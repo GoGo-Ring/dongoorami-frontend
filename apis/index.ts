@@ -1,16 +1,16 @@
-import axios, { AxiosInstance, AxiosRequestConfig, Method } from "axios";
+import axios, { AxiosInstance, AxiosRequestConfig, Method } from 'axios';
 
 const api = axios.create({
   // TODO BaseURL, Authorization 설정
-  headers: { "Content-Type": "application/json" },
+  headers: { 'Content-Type': 'application/json' },
 });
 
 const HTTP_METHODS = {
-  GET: "get",
-  POST: "post",
-  PATCH: "patch",
-  PUT: "put",
-  DELETE: "delete",
+  GET: 'get',
+  POST: 'post',
+  PATCH: 'patch',
+  PUT: 'put',
+  DELETE: 'delete',
 } as const;
 
 const createApiMethod =

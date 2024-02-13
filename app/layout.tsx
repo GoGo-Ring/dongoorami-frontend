@@ -1,28 +1,27 @@
-import "~/styles/globals.css";
-import { Inter as FontSans } from "next/font/google";
+import '~/styles/globals.css';
 
-import { cn } from "~/libs/utils";
+import { Inter as FontSans } from 'next/font/google';
+
+import { cn } from '~/libs/utils';
 
 export const fontSans = FontSans({
-  subsets: ["latin"],
-  variable: "--font-sans",
+  subsets: ['latin'],
+  variable: '--font-sans',
 });
 
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+const RootLayout = ({ children }: { children: React.ReactNode }) => {
   return (
     <html lang="ko">
       <body
         className={cn(
-          "min-h-screen bg-background font-sans antialiased",
-          fontSans.variable
+          'min-h-screen bg-background font-sans antialiased',
+          fontSans.variable,
         )}
       >
         <section>{children}</section>
       </body>
     </html>
   );
-}
+};
+
+export default RootLayout;
