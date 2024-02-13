@@ -22,10 +22,12 @@ const createApiMethod =
     });
   };
 
-export default {
+const instance = {
   get: createApiMethod(api, HTTP_METHODS.GET),
   post: createApiMethod(api, HTTP_METHODS.POST),
   patch: createApiMethod(api, HTTP_METHODS.PATCH),
   put: createApiMethod(api, HTTP_METHODS.PUT),
   delete: createApiMethod(api, HTTP_METHODS.DELETE),
 };
+
+export default instance;
