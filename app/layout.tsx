@@ -2,6 +2,7 @@ import '~/styles/globals.css';
 
 import { Inter as FontSans } from 'next/font/google';
 
+import { Toaster } from '~/components/toast';
 import { cn } from '~/libs/utils';
 
 export const fontSans = FontSans({
@@ -19,6 +20,7 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => {
         )}
       >
         <section>{children}</section>
+        <Toaster />
       </body>
     </html>
   );
