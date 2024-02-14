@@ -2,7 +2,7 @@
 name: 'Issue: Bug report'
 about: 버그 이슈 템플릿입니다
 title: ''
-labels: ''
+labels: 'bug'
 assignees: junly21
 
 ---
