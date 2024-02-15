@@ -2,7 +2,6 @@ import '~/styles/globals.css';
 
 import { Inter as FontSans } from 'next/font/google';
 
-import { Toaster } from '~/components/toast';
 import { cn } from '~/libs/utils';
 
 export const fontSans = FontSans({
@@ -19,8 +18,7 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => {
           fontSans.variable,
         )}
       >
-        <section>{children}</section>
-        <Toaster />
+        <section className="h-screen w-screen">{children}</section>
       </body>
     </html>
   );
