@@ -1,7 +1,7 @@
 import Image from 'next/image';
 
 import { Badge } from '~/components/badge';
-import { getPerformanceStartDate } from '~/utils/dateFormatter';
+import { getDateStringYearMonthDay } from '~/utils/dateFormatter';
 
 interface PerformanceInfoCardProps {
   posterSrc: string;
@@ -29,7 +29,7 @@ const PerformanceInfoCard = ({
         <p className="text-clip text-base font-semibold">{performanceName}</p>
         <p className="truncate text-sm">{performanceFacilityName}</p>
         <span className="text-xs text-gray-300">
-          {getPerformanceStartDate(performanceStartDate)}
+          {getDateStringYearMonthDay(performanceStartDate)}
         </span>
         <div className="pt-2">
           <Badge className="w-fit rounded-md" variant="outline">
