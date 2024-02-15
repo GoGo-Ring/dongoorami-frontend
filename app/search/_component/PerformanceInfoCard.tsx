@@ -4,7 +4,7 @@ import { Badge } from '~/components/badge';
 import { getPerformanceStartDate } from '~/utils/dateFormatter';
 
 interface PerformanceInfoCardProps {
-  poster: string;
+  posterSrc: string;
   performanceName: string;
   performanceFacilityName: string;
   performanceStartDate: Date;
@@ -12,7 +12,7 @@ interface PerformanceInfoCardProps {
 }
 
 const PerformanceInfoCard = ({
-  poster,
+  posterSrc,
   performanceName,
   performanceFacilityName,
   performanceStartDate,
@@ -22,7 +22,7 @@ const PerformanceInfoCard = ({
     <div className="mr-5 w-56 cursor-pointer flex-col">
       <Image
         className="h-72 w-56 rounded-lg"
-        src={poster}
+        src={posterSrc}
         alt={`${performanceName} 포스터`}
       />
       <div className="flex flex-col px-1">
