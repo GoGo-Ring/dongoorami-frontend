@@ -33,11 +33,9 @@ const PerformanceInfoCard = ({
         <span className="text-xs text-gray-300">
           {getDateStringYearMonthDay(startDate)}
         </span>
-        <div className="pt-2">
-          <Badge className="w-fit rounded-md" variant="outline">
-            {salesStatus}
-          </Badge>
-        </div>
+        <Badge className="mt-2 w-fit rounded-md" variant="outline">
+          {salesStatus}
+        </Badge>
       </div>
     </div>
   );
