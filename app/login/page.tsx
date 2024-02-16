@@ -9,7 +9,7 @@ const Login = () => {
         <h1 className="text-center text-5xl">동구라미 로고</h1>
         <div className="rounded-md border border-slate-200 p-8">
           <OAuthButton domain="kakao"></OAuthButton>
-          <OAuthButton domain="X"></OAuthButton>
+          <OAuthButton domain="naver"></OAuthButton>
         </div>
       </div>
     </div>

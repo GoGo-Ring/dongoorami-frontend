@@ -9,7 +9,7 @@ const LoginKakao = () => {
 
   return (
     <div>
-      <div>카카오로그인 accessCode</div>
+      <div>네이버 로그인 accessCode</div>
       {/* TODO: accessCode 백에 넘겨주고 accessToken 받아오기 */}
       <div> {accessCode}</div>
     </div>

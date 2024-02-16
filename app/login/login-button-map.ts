@@ -18,4 +18,10 @@ export const ButtonStyle: {
     icon: '/x-white-icon.svg',
     txtcolor: 'white',
   },
+  naver: {
+    name: '네이버',
+    bgcolor: 'bg-naver',
+    icon: '/naver-icon.svg',
+    txtcolor: 'white',
+  },
 };
