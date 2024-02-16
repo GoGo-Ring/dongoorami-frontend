@@ -37,6 +37,7 @@
     --ring: var(--gray-900);
     --radius: 0.5rem;
     --kakao: 54, 100%, 49.8%;
+    --naver: 3 199 90;
   }
 
   .dark {
@@ -70,6 +71,7 @@
     --input: var(--gray-150);
     --ring: var(--gray-700);
     --kakao: 54, 100%, 49.8%;
+    --naver: 3 199 90;
   }
 }
 
