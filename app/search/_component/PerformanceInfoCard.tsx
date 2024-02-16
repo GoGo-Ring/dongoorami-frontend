@@ -18,10 +18,15 @@ const PerformanceInfoCard = ({
   startDate,
   status,
 }: PerformanceInfoCardProps) => {
+  const width = 224;
+  const height = 288;
+
   return (
     <div className="mr-5 w-56 cursor-pointer flex-col">
       <Image
         className="h-72 w-56 rounded-lg"
+        width={width}
+        height={height}
         src={posterSrc}
         alt={`${title} 포스터`}
       />
