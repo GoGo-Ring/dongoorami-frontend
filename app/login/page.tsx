@@ -1,6 +1,6 @@
 'use client';
 
-import OAuthButton from '~/components/login/o-auth-button';
+import OAuthButton from '~/app/login/_components/o-auth-button';
 
 const Login = () => {
   return (
