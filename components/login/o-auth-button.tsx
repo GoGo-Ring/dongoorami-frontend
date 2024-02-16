@@ -1,28 +1,21 @@
 import Image from 'next/image';
 
+import { ButtonStyle } from '../../app/login/login-button-map';
 import { KAKAO_AUTH_URL, NAVER_AUTH_URL } from '../../app/login/loginconfig';
 import { Button } from '../button';
 
 interface OAuthButtonProps {
-  bgcolor: string;
-  name: string;
-  icon: string;
-  txtcolor: string;
+  domain: string;
 }
-
-const NameMap: { [key: string]: string } = {
-  kakao: '카카오',
-  X: 'X',
-  naver: '네이버',
-  google: '구글',
-};
 
 const urlMap: { [key: string]: string } = {
   KAKAO_AUTH_URL: KAKAO_AUTH_URL,
   NAVER_AUTH_URL: NAVER_AUTH_URL,
 };
 
-const OAuthButton = ({ bgcolor, name, icon, txtcolor }: OAuthButtonProps) => {
+const OAuthButton = ({ domain }: OAuthButtonProps) => {
+  const { bgcolor, icon, txtcolor, name } = ButtonStyle[domain];
+
   const buttonStyle = `m-1 flex h-11 w-72 cursor-pointer items-center rounded-md border ${bgcolor} p-4 hover:${bgcolor}`;
 
   const textColor = `
@@ -30,7 +23,7 @@ const OAuthButton = ({ bgcolor, name, icon, txtcolor }: OAuthButtonProps) => {
   `;
 
   const linkAccessCode = () => {
-    const upperName = name.toUpperCase();
+    const upperName = domain.toUpperCase();
 
     const authUrl = `${upperName}_AUTH_URL`;
 
@@ -40,7 +33,7 @@ const OAuthButton = ({ bgcolor, name, icon, txtcolor }: OAuthButtonProps) => {
   return (
     <Button className={buttonStyle} onClick={linkAccessCode}>
       <Image width="16" height="16" src={icon} alt="X 로그인" />
-      <div className={textColor}>{NameMap[name]} 로그인</div>
+      <div className={textColor}>{name} 로그인</div>
     </Button>
   );
 };
