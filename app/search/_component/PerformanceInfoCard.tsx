@@ -5,7 +5,7 @@ import { getDateStringYearMonthDay } from '~/utils/dateFormatter';
 
 interface PerformanceInfoCardProps {
   posterSrc: string;
-  performanceName: string;
+  title: string;
   facilityName: string;
   startDate: Date;
   salesStatus: string;
@@ -13,7 +13,7 @@ interface PerformanceInfoCardProps {
 
 const PerformanceInfoCard = ({
   posterSrc,
-  performanceName,
+  title,
   facilityName,
   startDate,
   salesStatus,
@@ -23,10 +23,12 @@ const PerformanceInfoCard = ({
       <Image
         className="h-72 w-56 rounded-lg"
         src={posterSrc}
-        alt={`${performanceName} 포스터`}
+        alt={`${title} 포스터`}
       />
       <div className="flex flex-col px-1">
-        <p className="text-clip text-base font-semibold">{performanceName}</p>
+        <span className="text-clip break-all text-base font-semibold">
+          {title}
+        </span>
         <span className="truncate text-sm">{facilityName}</span>
         <span className="text-xs text-gray-300">
           {getDateStringYearMonthDay(startDate)}
