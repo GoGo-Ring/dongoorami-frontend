@@ -8,7 +8,7 @@ interface PerformanceInfoCardProps {
   title: string;
   facilityName: string;
   startDate: Date;
-  status: string;
+  status: '공연 예정' | '공연 중' | '공연 종료';
 }
 
 const PerformanceInfoCard = ({
