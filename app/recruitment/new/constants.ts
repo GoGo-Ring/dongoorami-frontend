@@ -20,8 +20,8 @@ export const FORM_LABELS = {
   LOCATION: '지역',
   AGE: '연령',
   PARTICIPANTS: '인원수',
-  M: '남성',
-  F: '여성',
+  M: '남',
+  F: '여',
   ANY: '무관',
   GENDER: '성별',
 };
