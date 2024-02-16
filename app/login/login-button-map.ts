@@ -1,9 +1,9 @@
-export const ButtonStyle: {
-  [key: string]: {
+export const buttonStyle: {
+  [key in 'kakao' | 'naver' | 'X' | 'google']: {
     name: string;
     bgcolor: string;
     icon: string;
-    txtcolor: string;
+    txtcolor: 'black' | 'white';
     alt: string;
   };
 } = {
@@ -27,5 +27,12 @@ export const ButtonStyle: {
     icon: '/naver-icon.svg',
     txtcolor: 'white',
     alt: '네이버 로그인',
+  },
+  google: {
+    name: '구글',
+    bgcolor: 'bg-naver',
+    icon: '/naver-icon.svg',
+    txtcolor: 'white',
+    alt: '구글 로그인',
   },
 };
