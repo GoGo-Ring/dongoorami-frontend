@@ -1,6 +1,6 @@
 import Image from 'next/image';
 
-import { KAKAO_AUTH_URL, NAVER_AUTH_URL } from './loginconfig';
+import { KAKAO_AUTH_URL, NAVER_AUTH_URL } from '../../app/login/loginconfig';
 import { Button } from '../button';
 
 interface OAuthButtonProps {
