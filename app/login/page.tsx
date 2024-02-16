@@ -1,3 +1,5 @@
+'use client';
+
 import OAuthButton from '~/components/login/o-auth-button';
 
 const Login = () => {
@@ -8,7 +10,7 @@ const Login = () => {
         <div className="rounded-md border border-slate-200 p-8">
           <OAuthButton
             bgcolor="bg-kakao"
-            name="카카오"
+            name="kakao"
             icon="/kakao-icon.svg"
             txtcolor="black"
           ></OAuthButton>
