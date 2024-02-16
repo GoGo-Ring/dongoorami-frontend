@@ -6,16 +6,16 @@ import { getDateStringYearMonthDay } from '~/utils/dateFormatter';
 interface PerformanceInfoCardProps {
   posterSrc: string;
   performanceName: string;
-  performanceFacilityName: string;
-  performanceStartDate: Date;
+  facilityName: string;
+  startDate: Date;
   salesStatus: string;
 }
 
 const PerformanceInfoCard = ({
   posterSrc,
   performanceName,
-  performanceFacilityName,
-  performanceStartDate,
+  facilityName,
+  startDate,
   salesStatus,
 }: PerformanceInfoCardProps) => {
   return (
@@ -27,9 +27,9 @@ const PerformanceInfoCard = ({
       />
       <div className="flex flex-col px-1">
         <p className="text-clip text-base font-semibold">{performanceName}</p>
-        <p className="truncate text-sm">{performanceFacilityName}</p>
+        <span className="truncate text-sm">{facilityName}</span>
         <span className="text-xs text-gray-300">
-          {getDateStringYearMonthDay(performanceStartDate)}
+          {getDateStringYearMonthDay(startDate)}
         </span>
         <div className="pt-2">
           <Badge className="w-fit rounded-md" variant="outline">
