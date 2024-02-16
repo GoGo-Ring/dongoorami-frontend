@@ -66,6 +66,9 @@ const PerformanceFilter = () => {
         <ButtonSelectionField {...GENRE_SELECTION} />
         <ButtonSelectionField {...STATUS_SELECTION} />
         <CheckboxSelectionField {...REGIONS} />
+        <Button variant="outline" type="submit">
+          검색
+        </Button>
       </div>
     </form>
   );
