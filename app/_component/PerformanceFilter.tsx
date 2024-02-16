@@ -1,9 +1,11 @@
 'use client';
 
 import { Button } from '~/components/button';
+import { Checkbox } from '~/components/checkbox';
 import {
   GENRE_SELECTION,
   STATUS_SELECTION,
+  REGIONS,
   MULTIPLE_SELECTION_AVAILABLE,
 } from '~/constants/Filter';
 
@@ -36,12 +38,34 @@ const ButtonSelectionField = ({ category, options }: SelectionFieldProps) => {
   );
 };
 
+const CheckboxSelectionField = ({ category, options }: SelectionFieldProps) => {
+  return (
+    <div className="flex flex-col gap-2">
+      <span className="font-semibold">{category}</span>
+      <div className="flex flex-col gap-1">
+        {options.map(option => (
+          <div key={option} className="flex items-center space-x-2">
+            <Checkbox id={option} />
+            <label
+              htmlFor={option}
+              className="text-sm font-medium leading-none hover:cursor-pointer peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+            >
+              {option}
+            </label>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+};
+
 const PerformanceFilter = () => {
   return (
     <form>
       <div className="flex w-[260px] flex-col gap-6">
         <ButtonSelectionField {...GENRE_SELECTION} />
         <ButtonSelectionField {...STATUS_SELECTION} />
+        <CheckboxSelectionField {...REGIONS} />
       </div>
     </form>
   );
