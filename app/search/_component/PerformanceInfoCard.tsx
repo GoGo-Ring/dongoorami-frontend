@@ -8,7 +8,7 @@ interface PerformanceInfoCardProps {
   title: string;
   facilityName: string;
   startDate: Date;
-  salesStatus: string;
+  status: string;
 }
 
 const PerformanceInfoCard = ({
@@ -16,7 +16,7 @@ const PerformanceInfoCard = ({
   title,
   facilityName,
   startDate,
-  salesStatus,
+  status,
 }: PerformanceInfoCardProps) => {
   return (
     <div className="mr-5 w-56 cursor-pointer flex-col">
@@ -34,7 +34,7 @@ const PerformanceInfoCard = ({
           {getDateStringYearMonthDay(startDate)}
         </span>
         <Badge className="mt-2 w-fit rounded-md" variant="outline">
-          {salesStatus}
+          {status}
         </Badge>
       </div>
     </div>
