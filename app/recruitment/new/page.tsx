@@ -94,15 +94,18 @@ const Page = () => {
             </Select>
           </Field>
 
-          <Field label={FORM_LABELS.AGE}>
+          <div className=" flex w-[45%] items-center">
+            <legend className="w-24 flex-shrink-0 text-nowrap text-base font-semibold">
+              {FORM_LABELS.AGE}
+            </legend>
             <div className="flex flex-col gap-4">
               <div className="flex gap-4">
                 <Input type="text" min={0} />
                 <Input type="text" max={100} />
               </div>
-              <Slider defaultValue={[0, 100]} minStepsBetweenThumbs={1} />
+              <Slider defaultValue={[20, 30]} minStepsBetweenThumbs={1} />
             </div>
-          </Field>
+          </div>
 
           <Field
             htmlFor={FORM_IDS.PARTICIPANTS}
