@@ -140,11 +140,11 @@ const Page = () => {
         />
 
         <div className="flex gap-8">
-          <Button className="w-full bg-primary text-primary-foreground">
-            입력 완료
-          </Button>
           <Button className="w-full bg-secondary text-secondary-foreground">
             취소
+          </Button>
+          <Button className="w-full bg-primary text-primary-foreground">
+            입력 완료
           </Button>
         </div>
       </form>
