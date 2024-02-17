@@ -59,12 +59,16 @@ const Page = () => {
         <Field htmlFor="image" label="이미지">
           <Input type="file" id="image" />
         </Field>
+
         <div className="flex flex-wrap items-center gap-7 rounded-md border border-gray-200 p-6">
-          <Field htmlFor={FORM_IDS.PERFORMANCE} label={FORM_LABELS.PERFORMANCE}>
+          <Field
+            htmlFor={FORM_IDS.PERFORMANCE_NAME}
+            label={FORM_LABELS.PERFORMANCE_NAME}
+          >
             <Input
-              id={FORM_IDS.PERFORMANCE}
+              id={FORM_IDS.PERFORMANCE_NAME}
               type="text"
-              placeholder={FORM_PLACEHOLDERS.PERFORMANCE}
+              placeholder={FORM_PLACEHOLDERS.PERFORMANCE_NAME}
             />
           </Field>
 
@@ -79,10 +83,10 @@ const Page = () => {
             />
           </Field>
 
-          <Field htmlFor={FORM_IDS.LOCATION} label={FORM_LABELS.LOCATION}>
+          <Field htmlFor={FORM_IDS.REGION} label={FORM_LABELS.REGION}>
             <Select>
-              <SelectTrigger className="w-[180px]" id={FORM_IDS.LOCATION}>
-                <SelectValue placeholder={FORM_PLACEHOLDERS.LOCATION} />
+              <SelectTrigger className="w-[180px]" id={FORM_IDS.REGION}>
+                <SelectValue placeholder={FORM_PLACEHOLDERS.REGION} />
               </SelectTrigger>
               <SelectContent>
                 {FORM_ITEMS.LOCATION.map(location => (
@@ -108,14 +112,19 @@ const Page = () => {
           </div>
 
           <Field
-            htmlFor={FORM_IDS.PARTICIPANTS}
-            label={FORM_LABELS.PARTICIPANTS}
+            htmlFor={FORM_IDS.PARTICIPANT_COUNT}
+            label={FORM_LABELS.PARTICIPANT_COUNT}
           >
             <Select>
-              <SelectTrigger className="w-[180px]" id={FORM_IDS.PARTICIPANTS}>
-                <SelectValue placeholder={FORM_PLACEHOLDERS.PARTICIPANTS} />
+              <SelectTrigger
+                className="w-[180px]"
+                id={FORM_IDS.PARTICIPANT_COUNT}
+              >
+                <SelectValue
+                  placeholder={FORM_PLACEHOLDERS.PARTICIPANT_COUNT}
+                />
               </SelectTrigger>
-              <SelectContent id={FORM_IDS.PARTICIPANTS}>
+              <SelectContent id={FORM_IDS.PARTICIPANT_COUNT}>
                 {FORM_ITEMS.PARTICIPANTS.map(participant => (
                   <SelectItem key={participant} value={participant}>
                     {participant}
@@ -127,12 +136,14 @@ const Page = () => {
 
           <Field label={FORM_LABELS.GENDER}>
             <RadioGroup className="flex w-full">
-              <RadioGroupItem value="male" id={FORM_IDS.M} />
-              <Label htmlFor={FORM_IDS.M}>{FORM_LABELS.M}</Label>
-              <RadioGroupItem value="female" id={FORM_IDS.F} />
-              <Label htmlFor={FORM_IDS.F}>{FORM_LABELS.F}</Label>
-              <RadioGroupItem value="any" id={FORM_IDS.ANY} />
-              <Label htmlFor={FORM_IDS.ANY}>{FORM_LABELS.ANY}</Label>
+              <RadioGroupItem value="male" id={FORM_IDS.MALE} />
+              <Label htmlFor={FORM_IDS.MALE}>{FORM_LABELS.MALE}</Label>
+              <RadioGroupItem value="female" id={FORM_IDS.FEMALE} />
+              <Label htmlFor={FORM_IDS.FEMALE}>{FORM_LABELS.FEMALE}</Label>
+              <RadioGroupItem value="any" id={FORM_IDS.IRRELEVANT} />
+              <Label htmlFor={FORM_IDS.IRRELEVANT}>
+                {FORM_LABELS.IRRELEVANT}
+              </Label>
             </RadioGroup>
           </Field>
         </div>
