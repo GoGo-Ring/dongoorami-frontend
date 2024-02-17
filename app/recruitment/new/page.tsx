@@ -20,13 +20,13 @@ import {
   FORM_PLACEHOLDERS,
 } from './constants';
 
-interface WithLabelProps {
+interface FieldProps {
   children: React.ReactNode;
   htmlFor?: string;
   label?: string;
 }
 
-const Field = ({ children, htmlFor, label }: WithLabelProps) => (
+const Field = ({ children, htmlFor, label }: FieldProps) => (
   <div className="flex w-[45%] items-center ">
     <Label
       className=" w-24 flex-shrink-0 text-nowrap text-base font-semibold"
