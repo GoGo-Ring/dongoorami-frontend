@@ -55,6 +55,10 @@ const Page = () => {
             placeholder={FORM_PLACEHOLDERS.TITLE}
           />
         </div>
+
+        <Field htmlFor="image" label="이미지">
+          <Input type="file" id="image" />
+        </Field>
         <div className="flex flex-wrap items-center gap-7 rounded-md border border-gray-200 p-6">
           <Field htmlFor={FORM_IDS.PERFORMANCE} label={FORM_LABELS.PERFORMANCE}>
             <Input
