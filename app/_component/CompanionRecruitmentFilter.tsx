@@ -1,6 +1,12 @@
 import { ReactNode } from 'react';
 
-import { RadioGroup } from '~/components/radio-group';
+import { Label } from '~/components/label';
+import { RadioGroup, RadioGroupItem } from '~/components/radio-group';
+
+interface ItemProps {
+  label?: string;
+  value: string;
+}
 
 interface FieldProps {
   category: string;
@@ -8,6 +14,15 @@ interface FieldProps {
   defaultValue?: string;
   placeholder?: string;
 }
+
+const RadioItem = ({ label, value }: ItemProps) => {
+  return (
+    <div className="flex items-center space-x-2">
+      <RadioGroupItem value={value} id={value} />
+      <Label htmlFor={value}>{label}</Label>
+    </div>
+  );
+};
 
 const RadioField = ({ category, children, defaultValue }: FieldProps) => {
   return (
@@ -33,5 +48,6 @@ const CompanionRecruitmentFilter = ({
 };
 
 CompanionRecruitmentFilter.RadioField = RadioField;
+CompanionRecruitmentFilter.RadioItem = RadioItem;
 
 export default CompanionRecruitmentFilter;
