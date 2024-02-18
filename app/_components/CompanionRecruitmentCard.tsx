@@ -4,6 +4,28 @@ interface TitleProps {
   title: string;
 }
 
+interface ConditionItemProps {
+  label: '공연명' | '성별' | '인원 수';
+  contents: string | number;
+}
+
+interface IconWithCountItemProps {
+  icon: string;
+  count: number;
+}
+
+interface UserIdProps {
+  userId: string;
+}
+
+interface CreatedDateProps {
+  date: string;
+}
+
+interface BadgeItemProps {
+  status: '모집 중' | '모집 종료';
+}
+
 const Title = ({ title }: TitleProps) => {
   return (
     <div className="text-gray-700 ">
@@ -11,11 +33,6 @@ const Title = ({ title }: TitleProps) => {
     </div>
   );
 };
-
-interface ConditionItemProps {
-  label: '공연명' | '성별' | '인원 수';
-  contents: string | number;
-}
 
 const ConditionItem = ({ label, contents }: ConditionItemProps) => {
   return (
@@ -26,11 +43,6 @@ const ConditionItem = ({ label, contents }: ConditionItemProps) => {
   );
 };
 
-interface IconWithCountItemProps {
-  icon: string;
-  count: number;
-}
-
 const IconWithCountItem = ({ icon, count }: IconWithCountItemProps) => {
   return (
     <div className="flex gap-1">
@@ -40,25 +52,13 @@ const IconWithCountItem = ({ icon, count }: IconWithCountItemProps) => {
   );
 };
 
-interface UserIdProps {
-  userId: string;
-}
-
 const UserId = ({ userId }: UserIdProps) => {
   return <span className="truncate text-sm text-gray-400">{userId}</span>;
 };
 
-interface CreatedDateProps {
-  date: string;
-}
-
 const CreatedDate = ({ date }: CreatedDateProps) => {
   return <span className="text-xs text-gray-300">{date}</span>;
 };
-
-interface BadgeItemProps {
-  status: '모집 중' | '모집 종료';
-}
 
 const BadgeItem = ({ status }: BadgeItemProps) => {
   return <Badge className="h-fit flex-shrink-0">{status}</Badge>;
