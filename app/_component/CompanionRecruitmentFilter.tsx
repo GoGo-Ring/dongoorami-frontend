@@ -1,5 +1,6 @@
 import { ReactNode } from 'react';
 
+import { Input } from '~/components/input';
 import { Label } from '~/components/label';
 import { RadioGroup, RadioGroupItem } from '~/components/radio-group';
 
@@ -33,6 +34,19 @@ const RadioField = ({ category, children, defaultValue }: FieldProps) => {
   );
 };
 
+const InputField = ({ category }: FieldProps) => {
+  return (
+    <div>
+      <span className="font-semibold">{category}</span>
+      <div className="flex flex-row gap-1">
+        <Input type="number" className="w-16" />
+        <span className="my-auto ">~</span>
+        <Input type="number" className="w-16" />
+      </div>
+    </div>
+  );
+};
+
 interface CompanionRecruitmentFilterProps {
   children: ReactNode;
 }
@@ -49,5 +63,6 @@ const CompanionRecruitmentFilter = ({
 
 CompanionRecruitmentFilter.RadioField = RadioField;
 CompanionRecruitmentFilter.RadioItem = RadioItem;
+CompanionRecruitmentFilter.InputField = InputField;
 
 export default CompanionRecruitmentFilter;
