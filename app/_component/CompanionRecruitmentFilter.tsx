@@ -21,7 +21,6 @@ interface FieldProps {
   category: string;
   children: ReactNode;
   defaultValue?: string;
-  placeholder?: string;
 }
 
 const RadioItem = ({ label, value }: ItemProps) => {
