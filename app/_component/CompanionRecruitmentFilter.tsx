@@ -1,5 +1,6 @@
-import { ReactNode } from 'react';
+import { Children, ReactNode } from 'react';
 
+import { Input } from '~/components/input';
 import { Label } from '~/components/label';
 import { RadioGroup, RadioGroupItem } from '~/components/radio-group';
 
@@ -33,12 +34,26 @@ const RadioField = ({ category, children, defaultValue }: FieldProps) => {
   );
 };
 
-const InputField = ({ category }: FieldProps) => {
+const InputItem = () => {
+  return <Input type="number" className="w-16" />;
+};
+
+const InputField = ({ category, children }: FieldProps) => {
+  const childrenArray = Children.toArray(children);
+
+  if (childrenArray.length !== 2) {
+    return null;
+  }
+
+  const [min, max] = childrenArray;
+
   return (
     <div>
       <span className="font-semibold">{category}</span>
       <div className="flex flex-row gap-1">
+        {min}
         <span className="my-auto ">~</span>
+        {max}
       </div>
     </div>
   );
@@ -61,5 +76,6 @@ const CompanionRecruitmentFilter = ({
 CompanionRecruitmentFilter.RadioField = RadioField;
 CompanionRecruitmentFilter.RadioItem = RadioItem;
 CompanionRecruitmentFilter.InputField = InputField;
+CompanionRecruitmentFilter.InputItem = InputItem;
 
 export default CompanionRecruitmentFilter;
