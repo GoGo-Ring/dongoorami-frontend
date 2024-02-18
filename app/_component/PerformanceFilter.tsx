@@ -79,7 +79,7 @@ const CheckboxSelectionField = ({
 
 const PerformanceFilter = ({ children }: PerformanceFilterProps) => {
   return (
-    <div className="flex w-[260px] flex-col gap-6">
+    <div className="flex w-[260px] flex-col gap-6 px-3">
       {children}
       <Button variant="outline" type="submit">
         {SEARCH}
