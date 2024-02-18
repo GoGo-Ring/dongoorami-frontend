@@ -40,6 +40,10 @@ const UserId = () => {
   return <span className="truncate text-sm text-gray-400">작성자id</span>;
 };
 
+const CreatedDate = () => {
+  return <span className="text-xs text-gray-300">2024.02.19</span>;
+};
+
 const CompanionRecruitmentCard = () => {
   return (
     <div className=" w-[204px] rounded-lg border p-6">
@@ -59,7 +63,7 @@ const CompanionRecruitmentCard = () => {
         <div className="flex flex-row items-center justify-between pt-1">
           <div className="flex w-full flex-grow-0 flex-col">
             <UserId />
-            <span className="text-xs text-gray-300">2024.02.19</span>
+            <CreatedDate />
           </div>
           <Badge className="h-fit flex-shrink-0">모집 여부</Badge>
         </div>
