@@ -52,8 +52,12 @@ const CreatedDate = ({ date }: CreatedDateProps) => {
   return <span className="text-xs text-gray-300">{date}</span>;
 };
 
-const BadgeItem = () => {
-  return <Badge className="h-fit flex-shrink-0">모집 여부</Badge>;
+interface BadgeItemProps {
+  status: '모집 중' | '모집 종료';
+}
+
+const BadgeItem = ({ status }: BadgeItemProps) => {
+  return <Badge className="h-fit flex-shrink-0">{status}</Badge>;
 };
 
 const CompanionRecruitmentCard = () => {
@@ -77,7 +81,7 @@ const CompanionRecruitmentCard = () => {
             <UserId userId="사용자id" />
             <CreatedDate date="2024.02.19" />
           </div>
-          <BadgeItem />
+          <BadgeItem status={'모집 중'} />
         </div>
       </div>
     </div>
