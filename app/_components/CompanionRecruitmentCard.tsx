@@ -8,11 +8,16 @@ const Title = () => {
   );
 };
 
-const ConditionItem = () => {
+interface ConditionItemProps {
+  label: '공연명' | '성별' | '인원 수';
+  contents: string | number;
+}
+
+const ConditionItem = ({ label, contents }: ConditionItemProps) => {
   return (
     <div className="flex gap-2 text-sm text-gray-300">
-      <span className="w-12 flex-shrink-0">공연명</span>
-      <span className="truncate">공연명공연명</span>
+      <span className="w-12 flex-shrink-0">{label}</span>
+      <span className="truncate">{contents}</span>
     </div>
   );
 };
@@ -24,15 +29,9 @@ const CompanionRecruitmentCard = () => {
         <div className="flex w-[156px] flex-col gap-1 pb-1">
           <Title />
           <div className="flex flex-col">
-            <ConditionItem />
-            <div className="flex gap-2 text-sm text-gray-300">
-              <span className="w-12">성별</span>
-              <span>무관</span>
-            </div>
-            <div className="flex gap-2 text-sm text-gray-300">
-              <span className="w-12">인원 수</span>
-              <span>1</span>
-            </div>
+            <ConditionItem label="공연명" contents="공연명공연명" />
+            <ConditionItem label="성별" contents="무관" />
+            <ConditionItem label="인원 수" contents={1} />
           </div>
           <div className="flex flex-row justify-end gap-2 text-sm text-gray-300">
             <div className="flex gap-1">
