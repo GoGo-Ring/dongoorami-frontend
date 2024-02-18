@@ -1,6 +1,6 @@
 'use client';
 
-import { GENRE_SELECTION, STATUS_SELECTION } from '~/constants/Filter';
+import { GENRE_SELECTION, REGIONS, STATUS_SELECTION } from '~/constants/Filter';
 
 import PerformanceFilter from './PerformanceFilter';
 
@@ -17,6 +17,11 @@ const Filter = () => {
           <PerformanceFilter.ButtonItem key={option} label={option} />
         ))}
       </PerformanceFilter.ButtonField>
+      <PerformanceFilter.CheckboxField category={REGIONS.category}>
+        {REGIONS.options.map(option => (
+          <PerformanceFilter.CheckboxItem key={option} label={option} />
+        ))}
+      </PerformanceFilter.CheckboxField>
     </PerformanceFilter>
   );
 };
