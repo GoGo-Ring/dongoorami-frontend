@@ -1,5 +1,6 @@
 import { Children, ReactNode } from 'react';
 
+import { Button } from '~/components/button';
 import { Input } from '~/components/input';
 import { Label } from '~/components/label';
 import { RadioGroup, RadioGroupItem } from '~/components/radio-group';
@@ -11,6 +12,8 @@ import {
   SelectTrigger,
   SelectValue,
 } from '~/components/select';
+
+import { SEARCH } from './constants';
 
 interface ItemProps {
   label?: string;
@@ -98,8 +101,11 @@ const CompanionRecruitmentFilter = ({
   children,
 }: CompanionRecruitmentFilterProps) => {
   return (
-    <div>
-      <div className="flex flex-col">{children}</div>
+    <div className="flex flex-col">
+      {children}
+      <Button variant="outline" type="submit">
+        {SEARCH}
+      </Button>
     </div>
   );
 };
