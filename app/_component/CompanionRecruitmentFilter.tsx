@@ -3,6 +3,13 @@ import { Children, ReactNode } from 'react';
 import { Input } from '~/components/input';
 import { Label } from '~/components/label';
 import { RadioGroup, RadioGroupItem } from '~/components/radio-group';
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectTrigger,
+  SelectValue,
+} from '~/components/select';
 
 interface ItemProps {
   label?: string;
@@ -59,6 +66,22 @@ const InputField = ({ category, children }: FieldProps) => {
   );
 };
 
+const SelectionField = ({ category, children }: FieldProps) => {
+  return (
+    <div>
+      <span className="font-semibold">{category}</span>
+      <Select>
+        <SelectTrigger className="w-[180px]">
+          <SelectValue />
+        </SelectTrigger>
+        <SelectContent>
+          <SelectGroup>{children}</SelectGroup>
+        </SelectContent>
+      </Select>
+    </div>
+  );
+};
+
 interface CompanionRecruitmentFilterProps {
   children: ReactNode;
 }
@@ -77,5 +100,6 @@ CompanionRecruitmentFilter.RadioField = RadioField;
 CompanionRecruitmentFilter.RadioItem = RadioItem;
 CompanionRecruitmentFilter.InputField = InputField;
 CompanionRecruitmentFilter.InputItem = InputItem;
+CompanionRecruitmentFilter.SelectionField = SelectionField;
 
 export default CompanionRecruitmentFilter;
