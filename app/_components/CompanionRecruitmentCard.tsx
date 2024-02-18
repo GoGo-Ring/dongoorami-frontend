@@ -1,9 +1,13 @@
 import { Badge } from '~/components/badge';
 
-const Title = () => {
+interface TitleProps {
+  title: string;
+}
+
+const Title = ({ title }: TitleProps) => {
   return (
     <div className="text-gray-700 ">
-      <span>글제목글제목글제목글제목글제목글제목글제목글제목</span>
+      <span>{title}</span>
     </div>
   );
 };
@@ -65,7 +69,7 @@ const CompanionRecruitmentCard = () => {
     <div className=" w-[204px] rounded-lg border p-6">
       <div className="divide-y">
         <div className="flex w-[156px] flex-col gap-1 pb-1">
-          <Title />
+          <Title title={'글제목글제목글제목글제목글제목글제목글제목글제목'} />
           <div className="flex flex-col">
             <ConditionItem label="공연명" contents="공연명공연명" />
             <ConditionItem label="성별" contents="무관" />
