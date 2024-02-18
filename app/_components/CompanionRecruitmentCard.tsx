@@ -22,6 +22,15 @@ const ConditionItem = ({ label, contents }: ConditionItemProps) => {
   );
 };
 
+const IconLabel = () => {
+  return (
+    <div className="flex gap-1">
+      <div>icon</div>
+      <span>1</span>
+    </div>
+  );
+};
+
 const CompanionRecruitmentCard = () => {
   return (
     <div className=" w-[204px] rounded-lg border p-6">
@@ -34,10 +43,7 @@ const CompanionRecruitmentCard = () => {
             <ConditionItem label="인원 수" contents={1} />
           </div>
           <div className="flex flex-row justify-end gap-2 text-sm text-gray-300">
-            <div className="flex gap-1">
-              <div>icon</div>
-              <span>1</span>
-            </div>
+            <IconLabel />
             <div className="flex gap-1">
               <div>icon</div>
               <span>1</span>
