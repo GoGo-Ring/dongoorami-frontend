@@ -1,13 +1,19 @@
 import { Badge } from '~/components/badge';
 
+const Title = () => {
+  return (
+    <div className="text-gray-700 ">
+      <span>글제목글제목글제목글제목글제목글제목글제목글제목</span>
+    </div>
+  );
+};
+
 const CompanionRecruitmentCard = () => {
   return (
     <div className=" w-[204px] rounded-lg border p-6">
       <div className="divide-y">
         <div className="flex w-[156px] flex-col gap-1 pb-1">
-          <div className="text-gray-700 ">
-            <span>글제목글제목글제목글제목글제목글제목글제목글제목</span>
-          </div>
+          <Title />
           <div className="flex flex-col">
             <div className="flex gap-2 text-sm text-gray-300">
               <span className="w-12 flex-shrink-0">공연명</span>
