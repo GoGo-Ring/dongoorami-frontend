@@ -30,7 +30,9 @@ const RadioItem = ({ label, value }: ItemProps) => {
   return (
     <div className="flex items-center space-x-2">
       <RadioGroupItem value={value} id={value} />
-      <Label htmlFor={value}>{label}</Label>
+      <Label className="hover:cursor-pointer" htmlFor={value}>
+        {label}
+      </Label>
     </div>
   );
 };
