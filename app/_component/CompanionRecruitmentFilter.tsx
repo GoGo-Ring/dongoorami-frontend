@@ -1,3 +1,4 @@
+import { Input } from '~/components/input';
 import { Label } from '~/components/label';
 import { RadioGroup, RadioGroupItem } from '~/components/radio-group';
 
@@ -19,6 +20,14 @@ const CompanionRecruitmentFilter = () => {
           <Label htmlFor="여자">여자</Label>
         </div>
       </RadioGroup>
+      <div className="flex flex-col">
+        <span className="font-semibold">나이</span>
+        <div className="flex flex-row gap-1">
+          <Input type="number" className="w-16" />
+          <span className="my-auto ">~</span>
+          <Input type="number" className="w-16" />
+        </div>
+      </div>
     </div>
   );
 };
