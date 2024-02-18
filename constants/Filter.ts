@@ -19,4 +19,6 @@ export const REGIONS = {
   ],
 };
 
+export const SEARCH = '검색';
+
 export const MULTIPLE_SELECTION_AVAILABLE = '(중복 선택 가능)';

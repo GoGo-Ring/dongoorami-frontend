@@ -4,7 +4,7 @@ import React, { ReactNode } from 'react';
 
 import { Button } from '~/components/button';
 import { Checkbox } from '~/components/checkbox';
-import { MULTIPLE_SELECTION_AVAILABLE } from '~/constants/Filter';
+import { MULTIPLE_SELECTION_AVAILABLE, SEARCH } from '~/constants/Filter';
 
 interface PerformanceFilterProps {
   children?: ReactNode;
@@ -79,14 +79,12 @@ const CheckboxSelectionField = ({
 
 const PerformanceFilter = ({ children }: PerformanceFilterProps) => {
   return (
-    <form>
-      <div className="flex w-[260px] flex-col gap-6">
-        {children}
-        <Button variant="outline" type="submit">
-          검색
-        </Button>
-      </div>
-    </form>
+    <div className="flex w-[260px] flex-col gap-6">
+      {children}
+      <Button variant="outline" type="submit">
+        {SEARCH}
+      </Button>
+    </div>
   );
 };
 
