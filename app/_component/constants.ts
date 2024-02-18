@@ -21,3 +21,5 @@ export const SELECTION = {
     }),
   },
 };
+
+export const SEARCH = '검색';
