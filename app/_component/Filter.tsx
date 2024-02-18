@@ -32,6 +32,18 @@ const Filter = () => {
           />
         ))}
       </CompanionRecruitmentFilter.RadioField>
+      <CompanionRecruitmentFilter.SelectionField
+        category={SELECTION.PERSON_COUNT.category}
+        defaultValue={SELECTION.PERSON_COUNT.options[0].label}
+      >
+        {SELECTION.PERSON_COUNT.options.map(({ label, value }) => (
+          <CompanionRecruitmentFilter.SelectOptionItem
+            key={label}
+            label={label}
+            value={value}
+          />
+        ))}
+      </CompanionRecruitmentFilter.SelectionField>
     </CompanionRecruitmentFilter>
   );
 };
