@@ -20,6 +20,18 @@ const Filter = () => {
         <CompanionRecruitmentFilter.InputItem />
         <CompanionRecruitmentFilter.InputItem />
       </CompanionRecruitmentFilter.InputField>
+      <CompanionRecruitmentFilter.RadioField
+        category={SELECTION.TRANSPORTATION.category}
+        defaultValue={SELECTION.TRANSPORTATION.options[0].value}
+      >
+        {SELECTION.TRANSPORTATION.options.map(({ label, value }) => (
+          <CompanionRecruitmentFilter.RadioItem
+            key={label}
+            label={label}
+            value={value}
+          />
+        ))}
+      </CompanionRecruitmentFilter.RadioField>
     </CompanionRecruitmentFilter>
   );
 };
