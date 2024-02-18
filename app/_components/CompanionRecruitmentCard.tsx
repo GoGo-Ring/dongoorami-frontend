@@ -36,8 +36,12 @@ const IconWithCount = ({ icon, count }: IconWithCountProps) => {
   );
 };
 
-const UserId = () => {
-  return <span className="truncate text-sm text-gray-400">작성자id</span>;
+interface UserIdProps {
+  userId: string;
+}
+
+const UserId = ({ userId }: UserIdProps) => {
+  return <span className="truncate text-sm text-gray-400">{userId}</span>;
 };
 
 const CreatedDate = () => {
@@ -62,7 +66,7 @@ const CompanionRecruitmentCard = () => {
         </div>
         <div className="flex flex-row items-center justify-between pt-1">
           <div className="flex w-full flex-grow-0 flex-col">
-            <UserId />
+            <UserId userId="사용자id" />
             <CreatedDate />
           </div>
           <Badge className="h-fit flex-shrink-0">모집 여부</Badge>
