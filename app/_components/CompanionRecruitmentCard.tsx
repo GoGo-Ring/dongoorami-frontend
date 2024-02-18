@@ -92,4 +92,11 @@ const CompanionRecruitmentCard = () => {
   );
 };
 
+CompanionRecruitmentCard.Title = Title;
+CompanionRecruitmentCard.ConditionItem = ConditionItem;
+CompanionRecruitmentCard.IconWithCountItem = IconWithCountItem;
+CompanionRecruitmentCard.UserId = UserId;
+CompanionRecruitmentCard.CreatedDate = CreatedDate;
+CompanionRecruitmentCard.BadgeItem = BadgeItem;
+
 export default CompanionRecruitmentCard;
