@@ -14,4 +14,10 @@ export const SELECTION = {
       { value: 'separate', label: '미동행' },
     ],
   },
+  PERSON_COUNT: {
+    category: '인원 수',
+    options: Array.from({ length: 10 }, (_, i) => {
+      return { value: `${i + 1}`, label: `${i + 1}명` };
+    }),
+  },
 };
