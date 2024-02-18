@@ -28,6 +28,19 @@ const CompanionRecruitmentFilter = () => {
           <Input type="number" className="w-16" />
         </div>
       </div>
+      <div>
+        <span className="font-semibold">교통수단</span>
+        <RadioGroup defaultValue="동행">
+          <div className="flex items-center space-x-2">
+            <RadioGroupItem value="동행" id="동행" />
+            <Label htmlFor="동행">동행</Label>
+          </div>
+          <div className="flex items-center space-x-2">
+            <RadioGroupItem value="미동행" id="미동행" />
+            <Label htmlFor="미동행">미동행</Label>
+          </div>
+        </RadioGroup>
+      </div>
     </div>
   );
 };
