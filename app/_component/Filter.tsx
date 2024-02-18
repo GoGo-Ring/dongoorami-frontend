@@ -16,6 +16,10 @@ const Filter = () => {
           />
         ))}
       </CompanionRecruitmentFilter.RadioField>
+      <CompanionRecruitmentFilter.InputField category={'나이'}>
+        <CompanionRecruitmentFilter.InputItem />
+        <CompanionRecruitmentFilter.InputItem />
+      </CompanionRecruitmentFilter.InputField>
     </CompanionRecruitmentFilter>
   );
 };
