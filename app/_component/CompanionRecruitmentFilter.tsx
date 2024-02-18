@@ -7,6 +7,7 @@ import {
   Select,
   SelectContent,
   SelectGroup,
+  SelectItem,
   SelectTrigger,
   SelectValue,
 } from '~/components/select';
@@ -66,6 +67,14 @@ const InputField = ({ category, children }: FieldProps) => {
   );
 };
 
+interface SelectOptionItemProps {
+  value: string;
+  label: string;
+}
+const SelectOptionItem = ({ value, label }: SelectOptionItemProps) => {
+  return <SelectItem value={value}>{label}</SelectItem>;
+};
+
 const SelectionField = ({ category, children }: FieldProps) => {
   return (
     <div>
@@ -101,5 +110,6 @@ CompanionRecruitmentFilter.RadioItem = RadioItem;
 CompanionRecruitmentFilter.InputField = InputField;
 CompanionRecruitmentFilter.InputItem = InputItem;
 CompanionRecruitmentFilter.SelectionField = SelectionField;
+CompanionRecruitmentFilter.SelectOptionItem = SelectOptionItem;
 
 export default CompanionRecruitmentFilter;
