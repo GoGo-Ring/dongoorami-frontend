@@ -8,6 +8,15 @@ const Title = () => {
   );
 };
 
+const ConditionItem = () => {
+  return (
+    <div className="flex gap-2 text-sm text-gray-300">
+      <span className="w-12 flex-shrink-0">공연명</span>
+      <span className="truncate">공연명공연명</span>
+    </div>
+  );
+};
+
 const CompanionRecruitmentCard = () => {
   return (
     <div className=" w-[204px] rounded-lg border p-6">
@@ -15,10 +24,7 @@ const CompanionRecruitmentCard = () => {
         <div className="flex w-[156px] flex-col gap-1 pb-1">
           <Title />
           <div className="flex flex-col">
-            <div className="flex gap-2 text-sm text-gray-300">
-              <span className="w-12 flex-shrink-0">공연명</span>
-              <span className="truncate">공연명공연명</span>
-            </div>
+            <ConditionItem />
             <div className="flex gap-2 text-sm text-gray-300">
               <span className="w-12">성별</span>
               <span>무관</span>
