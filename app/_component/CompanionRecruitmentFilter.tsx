@@ -101,7 +101,7 @@ const CompanionRecruitmentFilter = ({
   children,
 }: CompanionRecruitmentFilterProps) => {
   return (
-    <div className="flex flex-col">
+    <div className="flex w-[260px] flex-col gap-6 px-3">
       {children}
       <Button variant="outline" type="submit">
         {SEARCH}
