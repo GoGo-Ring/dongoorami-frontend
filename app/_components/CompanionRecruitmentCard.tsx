@@ -26,12 +26,12 @@ const ConditionItem = ({ label, contents }: ConditionItemProps) => {
   );
 };
 
-interface IconWithCountProps {
+interface IconWithCountItemProps {
   icon: string;
   count: number;
 }
 
-const IconWithCount = ({ icon, count }: IconWithCountProps) => {
+const IconWithCountItem = ({ icon, count }: IconWithCountItemProps) => {
   return (
     <div className="flex gap-1">
       <div>{icon}</div>
@@ -76,8 +76,8 @@ const CompanionRecruitmentCard = () => {
             <ConditionItem label="인원 수" contents={1} />
           </div>
           <div className="flex flex-row justify-end gap-2 text-sm text-gray-300">
-            <IconWithCount icon={'icon'} count={1} />
-            <IconWithCount icon={'icon'} count={1} />
+            <IconWithCountItem icon={'icon'} count={1} />
+            <IconWithCountItem icon={'icon'} count={1} />
           </div>
         </div>
         <div className="flex flex-row items-center justify-between pt-1">
