@@ -1,6 +1,6 @@
 'use client';
 
-import { GENRE_SELECTION } from '~/constants/Filter';
+import { GENRE_SELECTION, STATUS_SELECTION } from '~/constants/Filter';
 
 import PerformanceFilter from './PerformanceFilter';
 
@@ -9,6 +9,11 @@ const Filter = () => {
     <PerformanceFilter>
       <PerformanceFilter.ButtonField category={GENRE_SELECTION.category}>
         {GENRE_SELECTION.options.map(option => (
+          <PerformanceFilter.ButtonItem key={option} label={option} />
+        ))}
+      </PerformanceFilter.ButtonField>
+      <PerformanceFilter.ButtonField category={STATUS_SELECTION.category}>
+        {STATUS_SELECTION.options.map(option => (
           <PerformanceFilter.ButtonItem key={option} label={option} />
         ))}
       </PerformanceFilter.ButtonField>
