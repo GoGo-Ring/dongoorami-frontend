@@ -75,13 +75,13 @@ const SelectOptionItem = ({ value, label }: SelectOptionItemProps) => {
   return <SelectItem value={value}>{label}</SelectItem>;
 };
 
-const SelectionField = ({ category, children }: FieldProps) => {
+const SelectionField = ({ category, children, defaultValue }: FieldProps) => {
   return (
     <div>
       <span className="font-semibold">{category}</span>
       <Select>
         <SelectTrigger className="w-[180px]">
-          <SelectValue />
+          <SelectValue placeholder={defaultValue} />
         </SelectTrigger>
         <SelectContent>
           <SelectGroup>{children}</SelectGroup>
