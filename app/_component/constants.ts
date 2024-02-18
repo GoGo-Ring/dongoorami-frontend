@@ -7,4 +7,11 @@ export const SELECTION = {
       { value: 'female', label: '여자' },
     ],
   },
+  TRANSPORTATION: {
+    category: '교통 수단',
+    options: [
+      { value: 'together', label: '동행' },
+      { value: 'separate', label: '미동행' },
+    ],
+  },
 };
