@@ -12,28 +12,28 @@ interface PerformanceFilterProps {
 
 interface SelectionFieldProps {
   category: string;
-  options: string[];
   isMultipleSelection?: boolean;
+  children: ReactNode;
 }
 
-interface SelectionProps {
-  children: string;
+interface ItemProps {
+  label: string;
 }
 
-const ButtonItem = ({ children }: SelectionProps) => {
+const ButtonItem = ({ label }: ItemProps) => {
   return (
     <Button
       className="h-6 rounded-full px-3 py-[6px] text-xs"
       variant="outline"
     >
-      {children}
+      {label}
     </Button>
   );
 };
 
 const ButtonSelectionField = ({
   category,
-  options,
+  children,
   isMultipleSelection,
 }: SelectionFieldProps) => {
   return (
@@ -46,38 +46,33 @@ const ButtonSelectionField = ({
           </span>
         )}
       </div>
-      <div className="flex flex-wrap gap-1">
-        {options.map(option => (
-          <ButtonItem key={option}>{option}</ButtonItem>
-        ))}
-      </div>
+      <div className="flex flex-wrap gap-1">{children}</div>
     </div>
   );
 };
 
-const CheckboxItem = ({ children }: SelectionProps) => {
+const CheckboxItem = ({ label }: ItemProps) => {
   return (
     <div className="flex items-center space-x-2">
-      <Checkbox id={children} />
+      <Checkbox id={label} />
       <label
-        htmlFor={children}
+        htmlFor={label}
         className="text-sm font-medium leading-none hover:cursor-pointer peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
       >
-        {children}
+        {label}
       </label>
     </div>
   );
 };
 
-const CheckboxSelectionField = ({ category, options }: SelectionFieldProps) => {
+const CheckboxSelectionField = ({
+  category,
+  children,
+}: SelectionFieldProps) => {
   return (
     <div className="flex flex-col gap-2">
       <span className="font-semibold">{category}</span>
-      <div className="flex flex-col gap-1">
-        {options.map(option => (
-          <CheckboxItem key={option}>{option}</CheckboxItem>
-        ))}
-      </div>
+      <div className="flex flex-col gap-1">{children}</div>
     </div>
   );
 };
@@ -95,7 +90,9 @@ const PerformanceFilter = ({ children }: PerformanceFilterProps) => {
   );
 };
 
-PerformanceFilter.ButtonSelectionField = ButtonSelectionField;
-PerformanceFilter.CheckboxSelectionField = CheckboxSelectionField;
+PerformanceFilter.ButtonItem = ButtonItem;
+PerformanceFilter.CheckboxItem = CheckboxItem;
+PerformanceFilter.ButtonField = ButtonSelectionField;
+PerformanceFilter.CheckboxField = CheckboxSelectionField;
 
 export default PerformanceFilter;
