@@ -1,6 +1,14 @@
 import { Input } from '~/components/input';
 import { Label } from '~/components/label';
 import { RadioGroup, RadioGroupItem } from '~/components/radio-group';
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '~/components/select';
 
 const CompanionRecruitmentFilter = () => {
   return (
@@ -40,6 +48,19 @@ const CompanionRecruitmentFilter = () => {
             <Label htmlFor="미동행">미동행</Label>
           </div>
         </RadioGroup>
+      </div>
+      <div>
+        <span className="font-semibold">인원 수</span>
+        <Select>
+          <SelectTrigger className="w-[180px]">
+            <SelectValue placeholder="인원 수" />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectGroup>
+              <SelectItem value="1">1명</SelectItem>
+            </SelectGroup>
+          </SelectContent>
+        </Select>
       </div>
     </div>
   );
