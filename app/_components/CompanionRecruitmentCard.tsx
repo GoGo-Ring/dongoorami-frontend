@@ -1,3 +1,5 @@
+import { ReactNode } from 'react';
+
 import { Badge } from '~/components/badge';
 
 interface TitleProps {
@@ -41,6 +43,14 @@ const ConditionItem = ({ label, contents }: ConditionItemProps) => {
       <span className="truncate">{contents}</span>
     </div>
   );
+};
+
+interface FieldProps {
+  children: ReactNode;
+}
+
+const ContentField = ({ children }: FieldProps) => {
+  return <div className="flex flex-col">{children}</div>;
 };
 
 const IconWithCountItem = ({ icon, count }: IconWithCountItemProps) => {
@@ -94,6 +104,7 @@ const CompanionRecruitmentCard = () => {
 
 CompanionRecruitmentCard.Title = Title;
 CompanionRecruitmentCard.ConditionItem = ConditionItem;
+CompanionRecruitmentCard.ContentField = ContentField;
 CompanionRecruitmentCard.IconWithCountItem = IconWithCountItem;
 CompanionRecruitmentCard.UserId = UserId;
 CompanionRecruitmentCard.CreatedDate = CreatedDate;
