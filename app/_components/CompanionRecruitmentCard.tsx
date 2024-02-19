@@ -28,6 +28,19 @@ interface BadgeItemProps {
   status: '모집 중' | '모집 종료';
 }
 
+interface FieldProps {
+  children: ReactNode;
+}
+
+interface FooterFieldProps {
+  children: ReactNode;
+  status: '모집 중' | '모집 종료';
+}
+
+interface CompanionRecruitmentCardProps {
+  children?: ReactNode;
+}
+
 const Title = ({ title }: TitleProps) => {
   return (
     <div className="text-gray-700 ">
@@ -44,10 +57,6 @@ const ConditionItem = ({ label, contents }: ConditionItemProps) => {
     </div>
   );
 };
-
-interface FieldProps {
-  children: ReactNode;
-}
 
 const ContentField = ({ children }: FieldProps) => {
   return (
@@ -86,11 +95,6 @@ const BadgeItem = ({ status }: BadgeItemProps) => {
   return <Badge className="h-fit flex-shrink-0">{status}</Badge>;
 };
 
-interface FooterFieldProps {
-  children: ReactNode;
-  status: '모집 중' | '모집 종료';
-}
-
 const FooterField = ({ children, status }: FooterFieldProps) => {
   return (
     <div className="flex flex-row items-center justify-between border-t-[1px] pt-1">
@@ -99,10 +103,6 @@ const FooterField = ({ children, status }: FooterFieldProps) => {
     </div>
   );
 };
-
-interface CompanionRecruitmentCardProps {
-  children?: ReactNode;
-}
 
 const CompanionRecruitmentCard = ({
   children,
