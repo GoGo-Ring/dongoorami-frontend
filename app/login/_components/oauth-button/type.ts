@@ -1,1 +1,1 @@
-export type domain = 'kakao' | 'naver' | 'google';
+export type Domain = 'kakao' | 'naver' | 'google';
