@@ -21,7 +21,7 @@ interface UserIdProps {
 }
 
 interface CreatedDateProps {
-  date: string;
+  date: `${number}.${number}.${number}`;
 }
 
 interface BadgeItemProps {
