@@ -50,7 +50,11 @@ interface FieldProps {
 }
 
 const ContentField = ({ children }: FieldProps) => {
-  return <div className="flex flex-col">{children}</div>;
+  return (
+    <div className="flex w-[156px] flex-col gap-1 pb-1">
+      <div className="flex flex-col">{children}</div>
+    </div>
+  );
 };
 
 const IconWithCountItem = ({ icon, count }: IconWithCountItemProps) => {
@@ -84,7 +88,7 @@ const BadgeItem = ({ status }: BadgeItemProps) => {
 
 const FooterField = () => {
   return (
-    <div className="flex flex-row items-center justify-between pt-1">
+    <div className="flex flex-row items-center justify-between border-t-[1px] pt-1">
       <div className="flex w-full flex-grow-0 flex-col">
         <UserId userId="사용자id" />
         <CreatedDate date="2024.02.19" />
@@ -101,13 +105,7 @@ interface CompanionRecruitmentCardProps {
 const CompanionRecruitmentCard = ({
   children,
 }: CompanionRecruitmentCardProps) => {
-  return (
-    <div className=" w-[204px] rounded-lg border p-6">
-      <div className="divide-y">
-        <div className="flex w-[156px] flex-col gap-1 pb-1">{children}</div>
-      </div>
-    </div>
-  );
+  return <div className=" w-[204px] rounded-lg border p-6">{children}</div>;
 };
 
 CompanionRecruitmentCard.Title = Title;
