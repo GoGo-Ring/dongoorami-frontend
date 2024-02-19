@@ -82,29 +82,29 @@ const BadgeItem = ({ status }: BadgeItemProps) => {
   return <Badge className="h-fit flex-shrink-0">{status}</Badge>;
 };
 
-const CompanionRecruitmentCard = () => {
+const FooterField = () => {
+  return (
+    <div className="flex flex-row items-center justify-between pt-1">
+      <div className="flex w-full flex-grow-0 flex-col">
+        <UserId userId="사용자id" />
+        <CreatedDate date="2024.02.19" />
+      </div>
+      <BadgeItem status={'모집 중'} />
+    </div>
+  );
+};
+
+interface CompanionRecruitmentCardProps {
+  children?: ReactNode;
+}
+
+const CompanionRecruitmentCard = ({
+  children,
+}: CompanionRecruitmentCardProps) => {
   return (
     <div className=" w-[204px] rounded-lg border p-6">
       <div className="divide-y">
-        <div className="flex w-[156px] flex-col gap-1 pb-1">
-          <Title title={'글제목글제목글제목글제목글제목글제목글제목글제목'} />
-          <div className="flex flex-col">
-            <ConditionItem label="공연명" contents="공연명공연명" />
-            <ConditionItem label="성별" contents="무관" />
-            <ConditionItem label="인원 수" contents={1} />
-          </div>
-          <div className="flex flex-row justify-end gap-2 text-sm text-gray-300">
-            <IconWithCountItem icon={'icon'} count={1} />
-            <IconWithCountItem icon={'icon'} count={1} />
-          </div>
-        </div>
-        <div className="flex flex-row items-center justify-between pt-1">
-          <div className="flex w-full flex-grow-0 flex-col">
-            <UserId userId="사용자id" />
-            <CreatedDate date="2024.02.19" />
-          </div>
-          <BadgeItem status={'모집 중'} />
-        </div>
+        <div className="flex w-[156px] flex-col gap-1 pb-1">{children}</div>
       </div>
     </div>
   );
@@ -118,5 +118,6 @@ CompanionRecruitmentCard.IconField = IconField;
 CompanionRecruitmentCard.UserId = UserId;
 CompanionRecruitmentCard.CreatedDate = CreatedDate;
 CompanionRecruitmentCard.BadgeItem = BadgeItem;
+CompanionRecruitmentCard.FooterField = FooterField;
 
 export default CompanionRecruitmentCard;
