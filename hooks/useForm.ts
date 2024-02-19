@@ -15,7 +15,9 @@ const useForm = <T extends Record<string, string>>({
   );
 
   const handleChange = (
-    e: React.FormEvent<HTMLInputElement | HTMLTextAreaElement>,
+    e: React.FormEvent<
+      HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
+    >,
   ) => {
     const { id, value } = e.currentTarget;
 
