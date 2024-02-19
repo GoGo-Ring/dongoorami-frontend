@@ -22,8 +22,6 @@ const OAuthButton = ({ domain }: OAuthButtonProps) => {
   const { bgcolor, icon, txtcolor, name } = buttonStyle[domain];
   const alt = `${name} 로그인`;
 
-  const buttonClass = `m-1 flex h-11 w-72 cursor-pointer items-center rounded-md border ${bgcolor} p-4 hover:${bgcolor}`;
-
   const textColor = `
   flex w-full justify-center text-sm text-${txtcolor}
   `;
@@ -33,7 +31,10 @@ const OAuthButton = ({ domain }: OAuthButtonProps) => {
   };
 
   return (
-    <Button className={buttonClass} onClick={linkAccessCode}>
+    <Button
+      className={`m-1 flex h-11 w-72 cursor-pointer items-center rounded-md border ${bgcolor} p-4 hover:${bgcolor}`}
+      onClick={linkAccessCode}
+    >
       <Image width="16" height="16" src={icon} alt={alt} />
       <div className={textColor}>{name} 로그인</div>
     </Button>
