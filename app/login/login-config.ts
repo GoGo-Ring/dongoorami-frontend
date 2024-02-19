@@ -1,0 +1,5 @@
+export const KAKAO_REST_API_KEY = process.env.NEXT_PUBLIC__KAKAO_REST_API_KEY;
+export const KAKAO_REDIRECT_URI = process.env.NEXT_PUBLIC__KAKAO_REDIRECT_URI;
+
+export const NAVER_REST_API_KEY = process.env.NEXT_PUBLIC__NAVER_REST_API_KEY;
+export const NAVER_REDIRECT_URI = process.env.NEXT_PUBLIC__NAVER_REDIRECT_URI;

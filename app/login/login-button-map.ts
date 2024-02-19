@@ -1,5 +1,14 @@
 type Corp = 'kakao' | 'naver' | 'X' | 'google';
 
+export type ButtonStyle = {
+  [key in Corp]: {
+    name: string;
+    bgcolor: string;
+    icon: string;
+    txtcolor: 'black' | 'white';
+  };
+};
+
 export const buttonStyle: {
   [key in Corp]: {
     name: string;

@@ -6,7 +6,7 @@ import {
   KAKAO_REDIRECT_URI,
   NAVER_REST_API_KEY,
   NAVER_REDIRECT_URI,
-} from '~/app/login/loginconfig';
+} from '~/app/login/login-config';
 import { Button } from '~/components/button';
 
 interface OAuthButtonProps {
