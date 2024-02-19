@@ -62,6 +62,14 @@ const IconWithCountItem = ({ icon, count }: IconWithCountItemProps) => {
   );
 };
 
+const IconField = ({ children }: FieldProps) => {
+  return (
+    <div className="flex flex-row justify-end gap-2 text-sm text-gray-300">
+      {children}
+    </div>
+  );
+};
+
 const UserId = ({ userId }: UserIdProps) => {
   return <span className="truncate text-sm text-gray-400">{userId}</span>;
 };
@@ -106,6 +114,7 @@ CompanionRecruitmentCard.Title = Title;
 CompanionRecruitmentCard.ConditionItem = ConditionItem;
 CompanionRecruitmentCard.ContentField = ContentField;
 CompanionRecruitmentCard.IconWithCountItem = IconWithCountItem;
+CompanionRecruitmentCard.IconField = IconField;
 CompanionRecruitmentCard.UserId = UserId;
 CompanionRecruitmentCard.CreatedDate = CreatedDate;
 CompanionRecruitmentCard.BadgeItem = BadgeItem;
