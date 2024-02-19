@@ -1,7 +1,7 @@
-type Corp = 'kakao' | 'naver' | 'google';
+import { domain } from './type';
 
 export type ButtonStyle = {
-  [key in Corp]: {
+  [key in domain]: {
     name: string;
     bgColor: string;
     icon: string;
@@ -10,7 +10,7 @@ export type ButtonStyle = {
 };
 
 export const buttonStyle: {
-  [key in Corp]: {
+  [key in domain]: {
     name: string;
     bgColor: string;
     icon: string;

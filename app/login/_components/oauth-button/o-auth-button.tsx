@@ -3,7 +3,7 @@ import Image from 'next/image';
 import { buttonStyle } from '~/app/login/_components/oauth-button/login-button-map';
 import { Button } from '~/components/button';
 
-type domain = 'kakao' | 'naver';
+import { domain } from './type';
 
 interface OAuthButtonProps {
   domain: domain;
@@ -12,6 +12,7 @@ interface OAuthButtonProps {
 const oauthUrl: { [key in domain]: string } = {
   kakao: `https://kauth.kakao.com/oauth/authorize?client_id=${process.env.NEXT_PUBLIC__KAKAO_REST_API_KEY}&redirect_uri=${process.env.NEXT_PUBLIC__KAKAO_REDIRECT_URI}&response_type=code`,
   naver: `https://nid.naver.com/oauth2.0/authorize?client_id=${process.env.NAVER_PUBLIC__KAKAO_REST_API_KEY}&redirect_uri=${process.env.NEXT_PUBLIC__NAVER_REDIRECT_URI}&response_type=code&state=STATE_STRING`,
+  google: `https://accounts.google.com/o/oauth2/v2/auth?client_id=${process.env.NEXT_PUBLIC__GOOGLE_REST_API_KEY}&redirect_uri=${process.env.NEXT_PUBLIC__GOOGLE_REDIRECT_URI}&response_type=code&scope=https://www.googleapis.com/auth/userinfo.email`,
 };
 
 const OAuthButton = ({ domain }: OAuthButtonProps) => {
