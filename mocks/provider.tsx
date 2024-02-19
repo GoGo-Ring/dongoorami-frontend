@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 
 import { PropsWithRequiredChildren } from '~/types/utils';
 
-const isMockingMode = 'enabled';
+const isMockingMode = process.env.NEXT_PUBLIC_API_MOCKING === 'enabled';
 
 const initMocks = async () => {
   if (typeof window === 'undefined') {
