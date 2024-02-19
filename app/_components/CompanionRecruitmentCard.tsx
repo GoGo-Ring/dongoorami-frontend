@@ -86,11 +86,16 @@ const BadgeItem = ({ status }: BadgeItemProps) => {
   return <Badge className="h-fit flex-shrink-0">{status}</Badge>;
 };
 
-const FooterField = ({ children }: FieldProps) => {
+interface FooterFieldProps {
+  children: ReactNode;
+  status: '모집 중' | '모집 종료';
+}
+
+const FooterField = ({ children, status }: FooterFieldProps) => {
   return (
     <div className="flex flex-row items-center justify-between border-t-[1px] pt-1">
       <div className="flex w-full flex-grow-0 flex-col">{children}</div>
-      <BadgeItem status={'모집 중'} />
+      <BadgeItem status={status} />
     </div>
   );
 };
