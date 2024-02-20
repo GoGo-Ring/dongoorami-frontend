@@ -26,12 +26,7 @@ interface SliderFieldProps extends FieldProps {
 }
 
 export const InputField = ({ id, placeholder, label, variant }: FieldProps) => {
-  const fieldProps = useContext(FormContext);
-
-  if (!fieldProps) {
-    return null;
-  }
-  const { values, handleChange } = fieldProps;
+  const { values, handleChange } = useContext(FormContext);
 
   return (
     <Field id={id} label={label} variant={variant}>
@@ -47,12 +42,7 @@ export const InputField = ({ id, placeholder, label, variant }: FieldProps) => {
 };
 
 export const FileField = ({ id, placeholder, label, variant }: FieldProps) => {
-  const fieldProps = useContext(FormContext);
-
-  if (!fieldProps) {
-    return null;
-  }
-  const { values, handleChange } = fieldProps;
+  const { values, handleChange } = useContext(FormContext);
 
   return (
     <Field id={id} label={label} variant={variant}>
@@ -75,12 +65,7 @@ export const SelectField = ({
   variant,
   children,
 }: PropsWithChildren<FieldProps>) => {
-  const fieldProps = useContext(FormContext);
-
-  if (!fieldProps) {
-    return null;
-  }
-  const { setValues, values } = fieldProps;
+  const { setValues, values } = useContext(FormContext);
 
   return (
     <Field id={id} label={label} variant={variant}>
@@ -117,12 +102,7 @@ export const RadioGroupField = ({
   children,
   variant,
 }: PropsWithChildren<FieldProps>) => {
-  const fieldProps = useContext(FormContext);
-
-  if (!fieldProps) {
-    return null;
-  }
-  const { setValues, values } = fieldProps;
+  const { setValues, values } = useContext(FormContext);
 
   return (
     <Field id={id} label={label} variant={variant}>
@@ -155,12 +135,7 @@ export const SliderField = ({
   label,
   variant,
 }: SliderFieldProps) => {
-  const fieldProps = useContext(FormContext);
-
-  if (!fieldProps) {
-    return null;
-  }
-  const { setValues, handleChange, values } = fieldProps;
+  const { setValues, handleChange, values } = useContext(FormContext);
 
   return (
     <Field id={id} label={label} variant={variant}>

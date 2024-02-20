@@ -4,9 +4,17 @@ import useForm from '~/hooks/useForm';
 
 import { INITIAL_VALUES } from '../../constants';
 
-export const FormContext = createContext<ReturnType<
-  typeof useForm<typeof INITIAL_VALUES>
-> | null>(null);
+const INITIAL_RETURN_FORM_VALUES = {
+  values: INITIAL_VALUES,
+  errors: {} as Record<keyof typeof INITIAL_VALUES, boolean>,
+  setValues: () => {},
+  handleChange: () => {},
+  handleSubmit: () => {},
+};
+
+export const FormContext = createContext<
+  ReturnType<typeof useForm<typeof INITIAL_VALUES>>
+>(INITIAL_RETURN_FORM_VALUES);
 
 FormContext.displayName = 'FormContext';
 
