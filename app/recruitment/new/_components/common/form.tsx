@@ -2,15 +2,7 @@ import { ReactNode, createContext } from 'react';
 
 import useForm from '~/hooks/useForm';
 
-import { INITIAL_VALUES } from '../../constants';
-
-const INITIAL_RETURN_FORM_VALUES = {
-  values: INITIAL_VALUES,
-  errors: {} as Record<keyof typeof INITIAL_VALUES, boolean>,
-  setValues: () => {},
-  handleChange: () => {},
-  handleSubmit: () => {},
-};
+import { INITIAL_RETURN_FORM_VALUES, INITIAL_VALUES } from '../../constants';
 
 export const FormContext = createContext<
   ReturnType<typeof useForm<typeof INITIAL_VALUES>>
