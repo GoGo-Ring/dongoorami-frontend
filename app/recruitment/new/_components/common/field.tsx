@@ -1,7 +1,7 @@
-import { Label } from '@radix-ui/react-label';
 import { VariantProps, cva } from 'class-variance-authority';
 import { PropsWithChildren } from 'react';
 
+import { Label } from '~/components/label';
 import { cn } from '~/libs/utils';
 
 import { INITIAL_VALUES } from '../../constants';
