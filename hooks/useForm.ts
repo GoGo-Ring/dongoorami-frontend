@@ -1,23 +1,33 @@
 import React, { useState } from 'react';
 
-interface UseFormProps<T> {
-  initialValues: T;
-  onSubmit: (values: T) => void;
-}
+type UseForm = <T extends Record<string, string>>(
+  initialValues: T,
+  onSubmit: (values: T) => void,
+) => {
+  values: T;
+  errors: Record<keyof T, boolean>;
+  setValues: React.Dispatch<React.SetStateAction<T>>;
+  handleChange: <
+    E extends HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement,
+  >(
+    e: React.ChangeEvent<E>,
+  ) => void;
+  handleSubmit: (e: React.FormEvent) => void;
+};
 
-const useForm = <T extends Record<string, string>>({
-  initialValues,
-  onSubmit,
-}: UseFormProps<T>) => {
+const useForm: UseForm = <T>(
+  initialValues: T,
+  onSubmit: (values: T) => void,
+) => {
   const [values, setValues] = useState<T>(initialValues);
   const [errors, setErrors] = useState<Record<keyof T, boolean>>(
     {} as Record<keyof T, boolean>,
   );
 
-  const handleChange = (
-    e: React.FormEvent<
-      HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
-    >,
+  const handleChange = <
+    E extends HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement,
+  >(
+    e: React.ChangeEvent<E>,
   ) => {
     const { id, value } = e.currentTarget;
 
@@ -30,16 +40,9 @@ const useForm = <T extends Record<string, string>>({
     setErrors({ ...errors, [id]: false });
   };
 
-  const handleSubmit = (e: React.SyntheticEvent) => {
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     onSubmit(values);
-  };
-
-  const getFieldProps = (id: string) => {
-    return {
-      value: values[id],
-      onChange: handleChange,
-    };
   };
 
   return {
@@ -48,7 +51,6 @@ const useForm = <T extends Record<string, string>>({
     setValues,
     handleChange,
     handleSubmit,
-    getFieldProps,
   };
 };
 
