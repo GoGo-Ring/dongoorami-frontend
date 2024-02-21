@@ -20,6 +20,7 @@ const PerformanceInfoCard = ({
 }: PerformanceInfoCardProps) => {
   const width = 224;
   const height = 288;
+  const formattedStartDate = getDate(startDate, 'yyyy-mm-dd');
 
   return (
     <div className="mr-5 w-56 cursor-pointer flex-col">
@@ -33,9 +34,7 @@ const PerformanceInfoCard = ({
       <div className="flex flex-col px-1">
         <h3 className="text-clip break-all text-base font-semibold">{title}</h3>
         <span className="truncate text-sm">{facilityName}</span>
-        <span className="text-xs text-gray-300">
-          {getDate(startDate, 'yyyy-mm-dd')}
-        </span>
+        <span className="text-xs text-gray-300">{formattedStartDate}</span>
         <Badge className="mt-2 w-fit rounded-md" variant="outline">
           {status}
         </Badge>
