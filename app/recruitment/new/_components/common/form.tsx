@@ -1,8 +1,10 @@
 import { ReactNode, createContext } from 'react';
 
+import {
+  INITIAL_RETURN_FORM_VALUES,
+  INITIAL_VALUES,
+} from '~/app/recruitment/new/constants';
 import useForm from '~/hooks/useForm';
-
-import { INITIAL_RETURN_FORM_VALUES, INITIAL_VALUES } from '../../constants';
 
 export const FormContext = createContext<
   ReturnType<typeof useForm<typeof INITIAL_VALUES>>

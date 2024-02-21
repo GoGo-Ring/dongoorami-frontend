@@ -1,10 +1,9 @@
 import { VariantProps, cva } from 'class-variance-authority';
 import { PropsWithChildren } from 'react';
 
+import { INITIAL_VALUES } from '~/app/recruitment/new/constants';
 import { Label } from '~/components/label';
 import { cn } from '~/libs/utils';
-
-import { INITIAL_VALUES } from '../../constants';
 
 export type FieldIds = keyof typeof INITIAL_VALUES;
 
