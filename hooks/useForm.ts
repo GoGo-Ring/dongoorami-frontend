@@ -6,7 +6,7 @@ type HandleChange = <
   e: React.ChangeEvent<E>,
 ) => void;
 
-type HandleSubmit = (e: React.FormEvent) => void;
+type HandleSubmit = (e: React.FormEvent<HTMLFormElement>) => void;
 
 type UseForm = <T extends Record<string, string>>(
   initialValues: T,
