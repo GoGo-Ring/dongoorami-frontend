@@ -31,9 +31,7 @@ const PerformanceInfoCard = ({
         alt={`${title} 포스터`}
       />
       <div className="flex flex-col px-1">
-        <span className="text-clip break-all text-base font-semibold">
-          {title}
-        </span>
+        <h3 className="text-clip break-all text-base font-semibold">{title}</h3>
         <span className="truncate text-sm">{facilityName}</span>
         <span className="text-xs text-gray-300">
           {getDate(startDate, 'yyyy-mm-dd')}
