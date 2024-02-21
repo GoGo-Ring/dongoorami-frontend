@@ -11,6 +11,7 @@ const FieldVariants = cva('', {
   variants: {
     variant: {
       title: 'flex w-full items-center',
+      slider: 'flex w-full items-center',
       default: 'flex w-[45%] items-center',
     },
   },
@@ -22,8 +23,9 @@ const FieldVariants = cva('', {
 const LabelVariants = cva('', {
   variants: {
     labelVariant: {
-      radio: 'pr-4 text-base ',
+      radio: 'pr-4 text-base',
       default: 'w-24 flex-shrink-0 text-nowrap text-base font-semibold',
+      slider: '',
     },
   },
   defaultVariants: {
