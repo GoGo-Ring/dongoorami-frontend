@@ -135,7 +135,21 @@ export const SliderField = ({
   label,
   variant,
 }: SliderFieldProps) => {
-  const { setValues, handleChange, values } = useContext(FormContext);
+  const { setValues, values } = useContext(FormContext);
+
+  const handleSliderChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { id, value } = e.currentTarget;
+
+    if (Number(value) < 0 || Number(value) > 100) {
+      return;
+    } else if (id === maxId && Number(value) < Number(values[minId])) {
+      return;
+    } else if (id === minId && Number(value) > Number(values[maxId])) {
+      return;
+    } else {
+      setValues({ ...values, [id]: value });
+    }
+  };
 
   return (
     <Field id={id} label={label} variant={variant}>
@@ -143,24 +157,25 @@ export const SliderField = ({
         <div className="flex items-center gap-4">
           <Input
             id={minId}
-            type="text"
+            type="number"
             min={0}
+            max={100}
             value={values[minId]}
-            onChange={handleChange}
+            onChange={handleSliderChange}
           />
           ~
           <Input
             id={maxId}
-            type="text"
+            type="number"
+            min={0}
             max={100}
             value={values[maxId]}
-            onChange={handleChange}
+            onChange={handleSliderChange}
           />
         </div>
         <Slider
           id={id}
           value={[Number(values[minId]), Number(values[maxId])]}
-          minStepsBetweenThumbs={1}
           onValueChange={value => {
             setValues({ ...values, [minId]: value[0], [maxId]: value[1] });
           }}
