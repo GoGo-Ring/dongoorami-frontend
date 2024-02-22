@@ -4,7 +4,7 @@ import React from 'react';
 import { Button } from '~/components/button';
 import { Textarea } from '~/components/textarea';
 
-import { Form } from './_components/common/form';
+import { Form } from './_components/form';
 import {
   FileField,
   InputField,
@@ -13,7 +13,7 @@ import {
   SelectField,
   SelectFieldItem,
   SliderField,
-} from './_components/form-field';
+} from './_components/form-filed';
 import { FORM_ITEMS } from './constants';
 
 const Page = () => {

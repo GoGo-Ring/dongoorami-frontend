@@ -31,11 +31,6 @@ const useForm: UseForm = <T>(
   const handleChange: HandleChange = e => {
     const { id, value } = e.currentTarget;
 
-    if (!value) {
-      setErrors({ ...errors, [id]: true });
-
-      return;
-    }
     setValues({ ...values, [id]: value });
     setErrors({ ...errors, [id]: false });
   };
