@@ -29,8 +29,8 @@ interface FieldProps {
 const RadioItem = ({ label, value }: ItemProps) => {
   return (
     <div className="flex items-center space-x-2">
-      <RadioGroupItem value={value} id={value} />
-      <Label className="hover:cursor-pointer" htmlFor={value}>
+      <RadioGroupItem value={value} id={label} />
+      <Label className="hover:cursor-pointer" htmlFor={label}>
         {label}
       </Label>
     </div>
