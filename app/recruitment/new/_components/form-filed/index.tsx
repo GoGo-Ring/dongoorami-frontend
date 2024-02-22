@@ -1,6 +1,7 @@
 'use client';
 import { PropsWithChildren, useContext } from 'react';
 
+import { Slider } from '~/app/recruitment/new/_components/double-thumb-slider';
 import { Input } from '~/components/input';
 import { RadioGroup, RadioGroupItem } from '~/components/radio-group';
 import {
@@ -12,9 +13,8 @@ import {
   SelectValue,
 } from '~/components/select';
 
-import { Field, FieldProps, FieldIds } from './common/field';
-import { FormContext } from './common/form';
-import { Slider } from './double-thumb-slider';
+import { Field, FieldProps, FieldIds } from './field';
+import { FormContext } from '../form';
 
 interface SelectFieldItemProps {
   items: string[];
