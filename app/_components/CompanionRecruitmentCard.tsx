@@ -44,7 +44,7 @@ interface CompanionRecruitmentCardProps {
 const Title = ({ title }: TitleProps) => {
   return (
     <div className="text-gray-700 ">
-      <span>{title}</span>
+      <h3>{title}</h3>
     </div>
   );
 };
