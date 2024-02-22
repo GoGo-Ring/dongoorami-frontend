@@ -1,7 +1,18 @@
+'use client';
+import { MouseEvent, useState } from 'react';
+
 import CompanionRecruitmentFilterContainer from './CompanionRecruitmentFilterContainer';
 import { SELECTION } from './constants';
 
-const Filter = () => {
+const CompanionRecruitmentFilter = () => {
+  const [selectedGender, setSelectedGender] = useState('irrelevant');
+
+  const handleRadio = (e: MouseEvent<HTMLButtonElement>) => {
+    const { value } = e.currentTarget;
+
+    setSelectedGender(value);
+  };
+
   return (
     <CompanionRecruitmentFilterContainer>
       <CompanionRecruitmentFilterContainer.RadioField
@@ -13,6 +24,8 @@ const Filter = () => {
             key={label}
             label={label}
             value={value}
+            onClick={handleRadio}
+            checked={selectedGender === value}
           />
         ))}
       </CompanionRecruitmentFilterContainer.RadioField>
@@ -48,4 +61,4 @@ const Filter = () => {
   );
 };
 
-export default Filter;
+export default CompanionRecruitmentFilter;
