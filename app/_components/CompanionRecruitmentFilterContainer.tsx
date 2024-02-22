@@ -95,13 +95,13 @@ const SelectionField = ({ category, children, defaultValue }: FieldProps) => {
   );
 };
 
-interface CompanionRecruitmentFilterProps {
+interface CompanionRecruitmentFilterContainerProps {
   children: ReactNode;
 }
 
-const CompanionRecruitmentFilter = ({
+const CompanionRecruitmentFilterContainer = ({
   children,
-}: CompanionRecruitmentFilterProps) => {
+}: CompanionRecruitmentFilterContainerProps) => {
   return (
     <div className="flex w-[260px] flex-col gap-6 px-3">
       {children}
@@ -112,11 +112,11 @@ const CompanionRecruitmentFilter = ({
   );
 };
 
-CompanionRecruitmentFilter.RadioField = RadioField;
-CompanionRecruitmentFilter.RadioItem = RadioItem;
-CompanionRecruitmentFilter.InputField = InputField;
-CompanionRecruitmentFilter.InputItem = InputItem;
-CompanionRecruitmentFilter.SelectionField = SelectionField;
-CompanionRecruitmentFilter.SelectOptionItem = SelectOptionItem;
+CompanionRecruitmentFilterContainer.RadioField = RadioField;
+CompanionRecruitmentFilterContainer.RadioItem = RadioItem;
+CompanionRecruitmentFilterContainer.InputField = InputField;
+CompanionRecruitmentFilterContainer.InputItem = InputItem;
+CompanionRecruitmentFilterContainer.SelectionField = SelectionField;
+CompanionRecruitmentFilterContainer.SelectOptionItem = SelectOptionItem;
 
-export default CompanionRecruitmentFilter;
+export default CompanionRecruitmentFilterContainer;
