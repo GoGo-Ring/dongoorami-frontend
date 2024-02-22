@@ -38,7 +38,7 @@ interface FooterFieldProps {
 }
 
 interface CompanionRecruitmentCardProps {
-  children?: ReactNode;
+  children: ReactNode;
 }
 
 const Title = ({ title }: TitleProps) => {
