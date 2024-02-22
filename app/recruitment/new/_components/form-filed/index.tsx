@@ -135,20 +135,35 @@ export const SliderField = ({
   label,
   variant,
 }: SliderFieldProps) => {
-  const { setValues, values } = useContext(FormContext);
+  const { setValues, values, handleChange } = useContext(FormContext);
 
-  const handleSliderChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleBlur = (e: React.FocusEvent<HTMLInputElement>) => {
     const { id, value } = e.currentTarget;
 
-    if (Number(value) < 0 || Number(value) > 100) {
-      return;
-    } else if (id === maxId && Number(value) < Number(values[minId])) {
-      return;
-    } else if (id === minId && Number(value) > Number(values[maxId])) {
-      return;
-    } else {
-      setValues({ ...values, [id]: value });
+    const result: { [key in FieldIds]: string } & { [key: string]: string } = {
+      ...values,
+      [id]: value,
+    };
+
+    if (Number(result[id]) < 0) {
+      result[id] = '0';
+    } else if (Number(result[id]) > 100) {
+      result[id] = '100';
     }
+    if (id === maxId && Number(result[id]) < Number(values[minId])) {
+      result['temp'] = result[minId];
+      result[minId] = result[maxId];
+      result[maxId] = result['temp'];
+    } else if (id === minId && Number(result[id]) > Number(values[maxId])) {
+      result['temp'] = result[minId];
+      result[minId] = result[maxId];
+      result[maxId] = result['temp'];
+    }
+
+    result[minId] = String(Number(result[minId]));
+    result[maxId] = String(Number(result[maxId]));
+
+    setValues(result);
   };
 
   return (
@@ -161,7 +176,8 @@ export const SliderField = ({
             min={0}
             max={100}
             value={values[minId]}
-            onChange={handleSliderChange}
+            onChange={handleChange}
+            onBlur={handleBlur}
           />
           ~
           <Input
@@ -170,7 +186,8 @@ export const SliderField = ({
             min={0}
             max={100}
             value={values[maxId]}
-            onChange={handleSliderChange}
+            onChange={handleChange}
+            onBlur={handleBlur}
           />
         </div>
         <Slider
