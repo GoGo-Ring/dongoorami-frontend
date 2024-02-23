@@ -1,4 +1,5 @@
-import { Children, ReactNode } from 'react';
+'use client';
+import { Children, ReactNode, useState } from 'react';
 
 import { Button } from '~/components/button';
 import { Input } from '~/components/input';
@@ -35,7 +36,7 @@ interface SelectFieldProps {
   category: string;
   children: ReactNode;
   defaultValue: number;
-  placeholder?: string;
+  placeholder: string;
 }
 
 const RadioItem = ({ label, value }: ItemProps) => {
@@ -84,24 +85,32 @@ const InputField = ({ category, children }: InputFieldProps) => {
 };
 
 interface SelectOptionItemProps {
-  value: string;
+  value: number;
   label: string;
 }
+
 const SelectOptionItem = ({ value, label }: SelectOptionItemProps) => {
-  return <SelectItem value={value}>{label}</SelectItem>;
+  return <SelectItem value={value.toString()}>{label}</SelectItem>;
 };
 
 const SelectField = ({
   category,
   children,
   defaultValue,
+  placeholder,
 }: SelectFieldProps) => {
+  const [, setSelectedOption] = useState(defaultValue.toString());
+
+  const onValueChange = (value: string) => {
+    setSelectedOption(value);
+  };
+
   return (
     <div>
       <span className="font-semibold">{category}</span>
-      <Select>
+      <Select onValueChange={onValueChange}>
         <SelectTrigger className="w-[180px]">
-          <SelectValue placeholder={defaultValue} />
+          <SelectValue placeholder={placeholder} />
         </SelectTrigger>
         <SelectContent>
           <SelectGroup>{children}</SelectGroup>
