@@ -36,7 +36,8 @@ const CompanionRecruitmentFilter = () => {
       </CompanionRecruitmentFilterContainer.RadioField>
       <CompanionRecruitmentFilterContainer.SelectField
         category={SELECTION.PERSON_COUNT.category}
-        defaultValue={SELECTION.PERSON_COUNT.options[0].label}
+        defaultValue={SELECTION.PERSON_COUNT.options[0].value}
+        placeholder={SELECTION.PERSON_COUNT.options[0].label}
       >
         {SELECTION.PERSON_COUNT.options.map(({ label, value }) => (
           <CompanionRecruitmentFilterContainer.SelectOptionItem
