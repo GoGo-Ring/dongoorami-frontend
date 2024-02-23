@@ -1,5 +1,12 @@
 'use client';
-import { Children, ReactNode, useState } from 'react';
+import {
+  createContext,
+  ChangeEvent,
+  Children,
+  ReactNode,
+  useContext,
+  useState,
+} from 'react';
 
 import { Button } from '~/components/button';
 import { Input } from '~/components/input';
@@ -24,6 +31,7 @@ interface ItemProps {
 interface InputFieldProps {
   category: string;
   children: ReactNode;
+  defaultValue: number[];
 }
 
 interface RadioFieldProps {
@@ -75,14 +83,42 @@ const RadioField = ({
 };
 
 interface InputItemProps {
-  value?: number;
+  name: string;
 }
 
-const InputItem = ({ value }: InputItemProps) => {
-  return <Input type="number" className="w-16" value={value} />;
+interface InputFieldContextType {
+  state: number[];
+  onChange: (value: string, name: string) => void;
+}
+
+const InputFieldContext = createContext({} as InputFieldContextType);
+
+const InputItem = ({ name }: InputItemProps) => {
+  const { state, onChange } = useContext(InputFieldContext);
+
+  const value = name === 'min' ? state[0] : state[1];
+
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const { value } = e.currentTarget;
+
+    onChange(value, name);
+  };
+
+  return (
+    <Input
+      type="number"
+      className="w-16"
+      min={0}
+      max={100}
+      name={name}
+      onChange={handleChange}
+      value={value}
+    />
+  );
 };
 
-const InputField = ({ category, children }: InputFieldProps) => {
+const InputField = ({ category, children, defaultValue }: InputFieldProps) => {
+  const [state, setState] = useState(defaultValue);
   const childrenArray = Children.toArray(children);
 
   if (childrenArray.length !== 2) {
@@ -90,16 +126,23 @@ const InputField = ({ category, children }: InputFieldProps) => {
   }
 
   const [min, max] = childrenArray;
+  const onChange = (value: string, name: string) => {
+    if (name === 'min') {
+      setState([parseInt(value), state[1]]);
+    } else if (name === 'max') {
+      setState([state[0], parseInt(value)]);
+    }
+  };
 
   return (
-    <div>
+    <InputFieldContext.Provider value={{ state, onChange }}>
       <span className="font-semibold">{category}</span>
       <div className="flex flex-row gap-1">
         {min}
         <span className="my-auto ">~</span>
         {max}
       </div>
-    </div>
+    </InputFieldContext.Provider>
   );
 };
 

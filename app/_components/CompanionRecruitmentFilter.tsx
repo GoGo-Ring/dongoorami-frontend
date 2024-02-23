@@ -34,9 +34,15 @@ const CompanionRecruitmentFilter = () => {
           />
         ))}
       </CompanionRecruitmentFilterContainer.RadioField>
-      <CompanionRecruitmentFilterContainer.InputField category={'나이'}>
-        <CompanionRecruitmentFilterContainer.InputItem />
-        <CompanionRecruitmentFilterContainer.InputItem />
+      <CompanionRecruitmentFilterContainer.InputField
+        category={'나이'}
+        defaultValue={[
+          SELECTION.AGE.options[0].value,
+          SELECTION.AGE.options[1].value,
+        ]}
+      >
+        <CompanionRecruitmentFilterContainer.InputItem name="min" />
+        <CompanionRecruitmentFilterContainer.InputItem name="max" />
       </CompanionRecruitmentFilterContainer.InputField>
       <CompanionRecruitmentFilterContainer.RadioField
         category={SELECTION.TRANSPORTATION.category}
