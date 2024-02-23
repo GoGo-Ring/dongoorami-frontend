@@ -25,7 +25,7 @@ const Page = () => {
             id="title"
             label="제목"
             placeholder="제목을 입력해주세요"
-            variant="title"
+            variant="fullWidth"
           />
         </div>
         <FileField id="image" label="이미지" />
