@@ -84,7 +84,11 @@ const useForm = <T extends Record<string, string>>(
     }
   };
 
-  const registerValidation: RegisterValidation<T> = (id, message, validate) => {
+  const registerValidation: RegisterValidation<T> = ({
+    id,
+    message,
+    validate,
+  }) => {
     validationRules.current[id] = {
       ...validationRules.current[id],
       [message]: validate,

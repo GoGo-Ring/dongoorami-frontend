@@ -30,12 +30,16 @@ export const InputField = ({ id, placeholder, label, variant }: FieldProps) => {
   const { values, handleChange, errors, registerValidation } =
     useContext(FormContext);
 
-  registerValidation(id, '필수 입력사항입니다', value => value.length > 0);
-  registerValidation(
+  registerValidation({
     id,
-    '최대 20자까지 입력 가능합니다',
-    value => value.length <= 20,
-  );
+    message: '필수 입력사항입니다',
+    validate: value => value.length > 0,
+  });
+  registerValidation({
+    id,
+    message: '최대 20자까지 입력 가능합니다',
+    validate: value => value.length <= 20,
+  });
 
   return (
     <Field id={id} label={label} variant={variant}>
@@ -80,7 +84,11 @@ export const SelectField = ({
   const { values, handleValueChange, registerValidation, errors } =
     useContext(FormContext);
 
-  registerValidation(id, '필수 선택사항입니다', value => value.length > 0);
+  registerValidation({
+    id,
+    message: '필수 선택사항입니다',
+    validate: value => value.length > 0,
+  });
 
   return (
     <Field id={id} label={label} variant={variant}>
@@ -118,7 +126,11 @@ export const RadioGroupField = ({
   const { handleValueChange, values, registerValidation, errors } =
     useContext(FormContext);
 
-  registerValidation(id, '필수 선택사항입니다', value => value.length > 0);
+  registerValidation({
+    id,
+    message: '필수 선택사항입니다',
+    validate: value => value.length > 0,
+  });
 
   return (
     <Field id={id} label={label} variant={variant}>
@@ -160,26 +172,26 @@ export const SliderField = ({
     handleSliderValueChange,
   } = useContext(FormContext);
 
-  registerValidation(
-    minId,
-    '0 이상의 숫자를 입력해주세요',
-    value => Number(value) >= 0,
-  );
-  registerValidation(
-    maxId,
-    '100 이하의 숫자를 입력해주세요',
-    value => Number(value) <= 100,
-  );
-  registerValidation(
-    maxId,
-    '최대값은 최소값보다 작을 수 없습니다',
-    value => Number(value) >= Number(values[minId]),
-  );
-  registerValidation(
-    minId,
-    '최소값은 최대값보다 클 수 없습니다',
-    value => Number(value) <= Number(values[maxId]),
-  );
+  registerValidation({
+    id: minId,
+    message: '0 이상의 숫자를 입력해주세요',
+    validate: value => Number(value) >= 0,
+  });
+  registerValidation({
+    id: maxId,
+    message: '100 이하의 숫자를 입력해주세요',
+    validate: value => Number(value) <= 100,
+  });
+  registerValidation({
+    id: maxId,
+    message: '최대값은 최소값보다 작을 수 없습니다',
+    validate: value => Number(value) >= Number(values[minId]),
+  });
+  registerValidation({
+    id: minId,
+    message: '최소값은 최대값보다 클 수 없습니다',
+    validate: value => Number(value) <= Number(values[maxId]),
+  });
 
   return (
     <Field id={id} label={label} variant={variant}>

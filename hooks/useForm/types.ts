@@ -18,11 +18,11 @@ type ValidateField<T> = (id: keyof T, value: string) => string[];
 type ValidateForm<T> = () => Errors<T>;
 type UpdateField<T> = (id: keyof T, value: string) => void;
 
-type RegisterValidation<T> = (
-  id: keyof T,
-  message: string,
-  validate: ValidateFn,
-) => void;
+type RegisterValidation<T> = (props: {
+  id: keyof T;
+  validate: ValidateFn;
+  message: string;
+}) => void;
 
 type ValidationRules<T> = Record<keyof T, Record<string, ValidateFn>>;
 
