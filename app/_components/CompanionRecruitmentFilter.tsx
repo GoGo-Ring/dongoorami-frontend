@@ -6,11 +6,14 @@ import CompanionRecruitmentFilterContainer from './CompanionRecruitmentFilterCon
 import { SELECTION } from './constants';
 
 const CompanionRecruitmentFilter = () => {
-  const ref = useRef<Record<string, string>>({
-    성별: 'irrevarnt',
-    '교통 수단': 'together',
-    '인원 수': '1',
-  });
+  const defaultValues = Object.values(SELECTION).reduce(
+    (acc, { category, options }) => {
+      return { ...acc, [category]: options[0].value.toString() };
+    },
+    {},
+  );
+
+  const ref = useRef<Record<string, string>>(defaultValues);
 
   const setRef = (category: string, value: string) => {
     ref.current[category] = value;
