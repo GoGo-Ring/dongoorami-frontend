@@ -1,19 +1,19 @@
 'use client';
 
-import { useState } from 'react';
+import { useRef } from 'react';
 
 import CompanionRecruitmentFilterContainer from './CompanionRecruitmentFilterContainer';
 import { SELECTION } from './constants';
 
 const CompanionRecruitmentFilter = () => {
-  const [state, setState] = useState({
+  const ref = useRef<Record<string, string>>({
     성별: 'irrevarnt',
     '교통 수단': 'together',
     '인원 수': '1',
   });
 
-  const handleState = (category: string, value: string) => {
-    setState({ ...state, [category]: value });
+  const setRef = (category: string, value: string) => {
+    ref.current[category] = value;
   };
 
   return (
@@ -21,7 +21,7 @@ const CompanionRecruitmentFilter = () => {
       <CompanionRecruitmentFilterContainer.RadioField
         category={SELECTION.GENDER.category}
         defaultValue={SELECTION.GENDER.options[0].value}
-        handleState={handleState}
+        handleState={setRef}
       >
         {SELECTION.GENDER.options.map(({ label, value }) => (
           <CompanionRecruitmentFilterContainer.RadioItem
@@ -38,7 +38,7 @@ const CompanionRecruitmentFilter = () => {
       <CompanionRecruitmentFilterContainer.RadioField
         category={SELECTION.TRANSPORTATION.category}
         defaultValue={SELECTION.TRANSPORTATION.options[0].value}
-        handleState={handleState}
+        handleState={setRef}
       >
         {SELECTION.TRANSPORTATION.options.map(({ label, value }) => (
           <CompanionRecruitmentFilterContainer.RadioItem
