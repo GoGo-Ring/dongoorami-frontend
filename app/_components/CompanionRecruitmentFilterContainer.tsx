@@ -30,6 +30,7 @@ interface RadioFieldProps {
   category: string;
   children: ReactNode;
   defaultValue: string;
+  handleState: (category: string, value: string) => void;
 }
 
 interface SelectFieldProps {
@@ -50,9 +51,15 @@ const RadioItem = ({ label, value }: ItemProps) => {
   );
 };
 
-const RadioField = ({ category, children, defaultValue }: RadioFieldProps) => {
+const RadioField = ({
+  category,
+  children,
+  defaultValue,
+  handleState,
+}: RadioFieldProps) => {
   const [, setSelectedOption] = useState(defaultValue);
   const onValueChange = (value: string) => {
+    handleState(category, value);
     setSelectedOption(value);
   };
 
@@ -97,7 +104,9 @@ interface SelectOptionItemProps {
 }
 
 const SelectOptionItem = ({ value, label }: SelectOptionItemProps) => {
-  return <SelectItem value={value.toString()}>{label}</SelectItem>;
+  const optionValue = value.toString();
+
+  return <SelectItem value={optionValue}>{label}</SelectItem>;
 };
 
 const SelectField = ({
