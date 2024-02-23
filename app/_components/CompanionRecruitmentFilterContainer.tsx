@@ -74,8 +74,12 @@ const RadioField = ({
   );
 };
 
-const InputItem = () => {
-  return <Input type="number" className="w-16" />;
+interface InputItemProps {
+  value?: number;
+}
+
+const InputItem = ({ value }: InputItemProps) => {
+  return <Input type="number" className="w-16" value={value} />;
 };
 
 const InputField = ({ category, children }: InputFieldProps) => {
