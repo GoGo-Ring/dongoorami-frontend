@@ -20,6 +20,10 @@ export const SELECTION = {
       return { value: i + 1, label: `${i + 1}명` };
     }),
   },
+  AGE: {
+    category: '나이',
+    options: [{ value: 20 }, { value: 30 }],
+  },
 };
 
 export const SEARCH = '검색';
