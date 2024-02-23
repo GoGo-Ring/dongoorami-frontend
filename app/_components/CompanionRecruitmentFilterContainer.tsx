@@ -20,10 +20,22 @@ interface ItemProps {
   value: string;
 }
 
-interface FieldProps {
+interface InputFieldProps {
   category: string;
   children: ReactNode;
-  defaultValue?: string;
+}
+
+interface RadioFieldProps {
+  category: string;
+  children: ReactNode;
+  defaultValue: string;
+}
+
+interface SelectFieldProps {
+  category: string;
+  children: ReactNode;
+  defaultValue: number;
+  placeholder?: string;
 }
 
 const RadioItem = ({ label, value }: ItemProps) => {
@@ -37,7 +49,7 @@ const RadioItem = ({ label, value }: ItemProps) => {
   );
 };
 
-const RadioField = ({ category, children, defaultValue }: FieldProps) => {
+const RadioField = ({ category, children, defaultValue }: RadioFieldProps) => {
   return (
     <div>
       <span className="font-semibold">{category}</span>
@@ -50,7 +62,7 @@ const InputItem = () => {
   return <Input type="number" className="w-16" />;
 };
 
-const InputField = ({ category, children }: FieldProps) => {
+const InputField = ({ category, children }: InputFieldProps) => {
   const childrenArray = Children.toArray(children);
 
   if (childrenArray.length !== 2) {
@@ -79,7 +91,11 @@ const SelectOptionItem = ({ value, label }: SelectOptionItemProps) => {
   return <SelectItem value={value}>{label}</SelectItem>;
 };
 
-const SelectionField = ({ category, children, defaultValue }: FieldProps) => {
+const SelectField = ({
+  category,
+  children,
+  defaultValue,
+}: SelectFieldProps) => {
   return (
     <div>
       <span className="font-semibold">{category}</span>
@@ -116,7 +132,7 @@ CompanionRecruitmentFilterContainer.RadioField = RadioField;
 CompanionRecruitmentFilterContainer.RadioItem = RadioItem;
 CompanionRecruitmentFilterContainer.InputField = InputField;
 CompanionRecruitmentFilterContainer.InputItem = InputItem;
-CompanionRecruitmentFilterContainer.SelectionField = SelectionField;
+CompanionRecruitmentFilterContainer.SelectField = SelectField;
 CompanionRecruitmentFilterContainer.SelectOptionItem = SelectOptionItem;
 
 export default CompanionRecruitmentFilterContainer;
