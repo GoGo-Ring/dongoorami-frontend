@@ -1,23 +1,18 @@
 import { ReactNode, createContext } from 'react';
 
-import {
-  INITIAL_RETURN_FORM_VALUES,
-  INITIAL_VALUES,
-} from '~/app/recruitment/new/constants';
 import useForm from '~/hooks/useForm';
 
-export const FormContext = createContext<
-  ReturnType<typeof useForm<typeof INITIAL_VALUES>>
->(INITIAL_RETURN_FORM_VALUES);
+export const FormContext = createContext({} as ReturnType<typeof useForm>);
 
 FormContext.displayName = 'FormContext';
 
 interface FormProps {
   children: ReactNode;
+  initialValues: Record<string, string>;
 }
 
-export const Form = ({ children }: FormProps) => {
-  const formValues = useForm(INITIAL_VALUES, values => values); // TODO: 제출 로직 추가
+export const Form = ({ children, initialValues }: FormProps) => {
+  const formValues = useForm(initialValues, values => values); // TODO: 제출 로직 추가
   const { handleSubmit } = formValues;
 
   return (

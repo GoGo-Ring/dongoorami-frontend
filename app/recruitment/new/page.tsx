@@ -14,12 +14,12 @@ import {
   SelectFieldItem,
   SliderField,
 } from './_components/form-filed';
-import { FORM_ITEMS } from './constants';
+import { FORM_ITEMS, INITIAL_VALUES } from './constants';
 
 const Page = () => {
   return (
     <div className="flex justify-center py-10">
-      <Form>
+      <Form initialValues={INITIAL_VALUES}>
         <div className="flex w-full items-center gap-7">
           <InputField
             id="title"

@@ -52,11 +52,3 @@ export const INITIAL_VALUES = {
   count: '',
   textArea: '',
 };
-
-export const INITIAL_RETURN_FORM_VALUES = {
-  values: INITIAL_VALUES,
-  errors: {} as Record<keyof typeof INITIAL_VALUES, boolean>,
-  setValues: () => {},
-  handleChange: () => {},
-  handleSubmit: () => {},
-};
