@@ -51,10 +51,17 @@ const RadioItem = ({ label, value }: ItemProps) => {
 };
 
 const RadioField = ({ category, children, defaultValue }: RadioFieldProps) => {
+  const [, setSelectedOption] = useState(defaultValue);
+  const onValueChange = (value: string) => {
+    setSelectedOption(value);
+  };
+
   return (
     <div>
       <span className="font-semibold">{category}</span>
-      <RadioGroup defaultValue={defaultValue}>{children}</RadioGroup>
+      <RadioGroup defaultValue={defaultValue} onValueChange={onValueChange}>
+        {children}
+      </RadioGroup>
     </div>
   );
 };
