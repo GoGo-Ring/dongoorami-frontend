@@ -34,7 +34,7 @@ const CompanionRecruitmentFilter = () => {
           />
         ))}
       </CompanionRecruitmentFilterContainer.RadioField>
-      <CompanionRecruitmentFilterContainer.SelectionField
+      <CompanionRecruitmentFilterContainer.SelectField
         category={SELECTION.PERSON_COUNT.category}
         defaultValue={SELECTION.PERSON_COUNT.options[0].label}
       >
@@ -45,7 +45,7 @@ const CompanionRecruitmentFilter = () => {
             value={value}
           />
         ))}
-      </CompanionRecruitmentFilterContainer.SelectionField>
+      </CompanionRecruitmentFilterContainer.SelectField>
     </CompanionRecruitmentFilterContainer>
   );
 };
