@@ -10,9 +10,9 @@ export type FieldIds = keyof typeof INITIAL_VALUES;
 const FieldVariants = cva('', {
   variants: {
     variant: {
-      title: 'flex w-full items-center',
-      slider: 'flex w-full items-center',
-      default: 'flex w-[45%] items-center',
+      title: 'flex w-full items-start',
+      slider: 'flex w-full items-start',
+      default: 'flex w-[45%] items-start',
     },
   },
   defaultVariants: {
@@ -23,8 +23,8 @@ const FieldVariants = cva('', {
 const LabelVariants = cva('', {
   variants: {
     labelVariant: {
-      radio: 'pr-4 text-base',
-      default: 'w-24 flex-shrink-0 text-nowrap text-base font-semibold',
+      radio: 'pr-4 text-xm text-nowrap',
+      default: 'w-24 flex-shrink-0 text-nowrap text-base font-semibold p-1',
       slider: '',
     },
   },
@@ -52,6 +52,6 @@ export const Field = ({
     <Label className={cn(LabelVariants({ labelVariant }))} htmlFor={id}>
       {label}
     </Label>
-    {children}
+    <div className="flex w-full flex-col justify-start">{children}</div>
   </div>
 );

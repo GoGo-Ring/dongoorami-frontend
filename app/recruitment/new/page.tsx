@@ -29,7 +29,7 @@ const Page = () => {
           />
         </div>
         <FileField id="image" label="이미지" />
-        <div className="flex flex-wrap items-center gap-7 rounded-md border border-gray-200 p-6">
+        <div className="flex flex-wrap items-start gap-7 rounded-md border border-gray-200 p-6">
           <InputField
             id="performanceName"
             label="공연명"
