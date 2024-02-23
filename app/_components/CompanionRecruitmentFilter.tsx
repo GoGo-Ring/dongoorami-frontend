@@ -55,6 +55,7 @@ const CompanionRecruitmentFilter = () => {
         category={SELECTION.PERSON_COUNT.category}
         defaultValue={SELECTION.PERSON_COUNT.options[0].value}
         placeholder={SELECTION.PERSON_COUNT.options[0].label}
+        handleState={setRef}
       >
         {SELECTION.PERSON_COUNT.options.map(({ label, value }) => (
           <CompanionRecruitmentFilterContainer.SelectOptionItem

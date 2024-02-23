@@ -38,6 +38,7 @@ interface SelectFieldProps {
   children: ReactNode;
   defaultValue: number;
   placeholder: string;
+  handleState: (category: string, value: string) => void;
 }
 
 const RadioItem = ({ label, value }: ItemProps) => {
@@ -114,11 +115,13 @@ const SelectField = ({
   children,
   defaultValue,
   placeholder,
+  handleState,
 }: SelectFieldProps) => {
   const [, setSelectedOption] = useState(defaultValue.toString());
 
   const onValueChange = (value: string) => {
     setSelectedOption(value);
+    handleState(category, value);
   };
 
   return (
