@@ -1,158 +1,63 @@
 'use client';
+import React from 'react';
+
 import { Button } from '~/components/button';
-import { Input } from '~/components/input';
-import { Label } from '~/components/label';
-import { RadioGroup, RadioGroupItem } from '~/components/radio-group';
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '~/components/select';
 import { Textarea } from '~/components/textarea';
 
-import { Slider } from './_components/double-thumb-slider';
+import { Form } from './_components/common/form';
 import {
-  FORM_IDS,
-  FORM_ITEMS,
-  FORM_LABELS,
-  FORM_PLACEHOLDERS,
-} from './constants';
-
-interface FieldProps {
-  children: React.ReactNode;
-  htmlFor?: string;
-  label?: string;
-}
-
-const Field = ({ children, htmlFor, label }: FieldProps) => (
-  <div className="flex w-[45%] items-center ">
-    <Label
-      className=" w-24 flex-shrink-0 text-nowrap text-base font-semibold"
-      htmlFor={htmlFor}
-    >
-      {label}
-    </Label>
-    {children}
-  </div>
-);
+  FileField,
+  InputField,
+  RadioGroupField,
+  RadioGroupFieldItem,
+  SelectField,
+  SelectFieldItem,
+  SliderField,
+} from './_components/form-field';
+import { FORM_ITEMS } from './constants';
 
 const Page = () => {
   return (
     <div className="flex justify-center py-10">
-      <form className="flex w-[890px] flex-col justify-center gap-12">
+      <Form>
         <div className="flex w-full items-center gap-7">
-          <Label
-            className="text-nowrap text-xl font-semibold"
-            htmlFor={FORM_IDS.TITLE}
-          >
-            제목
-          </Label>
-          <Input
-            id={FORM_IDS.TITLE}
-            type="text"
-            placeholder={FORM_PLACEHOLDERS.TITLE}
+          <InputField
+            id="title"
+            label="제목"
+            placeholder="제목을 입력해주세요"
+            variant="title"
           />
         </div>
-
-        <Field htmlFor="image" label="이미지">
-          <Input type="file" id="image" />
-        </Field>
-
+        <FileField id="image" label="이미지" />
         <div className="flex flex-wrap items-center gap-7 rounded-md border border-gray-200 p-6">
-          <Field
-            htmlFor={FORM_IDS.PERFORMANCE_NAME}
-            label={FORM_LABELS.PERFORMANCE_NAME}
-          >
-            <Input
-              id={FORM_IDS.PERFORMANCE_NAME}
-              type="text"
-              placeholder={FORM_PLACEHOLDERS.PERFORMANCE_NAME}
-            />
-          </Field>
-
-          <Field
-            htmlFor={FORM_IDS.PERFORMANCE_LOCATION}
-            label={FORM_LABELS.PERFORMANCE_LOCATION}
-          >
-            <Input
-              id={FORM_IDS.PERFORMANCE_LOCATION}
-              type="text"
-              placeholder={FORM_PLACEHOLDERS.PERFORMANCE_LOCATION}
-            />
-          </Field>
-
-          <Field htmlFor={FORM_IDS.REGION} label={FORM_LABELS.REGION}>
-            <Select>
-              <SelectTrigger className="w-[180px]" id={FORM_IDS.REGION}>
-                <SelectValue placeholder={FORM_PLACEHOLDERS.REGION} />
-              </SelectTrigger>
-              <SelectContent>
-                {FORM_ITEMS.LOCATION.map(location => (
-                  <SelectItem key={location} value={location}>
-                    {location}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
-          </Field>
-
-          <div className=" flex w-[45%] items-center">
-            <legend className="w-24 flex-shrink-0 text-nowrap text-base font-semibold">
-              {FORM_LABELS.AGE}
-            </legend>
-            <div className="flex flex-col gap-4">
-              <div className="flex gap-4">
-                <Input type="text" min={0} />
-                <Input type="text" max={100} />
-              </div>
-              <Slider defaultValue={[20, 30]} minStepsBetweenThumbs={1} />
-            </div>
-          </div>
-
-          <Field
-            htmlFor={FORM_IDS.PARTICIPANT_COUNT}
-            label={FORM_LABELS.PARTICIPANT_COUNT}
-          >
-            <Select>
-              <SelectTrigger
-                className="w-[180px]"
-                id={FORM_IDS.PARTICIPANT_COUNT}
-              >
-                <SelectValue
-                  placeholder={FORM_PLACEHOLDERS.PARTICIPANT_COUNT}
-                />
-              </SelectTrigger>
-              <SelectContent id={FORM_IDS.PARTICIPANT_COUNT}>
-                {FORM_ITEMS.PARTICIPANTS.map(participant => (
-                  <SelectItem key={participant} value={participant}>
-                    {participant}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
-          </Field>
-
-          <Field label={FORM_LABELS.GENDER}>
-            <RadioGroup className="flex w-full">
-              <RadioGroupItem value="male" id={FORM_IDS.MALE} />
-              <Label htmlFor={FORM_IDS.MALE}>{FORM_LABELS.MALE}</Label>
-              <RadioGroupItem value="female" id={FORM_IDS.FEMALE} />
-              <Label htmlFor={FORM_IDS.FEMALE}>{FORM_LABELS.FEMALE}</Label>
-              <RadioGroupItem value="any" id={FORM_IDS.IRRELEVANT} />
-              <Label htmlFor={FORM_IDS.IRRELEVANT}>
-                {FORM_LABELS.IRRELEVANT}
-              </Label>
-            </RadioGroup>
-          </Field>
+          <InputField
+            id="performanceName"
+            label="공연명"
+            placeholder="공연명을 입력해주세요"
+          />
+          <InputField
+            id="performanceLocation"
+            label="공연 장소"
+            placeholder="공연 장소를 입력해주세요"
+          />
+          <SelectField id="region" label="지역" placeholder="선택">
+            <SelectFieldItem items={FORM_ITEMS.REGIONS} />
+          </SelectField>
+          <SelectField id="participantCount" label="인원수" placeholder="선택">
+            <SelectFieldItem items={FORM_ITEMS.PARTICIPANT_COUNT} />
+          </SelectField>
+          <SliderField id="age" minId="minAge" maxId="maxAge" label="연령" />
+          <RadioGroupField id="gender" label="성별">
+            {FORM_ITEMS.GENDER.map(({ label, id }) => (
+              <RadioGroupFieldItem key={id} id={id} label={label} />
+            ))}
+          </RadioGroupField>
         </div>
-
         <Textarea
-          className="h-80 resize-none"
-          placeholder={FORM_PLACEHOLDERS.TEXTAREA}
+          className="h-96 resize-none"
+          id="textarea"
+          placeholder="내용을 입력해주세요"
         />
-
         <div className="flex gap-8">
           <Button className="w-full bg-secondary text-secondary-foreground">
             취소
@@ -161,7 +66,7 @@ const Page = () => {
             입력 완료
           </Button>
         </div>
-      </form>
+      </Form>
     </div>
   );
 };
