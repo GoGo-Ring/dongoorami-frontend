@@ -7,7 +7,7 @@ import { MSWProvider } from '~/mocks/provider';
 
 import Providers from './providers';
 
-export const fontSans = FontSans({
+const fontSans = FontSans({
   subsets: ['latin'],
   variable: '--font-sans',
 });
