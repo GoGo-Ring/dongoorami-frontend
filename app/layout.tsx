@@ -5,11 +5,6 @@ import { MSWProvider } from '~/mocks/provider';
 
 import Providers from './providers';
 
-const fontSans = FontSans({
-  subsets: ['latin'],
-  variable: '--font-sans',
-});
-
 const RootLayout = ({ children }: { children: React.ReactNode }) => {
   return (
     <html lang="ko">
