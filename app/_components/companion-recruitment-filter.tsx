@@ -3,8 +3,9 @@
 import { useRef } from 'react';
 
 import { Button } from '~/components/button';
+import { SEARCH, SELECTION } from '~/constants/filterField';
 
-import { SEARCH, SELECTION } from './constants';
+import CheckboxSelectField from './filter-field/checkbox-select';
 import RadioField from './filter-field/radio-field';
 
 export interface refType {
@@ -26,6 +27,10 @@ const CompanionRecruitmentFilter = () => {
         category={SELECTION.GENDER.category}
         options={SELECTION.GENDER.options}
         ref={radioRef}
+      />
+      <CheckboxSelectField
+        category={SELECTION.REGIONS.category}
+        options={SELECTION.REGIONS.options}
       />
       <Button variant="outline" onClick={handle}>
         {SEARCH}
