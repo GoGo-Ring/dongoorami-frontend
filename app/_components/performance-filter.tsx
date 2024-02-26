@@ -3,7 +3,7 @@
 import React from 'react';
 
 import { Button } from '~/components/button';
-import { SEARCH, SELECTION } from '~/constants/Filter';
+import { SEARCH, SELECTION } from '~/constants/filterField';
 
 import ButtonSelectField from './filter-field/button-select';
 import CheckboxSelectField from './filter-field/checkbox-select';

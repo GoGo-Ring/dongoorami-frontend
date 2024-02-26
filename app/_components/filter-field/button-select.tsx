@@ -3,7 +3,7 @@
 import React from 'react';
 
 import { Button } from '~/components/button';
-import { MULTIPLE_SELECTION_AVAILABLE } from '~/constants/Filter';
+import { MULTIPLE_SELECTION_AVAILABLE } from '~/constants/filterField';
 
 interface SelectionFieldProps {
   category: string;
