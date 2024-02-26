@@ -18,6 +18,15 @@ export interface refType {
 
 const CompanionRecruitmentFilter = () => {
   const radioRef = useRef<string>(SELECTION.GENDER.options[0].value);
+  const checkbox = SELECTION.REGIONS.options.reduce(
+    (acc, option) => {
+      acc[option] = false;
+
+      return acc;
+    },
+    {} as Record<string, boolean>,
+  );
+  const checkboxRef = useRef(checkbox);
 
   const handle = () => {};
 
@@ -31,6 +40,7 @@ const CompanionRecruitmentFilter = () => {
       <CheckboxSelectField
         category={SELECTION.REGIONS.category}
         options={SELECTION.REGIONS.options}
+        ref={checkboxRef}
       />
       <Button variant="outline" onClick={handle}>
         {SEARCH}
