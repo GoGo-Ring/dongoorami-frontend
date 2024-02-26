@@ -27,7 +27,9 @@ const CompanionRecruitmentFilter = () => {
     {} as Record<string, boolean>,
   );
   const checkboxRef = useRef(checkbox);
-  const transportationRef = useRef<string>(SELECTION.GENDER.options[0].value);
+  const transportationRef = useRef<string>(
+    SELECTION.TRANSPORTATION.options[0].value,
+  );
 
   const handle = () => {};
 
