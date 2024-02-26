@@ -44,7 +44,7 @@ export const INITIAL_VALUES = {
   age: '20~30',
   minAge: '20',
   maxAge: '30',
-  gender: '',
+  gender: 'irrelevant',
   male: '',
   female: '',
   irrelevant: '',
