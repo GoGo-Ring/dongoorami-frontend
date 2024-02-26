@@ -4,8 +4,6 @@ import React, { forwardRef } from 'react';
 
 import { Checkbox } from '~/components/checkbox';
 
-import { checkboxOptionType } from '../companion-recruitment-filter';
-
 interface ItemProps {
   label: string;
   onClick: (value: string) => void;
@@ -35,7 +33,7 @@ const CheckboxItem = ({ label, onClick }: ItemProps) => {
 };
 
 const CheckboxSelectField = forwardRef<
-  checkboxOptionType,
+  Record<string, boolean>,
   CheckboxSelectFieldProps
 >(({ category, options }, ref) => {
   const onClick = (value: string) => {
