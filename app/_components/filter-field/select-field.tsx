@@ -1,5 +1,5 @@
 'use client';
-import { useState } from 'react';
+import { forwardRef } from 'react';
 
 import {
   Select,
@@ -20,7 +20,6 @@ interface SelectFieldProps {
   options: SelectOptionItemProps[];
   defaultValue: number;
   placeholder: string;
-  handleState: (category: string, value: string) => void;
 }
 
 const SelectOptionItem = ({ value, label }: SelectOptionItemProps) => {
@@ -29,37 +28,44 @@ const SelectOptionItem = ({ value, label }: SelectOptionItemProps) => {
   return <SelectItem value={optionValue}>{label}</SelectItem>;
 };
 
-const SelectField = ({
-  category,
-  options,
-  defaultValue,
-  placeholder,
-  handleState,
-}: SelectFieldProps) => {
-  const [, setSelectedOption] = useState(defaultValue.toString());
+const SelectField = forwardRef<number, SelectFieldProps>(
+  ({ category, options, defaultValue, placeholder }, ref) => {
+    const onValueChange = (value: string) => {
+      if (!ref) {
+        return;
+      }
+      if (typeof ref === 'function') {
+        return;
+      }
+      if (!ref.current) {
+        return;
+      }
+      ref.current = parseInt(value);
+    };
 
-  const onValueChange = (value: string) => {
-    setSelectedOption(value);
-    handleState(category, value);
-  };
+    return (
+      <div>
+        <span className="font-semibold">{category}</span>
+        <Select onValueChange={onValueChange}>
+          <SelectTrigger className="w-[180px]">
+            <SelectValue
+              placeholder={placeholder}
+              defaultValue={defaultValue.toString()}
+            />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectGroup>
+              {options.map(({ label, value }) => (
+                <SelectOptionItem key={label} label={label} value={value} />
+              ))}
+            </SelectGroup>
+          </SelectContent>
+        </Select>
+      </div>
+    );
+  },
+);
 
-  return (
-    <div>
-      <span className="font-semibold">{category}</span>
-      <Select onValueChange={onValueChange}>
-        <SelectTrigger className="w-[180px]">
-          <SelectValue placeholder={placeholder} />
-        </SelectTrigger>
-        <SelectContent>
-          <SelectGroup>
-            {options.map(({ label, value }) => (
-              <SelectOptionItem key={label} label={label} value={value} />
-            ))}
-          </SelectGroup>
-        </SelectContent>
-      </Select>
-    </div>
-  );
-};
+SelectField.displayName = 'SelectField';
 
 export default SelectField;
