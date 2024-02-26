@@ -2,10 +2,10 @@ import { ComponentProps } from 'react';
 
 import { cn } from '~/libs/utils';
 
-import Icons, { iconNames } from './icons';
+import Icons, { IconNames } from './icons';
 
 interface IconProps extends ComponentProps<'svg'> {
-  iconName: iconNames;
+  iconName: IconNames;
   size?: number;
 }
 

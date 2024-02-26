@@ -24,5 +24,5 @@ const iconName = {
   user: UserIcon,
 };
 
-export type iconNames = keyof typeof iconName;
+export type IconNames = keyof typeof iconName;
 export default iconName;
