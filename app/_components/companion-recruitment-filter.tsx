@@ -27,6 +27,7 @@ const CompanionRecruitmentFilter = () => {
     {} as Record<string, boolean>,
   );
   const checkboxRef = useRef(checkbox);
+  const transportationRef = useRef<string>(SELECTION.GENDER.options[0].value);
 
   const handle = () => {};
 
@@ -41,6 +42,11 @@ const CompanionRecruitmentFilter = () => {
         category={SELECTION.REGIONS.category}
         options={SELECTION.REGIONS.options}
         ref={checkboxRef}
+      />
+      <RadioField
+        category={SELECTION.TRANSPORTATION.category}
+        options={SELECTION.TRANSPORTATION.options}
+        ref={transportationRef}
       />
       <Button variant="outline" onClick={handle}>
         {SEARCH}
