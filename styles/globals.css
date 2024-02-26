@@ -1,3 +1,12 @@
+@import url('https://unpkg.com/pretendard@1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.css');
+@font-face {
+  font-family: 'Katuri';
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_13@1.0/Katuri.woff')
+    format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -23,6 +32,8 @@
     --popover: var(--gray-50);
     --popover-foreground: var(--gray-900);
     --primary: 43 100% 65%;
+    --primary-darker: 43 100% 45%;
+    --primary-lighter: 43 100% 75%;
     --primary-foreground: 21 92% 14%;
     --secondary: var(--gray-150);
     --secondary-foreground: var(--gray-800);
@@ -38,6 +49,9 @@
     --radius: 0.5rem;
     --kakao: 54, 100%, 49.8%;
     --naver: 3 199 90;
+
+    --font-title: 'Katuri', cursive;
+    --font-sans: 'Pretendard', sans-serif;
   }
 
   .dark {
@@ -80,6 +94,14 @@
     @apply border-border;
   }
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background font-sans text-foreground;
+  }
+
+  .text-shadow {
+    text-shadow:
+      -1px 0 hsl(var(--primary-darker)),
+      0 1px hsl(var(--primary-darker)),
+      1px 0 hsl(var(--primary-darker)),
+      0 -1px hsl(var(--primary-darker));
   }
 }

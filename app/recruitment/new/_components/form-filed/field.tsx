@@ -1,18 +1,17 @@
 import { VariantProps, cva } from 'class-variance-authority';
-import { PropsWithChildren } from 'react';
 
 import { INITIAL_VALUES } from '~/app/recruitment/new/constants';
 import { Label } from '~/components/label';
 import { cn } from '~/libs/utils';
+import { PropsWithRequiredChildren } from '~/types/utils';
 
 export type FieldIds = keyof typeof INITIAL_VALUES;
 
-const FieldVariants = cva('', {
+const FieldVariants = cva('items-start', {
   variants: {
     variant: {
-      title: 'flex w-full items-center',
-      slider: 'flex w-full items-center',
-      default: 'flex w-[45%] items-center',
+      fullWidth: 'flex w-full',
+      default: 'flex w-[45%] ',
     },
   },
   defaultVariants: {
@@ -20,11 +19,11 @@ const FieldVariants = cva('', {
   },
 });
 
-const LabelVariants = cva('', {
+const LabelVariants = cva('text-nowrap', {
   variants: {
     labelVariant: {
-      radio: 'pr-4 text-base',
-      default: 'w-24 flex-shrink-0 text-nowrap text-base font-semibold',
+      radio: 'px-2 text-xs',
+      default: 'w-24 flex-shrink-0text-base font-semibold p-1',
       slider: '',
     },
   },
@@ -47,11 +46,11 @@ export const Field = ({
   label,
   variant,
   labelVariant,
-}: PropsWithChildren<FieldProps>) => (
+}: PropsWithRequiredChildren<FieldProps>) => (
   <div className={cn(FieldVariants({ variant }))}>
     <Label className={cn(LabelVariants({ labelVariant }))} htmlFor={id}>
       {label}
     </Label>
-    {children}
+    <div className="flex w-full flex-col justify-start">{children}</div>
   </div>
 );
