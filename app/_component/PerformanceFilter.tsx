@@ -4,16 +4,17 @@ import React, { ReactNode } from 'react';
 
 import { Button } from '~/components/button';
 import { Checkbox } from '~/components/checkbox';
-import { MULTIPLE_SELECTION_AVAILABLE, SEARCH } from '~/constants/Filter';
-
-interface PerformanceFilterProps {
-  children?: ReactNode;
-}
+import {
+  MULTIPLE_SELECTION_AVAILABLE,
+  SEARCH,
+  SELECTION,
+} from '~/constants/Filter';
 
 interface SelectionFieldProps {
   category: string;
+  options: string[];
   isMultipleSelection?: boolean;
-  children: ReactNode;
+  children?: ReactNode;
 }
 
 interface ItemProps {
@@ -33,7 +34,7 @@ const ButtonItem = ({ label }: ItemProps) => {
 
 const ButtonSelectionField = ({
   category,
-  children,
+  options,
   isMultipleSelection,
 }: SelectionFieldProps) => {
   return (
@@ -46,7 +47,11 @@ const ButtonSelectionField = ({
           </span>
         )}
       </div>
-      <div className="flex flex-wrap gap-1">{children}</div>
+      <div className="flex flex-wrap gap-1">
+        {options.map(option => (
+          <ButtonItem key={option} label={option} />
+        ))}
+      </div>
     </div>
   );
 };
@@ -65,32 +70,39 @@ const CheckboxItem = ({ label }: ItemProps) => {
   );
 };
 
-const CheckboxSelectionField = ({
-  category,
-  children,
-}: SelectionFieldProps) => {
+const CheckboxSelectionField = ({ category, options }: SelectionFieldProps) => {
   return (
     <div className="flex flex-col gap-2">
       <span className="font-semibold">{category}</span>
-      <div className="flex flex-col gap-1">{children}</div>
+      <div className="flex flex-col gap-1">
+        {options.map(option => (
+          <CheckboxItem key={option} label={option} />
+        ))}
+      </div>
     </div>
   );
 };
 
-const PerformanceFilter = ({ children }: PerformanceFilterProps) => {
+const PerformanceFilter = () => {
   return (
     <div className="flex w-[260px] flex-col gap-6 px-3">
-      {children}
+      <ButtonSelectionField
+        category={SELECTION.GENRE.category}
+        options={SELECTION.GENRE.options}
+      />
+      <ButtonSelectionField
+        category={SELECTION.STATUS.category}
+        options={SELECTION.STATUS.options}
+      />
+      <CheckboxSelectionField
+        category={SELECTION.REGIONS.category}
+        options={SELECTION.REGIONS.options}
+      />
       <Button variant="outline" type="submit">
         {SEARCH}
       </Button>
     </div>
   );
 };
-
-PerformanceFilter.ButtonItem = ButtonItem;
-PerformanceFilter.CheckboxItem = CheckboxItem;
-PerformanceFilter.ButtonField = ButtonSelectionField;
-PerformanceFilter.CheckboxField = CheckboxSelectionField;
 
 export default PerformanceFilter;
