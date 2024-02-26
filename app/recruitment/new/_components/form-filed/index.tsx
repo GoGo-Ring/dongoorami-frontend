@@ -1,6 +1,9 @@
 'use client';
 import { PropsWithChildren, useContext } from 'react';
 
+import { Slider } from '~/app/recruitment/new/_components/double-thumb-slider';
+import { Error } from '~/app/recruitment/new/_components/error';
+import { FormContext } from '~/app/recruitment/new/_components/form';
 import { Input } from '~/components/input';
 import { RadioGroup, RadioGroupItem } from '~/components/radio-group';
 import {
@@ -12,9 +15,8 @@ import {
   SelectValue,
 } from '~/components/select';
 
-import { Field, FieldProps, FieldIds } from './common/field';
-import { FormContext } from './common/form';
-import { Slider } from './double-thumb-slider';
+import { Field } from './field';
+import type { FieldIds, FieldProps } from './field';
 
 interface SelectFieldItemProps {
   items: string[];
@@ -26,7 +28,7 @@ interface SliderFieldProps extends FieldProps {
 }
 
 export const InputField = ({ id, placeholder, label, variant }: FieldProps) => {
-  const { values, handleChange } = useContext(FormContext);
+  const { values, handleChange, errors } = useContext(FormContext);
 
   return (
     <Field id={id} label={label} variant={variant}>
@@ -37,12 +39,13 @@ export const InputField = ({ id, placeholder, label, variant }: FieldProps) => {
         value={values[id]}
         onChange={handleChange}
       />
+      <Error error={errors[id]} />
     </Field>
   );
 };
 
 export const FileField = ({ id, placeholder, label, variant }: FieldProps) => {
-  const { values, handleChange } = useContext(FormContext);
+  const { values, handleChange, errors } = useContext(FormContext);
 
   return (
     <Field id={id} label={label} variant={variant}>
@@ -54,6 +57,7 @@ export const FileField = ({ id, placeholder, label, variant }: FieldProps) => {
         value={values[id]}
         onChange={handleChange}
       />
+      <Error error={errors[id]} />
     </Field>
   );
 };
@@ -65,16 +69,11 @@ export const SelectField = ({
   variant,
   children,
 }: PropsWithChildren<FieldProps>) => {
-  const { setValues, values } = useContext(FormContext);
+  const { values, handleValueChange, errors } = useContext(FormContext);
 
   return (
     <Field id={id} label={label} variant={variant}>
-      <Select
-        onValueChange={value => {
-          setValues({ ...values, [id]: value });
-        }}
-        value={values[id]}
-      >
+      <Select onValueChange={handleValueChange(id)} value={values[id]}>
         <SelectTrigger className="w-[180px]" id={id}>
           <SelectValue placeholder={placeholder} />
         </SelectTrigger>
@@ -82,6 +81,7 @@ export const SelectField = ({
           <SelectGroup>{children}</SelectGroup>
         </SelectContent>
       </Select>
+      <Error error={errors[id]} />
     </Field>
   );
 };
@@ -102,20 +102,19 @@ export const RadioGroupField = ({
   children,
   variant,
 }: PropsWithChildren<FieldProps>) => {
-  const { setValues, values } = useContext(FormContext);
+  const { handleValueChange, values, errors } = useContext(FormContext);
 
   return (
     <Field id={id} label={label} variant={variant}>
       <RadioGroup
         id={id}
-        className="flex w-full items-center"
-        onValueChange={value => {
-          setValues({ ...values, [id]: value });
-        }}
+        className="flex w-fit flex-nowrap"
+        onValueChange={handleValueChange(id)}
         value={values[id]}
       >
         {children}
       </RadioGroup>
+      <Error error={errors[id]} />
     </Field>
   );
 };
@@ -135,21 +134,8 @@ export const SliderField = ({
   label,
   variant,
 }: SliderFieldProps) => {
-  const { setValues, values } = useContext(FormContext);
-
-  const handleSliderChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { id, value } = e.currentTarget;
-
-    if (Number(value) < 0 || Number(value) > 100) {
-      return;
-    } else if (id === maxId && Number(value) < Number(values[minId])) {
-      return;
-    } else if (id === minId && Number(value) > Number(values[maxId])) {
-      return;
-    } else {
-      setValues({ ...values, [id]: value });
-    }
-  };
+  const { values, errors, handleSliderInputChange, handleSliderValueChange } =
+    useContext(FormContext);
 
   return (
     <Field id={id} label={label} variant={variant}>
@@ -161,7 +147,7 @@ export const SliderField = ({
             min={0}
             max={100}
             value={values[minId]}
-            onChange={handleSliderChange}
+            onChange={handleSliderInputChange({ id, minId, maxId })}
           />
           ~
           <Input
@@ -170,17 +156,16 @@ export const SliderField = ({
             min={0}
             max={100}
             value={values[maxId]}
-            onChange={handleSliderChange}
+            onChange={handleSliderInputChange({ id, minId, maxId })}
           />
         </div>
         <Slider
           id={id}
           value={[Number(values[minId]), Number(values[maxId])]}
-          onValueChange={value => {
-            setValues({ ...values, [minId]: value[0], [maxId]: value[1] });
-          }}
+          onValueChange={handleSliderValueChange({ id, minId, maxId })}
         />
       </div>
+      <Error error={errors[id]} />
     </Field>
   );
 };
