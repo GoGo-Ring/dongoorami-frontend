@@ -6,6 +6,7 @@ import { Button } from '~/components/button';
 import { SEARCH, SELECTION } from '~/constants/filterField';
 
 import CheckboxSelectField from './filter-field/checkbox-select';
+import InputField from './filter-field/input-field';
 import RadioField from './filter-field/radio-field';
 
 export interface refType {
@@ -30,6 +31,7 @@ const CompanionRecruitmentFilter = () => {
   const transportationRef = useRef<string>(
     SELECTION.TRANSPORTATION.options[0].value,
   );
+  const ageRef = useRef([20, 30]);
 
   const handle = () => {};
 
@@ -49,6 +51,11 @@ const CompanionRecruitmentFilter = () => {
         category={SELECTION.TRANSPORTATION.category}
         options={SELECTION.TRANSPORTATION.options}
         ref={transportationRef}
+      />
+      <InputField
+        category={SELECTION.AGE.category}
+        defaultValues={SELECTION.AGE.options}
+        ref={ageRef}
       />
       <Button variant="outline" onClick={handle}>
         {SEARCH}
