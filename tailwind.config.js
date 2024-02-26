@@ -115,6 +115,10 @@ module.exports = {
         'page-max': '1024px',
         'page-min': '360px',
       },
+      minWidth: {
+        'page-max': '1024px',
+        'page-min': '360px',
+      },
     },
   },
   plugins: [require('tailwindcss-animate')],
