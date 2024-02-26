@@ -2,8 +2,6 @@ import { useRef, useState } from 'react';
 
 import {
   Errors,
-  ValidateField,
-  ValidateForm,
   HandleChange,
   HandleSliderValueChange,
   HandleSubmit,
@@ -12,6 +10,7 @@ import {
   UseFormReturn,
   UpdateField,
   ValidationRules,
+  HandleSliderInputChange,
 } from './types';
 
 const useForm = <T extends Record<string, string>>(
@@ -22,66 +21,116 @@ const useForm = <T extends Record<string, string>>(
   const [errors, setErrors] = useState<Errors<T>>({} as Errors<T>);
   const validationRules = useRef<ValidationRules<T>>({} as ValidationRules<T>);
 
-  const validateField: ValidateField<T> = (id, value) => {
-    const rules = validationRules.current[id] || {};
+  const updateField: UpdateField<T> = newValues => {
+    setValues(prevValues => ({
+      ...prevValues,
+      ...newValues,
+    }));
 
-    return Object.keys(rules).reduce<string[]>((acc, message) => {
-      if (!rules[message](value)) {
-        acc.push(message);
+    Object.entries(newValues).forEach(([id, value]) => {
+      if (!validationRules.current[id]) {
+        return;
       }
 
-      return acc;
-    }, []);
-  };
-
-  const validateForm: ValidateForm<T> = () => {
-    return Object.keys(validationRules.current).reduce<Errors<T>>(
-      (acc, key: keyof T) => {
-        const fieldErrors = validateField(key, values[key]);
-
-        if (fieldErrors.length > 0) {
-          acc[key] = fieldErrors;
-        }
-
-        return acc;
-      },
-      {} as Errors<T>,
-    );
-  };
-
-  const updateField: UpdateField<T> = (id, value) => {
-    setValues(prevValues => ({ ...prevValues, [id]: value }));
-
-    setErrors(prevErrors => ({
-      ...prevErrors,
-      [id]: validateField(id, value),
-    }));
+      setErrors(prevErrors => ({
+        ...prevErrors,
+        [id]: Object.entries(validationRules.current[id]).reduce(
+          (acc, [message, validate]) => {
+            return validate(value, newValues) ? acc : message;
+          },
+          '',
+        ),
+      }));
+    });
   };
 
   const handleChange: HandleChange = ({ currentTarget: { id, value } }) => {
-    updateField(id, value);
+    if (!validationRules.current[id]) {
+      return;
+    }
+
+    const newValues = {
+      [id]: value,
+    };
+
+    updateField(newValues as T);
   };
 
   const handleValueChange: HandleValueChange<T> = id => value => {
-    updateField(id, value);
+    if (!validationRules.current[id]) {
+      return;
+    }
+
+    const newValues = {
+      [id]: value,
+    };
+
+    updateField(newValues as T);
   };
 
+  const handleSliderInputChange: HandleSliderInputChange<T> =
+    ({ id, minId, maxId }) =>
+    ({ currentTarget: { id: targetId, value } }) => {
+      if (!validationRules.current[id]) {
+        return;
+      }
+
+      const newValues = {
+        [minId]: targetId === minId ? value : values[minId],
+        [maxId]: targetId === maxId ? value : values[maxId],
+        [id]:
+          targetId === minId
+            ? `${value}-${values[maxId]}`
+            : `${values[minId]}~${value}`,
+      };
+
+      updateField(newValues as T);
+    };
+
   const handleSliderValueChange: HandleSliderValueChange<T> =
-    (minId, maxId) =>
+    ({ id, minId, maxId }) =>
     ([minValue, maxValue]) => {
-      updateField(minId, String(minValue));
-      updateField(maxId, String(maxValue));
+      if (!validationRules.current[id]) {
+        return;
+      }
+
+      const newValues = {
+        [minId]: minValue,
+        [maxId]: maxValue,
+        [id]: `${minValue}~${maxValue}`,
+      };
+
+      updateField(newValues as T);
     };
 
   const handleSubmit: HandleSubmit = e => {
     e.preventDefault();
-    const newErrors = validateForm();
 
-    setErrors(newErrors);
+    const newErrors = Object.entries(validationRules.current).reduce(
+      (acc, [id, rules]) => {
+        const value = values[id];
+        const error = Object.entries(rules).reduce(
+          (errorAcc, [message, validate]) => {
+            return validate(value, values) ? errorAcc : message;
+          },
+          '',
+        );
+
+        return {
+          ...acc,
+          [id]: error,
+        };
+      },
+      {} as Errors<T>,
+    );
 
     if (!Object.keys(newErrors).length) {
       onSubmit(values);
+
+      return;
     }
+
+    setErrors(newErrors);
   };
 
   const registerValidation: RegisterValidation<T> = ({
@@ -102,6 +151,7 @@ const useForm = <T extends Record<string, string>>(
     handleChange,
     handleValueChange,
     handleSubmit,
+    handleSliderInputChange,
     handleSliderValueChange,
     registerValidation,
   };

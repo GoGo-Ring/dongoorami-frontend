@@ -2,6 +2,7 @@
 import { PropsWithChildren, useContext } from 'react';
 
 import { Slider } from '~/app/recruitment/new/_components/double-thumb-slider';
+import { Error } from '~/app/recruitment/new/_components/error';
 import { FormContext } from '~/app/recruitment/new/_components/form';
 import { Input } from '~/components/input';
 import { RadioGroup, RadioGroupItem } from '~/components/radio-group';
@@ -27,19 +28,7 @@ interface SliderFieldProps extends FieldProps {
 }
 
 export const InputField = ({ id, placeholder, label, variant }: FieldProps) => {
-  const { values, handleChange, errors, registerValidation } =
-    useContext(FormContext);
-
-  registerValidation({
-    id,
-    message: '필수 입력사항입니다',
-    validate: value => value.length > 0,
-  });
-  registerValidation({
-    id,
-    message: '최대 20자까지 입력 가능합니다',
-    validate: value => value.length <= 20,
-  });
+  const { values, handleChange, errors } = useContext(FormContext);
 
   return (
     <Field id={id} label={label} variant={variant}>
@@ -50,15 +39,13 @@ export const InputField = ({ id, placeholder, label, variant }: FieldProps) => {
         value={values[id]}
         onChange={handleChange}
       />
-      <p className="block p-2 text-xs text-destructive">
-        {errors[id]?.map(message => message)}
-      </p>
+      <Error error={errors[id]} />
     </Field>
   );
 };
 
 export const FileField = ({ id, placeholder, label, variant }: FieldProps) => {
-  const { values, handleChange } = useContext(FormContext);
+  const { values, handleChange, errors } = useContext(FormContext);
 
   return (
     <Field id={id} label={label} variant={variant}>
@@ -70,6 +57,7 @@ export const FileField = ({ id, placeholder, label, variant }: FieldProps) => {
         value={values[id]}
         onChange={handleChange}
       />
+      <Error error={errors[id]} />
     </Field>
   );
 };
@@ -81,14 +69,7 @@ export const SelectField = ({
   variant,
   children,
 }: PropsWithChildren<FieldProps>) => {
-  const { values, handleValueChange, registerValidation, errors } =
-    useContext(FormContext);
-
-  registerValidation({
-    id,
-    message: '필수 선택사항입니다',
-    validate: value => value.length > 0,
-  });
+  const { values, handleValueChange, errors } = useContext(FormContext);
 
   return (
     <Field id={id} label={label} variant={variant}>
@@ -100,9 +81,7 @@ export const SelectField = ({
           <SelectGroup>{children}</SelectGroup>
         </SelectContent>
       </Select>
-      <p className="block p-2 text-xs text-destructive">
-        {errors[id]?.map(message => message)}
-      </p>
+      <Error error={errors[id]} />
     </Field>
   );
 };
@@ -123,28 +102,19 @@ export const RadioGroupField = ({
   children,
   variant,
 }: PropsWithChildren<FieldProps>) => {
-  const { handleValueChange, values, registerValidation, errors } =
-    useContext(FormContext);
-
-  registerValidation({
-    id,
-    message: '필수 선택사항입니다',
-    validate: value => value.length > 0,
-  });
+  const { handleValueChange, values, errors } = useContext(FormContext);
 
   return (
     <Field id={id} label={label} variant={variant}>
       <RadioGroup
         id={id}
-        className="flex w-fit p-2"
+        className="flex w-fit flex-nowrap"
         onValueChange={handleValueChange(id)}
         value={values[id]}
       >
         {children}
       </RadioGroup>
-      <p className="block p-2 text-xs text-destructive">
-        {errors[id]?.map(message => message)}
-      </p>
+      <Error error={errors[id]} />
     </Field>
   );
 };
@@ -164,34 +134,8 @@ export const SliderField = ({
   label,
   variant,
 }: SliderFieldProps) => {
-  const {
-    values,
-    handleChange,
-    registerValidation,
-    errors,
-    handleSliderValueChange,
-  } = useContext(FormContext);
-
-  registerValidation({
-    id: minId,
-    message: '0 이상의 숫자를 입력해주세요',
-    validate: value => Number(value) >= 0,
-  });
-  registerValidation({
-    id: maxId,
-    message: '100 이하의 숫자를 입력해주세요',
-    validate: value => Number(value) <= 100,
-  });
-  registerValidation({
-    id: maxId,
-    message: '최대값은 최소값보다 작을 수 없습니다',
-    validate: value => Number(value) >= Number(values[minId]),
-  });
-  registerValidation({
-    id: minId,
-    message: '최소값은 최대값보다 클 수 없습니다',
-    validate: value => Number(value) <= Number(values[maxId]),
-  });
+  const { values, errors, handleSliderInputChange, handleSliderValueChange } =
+    useContext(FormContext);
 
   return (
     <Field id={id} label={label} variant={variant}>
@@ -203,7 +147,7 @@ export const SliderField = ({
             min={0}
             max={100}
             value={values[minId]}
-            onChange={handleChange}
+            onChange={handleSliderInputChange({ id, minId, maxId })}
           />
           ~
           <Input
@@ -212,19 +156,16 @@ export const SliderField = ({
             min={0}
             max={100}
             value={values[maxId]}
-            onChange={handleChange}
+            onChange={handleSliderInputChange({ id, minId, maxId })}
           />
         </div>
         <Slider
           id={id}
           value={[Number(values[minId]), Number(values[maxId])]}
-          onValueChange={handleSliderValueChange(minId, maxId)}
+          onValueChange={handleSliderValueChange({ id, minId, maxId })}
         />
       </div>
-      <p className="block p-2 text-xs text-destructive">
-        {errors[minId]?.map(message => message)}
-        {errors[maxId]?.map(message => message)}
-      </p>
+      <Error error={errors[id]} />
     </Field>
   );
 };
