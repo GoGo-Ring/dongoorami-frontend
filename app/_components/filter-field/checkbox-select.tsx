@@ -28,10 +28,7 @@ const CheckboxItem = ({ label }: ItemProps) => {
   );
 };
 
-export const CheckboxSelectField = ({
-  category,
-  options,
-}: SelectionFieldProps) => {
+const CheckboxSelectField = ({ category, options }: SelectionFieldProps) => {
   return (
     <div className="flex flex-col gap-2">
       <span className="font-semibold">{category}</span>
