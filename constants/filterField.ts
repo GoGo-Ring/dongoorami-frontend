@@ -22,7 +22,7 @@ export const SELECTION = {
   },
   AGE: {
     category: '나이',
-    options: [{ value: 20 }, { value: 30 }],
+    options: [20, 30],
   },
   GENRE: {
     category: '장르',
