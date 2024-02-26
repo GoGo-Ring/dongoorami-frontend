@@ -18,9 +18,15 @@ module.exports = {
         '2xl': '1400px',
       },
     },
+    screens: {
+      sm: { max: '767px' },
+      md: { min: '768px', max: '1023px' },
+      lg: { min: '1024px' },
+    },
     extend: {
       fontFamily: {
         sans: ['var(--font-sans)', ...fontFamily.sans],
+        title: ['var(--font-title)', ...fontFamily.sans],
       },
       colors: {
         kakao: 'hsl(var(--kakao))',
@@ -48,6 +54,8 @@ module.exports = {
         primary: {
           DEFAULT: 'hsl(var(--primary))',
           foreground: 'hsl(var(--primary-foreground))',
+          darker: 'hsl(var(--primary-darker))',
+          lighter: 'hsl(var(--primary-lighter))',
         },
         secondary: {
           DEFAULT: 'hsl(var(--secondary))',
@@ -92,6 +100,20 @@ module.exports = {
       animation: {
         'accordion-down': 'accordion-down 0.2s ease-out',
         'accordion-up': 'accordion-up 0.2s ease-out',
+      },
+      spacing: {
+        xl: '16px',
+        lg: '12px',
+        md: '8px',
+        sm: '4px',
+      },
+      width: {
+        'page-max': '1024px',
+        'page-min': '360px',
+      },
+      maxWidth: {
+        'page-max': '1024px',
+        'page-min': '360px',
       },
     },
   },
