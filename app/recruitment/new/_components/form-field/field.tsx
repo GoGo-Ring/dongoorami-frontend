@@ -38,6 +38,7 @@ export interface FieldProps
   id: FieldIds;
   label?: string;
   placeholder?: string;
+  className?: string;
 }
 
 export const Field = ({
@@ -46,9 +47,13 @@ export const Field = ({
   label,
   variant,
   labelVariant,
+  className,
 }: PropsWithRequiredChildren<FieldProps>) => (
-  <div className={cn(FieldVariants({ variant }))}>
-    <Label className={cn(LabelVariants({ labelVariant }))} htmlFor={id}>
+  <div className={cn(className, FieldVariants({ variant }))}>
+    <Label
+      className={cn(className, LabelVariants({ labelVariant }))}
+      htmlFor={id}
+    >
       {label}
     </Label>
     <div className="flex w-full flex-col justify-start">{children}</div>
