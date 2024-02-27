@@ -1,29 +1,20 @@
 import '~/styles/globals.css';
 
-import { Inter as FontSans } from 'next/font/google';
-
-import { cn } from '~/libs/utils';
+import Header from '~/components/header';
 import { MSWProvider } from '~/mocks/provider';
 
 import Providers from './providers';
 
-export const fontSans = FontSans({
-  subsets: ['latin'],
-  variable: '--font-sans',
-});
-
 const RootLayout = ({ children }: { children: React.ReactNode }) => {
   return (
     <html lang="ko">
-      <body
-        className={cn(
-          'min-h-screen w-full bg-background font-sans antialiased',
-          fontSans.variable,
-        )}
-      >
+      <body className="min-h-screen w-full bg-background font-sans antialiased">
         <Providers>
           <MSWProvider>
-            <section>{children}</section>
+            <Header />
+            <section className="mx-auto max-w-page-max px-lg">
+              {children}
+            </section>
           </MSWProvider>
         </Providers>
       </body>

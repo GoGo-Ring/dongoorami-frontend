@@ -1,4 +1,4 @@
-type DateFormat = 'yyyy-mm-dd';
+type DateFormat = 'yyyy-mm-dd' | 'yyyy.mm.dd';
 
 export const getDate = (date: Date, format: DateFormat) => {
   const year = date.getFullYear();
@@ -8,6 +8,8 @@ export const getDate = (date: Date, format: DateFormat) => {
   switch (format) {
     case 'yyyy-mm-dd':
       return `${year}-${month}-${day}`;
+    case 'yyyy.mm.dd':
+      return `${year}.${month}.${day}`;
     default:
       return null;
   }

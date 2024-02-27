@@ -4,7 +4,7 @@ import React from 'react';
 import { Button } from '~/components/button';
 import { Textarea } from '~/components/textarea';
 
-import { Form } from './_components/common/form';
+import { Form } from './_components/form';
 import {
   FileField,
   InputField,
@@ -13,23 +13,23 @@ import {
   SelectField,
   SelectFieldItem,
   SliderField,
-} from './_components/form-field';
-import { FORM_ITEMS } from './constants';
+} from './_components/form-filed';
+import { FORM_ITEMS, INITIAL_VALUES, VALIDATIONS } from './constants';
 
 const Page = () => {
   return (
     <div className="flex justify-center py-10">
-      <Form>
-        <div className="flex w-full items-center gap-7">
+      <Form initialValues={INITIAL_VALUES} initialValidations={VALIDATIONS}>
+        <div className="px-4">
           <InputField
             id="title"
             label="제목"
             placeholder="제목을 입력해주세요"
-            variant="title"
+            variant="fullWidth"
           />
         </div>
         <FileField id="image" label="이미지" />
-        <div className="flex flex-wrap items-center gap-7 rounded-md border border-gray-200 p-6">
+        <div className="flex flex-wrap items-start gap-7 rounded-md border border-gray-200 p-6">
           <InputField
             id="performanceName"
             label="공연명"
