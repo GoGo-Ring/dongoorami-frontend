@@ -10,15 +10,7 @@ import { Input } from '~/components/input';
 import { Label } from '~/components/label';
 import { RadioGroup, RadioGroupItem } from '~/components/radio-group';
 
-import validate from './validation';
-
-interface FormValues {
-  nickname: string;
-  gender: '' | 'male' | 'female';
-  year: number | '';
-  month: number | '';
-  day: number | '';
-}
+import validate, { FormValues } from './validation';
 
 const Register = () => {
   const router = useRouter();
@@ -47,7 +39,7 @@ const Register = () => {
     setValues({ ...values, gender: value });
   };
 
-  const handleSubmit = (event: React.FormEvent) => {
+  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
     const errors = validate(values);
@@ -89,7 +81,6 @@ const Register = () => {
             <RadioGroup
               className="flex w-full p-2"
               id="gender"
-              // onValueChange={handleGenderChange}
               onValueChange={handleGenderChange}
             >
               <RadioGroupItem value="male" />

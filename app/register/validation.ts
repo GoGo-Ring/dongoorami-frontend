@@ -1,4 +1,4 @@
-interface FormValues {
+export interface FormValues {
   nickname: string;
   gender: '' | 'male' | 'female';
   year: number | '';
