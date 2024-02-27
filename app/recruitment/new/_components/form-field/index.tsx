@@ -1,5 +1,5 @@
 'use client';
-import { PropsWithChildren, useContext } from 'react';
+import { PropsWithChildren, useContext, useState } from 'react';
 
 import { Slider } from '~/app/recruitment/new/_components/double-thumb-slider';
 import { Error } from '~/app/recruitment/new/_components/error';
@@ -44,8 +44,25 @@ export const InputField = ({ id, placeholder, label, variant }: FieldProps) => {
   );
 };
 
-export const FileField = ({ id, placeholder, label, variant }: FieldProps) => {
+export const ImageField = ({ id, placeholder, label, variant }: FieldProps) => {
   const { values, handleChange, errors } = useContext(FormContext);
+  const [selectedImage, setSelectedImage] = useState<string | null>(null);
+
+  const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+
+    if (file && file.type.startsWith('image/')) {
+      const reader = new FileReader();
+
+      reader.onload = e => {
+        if (e.target && typeof e.target.result === 'string') {
+          setSelectedImage(e.target.result);
+        }
+      };
+      reader.readAsDataURL(file);
+      handleChange(event);
+    }
+  };
 
   return (
     <Field id={id} label={label} variant={variant}>
@@ -55,8 +72,16 @@ export const FileField = ({ id, placeholder, label, variant }: FieldProps) => {
         type="file"
         placeholder={placeholder}
         value={values[id]}
-        onChange={handleChange}
+        onChange={handleImageChange}
       />
+      {selectedImage && (
+        <img
+          src={selectedImage}
+          alt="이미지"
+          width={300}
+          className="self-center p-4"
+        />
+      )}
       <Error error={errors[id]} />
     </Field>
   );
