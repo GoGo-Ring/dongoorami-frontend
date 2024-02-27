@@ -1,5 +1,6 @@
 'use client';
 
+import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 
 import { registerMember } from '~/apis/member';
@@ -20,6 +21,7 @@ interface FormValues {
 }
 
 const Register = () => {
+  const router = useRouter();
   const LabelStyle = 'w-24 text-nowrap text-base font-semibold p-1';
   const InputContainerStyle = 'h-[100px] flex flex-col rounded-md px-2 ';
   const ErrorStyle = 'px-1 mt-2 text-red-500 text-sm';
@@ -130,7 +132,11 @@ const Register = () => {
             )}
           </div>
           <div className="absolute inset-x-0 bottom-0 flex gap-8 px-4 py-8">
-            <Button className="w-full border border-primary bg-secondary text-secondary-foreground hover:bg-destructive">
+            <Button
+              type="button"
+              className="w-full border border-primary bg-secondary text-secondary-foreground hover:bg-destructive"
+              onClick={() => router.push('/')}
+            >
               홈으로
             </Button>
             <Button
