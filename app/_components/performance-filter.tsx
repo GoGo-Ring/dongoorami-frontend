@@ -28,10 +28,12 @@ const PerformanceFilter = () => {
       <ButtonSelectField
         category={SELECTION.GENRE.category}
         options={SELECTION.GENRE.options}
+        isMultipleSelection
       />
       <ButtonSelectField
         category={SELECTION.STATUS.category}
         options={SELECTION.STATUS.options}
+        isMultipleSelection
       />
       <CheckboxSelectField
         category={SELECTION.REGIONS.category}
