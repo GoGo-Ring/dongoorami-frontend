@@ -98,7 +98,7 @@ export const VALIDATIONS: {
 
       return new Date(startDate) <= new Date(endDate);
     },
-    message: '시작일이 종료일보다 빠릅니다',
+    message: '시작일이 종료일보다 빨라야합니다.',
   },
   {
     id: 'performanceDate',
