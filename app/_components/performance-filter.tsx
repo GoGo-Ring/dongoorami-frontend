@@ -9,6 +9,16 @@ import ButtonSelectField from './filter-field/button-select';
 import CheckboxSelectField from './filter-field/checkbox-select';
 
 const PerformanceFilter = () => {
+  const checkbox = SELECTION.REGIONS.options.reduce(
+    (acc, option) => {
+      acc[option] = false;
+
+      return acc;
+    },
+    {} as Record<string, boolean>,
+  );
+  const checkboxRef = useRef(checkbox);
+
   return (
     <div className="flex w-[260px] flex-col gap-6 px-3">
       <ButtonSelectField
@@ -22,6 +32,7 @@ const PerformanceFilter = () => {
       <CheckboxSelectField
         category={SELECTION.REGIONS.category}
         options={SELECTION.REGIONS.options}
+        ref={checkboxRef}
       />
       <Button variant="outline" type="submit">
         {SEARCH}
