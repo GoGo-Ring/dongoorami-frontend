@@ -1,6 +1,6 @@
 'use client';
 
-import React from 'react';
+import React, { MouseEvent, useState } from 'react';
 
 import { Button } from '~/components/button';
 import { MULTIPLE_SELECTION_AVAILABLE } from '~/constants/filterField';
@@ -13,13 +13,19 @@ interface SelectionFieldProps {
 
 interface ItemProps {
   label: string;
+  isClicked: boolean;
+  onClick?: (e: MouseEvent<HTMLButtonElement>) => void;
 }
 
-const ButtonItem = ({ label }: ItemProps) => {
+const ButtonItem = ({ label, isClicked, onClick }: ItemProps) => {
+  const variant = isClicked ? 'default' : 'outline';
+
   return (
     <Button
-      className="h-6 rounded-full px-3 py-[6px] text-xs"
-      variant="outline"
+      className={'h-6 rounded-full border px-3 py-[6px] text-xs'}
+      variant={variant}
+      name={label}
+      onClick={onClick}
     >
       {label}
     </Button>
@@ -31,6 +37,23 @@ const ButtonSelectField = ({
   options,
   isMultipleSelection,
 }: SelectionFieldProps) => {
+  const [isClicked, setIsClicked] = useState(
+    options.reduce(
+      (acc, cur) => {
+        acc[cur] = false;
+
+        return acc;
+      },
+      {} as Record<string, boolean>,
+    ),
+  );
+
+  const onClick = (e: MouseEvent<HTMLButtonElement>) => {
+    const { name } = e.currentTarget;
+
+    setIsClicked({ ...isClicked, [name]: !isClicked[name] });
+  };
+
   return (
     <div className="flex w-[240px] flex-col gap-2">
       <div className="flex items-center">
@@ -43,7 +66,12 @@ const ButtonSelectField = ({
       </div>
       <div className="flex flex-wrap gap-1">
         {options.map(option => (
-          <ButtonItem key={option} label={option} />
+          <ButtonItem
+            key={option}
+            label={option}
+            onClick={onClick}
+            isClicked={isClicked[option]}
+          />
         ))}
       </div>
     </div>
