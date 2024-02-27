@@ -19,6 +19,7 @@ const PerformanceFilter = () => {
   );
   const checkboxRef = useRef(checkbox);
   const genreRef = useRef<string[]>(null);
+  const statusRef = useRef<string[]>(null);
 
   const handleSubmit = (e: MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
@@ -36,6 +37,7 @@ const PerformanceFilter = () => {
         category={SELECTION.STATUS.category}
         options={SELECTION.STATUS.options}
         isMultipleSelection
+        ref={statusRef}
       />
       <CheckboxSelectField
         category={SELECTION.REGIONS.category}
