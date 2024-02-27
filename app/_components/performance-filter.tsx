@@ -1,6 +1,6 @@
 'use client';
 
-import React from 'react';
+import React, { MouseEvent, useRef } from 'react';
 
 import { Button } from '~/components/button';
 import { SEARCH, SELECTION } from '~/constants/filterField';
@@ -19,6 +19,10 @@ const PerformanceFilter = () => {
   );
   const checkboxRef = useRef(checkbox);
 
+  const handleSubmit = (e: MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+  };
+
   return (
     <div className="flex w-[260px] flex-col gap-6 px-3">
       <ButtonSelectField
@@ -34,7 +38,7 @@ const PerformanceFilter = () => {
         options={SELECTION.REGIONS.options}
         ref={checkboxRef}
       />
-      <Button variant="outline" type="submit">
+      <Button variant="outline" type="submit" onClick={handleSubmit}>
         {SEARCH}
       </Button>
     </div>
