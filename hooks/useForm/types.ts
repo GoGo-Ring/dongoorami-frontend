@@ -4,6 +4,7 @@ type HandleChange = <
   e: React.ChangeEvent<E>,
 ) => void;
 type HandleValueChange<T> = (id: keyof T) => (value: string) => void;
+type handleChangeField<T> = (newValues: Partial<T>) => void;
 type HandleSliderInputChange<T> = (props: {
   id: keyof T;
   minId: keyof T;
@@ -36,6 +37,7 @@ type UseFormReturn<T> = {
   errors: Errors<T>;
   setValues: React.Dispatch<React.SetStateAction<T>>;
   handleChange: HandleChange;
+  handleChangeField: handleChangeField<T>;
   handleSliderInputChange: HandleSliderInputChange<T>;
   handleValueChange: HandleValueChange<T>;
   handleSubmit: HandleSubmit;
