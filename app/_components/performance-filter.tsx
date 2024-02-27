@@ -18,6 +18,7 @@ const PerformanceFilter = () => {
     {} as Record<string, boolean>,
   );
   const checkboxRef = useRef(checkbox);
+  const genreRef = useRef<string[]>(null);
 
   const handleSubmit = (e: MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
@@ -28,6 +29,7 @@ const PerformanceFilter = () => {
       <ButtonSelectField
         category={SELECTION.GENRE.category}
         options={SELECTION.GENRE.options}
+        ref={genreRef}
         isMultipleSelection
       />
       <ButtonSelectField
