@@ -14,4 +14,12 @@ export const updateMember = async (member: Partial<Member>) => {
   return data;
 };
 
+export const updateProfileImage = (file: File) => {
+  return api.patch<string>({
+    url: '/profileImage',
+    data: file,
+    headers: { 'Content-Type': 'multipart/form-data' },
+  });
+};
+
 export const deleteMember = () => api.delete({ url: '/members' });
