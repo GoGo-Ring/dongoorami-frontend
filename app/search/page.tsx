@@ -97,7 +97,9 @@ const Page = () => {
 
   return (
     <div className="flex">
-      <FilterTabs />
+      <div className="box-border py-5">
+        <FilterTabs />
+      </div>
       <div className="flex flex-col gap-8 px-6 py-10">
         <div className="flex flex-col gap-6">
           <span className="font-semibold">공연</span>
