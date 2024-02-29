@@ -9,9 +9,13 @@ import PerformanceFilter from './performance-filter';
 
 interface FilterTabsProps {
   baseUrl?: string;
+  hasFilterTitle?: boolean;
 }
 
-const FilterTabs = ({ baseUrl = 'search' }: FilterTabsProps) => {
+const FilterTabs = ({
+  baseUrl = 'search',
+  hasFilterTitle = true,
+}: FilterTabsProps) => {
   const router = useRouter();
 
   const onSubmit = (query: string) => {
@@ -20,10 +24,12 @@ const FilterTabs = ({ baseUrl = 'search' }: FilterTabsProps) => {
 
   return (
     <div className="flex w-[300px] flex-col gap-3">
-      <div className="flex gap-3 p-3">
-        <Icon iconName="filter" />
-        <span>필터</span>
-      </div>
+      {hasFilterTitle && (
+        <div className="flex gap-3 p-3">
+          <Icon iconName="filter" />
+          <span>필터</span>
+        </div>
+      )}
       <Tabs defaultValue="performance" className="w-[260px]">
         <TabsList className="grid w-full grid-cols-2">
           <TabsTrigger value="performance">공연</TabsTrigger>
