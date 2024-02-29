@@ -111,34 +111,39 @@ const Page = () => {
           ),
         )}
       </div>
-      <div className="mx-auto grid grid-cols-3 gap-4">
-        {accompanyList.map(
-          ({
-            _id,
-            title,
-            concertName,
-            userId,
-            gender,
-            personCount,
-            viewCount,
-            commentsCount,
-            date,
-            status,
-          }) => (
-            <CompanionRecruitmentCard
-              key={_id}
-              title={title}
-              concertName={concertName}
-              userId={userId}
-              gender={gender}
-              personCount={personCount}
-              viewCount={viewCount}
-              commentsCount={commentsCount}
-              date={date}
-              status={status}
-            />
-          ),
-        )}
+      <div>
+        <div className="flex flex-col gap-6">
+          <span className="font-semibold">동행 모집</span>
+          <div className="mx-auto grid grid-cols-3 gap-4">
+            {accompanyList.map(
+              ({
+                _id,
+                title,
+                concertName,
+                userId,
+                gender,
+                personCount,
+                viewCount,
+                commentsCount,
+                date,
+                status,
+              }) => (
+                <CompanionRecruitmentCard
+                  key={_id}
+                  title={title}
+                  concertName={concertName}
+                  userId={userId}
+                  gender={gender}
+                  personCount={personCount}
+                  viewCount={viewCount}
+                  commentsCount={commentsCount}
+                  date={date}
+                  status={status}
+                />
+              ),
+            )}
+          </div>
+        </div>
       </div>
     </div>
   );
