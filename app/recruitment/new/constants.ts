@@ -37,7 +37,7 @@ export const FORM_ITEMS = {
 export const INITIAL_VALUES = {
   title: '',
   performanceName: '',
-  performanceDate: '',
+  performanceDate: '~',
   performanceLocation: '',
   participantCount: '',
   region: '',
@@ -70,7 +70,39 @@ export const VALIDATIONS: {
   },
   {
     id: 'performanceDate',
-    validate: value => value.length > 0,
+    validate: value => {
+      if (value.split('~').includes('')) {
+        return true;
+      }
+      const now = new Date();
+
+      const todayStart = new Date(
+        now.getFullYear(),
+        now.getMonth(),
+        now.getDate(),
+      );
+
+      const [startDate] = value.split('~');
+
+      return new Date(startDate) >= todayStart;
+    },
+    message: '오늘 이후의 날짜를 선택해주세요',
+  },
+  {
+    id: 'performanceDate',
+    validate: value => {
+      if (value.split('~').includes('')) {
+        return true;
+      }
+      const [startDate, endDate] = value.split('~');
+
+      return new Date(startDate) <= new Date(endDate);
+    },
+    message: '시작일이 종료일보다 빨라야합니다.',
+  },
+  {
+    id: 'performanceDate',
+    validate: value => !value.split('~').includes(''),
     message: '공연일을 입력해주세요',
   },
   {
