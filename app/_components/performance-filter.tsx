@@ -8,7 +8,11 @@ import { SEARCH, SELECTION } from '~/constants/filterField';
 import ButtonSelectField from './filter-field/button-select';
 import CheckboxSelectField from './filter-field/checkbox-select';
 
-const PerformanceFilter = () => {
+interface PerformanceFilterProps {
+  onSubmit: (query: string) => void;
+}
+
+const PerformanceFilter = ({ onSubmit }: PerformanceFilterProps) => {
   const checkbox = SELECTION.REGIONS.options.reduce(
     (acc, option) => {
       acc[option] = false;
@@ -23,6 +27,8 @@ const PerformanceFilter = () => {
 
   const handleSubmit = (e: MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
+
+    onSubmit(query);
   };
 
   return (
