@@ -25,8 +25,46 @@ const PerformanceFilter = ({ onSubmit }: PerformanceFilterProps) => {
   const genreRef = useRef<string[]>([]);
   const statusRef = useRef<string[]>([]);
 
+  const joinQuery = (...targets: string[][]) => {
+    return targets.map(target => target.join('&'));
+  };
+
+  if (!genreRef || !statusRef || !checkboxRef) {
+    return;
+  }
+
+  const setObject = (
+    genreQuery: string,
+    statusQuery: string,
+    regionsQuery: string,
+  ) => {
+    return {
+      genre: genreQuery,
+      status: statusQuery,
+      regions: regionsQuery,
+    };
+  };
+
+  const getQuery = () => {
+    const [genreQuery, statusQuery, regionsQuery] = joinQuery(
+      genreRef.current,
+      statusRef.current,
+      Object.keys(checkboxRef.current).filter(key => checkboxRef.current[key]),
+    );
+
+    const { genre, status, regions } = setObject(
+      genreQuery,
+      statusQuery,
+      regionsQuery,
+    );
+
+    return `genre=${genre}&status=${status}&regions=${regions}`;
+  };
+
   const handleSubmit = (e: MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
+
+    const query = getQuery();
 
     onSubmit(query);
   };
