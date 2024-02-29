@@ -151,6 +151,7 @@ const Page = () => {
             </div>
           </div>
         </div>
+        <Button variant="outline">동행 모집 더보기</Button>
       </div>
     </div>
   );
