@@ -1,6 +1,6 @@
 'use client';
 
-import { useRef } from 'react';
+import { MouseEvent, useRef } from 'react';
 
 import { Button } from '~/components/button';
 import { SEARCH, SELECTION } from '~/constants/filterField';
@@ -40,8 +40,36 @@ const CompanionRecruitmentFilter = ({
   const ageRef = useRef([20, 30]);
   const personCountRef = useRef(1);
 
+  const joinQuery = (...targets: string[][]) => {
+    return targets.map(target => target.join('&'));
+  };
+
+  const setObject = (regionQuery: string) => {
+    return {
+      gender: radioRef.current,
+      regions: regionQuery,
+      transportation: transportationRef.current,
+      startAge: ageRef.current[0],
+      endAge: ageRef.current[1],
+      totalPeople: personCountRef.current,
+    };
+  };
+
+  const getQuery = () => {
+    const [regionQuery] = joinQuery(
+      Object.keys(checkboxRef.current).filter(key => checkboxRef.current[key]),
+    );
+
+    const { gender, regions, startAge, endAge, transportation, totalPeople } =
+      setObject(regionQuery);
+
+    return `gender=${gender}&region=${regions}&startAge=${startAge}&endAge=${endAge}&transportation=${transportation}&totalPeople=${totalPeople}`;
+  };
+
   const handleSubmit = (e: MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
+    const query = getQuery();
+
     onSubmit(query);
   };
 
