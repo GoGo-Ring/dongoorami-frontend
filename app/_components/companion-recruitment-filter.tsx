@@ -18,7 +18,12 @@ export interface refType {
   personCount: number;
 }
 
-const CompanionRecruitmentFilter = () => {
+interface CompanionRecruitmentFilterProps {
+  onSubmit: (query: string) => void;
+}
+const CompanionRecruitmentFilter = ({
+  onSubmit,
+}: CompanionRecruitmentFilterProps) => {
   const radioRef = useRef<string>(SELECTION.GENDER.options[0].value);
   const checkbox = SELECTION.REGIONS.options.reduce(
     (acc, option) => {
@@ -37,6 +42,7 @@ const CompanionRecruitmentFilter = () => {
 
   const handleSubmit = (e: MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
+    onSubmit(query);
   };
 
   return (
