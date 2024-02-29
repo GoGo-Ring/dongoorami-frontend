@@ -12,7 +12,7 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => {
         <Providers>
           <MSWProvider>
             <Header />
-            <section className="mx-auto max-w-page-max px-lg">
+            <section className="mx-auto min-w-page-min max-w-page-max px-lg">
               {children}
             </section>
           </MSWProvider>

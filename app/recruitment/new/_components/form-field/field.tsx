@@ -7,11 +7,11 @@ import { PropsWithRequiredChildren } from '~/types/utils';
 
 export type FieldIds = keyof typeof INITIAL_VALUES;
 
-const FieldVariants = cva('items-start', {
+const FieldVariants = cva('items-start flex w-full min-w-16', {
   variants: {
     variant: {
-      fullWidth: 'flex w-full',
-      default: 'flex w-[45%] ',
+      default: 'sm:flex-wrap',
+      radio: 'sm:flex-nowrap pt-2',
     },
   },
   defaultVariants: {
@@ -23,7 +23,7 @@ const LabelVariants = cva('text-nowrap', {
   variants: {
     labelVariant: {
       radio: 'px-2 text-xs',
-      default: 'w-24 flex-shrink-0text-base font-semibold p-1',
+      default: 'w-24 flex-shrink-0 text-base font-semibold p-1',
       slider: '',
     },
   },
