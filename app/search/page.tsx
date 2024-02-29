@@ -1,3 +1,5 @@
+import { Button } from '~/components/button';
+
 import PerformanceInfoCard from './_component/PerformanceInfoCard';
 import CompanionRecruitmentCard from '../_components/CompanionRecruitmentCard';
 import FilterTabs from '../_components/filter-tabs';
@@ -111,6 +113,7 @@ const Page = () => {
           ),
         )}
       </div>
+      <Button variant="outline">공연 더보기</Button>
       <div>
         <div className="flex flex-col gap-6">
           <span className="font-semibold">동행 모집</span>
