@@ -35,7 +35,9 @@ const CompanionRecruitmentFilter = () => {
   const ageRef = useRef([20, 30]);
   const personCountRef = useRef(1);
 
-  const handle = () => {};
+  const handleSubmit = (e: MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+  };
 
   return (
     <div className="flex w-[260px] flex-col gap-6 px-3">
@@ -66,7 +68,7 @@ const CompanionRecruitmentFilter = () => {
         placeholder={SELECTION.PERSON_COUNT.options[0].label}
         ref={personCountRef}
       />
-      <Button variant="outline" onClick={handle}>
+      <Button variant="outline" onClick={handleSubmit}>
         {SEARCH}
       </Button>
     </div>
