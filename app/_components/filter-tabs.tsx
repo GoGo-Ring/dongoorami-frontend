@@ -1,6 +1,7 @@
 'use client';
 import { useRouter } from 'next/navigation';
 
+import Icon from '~/components/icon';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '~/components/tabs';
 
 import CompanionRecruitmentFilter from './companion-recruitment-filter';
@@ -18,18 +19,24 @@ const FilterTabs = ({ baseUrl = 'search' }: FilterTabsProps) => {
   };
 
   return (
-    <Tabs defaultValue="performance" className="w-[300px]">
-      <TabsList className="grid w-full grid-cols-2">
-        <TabsTrigger value="performance">공연</TabsTrigger>
-        <TabsTrigger value="accompany">동행 구인</TabsTrigger>
-      </TabsList>
-      <TabsContent value="performance">
-        <PerformanceFilter onSubmit={onSubmit} />
-      </TabsContent>
-      <TabsContent value="accompany">
-        <CompanionRecruitmentFilter onSubmit={onSubmit} />
-      </TabsContent>
-    </Tabs>
+    <div className="flex w-[300px] flex-col gap-3">
+      <div className="flex gap-3 p-3">
+        <Icon iconName="filter" />
+        <span>필터</span>
+      </div>
+      <Tabs defaultValue="performance" className="w-[260px]">
+        <TabsList className="grid w-full grid-cols-2">
+          <TabsTrigger value="performance">공연</TabsTrigger>
+          <TabsTrigger value="accompany">동행 구인</TabsTrigger>
+        </TabsList>
+        <TabsContent value="performance">
+          <PerformanceFilter onSubmit={onSubmit} />
+        </TabsContent>
+        <TabsContent value="accompany">
+          <CompanionRecruitmentFilter onSubmit={onSubmit} />
+        </TabsContent>
+      </Tabs>
+    </div>
   );
 };
 
