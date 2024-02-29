@@ -98,53 +98,57 @@ const Page = () => {
   return (
     <div className="flex">
       <FilterTabs />
-      <span className="font-semibold">공연</span>
-      <div className="mx-auto grid grid-cols-3">
-        {performList.map(
-          ({ _id, posterSrc, title, facilityName, startDate, status }) => (
-            <PerformanceInfoCard
-              key={_id}
-              posterSrc={posterSrc}
-              title={title}
-              facilityName={facilityName}
-              startDate={startDate}
-              status={status}
-            />
-          ),
-        )}
-      </div>
-      <Button variant="outline">공연 더보기</Button>
-      <div>
+      <div className="flex flex-col gap-8 px-6 py-10">
         <div className="flex flex-col gap-6">
-          <span className="font-semibold">동행 모집</span>
-          <div className="mx-auto grid grid-cols-3 gap-4">
-            {accompanyList.map(
-              ({
-                _id,
-                title,
-                concertName,
-                userId,
-                gender,
-                personCount,
-                viewCount,
-                commentsCount,
-                date,
-                status,
-              }) => (
-                <CompanionRecruitmentCard
+          <span className="font-semibold">공연</span>
+          <div className="mx-auto grid grid-cols-3">
+            {performList.map(
+              ({ _id, posterSrc, title, facilityName, startDate, status }) => (
+                <PerformanceInfoCard
                   key={_id}
+                  posterSrc={posterSrc}
                   title={title}
-                  concertName={concertName}
-                  userId={userId}
-                  gender={gender}
-                  personCount={personCount}
-                  viewCount={viewCount}
-                  commentsCount={commentsCount}
-                  date={date}
+                  facilityName={facilityName}
+                  startDate={startDate}
                   status={status}
                 />
               ),
             )}
+          </div>
+        </div>
+        <Button variant="outline">공연 더보기</Button>
+        <div>
+          <div className="flex flex-col gap-6">
+            <span className="font-semibold">동행 모집</span>
+            <div className="mx-auto grid grid-cols-3 gap-4">
+              {accompanyList.map(
+                ({
+                  _id,
+                  title,
+                  concertName,
+                  userId,
+                  gender,
+                  personCount,
+                  viewCount,
+                  commentsCount,
+                  date,
+                  status,
+                }) => (
+                  <CompanionRecruitmentCard
+                    key={_id}
+                    title={title}
+                    concertName={concertName}
+                    userId={userId}
+                    gender={gender}
+                    personCount={personCount}
+                    viewCount={viewCount}
+                    commentsCount={commentsCount}
+                    date={date}
+                    status={status}
+                  />
+                ),
+              )}
+            </div>
           </div>
         </div>
       </div>
