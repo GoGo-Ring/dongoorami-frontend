@@ -1,12 +1,21 @@
 'use client';
+import { useRouter } from 'next/navigation';
 
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '~/components/tabs';
 
 import CompanionRecruitmentFilter from './companion-recruitment-filter';
 import PerformanceFilter from './performance-filter';
 
-const FilterTabs = () => {
-  const onSubmit = () => {};
+interface FilterTabsProps {
+  baseUrl?: string;
+}
+
+const FilterTabs = ({ baseUrl = 'search' }: FilterTabsProps) => {
+  const router = useRouter();
+
+  const onSubmit = (query: string) => {
+    router.push(`/${baseUrl}?${query}`);
+  };
 
   return (
     <Tabs defaultValue="performance" className="w-[300px]">
