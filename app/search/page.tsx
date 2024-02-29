@@ -1,4 +1,5 @@
 import PerformanceInfoCard from './_component/PerformanceInfoCard';
+import FilterTabs from '../_components/filter-tabs';
 
 const Page = () => {
   const performList = [
@@ -30,6 +31,7 @@ const Page = () => {
 
   return (
     <div className="flex">
+      <FilterTabs />
       {performList.map(
         ({ _id, posterSrc, title, facilityName, startDate, status }) => (
           <PerformanceInfoCard
