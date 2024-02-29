@@ -18,8 +18,8 @@ const PerformanceFilter = () => {
     {} as Record<string, boolean>,
   );
   const checkboxRef = useRef(checkbox);
-  const genreRef = useRef<string[]>(null);
-  const statusRef = useRef<string[]>(null);
+  const genreRef = useRef<string[]>([]);
+  const statusRef = useRef<string[]>([]);
 
   const handleSubmit = (e: MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
