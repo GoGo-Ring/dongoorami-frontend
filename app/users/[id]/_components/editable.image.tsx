@@ -41,9 +41,3 @@ const EditableImage = ({ nickname, profileImage }: EditableImageProps) => {
 };
 
 export default EditableImage;
-
-// m2 16g 512gb -> 200만원
-
-// vs
-
-// m1 16g 256gb -> 130만원
