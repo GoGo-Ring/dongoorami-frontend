@@ -5,7 +5,7 @@ interface InfoProps {
 
 const Info = ({ label, children }: InfoProps) => {
   return (
-    <div className="flex items-center gap-md">
+    <div className="grid grid-cols-[80px,auto] items-center gap-md">
       <span className="shrink-0">{label}</span>
       {children}
     </div>

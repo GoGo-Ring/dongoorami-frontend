@@ -1,5 +1,6 @@
 'use client';
 
+import Link from 'next/link';
 import { ChangeEvent, useState } from 'react';
 
 import { Member } from '~/apis/scheme/member';
@@ -17,7 +18,7 @@ import Info from './_components/info';
 import Review from './_components/review';
 import { TABS_VALUE } from './constants';
 
-const Page = () => {
+const Page = ({ params }: { params: { id: string } }) => {
   const [isEdit, setIsEdit] = useState(false);
 
   const { data: member } = useFetchMember();
@@ -81,9 +82,23 @@ const Page = () => {
           <Info label="나이">{getAge(new Date(member.birthdate))}세</Info>
           <Info label="성별">{member.gender}</Info>
           <Info label="매너지수">
-            <Progress value={member.mannerTemperature} className="w-1/2" />
-            {member.mannerTemperature}%
+            <div className="flex items-center gap-md">
+              <Progress value={member.mannerTemperature} className="w-1/2" />
+              {member.mannerTemperature}%
+            </div>
           </Info>
+
+          <div className="flex items-center">
+            <Link
+              href={`${params.id}/wish`}
+              className="block border-r pr-2 text-gray-400"
+            >
+              찜 목록
+            </Link>
+            <Link href={`${params.id}/message`} className="pl-2 text-gray-400">
+              쪽지 목록
+            </Link>
+          </div>
         </div>
       </div>
 
@@ -105,7 +120,7 @@ const Page = () => {
         </TabsList>
         <TabsContent value={TABS_VALUE.RECEIVED}>
           <Review
-            user="user"
+            title="concert"
             content="리뷰입니다. 리뷰입니다. 리뷰입니다."
             date={new Date().toString()}
           />
