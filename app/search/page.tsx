@@ -32,18 +32,21 @@ const Page = () => {
   return (
     <div className="flex">
       <FilterTabs />
-      {performList.map(
-        ({ _id, posterSrc, title, facilityName, startDate, status }) => (
-          <PerformanceInfoCard
-            key={_id}
-            posterSrc={posterSrc}
-            title={title}
-            facilityName={facilityName}
-            startDate={startDate}
-            status={status}
-          />
-        ),
-      )}
+      <span className="font-semibold">공연</span>
+      <div className="mx-auto grid grid-cols-3">
+        {performList.map(
+          ({ _id, posterSrc, title, facilityName, startDate, status }) => (
+            <PerformanceInfoCard
+              key={_id}
+              posterSrc={posterSrc}
+              title={title}
+              facilityName={facilityName}
+              startDate={startDate}
+              status={status}
+            />
+          ),
+        )}
+      </div>
     </div>
   );
 };
