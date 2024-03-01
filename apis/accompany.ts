@@ -1,3 +1,5 @@
+import { Comment } from '~/apis/scheme/comment';
+
 import { Companion, CompanionRequest } from './scheme/accompany';
 
 import api from '.';
@@ -38,14 +40,18 @@ export const updateCompanion = async (
 export const getCompanionProfile = async (memberId: number) =>
   await api.get({ url: `/profiles/${memberId}` });
 
-export const createComment = async (content: string) =>
+export const createComment = async (
+  accompanyPostId: string,
+  userId: string,
+  content: string,
+) =>
   await api.post({
-    url: '/comments}',
-    data: { content },
+    url: `/comments/${accompanyPostId}`,
+    data: { userId, content },
   });
 
 export const getComments = async (accompanyPostId: string) =>
-  await api.get({
+  await api.get<Comment[]>({
     url: `/comments/${accompanyPostId}`,
   });
 
