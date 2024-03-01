@@ -7,16 +7,17 @@ interface CompleteButtonProps<T> {
   onComplete: (inputs: T) => void;
 }
 
-// eslint-disable-next-line react/function-component-definition
-export default function CompleteButton<T>({
+const CompleteButton = <T,>({
   isEdit,
   inputs,
   handleIsEdit,
   onComplete,
-}: CompleteButtonProps<T>) {
+}: CompleteButtonProps<T>) => {
   if (isEdit) {
     return <Button onClick={() => onComplete(inputs)}>완료</Button>;
   }
 
   return <Button onClick={handleIsEdit}>수정</Button>;
-}
+};
+
+export default CompleteButton;

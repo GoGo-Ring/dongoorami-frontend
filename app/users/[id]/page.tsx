@@ -3,7 +3,6 @@
 import Link from 'next/link';
 import { ChangeEvent, useState } from 'react';
 
-import { Member } from '~/apis/scheme/member';
 import { Progress } from '~/components/progress';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '~/components/tabs';
 import { Textarea } from '~/components/textarea';
@@ -12,8 +11,8 @@ import useFetchMember from '~/hooks/queries/useFetchMember';
 import { getAge } from '~/utils/dateFormatter';
 
 import CompleteButton from './_components/complete-button';
+import EditableImage from './_components/editable-image';
 import EditableInput from './_components/editable-input';
-import EditableImage from './_components/editable.image';
 import Info from './_components/info';
 import Review from './_components/review';
 import { TABS_VALUE } from './constants';
@@ -35,7 +34,7 @@ const Page = ({ params }: { params: { id: string } }) => {
   };
 
   const { mutate: mutateMember } = useMutationMember();
-  const onSubmitMember = (inputsObj: Partial<Member>) => {
+  const onSubmitMember = (inputsObj: typeof inputs) => {
     const nextInputs = {} as typeof inputs;
 
     if (inputsObj.nickname !== member?.nickname) {
@@ -64,7 +63,7 @@ const Page = ({ params }: { params: { id: string } }) => {
           disabled={!isEdit}
           className="text-2xl font-bold disabled:pl-0"
         />
-        <CompleteButton<typeof inputs>
+        <CompleteButton
           isEdit={isEdit}
           inputs={inputs}
           handleIsEdit={() => setIsEdit(prev => !prev)}

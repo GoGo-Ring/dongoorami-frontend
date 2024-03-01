@@ -1,6 +1,7 @@
-interface InfoProps {
+import { PropsWithRequiredChildren } from '~/types/utils';
+
+interface InfoProps extends PropsWithRequiredChildren {
   label: string;
-  children: React.ReactNode;
 }
 
 const Info = ({ label, children }: InfoProps) => {
