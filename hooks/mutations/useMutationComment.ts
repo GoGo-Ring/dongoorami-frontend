@@ -24,7 +24,7 @@ const useMutationComment = (accompanyPostId: string) => {
 
       return { perviousComments };
     },
-    onError: (err, variables, context) => {
+    onError: (_err, _variables, context) => {
       queryClient.setQueryData(['comments'], context?.perviousComments);
     },
     onSettled: () => {
