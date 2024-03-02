@@ -1,7 +1,9 @@
 'use client';
 
-import CommentForm from '~/app/recruitment/[id]/_components/comment-form';
-import CommentList from '~/app/recruitment/[id]/_components/comment-list';
+import {
+  CommentForm,
+  CommentList,
+} from '~/app/recruitment/[id]/_components/comment';
 import useQueryComment from '~/hooks/queries/useQueryComment';
 
 interface Props {

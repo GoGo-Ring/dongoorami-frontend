@@ -1,4 +1,4 @@
-import CommentSection from '~/app/recruitment/[id]/_components/commentSection';
+import { CommentSection } from '~/app/recruitment/[id]/_components/comment';
 
 interface Params {
   id: string;
