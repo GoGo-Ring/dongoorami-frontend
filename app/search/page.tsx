@@ -5,73 +5,11 @@ import { Button } from '~/components/button';
 import PerformanceInfoCard from './_component/PerformanceInfoCard';
 import CompanionRecruitmentCard from '../_components/CompanionRecruitmentCard';
 import FilterTabs from '../_components/filter-tabs';
-import { usePerformances } from '../queries';
+import { useCompanion, usePerformances } from '../queries';
 
 const Page = () => {
   const performancesQuery = usePerformances();
-
-  const accompanyList = [
-    {
-      _id: 11,
-      title: '콘서트 동행하실 분 구해요',
-      concertName: '아이유 콘서트',
-      userId: '작성자',
-      gender: '무관',
-      personCount: 1,
-      viewCount: 3,
-      commentsCount: 3,
-      date: new Date(),
-      status: '모집 중' as const,
-    },
-    {
-      _id: 12,
-      title: '콘서트 동행하실 분 구해요',
-      concertName: '아이유 콘서트',
-      userId: '작성자',
-      gender: '무관',
-      personCount: 1,
-      viewCount: 3,
-      commentsCount: 3,
-      date: new Date(),
-      status: '모집 중' as const,
-    },
-    {
-      _id: 13,
-      title: '콘서트 동행하실 분 구해요',
-      concertName: '아이유 콘서트',
-      userId: '작성자',
-      gender: '무관',
-      personCount: 1,
-      viewCount: 3,
-      commentsCount: 3,
-      date: new Date(),
-      status: '모집 중' as const,
-    },
-    {
-      _id: 14,
-      title: '콘서트 동행하실 분 구해요',
-      concertName: '아이유 콘서트',
-      userId: '작성자',
-      gender: '무관',
-      personCount: 1,
-      viewCount: 3,
-      commentsCount: 3,
-      date: new Date(),
-      status: '모집 중' as const,
-    },
-    {
-      _id: 15,
-      title: '콘서트 동행하실 분 구해요',
-      concertName: '아이유 콘서트',
-      userId: '작성자',
-      gender: '무관',
-      personCount: 1,
-      viewCount: 3,
-      commentsCount: 3,
-      date: new Date(),
-      status: '모집 중' as const,
-    },
-  ];
+  const companionsQuery = useCompanion();
 
   return (
     <div className="flex">
@@ -103,9 +41,8 @@ const Page = () => {
           <div className="flex flex-col gap-6">
             <span className="font-semibold">동행 모집</span>
             <div className="mx-auto grid grid-cols-3 gap-4">
-              {accompanyList.map(
+              {companionsQuery?.data?.map(
                 ({
-                  _id,
                   title,
                   concertName,
                   userId,
@@ -117,7 +54,7 @@ const Page = () => {
                   status,
                 }) => (
                   <CompanionRecruitmentCard
-                    key={_id}
+                    key={title}
                     title={title}
                     concertName={concertName}
                     userId={userId}
@@ -125,6 +62,8 @@ const Page = () => {
                     personCount={personCount}
                     viewCount={viewCount}
                     commentsCount={commentsCount}
+                    // date={new Date()}
+                    // status={'모집 중'}
                     date={date}
                     status={status}
                   />
