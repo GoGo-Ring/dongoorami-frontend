@@ -26,3 +26,15 @@ export interface CompanionDetail
   viewCount: number;
   waitingCount: number;
 }
+
+export interface CompanionRecruitmentCard {
+  title: string;
+  concertName: string;
+  userId: string;
+  gender: string;
+  personCount: number;
+  viewCount: number;
+  commentsCount: number;
+  date: Date;
+  status: '모집 중' | '모집 종료';
+}
