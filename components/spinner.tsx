@@ -1,6 +1,6 @@
 import { cn } from '~/libs/utils';
 
-const Spinner = ({ className }: React.SVGProps<SVGSVGElement>) => {
+const Spinner = ({ className }: React.ComponentProps<'svg'>) => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
