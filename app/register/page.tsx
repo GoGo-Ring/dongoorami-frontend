@@ -18,13 +18,7 @@ const Register = () => {
   const InputContainerStyle = 'h-[100px] flex flex-col rounded-md px-2 ';
   const ErrorStyle = 'px-1 mt-2 text-red-500 text-sm';
 
-  const [values, setValues] = useState<FormValues>({
-    nickname: '',
-    gender: '',
-    year: '',
-    month: '',
-    day: '',
-  });
+  const [values, setValues] = useState<FormValues>({} as FormValues);
 
   const [errors, setErrors] = useState({
     nickname: '',
