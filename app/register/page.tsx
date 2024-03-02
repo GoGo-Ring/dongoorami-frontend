@@ -27,7 +27,9 @@ const Register = () => {
   });
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setValues({ ...values, [event.target.id]: event.target.value });
+    const { id, value } = event.target;
+
+    setValues({ ...values, [id]: value });
   };
   const handleGenderChange = (value: 'male' | 'female') => {
     setValues({ ...values, gender: value });
