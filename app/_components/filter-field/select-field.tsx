@@ -1,5 +1,5 @@
 'use client';
-import { forwardRef } from 'react';
+import { forwardRef, useState } from 'react';
 
 import {
   Select,
@@ -30,17 +30,22 @@ const SelectOptionItem = ({ value, label }: SelectOptionItemProps) => {
 
 const SelectField = forwardRef<number, SelectFieldProps>(
   ({ category, options, defaultValue, placeholder }, ref) => {
+    const defaultString = defaultValue.toString();
+    const [selectValue, setSelectValue] = useState(defaultString);
+
+    if (!ref) {
+      return;
+    }
+    if (typeof ref === 'function') {
+      return;
+    }
+    if (!ref.current) {
+      return;
+    }
+    ref.current = parseInt(selectValue);
+
     const onValueChange = (value: string) => {
-      if (!ref) {
-        return;
-      }
-      if (typeof ref === 'function') {
-        return;
-      }
-      if (!ref.current) {
-        return;
-      }
-      ref.current = parseInt(value);
+      setSelectValue(value);
     };
 
     return (
@@ -50,7 +55,7 @@ const SelectField = forwardRef<number, SelectFieldProps>(
           <SelectTrigger className="w-[180px]">
             <SelectValue
               placeholder={placeholder}
-              defaultValue={defaultValue.toString()}
+              defaultValue={defaultString}
             />
           </SelectTrigger>
           <SelectContent>
