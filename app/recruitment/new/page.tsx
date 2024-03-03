@@ -103,7 +103,10 @@ const Page = () => {
           <Button className="w-full bg-secondary text-secondary-foreground">
             취소
           </Button>
-          <Button className="w-full bg-primary text-primary-foreground">
+          <Button
+            className="w-full bg-primary text-primary-foreground"
+            disabled={mutation.isPending}
+          >
             {mutation.isPending ? <Spinner /> : '등록'}
           </Button>
         </div>
