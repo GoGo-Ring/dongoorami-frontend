@@ -4,7 +4,7 @@ import { BASE_URL } from '~/apis';
 import { PerformanceInfoCard } from '~/apis/scheme/performance';
 
 interface PerformanceInfoCardFixture {
-  current: PerformanceInfoCard[] | null;
+  current: PerformanceInfoCard[];
 }
 
 const performance: PerformanceInfoCardFixture = {
