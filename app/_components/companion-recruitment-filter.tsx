@@ -13,7 +13,7 @@ import SelectField from './filter-field/select-field';
 export interface refType {
   gender: string;
   region: string[];
-  age: number[];
+  age: [number, number];
   transportation: string;
   personCount: number;
 }
