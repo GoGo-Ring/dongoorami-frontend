@@ -31,7 +31,7 @@ export interface CompanionRecruitmentCard {
   title: string;
   concertName: string;
   userId: string;
-  gender: string;
+  gender: '남' | '여' | '무관';
   personCount: number;
   viewCount: number;
   commentsCount: number;
