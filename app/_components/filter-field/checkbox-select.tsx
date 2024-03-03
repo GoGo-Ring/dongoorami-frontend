@@ -1,12 +1,12 @@
 'use client';
 
-import React, { forwardRef } from 'react';
+import React, { MouseEvent, forwardRef, useState } from 'react';
 
 import { Checkbox } from '~/components/checkbox';
 
 interface ItemProps {
   label: string;
-  onClick: (value: string) => void;
+  onClick: (e: MouseEvent<HTMLButtonElement>) => void;
 }
 interface CheckboxSelectFieldProps {
   category: string;
@@ -15,13 +15,9 @@ interface CheckboxSelectFieldProps {
 }
 
 const CheckboxItem = ({ label, onClick }: ItemProps) => {
-  const handleClick = () => {
-    onClick(label);
-  };
-
   return (
     <div className="flex items-center space-x-2">
-      <Checkbox id={label} onClick={handleClick} />
+      <Checkbox id={label} value={label} onClick={onClick} />
       <label
         htmlFor={label}
         className="text-sm font-medium leading-none hover:cursor-pointer peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
@@ -36,19 +32,34 @@ const CheckboxSelectField = forwardRef<
   Record<string, boolean>,
   CheckboxSelectFieldProps
 >(({ category, options }, ref) => {
-  const onClick = (value: string) => {
-    if (!ref) {
-      return;
-    }
+  const [checkbox, setCheckbox] = useState(
+    options.reduce(
+      (acc, option) => {
+        acc[option] = false;
 
-    if (typeof ref === 'function') {
-      return;
-    }
+        return acc;
+      },
+      {} as Record<string, boolean>,
+    ),
+  );
 
-    if (!ref.current) {
-      return;
-    }
-    ref.current[value] = !ref.current[value];
+  if (!ref) {
+    return;
+  }
+
+  if (typeof ref === 'function') {
+    return;
+  }
+
+  if (!ref.current) {
+    return;
+  }
+  ref.current = checkbox;
+
+  const onClick = (e: MouseEvent<HTMLButtonElement>) => {
+    const { value } = e.currentTarget;
+
+    setCheckbox({ ...checkbox, [value]: !checkbox[value] });
   };
 
   return (
