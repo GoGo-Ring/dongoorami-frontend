@@ -3,6 +3,7 @@
 import { useSearchParams, useRouter } from 'next/navigation';
 import { useEffect, Suspense } from 'react';
 
+import { instance } from '~/apis';
 import Spinner from '~/components/spinner';
 
 const OAuth = () => {
@@ -21,7 +22,7 @@ const OAuth = () => {
       alert('로그인 오류');
       router.push('/login');
     }
-
+    instance.defaults.headers.common['Authorization'] = `Bearer ${accessToken}`;
     isFirstLogin === 'true' ? router.push('/register') : router.push('/');
   });
 
