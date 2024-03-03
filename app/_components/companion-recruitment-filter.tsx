@@ -52,15 +52,17 @@ const CompanionRecruitmentFilter = ({
     };
   };
 
+  const objectToQueryString = (object: { [key: string]: string | number }) =>
+    Object.entries(object).reduce((acc, [key, value]) => {
+      return `${acc}&${key}=${value}`;
+    }, '');
+
   const getQuery = () => {
     const [regionQuery] = joinQuery(
       Object.keys(checkboxRef.current).filter(key => checkboxRef.current[key]),
     );
 
-    const { gender, regions, startAge, endAge, transportation, totalPeople } =
-      setObject(regionQuery);
-
-    return `gender=${gender}&region=${regions}&startAge=${startAge}&endAge=${endAge}&transportation=${transportation}&totalPeople=${totalPeople}`;
+    return objectToQueryString(setObject(regionQuery));
   };
 
   const handleSubmit = (e: MouseEvent<HTMLButtonElement>) => {
