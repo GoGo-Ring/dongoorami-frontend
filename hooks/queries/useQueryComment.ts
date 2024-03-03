@@ -7,7 +7,7 @@ import { getComments } from '~/apis/accompany';
 const useQueryComment = (accompanyPostId: string) => {
   const query = useQuery({
     queryKey: ['comments', accompanyPostId],
-    queryFn: async () => (await getComments(accompanyPostId)).data,
+    queryFn: () => getComments(accompanyPostId),
   });
 
   return query;

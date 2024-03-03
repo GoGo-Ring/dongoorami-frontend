@@ -3,23 +3,33 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 
 import { createComment } from '~/apis/accompany';
+import { Comment } from '~/apis/scheme/comment';
+
+interface CommentData {
+  userId: string;
+  content: string;
+}
 
 const useMutationComment = (accompanyPostId: string) => {
   const queryClient = useQueryClient();
   const mutation = useMutation({
-    onMutate: async ({
-      userId,
-      content,
-    }: {
-      userId: string;
-      content: string;
-    }) => {
-      createComment(accompanyPostId, userId, content);
-      const perviousComments = queryClient.getQueryData(['comments']);
+    mutationFn: ({ userId, content }: CommentData) =>
+      createComment(accompanyPostId, userId, content),
+    onMutate: async ({ userId, content }: CommentData) => {
+      const perviousComments = queryClient.getQueryData<Comment[]>([
+        'comments',
+      ]);
 
-      queryClient.setQueryData(['comments'], (oldData: string[]) => [
-        ...oldData,
-        content,
+      if (!perviousComments) {
+        return;
+      }
+
+      queryClient.setQueryData(['comments'], () => [
+        ...perviousComments,
+        {
+          memberId: userId,
+          content,
+        },
       ]);
 
       return { perviousComments };

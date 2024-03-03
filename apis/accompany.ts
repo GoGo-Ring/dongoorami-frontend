@@ -50,10 +50,13 @@ export const createComment = async (
     data: { userId, content },
   });
 
-export const getComments = async (accompanyPostId: string) =>
-  await api.get<Comment[]>({
+export const getComments = async (accompanyPostId: string) => {
+  const { data } = await api.get<Comment[]>({
     url: `/comments/${accompanyPostId}`,
   });
+
+  return data;
+};
 
 export const updateComment = async (accompanyPostId: string, content: string) =>
   await api.patch({
