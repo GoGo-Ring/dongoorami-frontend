@@ -21,10 +21,10 @@ export interface refType {
 const CompanionRecruitmentFilter = () => {
   const radioRef = useRef<string>(SELECTION.GENDER.options[0].value);
   const checkbox = SELECTION.REGIONS.options.reduce(
-    (acc, option) => {
-      acc[option] = false;
+    (regions, option) => {
+      regions[option] = false;
 
-      return acc;
+      return regions;
     },
     {} as Record<string, boolean>,
   );
