@@ -4,6 +4,7 @@ import { MouseEvent, useRef } from 'react';
 
 import { Button } from '~/components/button';
 import { SEARCH, SELECTION } from '~/constants/filterField';
+import { joinQuery } from '~/utils/joinQuery';
 
 import CheckboxSelectField from './filter-field/checkbox-select';
 import InputField from './filter-field/input-field';
@@ -39,10 +40,6 @@ const CompanionRecruitmentFilter = ({
   );
   const ageRef = useRef([20, 30]);
   const personCountRef = useRef(1);
-
-  const joinQuery = (...targets: string[][]) => {
-    return targets.map(target => target.join('&'));
-  };
 
   const setObject = (regionQuery: string) => {
     return {
