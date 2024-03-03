@@ -1,12 +1,13 @@
 'use client';
-import { forwardRef, useRef } from 'react';
+import { ChangeEvent, forwardRef, useState } from 'react';
 
 import { Input } from '~/components/input';
 
 interface InputItemProps {
   type: string;
+  name: string;
   defaultValue: number;
-  onChange: () => void;
+  onChange: (e: ChangeEvent<HTMLInputElement>) => void;
 }
 
 interface InputFieldProps {
@@ -14,47 +15,40 @@ interface InputFieldProps {
   defaultValues: number[];
 }
 
-const InputItem = forwardRef<HTMLInputElement, InputItemProps>(
-  ({ type, defaultValue, onChange }, ref) => {
-    return (
-      <Input
-        defaultValue={defaultValue}
-        type={type}
-        className="w-16"
-        min={0}
-        max={100}
-        ref={ref}
-        onChange={onChange}
-      />
-    );
-  },
-);
-
-InputItem.displayName = 'InputItem';
+const InputItem = ({ type, name, defaultValue, onChange }: InputItemProps) => {
+  return (
+    <Input
+      defaultValue={defaultValue}
+      type={type}
+      className="w-16"
+      name={name}
+      min={0}
+      max={100}
+      onChange={onChange}
+    />
+  );
+};
 
 const InputField = forwardRef<number[], InputFieldProps>(
   ({ category, defaultValues }, ref) => {
-    const minRef = useRef<HTMLInputElement>(null);
-    const maxRef = useRef<HTMLInputElement>(null);
     const [minValue, maxValue] = defaultValues;
+    const [inputs, setInputs] = useState({
+      min: minValue.toString(),
+      max: maxValue.toString(),
+    });
 
-    const onChange = () => {
-      if (!ref) {
-        return;
-      }
-      if (typeof ref === 'function') {
-        return;
-      }
-      if (!ref.current || !minRef.current || !maxRef.current) {
-        return;
-      }
-      if (typeof ref.current === 'function') {
-        return;
-      }
-      ref.current = [
-        parseInt(minRef.current.value),
-        parseInt(maxRef.current.value),
-      ];
+    if (!ref) {
+      return;
+    }
+    if (typeof ref === 'function') {
+      return;
+    }
+    ref.current = [parseInt(inputs.min), parseInt(inputs.max)];
+
+    const onChange = (e: ChangeEvent<HTMLInputElement>) => {
+      const { value, name } = e.currentTarget;
+
+      setInputs({ ...inputs, [name]: value });
     };
 
     return (
@@ -64,14 +58,14 @@ const InputField = forwardRef<number[], InputFieldProps>(
           <InputItem
             defaultValue={minValue}
             type="number"
-            ref={minRef}
+            name="min"
             onChange={onChange}
           />
           <span className="my-auto ">~</span>
           <InputItem
             defaultValue={maxValue}
             type="number"
-            ref={maxRef}
+            name="max"
             onChange={onChange}
           />
         </div>
