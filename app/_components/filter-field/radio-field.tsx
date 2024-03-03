@@ -1,6 +1,6 @@
 'use client';
 
-import { forwardRef } from 'react';
+import { MouseEvent, forwardRef, useState } from 'react';
 
 import { Label } from '~/components/label';
 import { RadioGroup, RadioGroupItem } from '~/components/radio-group';
@@ -12,7 +12,7 @@ interface optionProps {
 interface RadioItemProps {
   label?: string;
   value: string;
-  onClick: (value: string) => void;
+  onClick: (e: MouseEvent<HTMLButtonElement>) => void;
 }
 
 interface RadioFieldProps {
@@ -23,11 +23,7 @@ interface RadioFieldProps {
 const RadioItem = ({ label, value, onClick }: RadioItemProps) => {
   return (
     <div className="flex items-center space-x-2">
-      <RadioGroupItem
-        value={value}
-        id={label}
-        onClick={onClick.bind(null, value)}
-      />
+      <RadioGroupItem value={value} id={label} onClick={onClick} />
       <Label className="hover:cursor-pointer" htmlFor={label}>
         {label}
       </Label>
@@ -38,15 +34,20 @@ const RadioItem = ({ label, value, onClick }: RadioItemProps) => {
 const RadioField = forwardRef<string, RadioFieldProps>(
   ({ category, options }, ref) => {
     const defaultValue = options[0].value;
+    const [state, setState] = useState('');
 
-    const onClick = (value: string) => {
-      if (!ref) {
-        return;
-      }
-      if (typeof ref === 'function') {
-        return;
-      }
-      ref.current = value;
+    if (!ref) {
+      return;
+    }
+    if (typeof ref === 'function') {
+      return;
+    }
+    ref.current = state;
+
+    const onClick = (e: MouseEvent<HTMLButtonElement>) => {
+      const { value } = e.currentTarget;
+
+      setState(value);
     };
 
     return (
