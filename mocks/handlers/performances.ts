@@ -36,7 +36,7 @@ const performance: PerformanceInfoCardFixture = {
   ],
 };
 
-export const getPerformance = rest.get<PerformanceInfoCard>(
+export const getPerformance = rest.get<PerformanceInfoCardFixture>(
   `${BASE_URL}/search/concerts`,
   (_, res, ctx) => res(ctx.status(200), ctx.json(performance.current)),
 );
