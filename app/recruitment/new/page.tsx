@@ -20,7 +20,7 @@ const Page = () => {
   return (
     <div className="flex justify-center py-10">
       <Form
-        className="flex w-[890px] flex-col justify-center gap-4"
+        className="flex w-full flex-col justify-center gap-4"
         initialValues={INITIAL_VALUES}
         initialValidations={VALIDATIONS}
       >
