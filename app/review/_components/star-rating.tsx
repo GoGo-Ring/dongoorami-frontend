@@ -105,7 +105,7 @@ const StarRating = () => {
 
   return (
     <div className="flex w-fit flex-col">
-      <InputRating onChange={onChange} width={width} />;
+      <InputRating onChange={onChange} width={width} />
       <div className={'flex w-36 justify-end'}>
         <div className={'flex w-[132px] justify-between'}>
           {star?.map((value, index) => (
