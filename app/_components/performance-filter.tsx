@@ -4,11 +4,16 @@ import React, { MouseEvent, useRef } from 'react';
 
 import { Button } from '~/components/button';
 import { SEARCH, SELECTION } from '~/constants/filterField';
+import { joinQuery } from '~/utils/joinQuery';
 
 import ButtonSelectField from './filter-field/button-select';
 import CheckboxSelectField from './filter-field/checkbox-select';
 
-const PerformanceFilter = () => {
+interface PerformanceFilterProps {
+  onSubmit: (query: string) => void;
+}
+
+const PerformanceFilter = ({ onSubmit }: PerformanceFilterProps) => {
   const checkbox = SELECTION.REGIONS.options.reduce(
     (acc, option) => {
       acc[option] = false;
@@ -18,11 +23,47 @@ const PerformanceFilter = () => {
     {} as Record<string, boolean>,
   );
   const checkboxRef = useRef(checkbox);
-  const genreRef = useRef<string[]>(null);
-  const statusRef = useRef<string[]>(null);
+  const genreRef = useRef<string[]>([]);
+  const statusRef = useRef<string[]>([]);
+
+  if (!genreRef || !statusRef || !checkboxRef) {
+    return;
+  }
+
+  const setObject = (
+    genreQuery: string,
+    statusQuery: string,
+    regionsQuery: string,
+  ) => {
+    return {
+      genre: genreQuery,
+      status: statusQuery,
+      regions: regionsQuery,
+    };
+  };
+
+  const getQuery = () => {
+    const [genreQuery, statusQuery, regionsQuery] = joinQuery(
+      genreRef.current,
+      statusRef.current,
+      Object.keys(checkboxRef.current).filter(key => checkboxRef.current[key]),
+    );
+
+    const { genre, status, regions } = setObject(
+      genreQuery,
+      statusQuery,
+      regionsQuery,
+    );
+
+    return `genre=${genre}&status=${status}&regions=${regions}`;
+  };
 
   const handleSubmit = (e: MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
+
+    const query = getQuery();
+
+    onSubmit(query);
   };
 
   return (

@@ -121,7 +121,7 @@ export const RadioGroupField = ({
 
 export const RadioGroupFieldItem = ({ id, label }: FieldProps) => {
   return (
-    <Field id={id} label={label} labelVariant="radio">
+    <Field id={id} label={label} labelVariant="radio" variant="radio">
       <RadioGroupItem value={id} id={id} />
     </Field>
   );

@@ -3,8 +3,8 @@ export const SELECTION = {
     category: '성별',
     options: [
       { value: 'irrelevant', label: '무관' },
-      { value: 'male', label: '남자' },
-      { value: 'female', label: '여자' },
+      { value: 'male', label: '남' },
+      { value: 'female', label: '여' },
     ],
   },
   TRANSPORTATION: {
