@@ -1,4 +1,4 @@
-import { ChangeEvent, useMemo, useState } from 'react';
+import { ChangeEvent, Dispatch, SetStateAction, useMemo } from 'react';
 
 import Icon from '~/components/icon';
 
@@ -40,8 +40,11 @@ enum StarState {
   Full = 'full',
 }
 
-const StarRating = () => {
-  const [rate, setRate] = useState(0);
+interface StarRatingProps {
+  rate: number;
+  setRate: Dispatch<SetStateAction<number>>;
+}
+const StarRating = ({ rate, setRate }: StarRatingProps) => {
   const star = useMemo(() => {
     const rating = [
       StarState.None,

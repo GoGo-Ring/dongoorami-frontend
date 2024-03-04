@@ -18,6 +18,8 @@ interface ReviewFormProps {
 const ReviewForm = ({ username }: ReviewFormProps) => {
   const [isOpen, setIsOpen] = useState(false);
 
+  const [rate, setRate] = useState(0);
+
   return (
     <Collapsible
       open={isOpen}
@@ -40,9 +42,12 @@ const ReviewForm = ({ username }: ReviewFormProps) => {
       </div>
       <CollapsibleContent className="space-y-2">
         <div className="flex justify-center ">
-          <StarRating />
+          <StarRating rate={rate} setRate={setRate} />
         </div>
-        <Textarea placeholder="동행자, 동행 상황에 대한 솔직한 리뷰를 남겨주세요." />
+        <Textarea
+          className="resize-none"
+          placeholder="동행자, 동행 상황에 대한 솔직한 리뷰를 남겨주세요."
+        />
       </CollapsibleContent>
     </Collapsible>
   );
