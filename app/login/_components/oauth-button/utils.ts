@@ -20,8 +20,3 @@ export const getButtonConfig = (domain: Domain) => {
     },
   }[domain];
 };
-
-export const oAuthUrl: { [key in Domain]: string } = {
-  kakao: `${process.env.NEXT_PUBLIC_KAKAO_AUTH_URL}`,
-  naver: `${process.env.NEXT_PUBLIC_NAVER_AUTH_URL}`,
-};
