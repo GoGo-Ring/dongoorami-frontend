@@ -11,6 +11,7 @@ const InputRating = ({ onChange }: InputRatingProps) => {
     <input
       type="range"
       onChange={onChange}
+      defaultValue={0}
       step={0.5}
       min={0}
       max={5}
