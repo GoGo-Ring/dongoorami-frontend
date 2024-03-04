@@ -23,3 +23,9 @@ export const updateProfileImage = (file: File) => {
 };
 
 export const deleteMember = () => api.delete({ url: '/members' });
+
+export const registerMember = async (member: Partial<Member>) => {
+  const { data } = await api.post<Member>({ url: '/members', data: member });
+
+  return data;
+};
