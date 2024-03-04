@@ -43,61 +43,33 @@ enum StarState {
 }
 
 interface StarRatingProps {
+  starCount?: number;
   rate: number;
   setRate: Dispatch<SetStateAction<number>>;
 }
-const StarRating = ({ rate, setRate }: StarRatingProps) => {
+const StarRating = ({ starCount = 5, rate, setRate }: StarRatingProps) => {
   const star = useMemo(() => {
-    const rating = [
-      StarState.None,
-      StarState.None,
-      StarState.None,
-      StarState.None,
-      StarState.None,
-    ];
+    const defaultRating = Array.from(
+      { length: starCount },
+      () => StarState.None,
+    );
+    const hasHalf = Number.isInteger(rate);
 
     if (rate === 0) {
-      return rating;
+      return defaultRating;
     }
 
-    return rating.map((_, index) => {
-      if (rate === 0.5 && index === 0) {
-        return StarState.Half;
-      }
-      if (rate === 1 && index === 0) {
-        return StarState.Full;
-      }
-      if (rate === 1.5 && index === 1) {
-        return StarState.Half;
-      }
-      if (rate === 2 && index === 1) {
-        return StarState.Full;
-      }
-      if (rate === 2.5 && index === 2) {
-        return StarState.Half;
-      }
-      if (rate === 3 && index === 2) {
-        return StarState.Full;
-      }
-      if (rate === 3.5 && index === 3) {
-        return StarState.Half;
-      }
-      if (rate === 4 && index === 3) {
-        return StarState.Full;
-      }
-      if (rate === 4.5 && index === 4) {
-        return StarState.Half;
-      }
-      if (rate === 5 && index === 4) {
-        return StarState.Full;
-      }
-      if (index < rate) {
-        return StarState.Full;
-      }
+    const IntegerRate = Math.floor(rate);
+    const newRating = defaultRating.map((none, index) =>
+      index <= IntegerRate - 1 ? StarState.Full : none,
+    );
 
-      return StarState.None;
-    });
-  }, [rate]);
+    if (!hasHalf) {
+      newRating[IntegerRate] = StarState.Half;
+    }
+
+    return newRating;
+  }, [rate, starCount]);
 
   const onChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { value } = e.currentTarget;
@@ -107,7 +79,7 @@ const StarRating = ({ rate, setRate }: StarRatingProps) => {
 
   return (
     <div className="relative flex w-fit flex-col">
-      <InputRating onChange={onChange} width={width} />
+      <InputRating onChange={onChange} />
       <div className={'flex w-36 justify-end '}>
         <div className={'flex w-[132px] justify-between '}>
           {star?.map((value, index) => (
