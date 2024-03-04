@@ -1,6 +1,6 @@
 import { cn } from '~/libs/utils';
 
-const Spinner = ({ className }: React.SVGProps<SVGSVGElement>) => {
+const Spinner = ({ className, ...props }: React.ComponentProps<'svg'>) => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -13,6 +13,7 @@ const Spinner = ({ className }: React.SVGProps<SVGSVGElement>) => {
       strokeLinecap="round"
       strokeLinejoin="round"
       className={cn('animate-spin', className)}
+      {...props}
     >
       <path d="M21 12a9 9 0 1 1-6.219-8.56" />
     </svg>
