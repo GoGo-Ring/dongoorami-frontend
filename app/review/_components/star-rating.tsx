@@ -14,7 +14,7 @@ const InputRating = ({ onChange }: InputRatingProps) => {
       step={0.5}
       min={0}
       max={5}
-      className={'absolute h-6 w-36'}
+      className={'absolute h-6 w-36 opacity-0'}
     />
   );
 };
