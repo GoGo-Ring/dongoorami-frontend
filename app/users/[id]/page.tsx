@@ -2,6 +2,7 @@
 
 import Link from 'next/link';
 import { ChangeEvent, useState } from 'react';
+import { toast } from 'sonner';
 
 import { Progress } from '~/components/progress';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '~/components/tabs';
@@ -22,8 +23,8 @@ const Page = ({ params }: { params: { id: string } }) => {
 
   const { data: member } = useFetchMember();
   const [inputs, setInputs] = useState({
-    nickname: member?.nickname,
-    introduction: member?.profileImage,
+    nickname: member?.nickname || '',
+    introduction: member?.profileImage || '',
   });
   const handleChangeInputs = <T extends HTMLInputElement | HTMLTextAreaElement>(
     e: ChangeEvent<T>,
@@ -37,6 +38,14 @@ const Page = ({ params }: { params: { id: string } }) => {
   const onSubmitMember = (inputsObj: typeof inputs) => {
     const nextInputs = {} as typeof inputs;
 
+    if (inputsObj.nickname.length < 2) {
+      toast.warning('수정 실패!', {
+        description: '닉네임은 2글자 이상이어야 합니다.',
+      });
+
+      return;
+    }
+
     if (inputsObj.nickname !== member?.nickname) {
       nextInputs.nickname = inputsObj.nickname;
     }
@@ -46,6 +55,7 @@ const Page = ({ params }: { params: { id: string } }) => {
 
     mutateMember(nextInputs, {
       onSettled: () => setIsEdit(false),
+      onSuccess: () => toast.success('수정 완료!'),
     });
   };
 
