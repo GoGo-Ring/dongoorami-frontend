@@ -4,6 +4,7 @@ import React, { MouseEvent, useRef } from 'react';
 
 import { Button } from '~/components/button';
 import { SEARCH, SELECTION } from '~/constants/filterField';
+import { joinQuery } from '~/utils/joinQuery';
 
 import ButtonSelectField from './filter-field/button-select';
 import CheckboxSelectField from './filter-field/checkbox-select';
@@ -24,10 +25,6 @@ const PerformanceFilter = ({ onSubmit }: PerformanceFilterProps) => {
   const checkboxRef = useRef(checkbox);
   const genreRef = useRef<string[]>([]);
   const statusRef = useRef<string[]>([]);
-
-  const joinQuery = (...targets: string[][]) => {
-    return targets.map(target => target.join('&'));
-  };
 
   if (!genreRef || !statusRef || !checkboxRef) {
     return;
