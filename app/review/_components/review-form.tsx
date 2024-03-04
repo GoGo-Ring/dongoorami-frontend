@@ -1,3 +1,5 @@
+import { useState } from 'react';
+
 import { Button } from '~/components/button';
 import {
   Collapsible,
@@ -10,8 +12,14 @@ interface ReviewFormProps {
   username: string;
 }
 const ReviewForm = ({ username }: ReviewFormProps) => {
+  const [isOpen, setIsOpen] = useState(false);
+
   return (
-    <Collapsible className="w-[350px] space-y-2">
+    <Collapsible
+      open={isOpen}
+      onOpenChange={setIsOpen}
+      className="w-[350px] space-y-2"
+    >
       <div className="flex items-center justify-between space-x-4 px-4">
         <span className="text-sm font-semibold">{username}</span>
         <CollapsibleTrigger asChild>
