@@ -4,7 +4,6 @@ import Icon from '~/components/icon';
 import { cn } from '~/libs/utils';
 
 interface InputRatingProps {
-  width?: number;
   onChange: (e: ChangeEvent<HTMLInputElement>) => void;
 }
 const InputRating = ({ onChange }: InputRatingProps) => {
@@ -16,7 +15,7 @@ const InputRating = ({ onChange }: InputRatingProps) => {
       step={0.5}
       min={0}
       max={5}
-      className={'absolute h-6 w-36 opacity-0'}
+      className={'absolute h-6 w-full opacity-0'}
     />
   );
 };
@@ -99,7 +98,6 @@ const StarRating = ({ rate, setRate }: StarRatingProps) => {
       return StarState.None;
     });
   }, [rate]);
-  const width = 132;
 
   const onChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { value } = e.currentTarget;
