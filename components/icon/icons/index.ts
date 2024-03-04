@@ -2,6 +2,7 @@ import AlarmIcon from './alarm';
 import ChatIcon from './chat';
 import ChevronDownIcon from './chevron-down';
 import EyeIcon from './eye';
+import FilledStarIcon from './filled-star';
 import FilterIcon from './filter';
 import HeartIcon from './heart';
 import MenuIcon from './menu';
@@ -22,6 +23,7 @@ const iconName = {
   search: SearchIcon,
   star: StarIcon,
   user: UserIcon,
+  'filled-star': FilledStarIcon,
 };
 
 export type IconNames = keyof typeof iconName;
