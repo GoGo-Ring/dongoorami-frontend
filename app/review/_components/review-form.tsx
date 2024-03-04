@@ -1,5 +1,6 @@
-import React, { memo, useState, useRef, useEffect } from 'react';
+import React, { memo, useState, useRef, useEffect, useCallback } from 'react';
 
+import { ReviewType } from '~/app/page';
 import { Button } from '~/components/button';
 import {
   Collapsible,
@@ -14,30 +15,26 @@ import StarRating from './star-rating';
 
 interface ReviewFormProps {
   username: string;
-  onUpdateRating: (value: number) => void;
-  getTextAreaValue: (value: string) => void;
+  userId: string;
+  onUpdate: ({ userId, text, starRating }: ReviewType) => void;
 }
-const ReviewForm = ({
-  username,
-  onUpdateRating,
-  getTextAreaValue,
-}: ReviewFormProps) => {
+const ReviewForm = ({ username, userId, onUpdate }: ReviewFormProps) => {
   const [isOpen, setIsOpen] = useState(false);
   const [rate, setRate] = useState(0);
   const ref = useRef<HTMLTextAreaElement>(null);
 
-  useEffect(() => {
-    onUpdateRating(rate);
-  }, [rate, onUpdateRating]);
-
-  const handleBlur = () => {
+  const onChange = useCallback(() => {
     if (!ref.current) {
       return;
     }
     const { value } = ref.current;
 
-    getTextAreaValue(value);
-  };
+    onUpdate({ userId, text: value, starRating: rate });
+  }, [onUpdate, rate, userId]);
+
+  useEffect(() => {
+    onChange();
+  }, [onChange]);
 
   return (
     <Collapsible
@@ -65,7 +62,7 @@ const ReviewForm = ({
         </div>
         <Textarea
           ref={ref}
-          onBlur={handleBlur}
+          onBlur={onChange}
           className="resize-none"
           placeholder="동행자, 동행 상황에 대한 솔직한 리뷰를 남겨주세요."
         />
