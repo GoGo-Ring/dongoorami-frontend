@@ -4,6 +4,7 @@ import {
   CollapsibleContent,
   CollapsibleTrigger,
 } from '~/components/collapsible';
+import { Textarea } from '~/components/textarea';
 
 interface ReviewFormProps {
   username: string;
@@ -23,6 +24,7 @@ const ReviewForm = ({ username }: ReviewFormProps) => {
         <div className="rounded-md border px-4 py-2 font-mono text-sm shadow-sm">
           @radix-ui/colors
         </div>
+        <Textarea placeholder="동행자, 동행 상황에 대한 솔직한 리뷰를 남겨주세요." />
       </CollapsibleContent>
     </Collapsible>
   );
