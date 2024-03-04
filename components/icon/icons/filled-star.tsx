@@ -1,4 +1,11 @@
 const FilledStarIcon = (props: React.ComponentProps<'svg'>) => {
+  const { className } = props;
+  const fill = className?.includes('half')
+    ? 'url(#half)'
+    : className?.includes('full')
+      ? '#FFCD4B'
+      : '#E5E5E5';
+
   return (
     <svg
       width="15"
@@ -18,6 +25,7 @@ const FilledStarIcon = (props: React.ComponentProps<'svg'>) => {
         x="0"
         y="0"
       />
+      fill={fill}
     </svg>
   );
 };
