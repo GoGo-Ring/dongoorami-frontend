@@ -17,7 +17,7 @@ export const updateMember = async (member: Partial<Member>) => {
 export const deleteMember = () => api.delete({ url: '/members' });
 
 export const registerMember = async (member: Partial<Member>) => {
-  const { data } = await api.post<Member>({ url: '/members', data: member });
+  const { data } = await api.patch<Member>({ url: '/members', data: member });
 
   return data;
 };
