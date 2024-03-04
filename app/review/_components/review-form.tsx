@@ -5,11 +5,14 @@ import {
   CollapsibleTrigger,
 } from '~/components/collapsible';
 
-const ReviewForm = () => {
+interface ReviewFormProps {
+  username: string;
+}
+const ReviewForm = ({ username }: ReviewFormProps) => {
   return (
     <Collapsible className="w-[350px] space-y-2">
       <div className="flex items-center justify-between space-x-4 px-4">
-        <span className="text-sm font-semibold">{}</span>
+        <span className="text-sm font-semibold">{username}</span>
         <CollapsibleTrigger asChild>
           <Button variant="ghost" size="sm">
             <span className="sr-only">Toggle</span>
