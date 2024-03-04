@@ -8,16 +8,14 @@ interface InputRatingProps {
 }
 const InputRating = ({ onChange }: InputRatingProps) => {
   return (
-    <div>
-      <input
-        type="range"
-        onChange={onChange}
-        step={0.5}
-        min={0}
-        max={5}
-        className={'w-36'}
-      />
-    </div>
+    <input
+      type="range"
+      onChange={onChange}
+      step={0.5}
+      min={0}
+      max={5}
+      className={'absolute h-6 w-36'}
+    />
   );
 };
 
@@ -104,10 +102,10 @@ const StarRating = () => {
   };
 
   return (
-    <div className="flex w-fit flex-col">
+    <div className="relative flex w-fit flex-col">
       <InputRating onChange={onChange} width={width} />
-      <div className={'flex w-36 justify-end'}>
-        <div className={'flex w-[132px] justify-between'}>
+      <div className={'flex w-36 justify-end '}>
+        <div className={'flex w-[132px] justify-between '}>
           {star?.map((value, index) => (
             <FilledStar key={`star_${index}`} filled={value} />
           ))}
