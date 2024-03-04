@@ -1,4 +1,4 @@
-import { forwardRef, useState } from 'react';
+import React, { memo, forwardRef, useState } from 'react';
 
 import { Button } from '~/components/button';
 import {
@@ -14,12 +14,15 @@ import StarRating from './star-rating';
 
 interface ReviewFormProps {
   username: string;
+  onUpdate: (value: number) => void;
 }
 const ReviewForm = forwardRef<HTMLTextAreaElement, ReviewFormProps>(
-  ({ username }, ref) => {
+  ({ username, onUpdate }, ref) => {
     const [isOpen, setIsOpen] = useState(false);
 
     const [rate, setRate] = useState(0);
+
+    onUpdate(rate);
 
     return (
       <Collapsible
@@ -58,4 +61,4 @@ const ReviewForm = forwardRef<HTMLTextAreaElement, ReviewFormProps>(
 
 ReviewForm.displayName = 'ReviewForm';
 
-export default ReviewForm;
+export default memo(ReviewForm);
