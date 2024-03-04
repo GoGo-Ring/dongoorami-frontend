@@ -1,6 +1,7 @@
 import { ChangeEvent, Dispatch, SetStateAction, useMemo } from 'react';
 
 import Icon from '~/components/icon';
+import { cn } from '~/libs/utils';
 
 interface InputRatingProps {
   width?: number;
@@ -25,14 +26,15 @@ interface FilledStarProps {
 }
 
 const FilledStar = ({ filled }: FilledStarProps) => {
-  if (filled === 'full') {
-    return <Icon iconName="filled-star" className="full" />;
-  }
-  if (filled === 'half') {
-    return <Icon iconName="filled-star" className="half" />;
-  }
-
-  return <Icon iconName="filled-star" className="none" />;
+  return (
+    <Icon
+      iconName="filled-star"
+      className={cn('none', {
+        full: filled === 'full',
+        half: filled === 'half',
+      })}
+    />
+  );
 };
 
 enum StarState {
