@@ -14,9 +14,6 @@ import validate, { FormValues } from './validation';
 
 const Register = () => {
   const router = useRouter();
-  const LabelStyle = 'w-24 text-nowrap text-base font-semibold p-1';
-  const InputContainerStyle = 'h-[100px] flex flex-col rounded-md px-2 ';
-  const ErrorStyle = 'px-1 mt-2 text-red-500 text-sm';
 
   const [values, setValues] = useState<FormValues>({} as FormValues);
 
@@ -60,8 +57,10 @@ const Register = () => {
       <form onSubmit={handleSubmit}>
         <div className="flex-column relative h-[800px] w-96 min-w-96 space-y-1 rounded-md border  border border-primary bg-muted p-1">
           <h1 className="p-6 text-center text-3xl  font-semibold">회원가입</h1>
-          <div className={InputContainerStyle}>
-            <Label className={LabelStyle}>닉네임</Label>
+          <div className="flex h-[100px] flex-col rounded-md px-2">
+            <Label className="w-24 text-nowrap p-1 text-base font-semibold">
+              닉네임
+            </Label>
             <Input
               type="text"
               placeholder="닉네임을 입력해주세요"
@@ -69,11 +68,15 @@ const Register = () => {
               onChange={handleChange}
             />
             {errors.nickname && (
-              <span className={ErrorStyle}>{errors.nickname}</span>
+              <span className="mt-2 px-1 text-sm text-red-500">
+                {errors.nickname}
+              </span>
             )}
           </div>
-          <div className={InputContainerStyle}>
-            <Label className={LabelStyle}>성별</Label>
+          <div className="flex h-[100px] flex-col rounded-md px-2">
+            <Label className="w-24 text-nowrap p-1 text-base font-semibold">
+              성별
+            </Label>
             <RadioGroup
               className="flex w-full p-2"
               id="gender"
@@ -85,12 +88,16 @@ const Register = () => {
               <Label>여</Label>
             </RadioGroup>
             {errors.gender && (
-              <span className={ErrorStyle}>{errors.gender}</span>
+              <span className="mt-2 px-1 text-sm text-red-500">
+                {errors.gender}
+              </span>
             )}
           </div>
 
-          <div className={InputContainerStyle}>
-            <Label className={LabelStyle}>생년월일</Label>
+          <div className="flex h-[100px] flex-col rounded-md px-2">
+            <Label className="w-24 text-nowrap p-1 text-base font-semibold">
+              생년월일
+            </Label>
             <div className="flex items-center gap-2">
               <Input
                 type="text"
@@ -115,7 +122,9 @@ const Register = () => {
               일
             </div>
             {errors.birthdate && (
-              <span className={ErrorStyle}>{errors.birthdate}</span>
+              <span className="mt-2 px-1 text-sm text-red-500">
+                {errors.birthdate}
+              </span>
             )}
           </div>
           <div className="absolute inset-x-0 bottom-0 flex gap-8 px-4 py-8">
