@@ -5,7 +5,7 @@ import axios, {
   Method,
 } from 'axios';
 
-export const BASE_URL = 'http://localhost:8080/api/v1';
+export const BASE_URL = process.env.NEXT_PUBLIC_API_URL || '';
 
 export const instance = axios.create({
   // TODO BaseURL, Authorization 설정

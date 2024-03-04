@@ -17,8 +17,8 @@ const EditableImage = ({ nickname, profileImage }: EditableImageProps) => {
 
     const formData = new FormData();
 
-    formData.append('image', file);
-    mutateProfileImage(file);
+    formData.append('imageProfile', file);
+    mutateProfileImage(formData);
   };
 
   return (

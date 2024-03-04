@@ -14,10 +14,10 @@ export const updateMember = async (member: Partial<Member>) => {
   return data;
 };
 
-export const updateProfileImage = (file: File) => {
+export const updateProfileImage = (data: FormData) => {
   return api.patch<string>({
     url: '/profileImage',
-    data: file,
+    data,
     headers: { 'Content-Type': 'multipart/form-data' },
   });
 };
