@@ -6,7 +6,9 @@ import {
   CollapsibleContent,
   CollapsibleTrigger,
 } from '~/components/collapsible';
+import Icon from '~/components/icon';
 import { Textarea } from '~/components/textarea';
+import { cn } from '~/libs/utils';
 
 interface ReviewFormProps {
   username: string;
@@ -24,6 +26,12 @@ const ReviewForm = ({ username }: ReviewFormProps) => {
         <span className="text-sm font-semibold">{username}</span>
         <CollapsibleTrigger asChild>
           <Button variant="ghost" size="sm">
+            <Icon
+              iconName="chevron-down"
+              className={cn('transition duration-500', {
+                'rotate-180 transform': isOpen,
+              })}
+            />
             <span className="sr-only">Toggle</span>
           </Button>
         </CollapsibleTrigger>
