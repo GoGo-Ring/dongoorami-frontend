@@ -1,5 +1,5 @@
 'use client';
-import { ChangeEvent, useEffect, useState } from 'react';
+import { ChangeEvent, memo, useEffect, useState } from 'react';
 
 import { Input } from '~/components/input';
 
@@ -72,4 +72,4 @@ const InputField = ({
   );
 };
 
-export default InputField;
+export default memo(InputField);

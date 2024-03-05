@@ -1,5 +1,5 @@
 'use client';
-import { useEffect, useState } from 'react';
+import { memo, useEffect, useState } from 'react';
 
 import {
   Select,
@@ -70,4 +70,4 @@ const SelectField = ({
   );
 };
 
-export default SelectField;
+export default memo(SelectField);
