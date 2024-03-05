@@ -13,7 +13,7 @@ interface CommentFormProps {
 
 const CommentForm = ({ accompanyPostId }: CommentFormProps) => {
   const ref = useRef<HTMLTextAreaElement>(null);
-  const { mutate } = useMutationComment(accompanyPostId);
+  const { mutate, isPending } = useMutationComment(accompanyPostId);
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -35,7 +35,7 @@ const CommentForm = ({ accompanyPostId }: CommentFormProps) => {
         name="comment"
         placeholder="댓글을 입력하세요"
       />
-      <Button className="w-14 self-end" type="submit">
+      <Button className="w-14 self-end" type="submit" disabled={isPending}>
         등록
       </Button>
     </form>
