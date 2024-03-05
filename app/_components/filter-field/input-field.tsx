@@ -1,66 +1,72 @@
 'use client';
-import { ChangeEvent, useState } from 'react';
+import { ChangeEvent, useEffect, useState } from 'react';
 
 import { Input } from '~/components/input';
+
+import { OptionsPartialType } from '../companion-recruitment-filter';
 
 interface InputItemProps {
   type: string;
   name: string;
-  defaultValue: number;
+  defaultValue?: number;
   onChange: (e: ChangeEvent<HTMLInputElement>) => void;
+  value: number;
 }
 
 interface InputFieldProps {
   category: string;
   defaultValues: number[];
+  setOption: (category: string, selectedOption: OptionsPartialType) => void;
+  fieldName: string;
 }
 
-const InputItem = ({ type, name, defaultValue, onChange }: InputItemProps) => {
+const InputItem = ({ type, name, onChange, value }: InputItemProps) => {
   return (
     <Input
-      defaultValue={defaultValue}
       type={type}
       className="w-16"
       name={name}
       min={0}
       max={100}
+      value={value}
       onChange={onChange}
     />
   );
 };
 
-const InputField = ({ category, defaultValues }: InputFieldProps) => {
+const InputField = ({
+  category,
+  defaultValues,
+  setOption,
+  fieldName,
+}: InputFieldProps) => {
   const [minValue, maxValue] = defaultValues;
   const [inputs, setInputs] = useState({
-    min: minValue.toString(),
-    max: maxValue.toString(),
+    min: minValue,
+    max: maxValue,
   });
-
-  [parseInt(inputs.min), parseInt(inputs.max)];
+  const { min, max } = inputs;
 
   const onChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { value, name } = e.currentTarget;
 
-    setInputs({ ...inputs, [name]: value });
+    setInputs({ ...inputs, [name]: parseInt(value) });
   };
+
+  useEffect(() => {
+    const { min, max } = inputs;
+    const selected: [number, number] = [min, max];
+
+    setOption(fieldName, selected);
+  }, [inputs, setOption, fieldName]);
 
   return (
     <>
       <span className="font-semibold">{category}</span>
       <div className="flex flex-row gap-1">
-        <InputItem
-          defaultValue={minValue}
-          type="number"
-          name="min"
-          onChange={onChange}
-        />
+        <InputItem type="number" name="min" value={min} onChange={onChange} />
         <span className="my-auto ">~</span>
-        <InputItem
-          defaultValue={maxValue}
-          type="number"
-          name="max"
-          onChange={onChange}
-        />
+        <InputItem type="number" name="max" value={max} onChange={onChange} />
       </div>
     </>
   );
