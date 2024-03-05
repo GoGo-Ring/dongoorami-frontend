@@ -1,6 +1,6 @@
 'use client';
 
-import React, { MouseEvent, useEffect, useState } from 'react';
+import React, { MouseEvent, memo, useEffect, useState } from 'react';
 
 import { Button } from '~/components/button';
 import { MULTIPLE_SELECTION_AVAILABLE } from '~/constants/filterField';
@@ -90,4 +90,4 @@ const ButtonSelectField = ({
   );
 };
 
-export default ButtonSelectField;
+export default memo(ButtonSelectField);
