@@ -1,8 +1,10 @@
 'use client';
 
-import React, { MouseEvent, forwardRef, useState } from 'react';
+import React, { MouseEvent, memo, useEffect, useState } from 'react';
 
 import { Checkbox } from '~/components/checkbox';
+
+import { OptionsPartialType } from '../companion-recruitment-filter';
 
 interface ItemProps {
   label: string;
@@ -11,7 +13,8 @@ interface ItemProps {
 interface CheckboxSelectFieldProps {
   category: string;
   options: string[];
-  isMultipleSelection?: boolean;
+  setOption: (category: string, selectedOption: OptionsPartialType) => void;
+  fieldName: string;
 }
 
 const CheckboxItem = ({ label, onClick }: ItemProps) => {
@@ -28,10 +31,12 @@ const CheckboxItem = ({ label, onClick }: ItemProps) => {
   );
 };
 
-const CheckboxSelectField = forwardRef<
-  Record<string, boolean>,
-  CheckboxSelectFieldProps
->(({ category, options }, ref) => {
+const CheckboxSelectField = ({
+  category,
+  options,
+  setOption,
+  fieldName,
+}: CheckboxSelectFieldProps) => {
   const [checkbox, setCheckbox] = useState(
     options.reduce(
       (acc, option) => {
@@ -43,18 +48,11 @@ const CheckboxSelectField = forwardRef<
     ),
   );
 
-  if (!ref) {
-    return;
-  }
+  useEffect(() => {
+    const selected = Object.keys(checkbox).filter(key => checkbox[key]);
 
-  if (typeof ref === 'function') {
-    return;
-  }
-
-  if (!ref.current) {
-    return;
-  }
-  ref.current = checkbox;
+    setOption(fieldName, selected);
+  }, [checkbox, setOption, fieldName]);
 
   const onClick = (e: MouseEvent<HTMLButtonElement>) => {
     const { value } = e.currentTarget;
@@ -72,7 +70,6 @@ const CheckboxSelectField = forwardRef<
       </div>
     </div>
   );
-});
+};
 
-CheckboxSelectField.displayName = 'CheckboxSelectField';
-export default CheckboxSelectField;
+export default memo(CheckboxSelectField);
