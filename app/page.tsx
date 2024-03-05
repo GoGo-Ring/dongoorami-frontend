@@ -1,3 +1,4 @@
+import { DummyCard } from './_components/DummyCard';
 import Filter from './_components/Filter';
 
 const Page = () => {
@@ -15,7 +16,11 @@ const Page = () => {
         <div className="flex w-[250px] justify-center border p-8 ">
           <Filter />
         </div>
-        <div className="flex w-full justify-center border bg-red-200 p-8"></div>
+        <div className="grid w-full grid-cols-3 justify-center gap-8 border p-8">
+          {Array.from({ length: 9 }).map((_, index) => (
+            <DummyCard key={index} />
+          ))}
+        </div>
       </div>
     </div>
   );
