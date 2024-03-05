@@ -1,11 +1,11 @@
 'use client';
 
-import { useQuery } from '@tanstack/react-query';
+import { useSuspenseQuery } from '@tanstack/react-query';
 
 import { getComments } from '~/apis/accompany';
 
-const useQueryComment = (accompanyPostId: string) => {
-  const query = useQuery({
+const useFetchComments = (accompanyPostId: string) => {
+  const query = useSuspenseQuery({
     queryKey: ['comments', accompanyPostId],
     queryFn: () => getComments(accompanyPostId),
   });
@@ -13,4 +13,4 @@ const useQueryComment = (accompanyPostId: string) => {
   return query;
 };
 
-export default useQueryComment;
+export default useFetchComments;
