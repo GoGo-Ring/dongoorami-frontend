@@ -120,7 +120,7 @@ const useForm = <T extends Record<string, string>>(
       {} as Errors<T>,
     );
 
-    if (!Object.keys(newErrors).length) {
+    if (Object.values(newErrors).every(error => error === '')) {
       onSubmit(values);
 
       return;

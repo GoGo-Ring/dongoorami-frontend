@@ -1,11 +1,12 @@
 'use client';
+import { useMutation } from '@tanstack/react-query';
 import React from 'react';
 
-import { CalendarField } from '~/app/recruitment/new/_components/form-field/calendar-field';
+import { createCompanion } from '~/apis/accompany';
 import { Button } from '~/components/button';
-import { Textarea } from '~/components/textarea';
+import Spinner from '~/components/spinner';
+import { convertCompanionFormValueToApiRequest } from '~/utils/apiRequestAdapter';
 
-import { Form } from './_components/form';
 import {
   ImageField,
   InputField,
@@ -14,16 +15,33 @@ import {
   SelectField,
   SelectFieldItem,
   SliderField,
-} from './_components/form-field';
-import { FORM_ITEMS, INITIAL_VALUES, VALIDATIONS } from './constants';
+  TextareaField,
+  CalendarField,
+} from './_components/fields';
+import { Form } from './_components/form';
+import {
+  CompanionFormValue,
+  FORM_ITEMS,
+  INITIAL_VALUES,
+  VALIDATIONS,
+} from './constants';
 
 const Page = () => {
+  const mutation = useMutation({ mutationFn: createCompanion });
+
+  const handleSubmit = (values: CompanionFormValue) => {
+    const companionData = convertCompanionFormValueToApiRequest(values);
+
+    mutation.mutate(companionData);
+  };
+
   return (
     <div className="flex justify-center py-10">
       <Form
         className="flex w-[890px] flex-col justify-center gap-4"
         initialValues={INITIAL_VALUES}
         initialValidations={VALIDATIONS}
+        submit={handleSubmit}
       >
         <div className="px-4">
           <InputField
@@ -74,9 +92,10 @@ const Page = () => {
           </div>
         </div>
         <div className="px-4">
-          <Textarea
-            className="h-96 resize-none"
-            id="textarea"
+          <TextareaField
+            id="content"
+            label="내용"
+            labelClassName="hidden"
             placeholder="내용을 입력해주세요"
           />
         </div>
@@ -84,8 +103,11 @@ const Page = () => {
           <Button className="w-full bg-secondary text-secondary-foreground">
             취소
           </Button>
-          <Button className="w-full bg-primary text-primary-foreground">
-            입력 완료
+          <Button
+            className="w-full bg-primary text-primary-foreground"
+            disabled={mutation.isPending}
+          >
+            {mutation.isPending ? <Spinner /> : '등록'}
           </Button>
         </div>
       </Form>

@@ -34,7 +34,25 @@ export const FORM_ITEMS = {
   ] as const,
 };
 
-export const INITIAL_VALUES = {
+export interface CompanionFormValue extends Record<string, string> {
+  title: string;
+  performanceName: string;
+  performanceDate: string;
+  performanceLocation: string;
+  participantCount: string;
+  region: string;
+  age: string;
+  minAge: string;
+  maxAge: string;
+  gender: string;
+  male: string;
+  female: string;
+  irrelevant: string;
+  image: string;
+  count: string;
+  content: string;
+}
+export const INITIAL_VALUES: CompanionFormValue = {
   title: '',
   performanceName: '',
   performanceDate: '~',
@@ -50,11 +68,11 @@ export const INITIAL_VALUES = {
   irrelevant: '',
   image: '',
   count: '',
-  textArea: '',
+  content: '',
 };
 
 export const VALIDATIONS: {
-  id: keyof typeof INITIAL_VALUES;
+  id: string;
   validate: (value: string, values: Record<string, string>) => boolean;
   message: string;
 }[] = [

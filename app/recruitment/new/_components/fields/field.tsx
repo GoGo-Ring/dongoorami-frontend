@@ -1,11 +1,8 @@
 import { VariantProps, cva } from 'class-variance-authority';
 
-import { INITIAL_VALUES } from '~/app/recruitment/new/constants';
 import { Label } from '~/components/label';
 import { cn } from '~/libs/utils';
 import { PropsWithRequiredChildren } from '~/types/utils';
-
-export type FieldIds = keyof typeof INITIAL_VALUES;
 
 const FieldVariants = cva('items-start flex w-full min-w-16', {
   variants: {
@@ -35,10 +32,11 @@ const LabelVariants = cva('text-nowrap', {
 export interface FieldProps
   extends VariantProps<typeof FieldVariants>,
     VariantProps<typeof LabelVariants> {
-  id: FieldIds;
+  id: string;
   label?: string;
   placeholder?: string;
   className?: string;
+  labelClassName?: string;
 }
 
 export const Field = ({
@@ -48,10 +46,11 @@ export const Field = ({
   variant,
   labelVariant,
   className,
+  labelClassName,
 }: PropsWithRequiredChildren<FieldProps>) => (
   <div className={cn(className, FieldVariants({ variant }))}>
     <Label
-      className={cn(className, LabelVariants({ labelVariant }))}
+      className={cn(labelClassName, LabelVariants({ labelVariant }))}
       htmlFor={id}
     >
       {label}

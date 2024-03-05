@@ -1,11 +1,11 @@
 import { useContext } from 'react';
 
 import { Error } from '~/app/recruitment/new/_components/error';
-import { FormContext } from '~/app/recruitment/new/_components/form';
 import {
   Field,
   FieldProps,
-} from '~/app/recruitment/new/_components/form-field/field';
+} from '~/app/recruitment/new/_components/fields/field';
+import { FormContext } from '~/app/recruitment/new/_components/form';
 import { Input } from '~/components/input';
 
 interface CalendarFieldProps extends FieldProps {
@@ -13,7 +13,7 @@ interface CalendarFieldProps extends FieldProps {
   maxId: string;
 }
 
-const CalendarField = ({
+export const CalendarField = ({
   id,
   minId,
   maxId,
@@ -67,5 +67,3 @@ const CalendarField = ({
     </Field>
   );
 };
-
-export { CalendarField };
