@@ -48,7 +48,7 @@ const SelectField = ({
   };
 
   useEffect(() => {
-    setOption(fieldName, selectValue);
+    setOption(fieldName, parseInt(selectValue));
   }, [selectValue, setOption, fieldName]);
 
   return (
