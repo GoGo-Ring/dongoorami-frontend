@@ -1,6 +1,6 @@
 'use client';
 
-import { MouseEvent, useEffect, useState } from 'react';
+import { MouseEvent, memo, useEffect, useState } from 'react';
 
 import { Label } from '~/components/label';
 import { RadioGroup, RadioGroupItem } from '~/components/radio-group';
@@ -71,4 +71,4 @@ const RadioField = ({
   );
 };
 
-export default RadioField;
+export default memo(RadioField);
