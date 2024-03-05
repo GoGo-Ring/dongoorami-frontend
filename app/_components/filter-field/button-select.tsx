@@ -1,6 +1,6 @@
 'use client';
 
-import React, { MouseEvent, useState } from 'react';
+import React, { MouseEvent, useEffect, useState } from 'react';
 
 import { Button } from '~/components/button';
 import { MULTIPLE_SELECTION_AVAILABLE } from '~/constants/filterField';
@@ -9,6 +9,8 @@ interface SelectionFieldProps {
   category: string;
   options: string[];
   isMultipleSelection?: boolean;
+  setOption: (category: string, selectedOption: string[]) => void;
+  fieldName: string;
 }
 
 interface ItemProps {
@@ -36,6 +38,8 @@ const ButtonSelectField = ({
   category,
   options,
   isMultipleSelection,
+  setOption,
+  fieldName,
 }: SelectionFieldProps) => {
   const [isClicked, setIsClicked] = useState(
     options.reduce(
@@ -55,6 +59,12 @@ const ButtonSelectField = ({
     setIsClicked(newIsClicked);
     Object.keys(newIsClicked).filter(key => newIsClicked[key]);
   };
+
+  useEffect(() => {
+    const selected = Object.keys(isClicked).filter(key => isClicked[key]);
+
+    setOption(fieldName, selected);
+  }, [isClicked, setOption, fieldName]);
 
   return (
     <div className="flex w-[240px] flex-col gap-2">
