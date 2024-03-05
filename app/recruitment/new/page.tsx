@@ -1,11 +1,16 @@
 'use client';
 import { useMutation } from '@tanstack/react-query';
-import React from 'react';
+import { useSearchParams } from 'next/navigation';
+import React, { useEffect } from 'react';
 
 import { createCompanion } from '~/apis/accompany';
 import { Button } from '~/components/button';
 import Spinner from '~/components/spinner';
-import { convertCompanionFormValueToApiRequest } from '~/utils/apiRequestAdapter';
+import useFetchCompanionPost from '~/hooks/queries/useFetchCompanionPost';
+import {
+  companionDetailToFormValue,
+  companionFormValueToRequest,
+} from '~/utils/apiCompanionDetailAdapter';
 
 import {
   ImageField,
@@ -27,19 +32,31 @@ import {
 } from './constants';
 
 const Page = () => {
-  const mutation = useMutation({ mutationFn: createCompanion });
+  const { mutate, isPending } = useMutation({ mutationFn: createCompanion });
+  const postId = useSearchParams().get('id');
+  const isEdit = !!postId;
+
+  const { data: companionPost, refetch } = useFetchCompanionPost(postId || '');
+
+  useEffect(() => {
+    if (isEdit) {
+      refetch();
+    }
+  }, [isEdit, refetch]);
 
   const handleSubmit = (values: CompanionFormValue) => {
-    const companionData = convertCompanionFormValueToApiRequest(values);
+    const companionData = companionFormValueToRequest(values);
 
-    mutation.mutate(companionData);
+    mutate(companionData);
   };
 
   return (
     <div className="flex justify-center py-10">
       <Form
         className="flex w-[890px] flex-col justify-center gap-4"
-        initialValues={INITIAL_VALUES}
+        initialValues={
+          isEdit ? companionDetailToFormValue(companionPost) : INITIAL_VALUES
+        }
         initialValidations={VALIDATIONS}
         submit={handleSubmit}
       >
@@ -105,9 +122,10 @@ const Page = () => {
           </Button>
           <Button
             className="w-full bg-primary text-primary-foreground"
-            disabled={mutation.isPending}
+            disabled={isPending}
           >
-            {mutation.isPending ? <Spinner /> : '등록'}
+            {isPending ? <Spinner /> : isEdit && '수정'}
+            {isPending ? <Spinner /> : !isEdit && '등록'}
           </Button>
         </div>
       </Form>
