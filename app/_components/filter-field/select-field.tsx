@@ -1,5 +1,5 @@
 'use client';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import {
   Select,
@@ -9,6 +9,8 @@ import {
   SelectTrigger,
   SelectValue,
 } from '~/components/select';
+
+import { OptionsPartialType } from '../companion-recruitment-filter';
 
 interface SelectOptionItemProps {
   value: number;
@@ -20,6 +22,8 @@ interface SelectFieldProps {
   options: SelectOptionItemProps[];
   defaultValue: number;
   placeholder: string;
+  setOption: (category: string, selectedOption: OptionsPartialType) => void;
+  fieldName: string;
 }
 
 const SelectOptionItem = ({ value, label }: SelectOptionItemProps) => {
@@ -33,15 +37,19 @@ const SelectField = ({
   options,
   defaultValue,
   placeholder,
+  setOption,
+  fieldName,
 }: SelectFieldProps) => {
   const defaultString = defaultValue.toString();
   const [selectValue, setSelectValue] = useState(defaultString);
 
-  parseInt(selectValue);
-
   const onValueChange = (value: string) => {
     setSelectValue(value);
   };
+
+  useEffect(() => {
+    setOption(fieldName, selectValue);
+  }, [selectValue, setOption, fieldName]);
 
   return (
     <div>
