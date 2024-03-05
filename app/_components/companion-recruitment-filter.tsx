@@ -1,9 +1,10 @@
 'use client';
 
-import { useRef } from 'react';
+import { MouseEvent, useRef } from 'react';
 
 import { Button } from '~/components/button';
 import { SEARCH, SELECTION } from '~/constants/filterField';
+import { joinQuery } from '~/utils/joinQuery';
 
 import CheckboxSelectField from './filter-field/checkbox-select';
 import InputField from './filter-field/input-field';
@@ -18,7 +19,12 @@ export interface refType {
   personCount: number;
 }
 
-const CompanionRecruitmentFilter = () => {
+interface CompanionRecruitmentFilterProps {
+  onSubmit: (query: string) => void;
+}
+const CompanionRecruitmentFilter = ({
+  onSubmit,
+}: CompanionRecruitmentFilterProps) => {
   const radioRef = useRef<string>(SELECTION.GENDER.options[0].value);
   const checkbox = SELECTION.REGIONS.options.reduce(
     (acc, option) => {
@@ -35,7 +41,36 @@ const CompanionRecruitmentFilter = () => {
   const ageRef = useRef([20, 30]);
   const personCountRef = useRef(1);
 
-  const handle = () => {};
+  const setObject = (regionQuery: string) => {
+    return {
+      gender: radioRef.current,
+      regions: regionQuery,
+      transportation: transportationRef.current,
+      startAge: ageRef.current[0],
+      endAge: ageRef.current[1],
+      totalPeople: personCountRef.current,
+    };
+  };
+
+  const objectToQueryString = (object: { [key: string]: string | number }) =>
+    Object.entries(object).reduce((acc, [key, value]) => {
+      return `${acc}&${key}=${value}`;
+    }, '');
+
+  const getQuery = () => {
+    const [regionQuery] = joinQuery(
+      Object.keys(checkboxRef.current).filter(key => checkboxRef.current[key]),
+    );
+
+    return objectToQueryString(setObject(regionQuery));
+  };
+
+  const handleSubmit = (e: MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    const query = getQuery();
+
+    onSubmit(query);
+  };
 
   return (
     <div className="flex w-[260px] flex-col gap-6 px-3">
@@ -66,7 +101,7 @@ const CompanionRecruitmentFilter = () => {
         placeholder={SELECTION.PERSON_COUNT.options[0].label}
         ref={personCountRef}
       />
-      <Button variant="outline" onClick={handle}>
+      <Button variant="outline" onClick={handleSubmit}>
         {SEARCH}
       </Button>
     </div>
