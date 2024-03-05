@@ -42,7 +42,7 @@ const RadioField = ({
   fieldName,
 }: RadioFieldProps) => {
   const defaultValue = options[0].value;
-  const [state, setState] = useState('');
+  const [state, setState] = useState(defaultValue);
 
   const onClick = (e: MouseEvent<HTMLButtonElement>) => {
     const { value } = e.currentTarget;
