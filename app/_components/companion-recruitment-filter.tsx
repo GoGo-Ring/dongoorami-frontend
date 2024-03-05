@@ -1,6 +1,6 @@
 'use client';
 
-import { useRef } from 'react';
+import { useCallback, useState } from 'react';
 
 import { Button } from '~/components/button';
 import { SEARCH, SELECTION } from '~/constants/filterField';
@@ -10,7 +10,7 @@ import InputField from './filter-field/input-field';
 import RadioField from './filter-field/radio-field';
 import SelectField from './filter-field/select-field';
 
-export interface refType {
+export interface OptionsType {
   gender: string;
   region: string[];
   age: [number, number];
@@ -18,53 +18,55 @@ export interface refType {
   personCount: number;
 }
 
-const CompanionRecruitmentFilter = () => {
-  const radioRef = useRef<string>(SELECTION.GENDER.options[0].value);
-  const checkbox = SELECTION.REGIONS.options.reduce(
-    (regions, option) => {
-      regions[option] = false;
+export type OptionsPartialType = string | string[] | [number, number] | number;
 
-      return regions;
-    },
-    {} as Record<string, boolean>,
-  );
-  const checkboxRef = useRef(checkbox);
-  const transportationRef = useRef<string>(
-    SELECTION.TRANSPORTATION.options[0].value,
-  );
-  const ageRef = useRef([20, 30]);
-  const personCountRef = useRef(1);
+const CompanionRecruitmentFilter = () => {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const [options, setOptions] = useState({
+    gender: 'irrelevant',
+    region: [],
+    age: [20, 30],
+    transportation: '',
+    personCount: 0,
+  });
 
   const handle = () => {};
+
+  const getValue = useCallback(() => {}, []);
 
   return (
     <div className="flex w-[260px] flex-col gap-6 px-3">
       <RadioField
         category={SELECTION.GENDER.category}
         options={SELECTION.GENDER.options}
-        ref={radioRef}
+        setOption={getValue}
+        fieldName={'gender'}
       />
       <CheckboxSelectField
         category={SELECTION.REGIONS.category}
         options={SELECTION.REGIONS.options}
-        ref={checkboxRef}
+        setOption={getValue}
+        fieldName={'region'}
       />
       <RadioField
         category={SELECTION.TRANSPORTATION.category}
         options={SELECTION.TRANSPORTATION.options}
-        ref={transportationRef}
+        setOption={getValue}
+        fieldName={'transportation'}
       />
       <InputField
         category={SELECTION.AGE.category}
         defaultValues={SELECTION.AGE.options}
-        ref={ageRef}
+        setOption={getValue}
+        fieldName={'age'}
       />
       <SelectField
         category={SELECTION.PERSON_COUNT.category}
         options={SELECTION.PERSON_COUNT.options}
         defaultValue={SELECTION.PERSON_COUNT.options[0].value}
         placeholder={SELECTION.PERSON_COUNT.options[0].label}
-        ref={personCountRef}
+        setOption={getValue}
+        fieldName={'personCount'}
       />
       <Button variant="outline" onClick={handle}>
         {SEARCH}
