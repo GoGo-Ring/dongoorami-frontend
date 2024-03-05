@@ -119,6 +119,9 @@ module.exports = {
         'page-max': '1024px',
         'page-min': '360px',
       },
+      aspectRatio: {
+        carousel: '3/1',
+      },
     },
   },
   plugins: [require('tailwindcss-animate')],
