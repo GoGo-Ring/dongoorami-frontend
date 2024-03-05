@@ -1,12 +1,13 @@
 'use client';
 import React from 'react';
 
+import { CalendarField } from '~/app/recruitment/new/_components/form-field/calendar-field';
 import { Button } from '~/components/button';
 import { Textarea } from '~/components/textarea';
 
 import { Form } from './_components/form';
 import {
-  FileField,
+  ImageField,
   InputField,
   RadioGroupField,
   RadioGroupFieldItem,
@@ -32,9 +33,9 @@ const Page = () => {
           />
         </div>
         <div className="px-4">
-          <FileField id="image" label="이미지" />
+          <ImageField id="image" label="이미지" />
         </div>
-        <div className="mx-4 flex items-start gap-7 rounded-md border border-gray-200 p-6 sm:mx-0 sm:flex-wrap sm:border-0 md:flex-wrap">
+        <div className="mx-4 flex items-start gap-7 rounded-md border border-gray-200 px-6 pt-6 sm:mx-0 sm:flex-wrap sm:border-0 md:flex-wrap">
           <div className="flex w-full flex-col">
             <InputField
               id="performanceName"
@@ -51,6 +52,12 @@ const Page = () => {
             >
               <SelectFieldItem items={FORM_ITEMS.PARTICIPANT_COUNT} />
             </SelectField>
+            <CalendarField
+              id="performanceDate"
+              minId="performanceMinDate"
+              maxId="performanceMaxDate"
+              label="공연 날짜"
+            />
           </div>
           <div className="flex w-full flex-col ">
             <InputField
