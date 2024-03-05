@@ -1,25 +1,22 @@
 'use client';
 
-import React, { MouseEvent, useRef } from 'react';
+import React, { MouseEvent, useCallback, useState } from 'react';
 
 import { Button } from '~/components/button';
 import { SEARCH, SELECTION } from '~/constants/filterField';
 
 import ButtonSelectField from './filter-field/button-select';
-import CheckboxSelectField from './filter-field/checkbox-select';
 
 const PerformanceFilter = () => {
-  const checkbox = SELECTION.REGIONS.options.reduce(
-    (acc, option) => {
-      acc[option] = false;
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const [options, setOptions] = useState({
+    genre: [],
+    status: [],
+  });
 
-      return acc;
-    },
-    {} as Record<string, boolean>,
-  );
-  const checkboxRef = useRef(checkbox);
-  const genreRef = useRef<string[]>(null);
-  const statusRef = useRef<string[]>(null);
+  const getValue = useCallback((category: string, selectedOption: string[]) => {
+    setOptions(options => ({ ...options, [category]: selectedOption }));
+  }, []);
 
   const handleSubmit = (e: MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
@@ -30,19 +27,16 @@ const PerformanceFilter = () => {
       <ButtonSelectField
         category={SELECTION.GENRE.category}
         options={SELECTION.GENRE.options}
-        ref={genreRef}
         isMultipleSelection
+        setOption={getValue}
+        fieldName={'genre'}
       />
       <ButtonSelectField
         category={SELECTION.STATUS.category}
         options={SELECTION.STATUS.options}
         isMultipleSelection
-        ref={statusRef}
-      />
-      <CheckboxSelectField
-        category={SELECTION.REGIONS.category}
-        options={SELECTION.REGIONS.options}
-        ref={checkboxRef}
+        setOption={getValue}
+        fieldName={'status'}
       />
       <Button variant="outline" type="submit" onClick={handleSubmit}>
         {SEARCH}
