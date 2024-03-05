@@ -4,6 +4,7 @@ import { MouseEvent, useRef } from 'react';
 
 import { Button } from '~/components/button';
 import { SEARCH, SELECTION } from '~/constants/filterField';
+import { joinQuery } from '~/utils/joinQuery';
 
 import CheckboxSelectField from './filter-field/checkbox-select';
 import InputField from './filter-field/input-field';
@@ -40,10 +41,6 @@ const CompanionRecruitmentFilter = ({
   const ageRef = useRef([20, 30]);
   const personCountRef = useRef(1);
 
-  const joinQuery = (...targets: string[][]) => {
-    return targets.map(target => target.join('&'));
-  };
-
   const setObject = (regionQuery: string) => {
     return {
       gender: radioRef.current,
@@ -55,15 +52,17 @@ const CompanionRecruitmentFilter = ({
     };
   };
 
+  const objectToQueryString = (object: { [key: string]: string | number }) =>
+    Object.entries(object).reduce((acc, [key, value]) => {
+      return `${acc}&${key}=${value}`;
+    }, '');
+
   const getQuery = () => {
     const [regionQuery] = joinQuery(
       Object.keys(checkboxRef.current).filter(key => checkboxRef.current[key]),
     );
 
-    const { gender, regions, startAge, endAge, transportation, totalPeople } =
-      setObject(regionQuery);
-
-    return `gender=${gender}&region=${regions}&startAge=${startAge}&endAge=${endAge}&transportation=${transportation}&totalPeople=${totalPeople}`;
+    return objectToQueryString(setObject(regionQuery));
   };
 
   const handleSubmit = (e: MouseEvent<HTMLButtonElement>) => {
