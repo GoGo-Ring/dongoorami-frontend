@@ -9,7 +9,7 @@ export interface Companion {
 }
 
 export interface CompanionRequest
-  extends Pick<Companion, 'concertName' | 'title' | 'image'> {
+  extends Pick<Companion, 'concertName' | 'title' | 'image' | 'status'> {
   content: string;
   endDate: string;
   endAge: number;
@@ -18,6 +18,7 @@ export interface CompanionRequest
   startDate: string;
   startAge: number;
   totalPeople: number;
+  concertPlace: string;
 }
 
 export interface CompanionDetail

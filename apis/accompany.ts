@@ -1,4 +1,8 @@
-import { Companion, CompanionRequest } from './scheme/accompany';
+import {
+  Companion,
+  CompanionDetail,
+  CompanionRequest,
+} from './scheme/accompany';
 
 import api from '.';
 
@@ -16,7 +20,7 @@ export const getCompanions = async () => {
 };
 
 export const getCompanion = async (accompanyPostId: string) => {
-  const { data } = await api.get<CompanionRequest>({
+  const { data } = await api.get<CompanionDetail>({
     url: `/accompanies/posts/${accompanyPostId}`,
   });
 
