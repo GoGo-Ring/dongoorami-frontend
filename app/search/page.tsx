@@ -104,18 +104,9 @@ const Page = () => {
         <div className="flex flex-col gap-6">
           <h3 className="font-semibold">공연</h3>
           <div className="mx-auto grid grid-cols-3">
-            {performList.map(
-              ({ _id, posterSrc, title, facilityName, startDate, status }) => (
-                <PerformanceInfoCard
-                  key={_id}
-                  posterSrc={posterSrc}
-                  title={title}
-                  facilityName={facilityName}
-                  startDate={startDate}
-                  status={status}
-                />
-              ),
-            )}
+            {performList.map(({ _id, ...rest }) => (
+              <PerformanceInfoCard key={_id} {...rest} />
+            ))}
           </div>
         </div>
         <Button variant="outline">공연 더보기</Button>
@@ -123,33 +114,9 @@ const Page = () => {
           <div className="flex flex-col gap-6">
             <span className="font-semibold">동행 모집</span>
             <div className="mx-auto grid grid-cols-3 gap-4">
-              {accompanyList.map(
-                ({
-                  _id,
-                  title,
-                  concertName,
-                  userId,
-                  gender,
-                  personCount,
-                  viewCount,
-                  commentsCount,
-                  date,
-                  status,
-                }) => (
-                  <CompanionRecruitmentCard
-                    key={_id}
-                    title={title}
-                    concertName={concertName}
-                    userId={userId}
-                    gender={gender}
-                    personCount={personCount}
-                    viewCount={viewCount}
-                    commentsCount={commentsCount}
-                    date={date}
-                    status={status}
-                  />
-                ),
-              )}
+              {accompanyList.map(({ _id, ...rest }) => (
+                <CompanionRecruitmentCard key={_id} {...rest} />
+              ))}
             </div>
           </div>
         </div>
