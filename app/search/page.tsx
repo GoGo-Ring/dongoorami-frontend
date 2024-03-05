@@ -102,7 +102,7 @@ const Page = () => {
       </div>
       <div className="flex flex-col gap-8 px-6 py-10">
         <div className="flex flex-col gap-6">
-          <span className="font-semibold">공연</span>
+          <h3 className="font-semibold">공연</h3>
           <div className="mx-auto grid grid-cols-3">
             {performList.map(
               ({ _id, posterSrc, title, facilityName, startDate, status }) => (
