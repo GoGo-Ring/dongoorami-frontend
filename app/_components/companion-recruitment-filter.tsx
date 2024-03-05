@@ -32,7 +32,12 @@ const CompanionRecruitmentFilter = () => {
 
   const handle = () => {};
 
-  const getValue = useCallback(() => {}, []);
+  const getValue = useCallback(
+    (category: string, selectedOption: OptionsPartialType) => {
+      setOptions(options => ({ ...options, [category]: selectedOption }));
+    },
+    [],
+  );
 
   return (
     <div className="flex w-[260px] flex-col gap-6 px-3">
