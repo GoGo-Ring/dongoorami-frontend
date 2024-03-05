@@ -1,6 +1,6 @@
 'use client';
 
-import React, { MouseEvent, forwardRef, useState } from 'react';
+import React, { MouseEvent, useState } from 'react';
 
 import { Button } from '~/components/button';
 import { MULTIPLE_SELECTION_AVAILABLE } from '~/constants/filterField';
@@ -32,59 +32,52 @@ const ButtonItem = ({ label, isClicked, onClick }: ItemProps) => {
   );
 };
 
-const ButtonSelectField = forwardRef<string[], SelectionFieldProps>(
-  ({ category, options, isMultipleSelection }, ref) => {
-    const [isClicked, setIsClicked] = useState(
-      options.reduce(
-        (acc, cur) => {
-          acc[cur] = false;
+const ButtonSelectField = ({
+  category,
+  options,
+  isMultipleSelection,
+}: SelectionFieldProps) => {
+  const [isClicked, setIsClicked] = useState(
+    options.reduce(
+      (acc, cur) => {
+        acc[cur] = false;
 
-          return acc;
-        },
-        {} as Record<string, boolean>,
-      ),
-    );
+        return acc;
+      },
+      {} as Record<string, boolean>,
+    ),
+  );
 
-    const onClick = (e: MouseEvent<HTMLButtonElement>) => {
-      const { name } = e.currentTarget;
-      const newIsClicked = { ...isClicked, [name]: !isClicked[name] };
+  const onClick = (e: MouseEvent<HTMLButtonElement>) => {
+    const { name } = e.currentTarget;
+    const newIsClicked = { ...isClicked, [name]: !isClicked[name] };
 
-      setIsClicked(newIsClicked);
-      if (!ref) {
-        return;
-      }
+    setIsClicked(newIsClicked);
+    Object.keys(newIsClicked).filter(key => newIsClicked[key]);
+  };
 
-      if (typeof ref === 'function') {
-        return;
-      }
-      ref.current = Object.keys(newIsClicked).filter(key => newIsClicked[key]);
-    };
-
-    return (
-      <div className="flex w-[240px] flex-col gap-2">
-        <div className="flex items-center">
-          <span className="font-semibold">{category}</span>
-          {isMultipleSelection && (
-            <span className="text-xs text-gray-300">
-              {MULTIPLE_SELECTION_AVAILABLE}
-            </span>
-          )}
-        </div>
-        <div className="flex flex-wrap gap-1">
-          {options.map(option => (
-            <ButtonItem
-              key={option}
-              label={option}
-              onClick={onClick}
-              isClicked={isClicked[option]}
-            />
-          ))}
-        </div>
+  return (
+    <div className="flex w-[240px] flex-col gap-2">
+      <div className="flex items-center">
+        <span className="font-semibold">{category}</span>
+        {isMultipleSelection && (
+          <span className="text-xs text-gray-300">
+            {MULTIPLE_SELECTION_AVAILABLE}
+          </span>
+        )}
       </div>
-    );
-  },
-);
-
-ButtonSelectField.displayName = 'ButtonSelectField';
+      <div className="flex flex-wrap gap-1">
+        {options.map(option => (
+          <ButtonItem
+            key={option}
+            label={option}
+            onClick={onClick}
+            isClicked={isClicked[option]}
+          />
+        ))}
+      </div>
+    </div>
+  );
+};
 
 export default ButtonSelectField;
