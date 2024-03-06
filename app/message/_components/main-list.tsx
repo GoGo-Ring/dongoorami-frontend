@@ -95,7 +95,7 @@ const MainMessage = ({ page }: { page: string }) => {
         </tbody>
       </table>
 
-      <Pagination className="mt-10">
+      <Pagination className="mt-10 sm:hidden">
         <PaginationContent>
           <PaginationItem>
             <PaginationLink
