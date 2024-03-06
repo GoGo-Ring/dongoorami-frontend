@@ -20,7 +20,7 @@ export const CalendarField = ({
   label,
   variant,
 }: CalendarFieldProps) => {
-  const { values, errors, handleChangeField } = useContext(FormContext);
+  const { values, errors, handleValueChange } = useContext(FormContext);
 
   const handleChange = ({
     target: { id: targetId, value: targetValue },
@@ -32,7 +32,7 @@ export const CalendarField = ({
         ? `${targetValue}~${prevMaxValue}`
         : `${prevMinValue}~${targetValue}`;
 
-    handleChangeField({ [id]: newValue });
+    handleValueChange(id)(newValue);
   };
 
   const getValue = (targetId: string) => {
