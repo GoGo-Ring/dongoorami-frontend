@@ -1,4 +1,4 @@
-import { Skeleton } from '~/components/skeleton';
+import Skeleton from '~/components/skeleton';
 
 const SkeletonPage = () => {
   return (
@@ -12,9 +12,9 @@ const SkeletonPage = () => {
           <Skeleton className="h-4 w-20" />
         </div>
         <div className="flex items-center gap-4">
-          <Skeleton className="h-4 w-20" />
-          <Skeleton className="h-4 w-20" />
-          <Skeleton className="h-4 w-20" />
+          <Skeleton className="h-4 w-10" />
+          <Skeleton className="h-4 w-10" />
+          <Skeleton className="h-4 w-10" />
         </div>
       </div>
       <div className="flex justify-center">
