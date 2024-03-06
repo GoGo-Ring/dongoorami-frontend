@@ -27,21 +27,21 @@ const Page = ({ params }: Props) => {
           image={data?.memberInfo.profileImage}
         />
         <PostStatus
-          updatedAt={data?.updatedAt}
+          createdAt={data?.updatedAt} // TODO: CompanionDetail 에 createdAt 필드 추가
           waitingCount={data?.waitingCount}
           viewCount={data?.viewCount}
         />
       </div>
-      <div className="flex justify-center">
-        {data?.image && (
+      {data?.image && (
+        <div className="flex justify-center">
           <Image
             src={data?.image}
             alt="companion image"
             width={300}
             height={300}
           />
-        )}
-      </div>
+        </div>
+      )}
       <Section>
         <div className="flex w-full flex-col">
           <Field label="공연명" value={data?.title} />
