@@ -1,6 +1,6 @@
 'use client';
 
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 
 import Icon from '~/components/icon';
 import {
@@ -15,8 +15,9 @@ import { getDate } from '~/utils/dateFormatter';
 
 import { MESSAGE_HEADER, MESSAGE_SIZE, getRead } from '../constatns';
 
-const MainMessage = ({ page }: { page: string }) => {
+const MainMessage = () => {
   const router = useRouter();
+  const page = useSearchParams().get('page') || '1';
 
   const { data } = useFetchMessage(MESSAGE_SIZE, +page);
   const { mutate } = useMutationMessage();
