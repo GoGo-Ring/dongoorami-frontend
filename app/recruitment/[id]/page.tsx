@@ -17,46 +17,52 @@ interface Props {
 
 const Page = ({ params }: Props) => {
   const { data } = useQueryCompanionPost(params.id);
+  const {
+    memberInfo,
+    updatedAt,
+    waitingCount,
+    viewCount,
+    image,
+    title,
+    region,
+    totalPeople,
+    startDate,
+    endDate,
+    concertLocation,
+    startAge,
+    endAge,
+    gender,
+    transportation,
+  } = data;
 
   return (
     <div className="flex flex-col gap-8 py-8">
       <div className="text-xl font-semibold">{data?.title}</div>
       <div className="flex items-center justify-between">
-        <Profile
-          name={data?.memberInfo.nickname}
-          image={data?.memberInfo.profileImage}
-        />
+        <Profile name={memberInfo.nickname} image={memberInfo.profileImage} />
         <PostStatus
-          createdAt={data?.updatedAt} // TODO: CompanionDetail 에 createdAt 필드 추가
-          waitingCount={data?.waitingCount}
-          viewCount={data?.viewCount}
+          createdAt={updatedAt} // TODO: CompanionDetail 에 createdAt 필드 추가
+          waitingCount={waitingCount}
+          viewCount={viewCount}
         />
       </div>
-      {data?.image && (
+      {image && (
         <div className="flex justify-center">
-          <Image
-            src={data?.image}
-            alt="companion image"
-            width={300}
-            height={300}
-          />
+          <Image src={image} alt="companion image" width={300} height={300} />
         </div>
       )}
       <Section>
         <div className="flex w-full flex-col">
-          <Field label="공연명" value={data?.title} />
-          <Field label="지역" value={data?.region} />
-          <Field label="인원수" value={data?.totalPeople} />
-          <Field
-            label="공연 날짜"
-            value={`${data?.startDate}~${data?.endDate}`}
-          />
+          <Field label="공연명" value={title} />
+          <Field label="지역" value={region} />
+          <Field label="인원수" value={totalPeople} />
+          <Field label="공연 날짜" value={`${startDate}~${endDate}`} />
         </div>
         <div className="flex w-full flex-col">
-          <Field label="공연장소" value={data?.concertLocation} />
-          <Field label="연령" value={`${data?.startAge}~${data?.endAge}`} />
-          <Field label="성별" value={data?.gender} />
-          <Field label="교통수단" value={data?.transportation} />
+          <Field label="공연장소" value={concertLocation} />
+          <Field label="연령" value={`${startAge}~${endAge}`} />
+          <Field label="성별" value={gender} />
+          <Field label="교통수단" value={transportation} />
         </div>
       </Section>
       <Section>{data?.content}</Section>
