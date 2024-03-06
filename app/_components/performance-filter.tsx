@@ -1,64 +1,38 @@
 'use client';
 
-import React, { MouseEvent, useRef } from 'react';
+import React, { MouseEvent, useCallback, useState } from 'react';
 
 import { Button } from '~/components/button';
 import { SEARCH, SELECTION } from '~/constants/filterField';
+import { joinQuery } from '~/utils/joinQuery';
 
 import ButtonSelectField from './filter-field/button-select';
-import CheckboxSelectField from './filter-field/checkbox-select';
 
 interface PerformanceFilterProps {
   onSubmit: (query: string) => void;
 }
 
 const PerformanceFilter = ({ onSubmit }: PerformanceFilterProps) => {
-  const checkbox = SELECTION.REGIONS.options.reduce(
-    (acc, option) => {
-      acc[option] = false;
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const [options, setOptions] = useState({
+    genre: [],
+    status: [],
+  });
 
-      return acc;
-    },
-    {} as Record<string, boolean>,
-  );
-  const checkboxRef = useRef(checkbox);
-  const genreRef = useRef<string[]>([]);
-  const statusRef = useRef<string[]>([]);
-
-  const joinQuery = (...targets: string[][]) => {
-    return targets.map(target => target.join('&'));
-  };
-
-  if (!genreRef || !statusRef || !checkboxRef) {
-    return;
-  }
-
-  const setObject = (
-    genreQuery: string,
-    statusQuery: string,
-    regionsQuery: string,
-  ) => {
+  const setObject = (genreQuery: string, statusQuery: string) => {
     return {
       genre: genreQuery,
       status: statusQuery,
-      regions: regionsQuery,
     };
   };
 
   const getQuery = () => {
-    const [genreQuery, statusQuery, regionsQuery] = joinQuery(
-      genreRef.current,
-      statusRef.current,
-      Object.keys(checkboxRef.current).filter(key => checkboxRef.current[key]),
-    );
+    const { genre: optionGenre, status: optionStatus } = options;
+    const [genreQuery, statusQuery] = joinQuery(optionGenre, optionStatus);
 
-    const { genre, status, regions } = setObject(
-      genreQuery,
-      statusQuery,
-      regionsQuery,
-    );
+    const { genre, status } = setObject(genreQuery, statusQuery);
 
-    return `genre=${genre}&status=${status}&regions=${regions}`;
+    return `genre=${genre}&status=${status}`;
   };
 
   const handleSubmit = (e: MouseEvent<HTMLButtonElement>) => {
@@ -69,24 +43,25 @@ const PerformanceFilter = ({ onSubmit }: PerformanceFilterProps) => {
     onSubmit(query);
   };
 
+  const getValue = useCallback((category: string, selectedOption: string[]) => {
+    setOptions(options => ({ ...options, [category]: selectedOption }));
+  }, []);
+
   return (
     <div className="flex w-[260px] flex-col gap-6 px-3">
       <ButtonSelectField
         category={SELECTION.GENRE.category}
         options={SELECTION.GENRE.options}
-        ref={genreRef}
         isMultipleSelection
+        setOption={getValue}
+        fieldName={'genre'}
       />
       <ButtonSelectField
         category={SELECTION.STATUS.category}
         options={SELECTION.STATUS.options}
         isMultipleSelection
-        ref={statusRef}
-      />
-      <CheckboxSelectField
-        category={SELECTION.REGIONS.category}
-        options={SELECTION.REGIONS.options}
-        ref={checkboxRef}
+        setOption={getValue}
+        fieldName={'status'}
       />
       <Button variant="outline" type="submit" onClick={handleSubmit}>
         {SEARCH}

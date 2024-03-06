@@ -1,21 +1,25 @@
 import { ReactNode, createContext } from 'react';
 
+import { CompanionFormValue } from '~/app/recruitment/new/constants';
 import useForm from '~/hooks/useForm';
-import { ValidateFn } from '~/hooks/useForm/types';
+import { UseFormReturn, ValidateFn } from '~/hooks/useForm/types';
 
-export const FormContext = createContext({} as ReturnType<typeof useForm>);
+export const FormContext = createContext(
+  {} as UseFormReturn<CompanionFormValue>,
+);
 
 FormContext.displayName = 'FormContext';
 
-interface FormProps {
+interface FormProps<T> {
   children: ReactNode;
-  initialValues: Record<string, string>;
+  initialValues: T;
   initialValidations: {
     id: string;
     validate: ValidateFn;
     message: string;
   }[];
   className?: string;
+  submit: (values: T) => void;
 }
 
 export const Form = ({
@@ -23,8 +27,9 @@ export const Form = ({
   initialValues,
   initialValidations,
   className,
-}: FormProps) => {
-  const formValues = useForm(initialValues, values => values);
+  submit,
+}: FormProps<CompanionFormValue>) => {
+  const formValues = useForm<CompanionFormValue>(initialValues, submit);
   const { handleSubmit, registerValidation } = formValues;
 
   initialValidations.forEach(registerValidation);

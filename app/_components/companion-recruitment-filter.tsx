@@ -1,19 +1,21 @@
 'use client';
 
-import { MouseEvent, useRef } from 'react';
+import { MouseEvent, useCallback, useState } from 'react';
 
 import { Button } from '~/components/button';
 import { SEARCH, SELECTION } from '~/constants/filterField';
+import { joinQuery } from '~/utils/joinQuery';
 
 import CheckboxSelectField from './filter-field/checkbox-select';
 import InputField from './filter-field/input-field';
 import RadioField from './filter-field/radio-field';
 import SelectField from './filter-field/select-field';
 
-export interface refType {
+export type OptionsPartialType = string | string[] | [number, number] | number;
+export interface OptionsType {
   gender: string;
   region: string[];
-  age: number[];
+  age: [number, number];
   transportation: string;
   personCount: number;
 }
@@ -24,46 +26,41 @@ interface CompanionRecruitmentFilterProps {
 const CompanionRecruitmentFilter = ({
   onSubmit,
 }: CompanionRecruitmentFilterProps) => {
-  const radioRef = useRef<string>(SELECTION.GENDER.options[0].value);
-  const checkbox = SELECTION.REGIONS.options.reduce(
-    (acc, option) => {
-      acc[option] = false;
+  const [options, setOptions] = useState({
+    gender: 'irrelevant',
+    regions: [],
+    age: [20, 30],
+    transportation: '',
+    personCount: 0,
+  });
 
-      return acc;
+  const getValue = useCallback(
+    (category: string, selectedOption: OptionsPartialType) => {
+      setOptions(options => ({ ...options, [category]: selectedOption }));
     },
-    {} as Record<string, boolean>,
+    [],
   );
-  const checkboxRef = useRef(checkbox);
-  const transportationRef = useRef<string>(
-    SELECTION.TRANSPORTATION.options[0].value,
-  );
-  const ageRef = useRef([20, 30]);
-  const personCountRef = useRef(1);
-
-  const joinQuery = (...targets: string[][]) => {
-    return targets.map(target => target.join('&'));
-  };
 
   const setObject = (regionQuery: string) => {
     return {
-      gender: radioRef.current,
+      gender: options.gender,
       regions: regionQuery,
-      transportation: transportationRef.current,
-      startAge: ageRef.current[0],
-      endAge: ageRef.current[1],
-      totalPeople: personCountRef.current,
+      transportation: options.transportation,
+      startAge: options.age[0],
+      endAge: options.age[1],
+      totalPeople: options.personCount,
     };
   };
 
+  const objectToQueryString = (object: { [key: string]: string | number }) =>
+    Object.entries(object).reduce((acc, [key, value]) => {
+      return `${acc}&${key}=${value}`;
+    }, '');
+
   const getQuery = () => {
-    const [regionQuery] = joinQuery(
-      Object.keys(checkboxRef.current).filter(key => checkboxRef.current[key]),
-    );
+    const [regionQuery] = joinQuery(options.regions);
 
-    const { gender, regions, startAge, endAge, transportation, totalPeople } =
-      setObject(regionQuery);
-
-    return `gender=${gender}&region=${regions}&startAge=${startAge}&endAge=${endAge}&transportation=${transportation}&totalPeople=${totalPeople}`;
+    return objectToQueryString(setObject(regionQuery));
   };
 
   const handleSubmit = (e: MouseEvent<HTMLButtonElement>) => {
@@ -78,29 +75,34 @@ const CompanionRecruitmentFilter = ({
       <RadioField
         category={SELECTION.GENDER.category}
         options={SELECTION.GENDER.options}
-        ref={radioRef}
+        setOption={getValue}
+        fieldName={'gender'}
       />
       <CheckboxSelectField
         category={SELECTION.REGIONS.category}
         options={SELECTION.REGIONS.options}
-        ref={checkboxRef}
+        setOption={getValue}
+        fieldName={'region'}
       />
       <RadioField
         category={SELECTION.TRANSPORTATION.category}
         options={SELECTION.TRANSPORTATION.options}
-        ref={transportationRef}
+        setOption={getValue}
+        fieldName={'transportation'}
       />
       <InputField
         category={SELECTION.AGE.category}
         defaultValues={SELECTION.AGE.options}
-        ref={ageRef}
+        setOption={getValue}
+        fieldName={'age'}
       />
       <SelectField
         category={SELECTION.PERSON_COUNT.category}
         options={SELECTION.PERSON_COUNT.options}
         defaultValue={SELECTION.PERSON_COUNT.options[0].value}
         placeholder={SELECTION.PERSON_COUNT.options[0].label}
-        ref={personCountRef}
+        setOption={getValue}
+        fieldName={'personCount'}
       />
       <Button variant="outline" onClick={handleSubmit}>
         {SEARCH}

@@ -11,7 +11,7 @@ interface SingleFilterProps {
 }
 
 const SingleFilter = ({
-  baseUrl = '/',
+  baseUrl = '',
   hasFilterTitle = true,
 }: SingleFilterProps) => {
   const router = useRouter();

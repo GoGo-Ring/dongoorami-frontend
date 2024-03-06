@@ -45,7 +45,7 @@ const updateMember = rest.patch(
 );
 
 const updateProfileImage = rest.patch(
-  `${BASE_URL}/members/profileImage`,
+  `${BASE_URL}/profileImage`,
   async (req, res, ctx) => {
     const newProfileImage = (await req.json()) as string;
 

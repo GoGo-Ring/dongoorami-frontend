@@ -18,22 +18,11 @@ const Page = () => {
       </div>
       <div className="flex flex-col gap-8 px-6 py-10">
         <div className="flex flex-col gap-6">
-          <span className="font-semibold">공연</span>
+          <h3 className="font-semibold">공연</h3>
           <div className="mx-auto grid grid-cols-3">
-            {performancesQuery?.data?.map(
-              ({ id, posterSrc, title, facilityName, startDate, status }) => (
-                <PerformanceInfoCard
-                  key={id}
-                  posterSrc={posterSrc}
-                  title={title}
-                  facilityName={facilityName}
-                  // startDate={new Date()}
-                  // status={'공연 중'}
-                  startDate={startDate}
-                  status={status}
-                />
-              ),
-            )}
+            {performancesQuery?.data?.map(({ _id, ...rest }) => (
+              <PerformanceInfoCard key={_id} {...rest} />
+            ))}
           </div>
         </div>
         <Button variant="outline">공연 더보기</Button>
@@ -41,34 +30,9 @@ const Page = () => {
           <div className="flex flex-col gap-6">
             <span className="font-semibold">동행 모집</span>
             <div className="mx-auto grid grid-cols-3 gap-4">
-              {companionsQuery?.data?.map(
-                ({
-                  title,
-                  concertName,
-                  userId,
-                  gender,
-                  personCount,
-                  viewCount,
-                  commentsCount,
-                  date,
-                  status,
-                }) => (
-                  <CompanionRecruitmentCard
-                    key={title}
-                    title={title}
-                    concertName={concertName}
-                    userId={userId}
-                    gender={gender}
-                    personCount={personCount}
-                    viewCount={viewCount}
-                    commentsCount={commentsCount}
-                    // date={new Date()}
-                    // status={'모집 중'}
-                    date={date}
-                    status={status}
-                  />
-                ),
-              )}
+              {companionsQuery?.data?.map(({ _id, ...rest }) => (
+                <CompanionRecruitmentCard key={_id} {...rest} />
+              ))}
             </div>
           </div>
         </div>
