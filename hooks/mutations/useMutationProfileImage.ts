@@ -7,7 +7,7 @@ const useMutationProfileImage = () => {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: (file: File) => updateProfileImage(file),
+    mutationFn: (file: FormData) => updateProfileImage(file),
     onSuccess: data => {
       queryClient.setQueryData(['member'], (oldData: Member) => ({
         ...oldData,
