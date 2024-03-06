@@ -1,15 +1,17 @@
 'use client';
 
-import { useCallback, useState } from 'react';
+import { MouseEvent, useCallback, useState } from 'react';
 
 import { Button } from '~/components/button';
 import { SEARCH, SELECTION } from '~/constants/filterField';
+import { joinQuery } from '~/utils/joinQuery';
 
 import CheckboxSelectField from './filter-field/checkbox-select';
 import InputField from './filter-field/input-field';
 import RadioField from './filter-field/radio-field';
 import SelectField from './filter-field/select-field';
 
+export type OptionsPartialType = string | string[] | [number, number] | number;
 export interface OptionsType {
   gender: string;
   region: string[];
@@ -18,19 +20,19 @@ export interface OptionsType {
   personCount: number;
 }
 
-export type OptionsPartialType = string | string[] | [number, number] | number;
-
-const CompanionRecruitmentFilter = () => {
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+interface CompanionRecruitmentFilterProps {
+  onSubmit: (query: string) => void;
+}
+const CompanionRecruitmentFilter = ({
+  onSubmit,
+}: CompanionRecruitmentFilterProps) => {
   const [options, setOptions] = useState({
     gender: 'irrelevant',
-    region: [],
+    regions: [],
     age: [20, 30],
     transportation: '',
     personCount: 0,
   });
-
-  const handle = () => {};
 
   const getValue = useCallback(
     (category: string, selectedOption: OptionsPartialType) => {
@@ -38,6 +40,35 @@ const CompanionRecruitmentFilter = () => {
     },
     [],
   );
+
+  const setObject = (regionQuery: string) => {
+    return {
+      gender: options.gender,
+      regions: regionQuery,
+      transportation: options.transportation,
+      startAge: options.age[0],
+      endAge: options.age[1],
+      totalPeople: options.personCount,
+    };
+  };
+
+  const objectToQueryString = (object: { [key: string]: string | number }) =>
+    Object.entries(object).reduce((acc, [key, value]) => {
+      return `${acc}&${key}=${value}`;
+    }, '');
+
+  const getQuery = () => {
+    const [regionQuery] = joinQuery(options.regions);
+
+    return objectToQueryString(setObject(regionQuery));
+  };
+
+  const handleSubmit = (e: MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    const query = getQuery();
+
+    onSubmit(query);
+  };
 
   return (
     <div className="flex w-[260px] flex-col gap-6 px-3">
@@ -73,7 +104,7 @@ const CompanionRecruitmentFilter = () => {
         setOption={getValue}
         fieldName={'personCount'}
       />
-      <Button variant="outline" onClick={handle}>
+      <Button variant="outline" onClick={handleSubmit}>
         {SEARCH}
       </Button>
     </div>
