@@ -3,6 +3,7 @@
 import { useSearchParams } from 'next/navigation';
 
 import MainMessage from './_components/main-list';
+import MobileMessage from './_components/mobile-list';
 
 const Page = () => {
   const page = useSearchParams().get('page') || '1';
@@ -11,6 +12,7 @@ const Page = () => {
     <section>
       <h2 className="mb-8 mt-10 text-xl font-bold">받은 쪽지함</h2>
       <MainMessage page={page} />
+      <MobileMessage />
     </section>
   );
 };
