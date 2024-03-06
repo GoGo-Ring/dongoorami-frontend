@@ -1,5 +1,6 @@
 'use client';
-import { forwardRef } from 'react';
+
+import { memo, useEffect, useState } from 'react';
 
 import {
   Select,
@@ -9,6 +10,8 @@ import {
   SelectTrigger,
   SelectValue,
 } from '~/components/select';
+
+import { OptionsPartialType } from '../companion-recruitment-filter';
 
 interface SelectOptionItemProps {
   value: number;
@@ -20,6 +23,8 @@ interface SelectFieldProps {
   options: SelectOptionItemProps[];
   defaultValue: number;
   placeholder: string;
+  setOption: (category: string, selectedOption: OptionsPartialType) => void;
+  fieldName: string;
 }
 
 const SelectOptionItem = ({ value, label }: SelectOptionItemProps) => {
@@ -28,44 +33,42 @@ const SelectOptionItem = ({ value, label }: SelectOptionItemProps) => {
   return <SelectItem value={optionValue}>{label}</SelectItem>;
 };
 
-const SelectField = forwardRef<number, SelectFieldProps>(
-  ({ category, options, defaultValue, placeholder }, ref) => {
-    const onValueChange = (value: string) => {
-      if (!ref) {
-        return;
-      }
-      if (typeof ref === 'function') {
-        return;
-      }
-      if (!ref.current) {
-        return;
-      }
-      ref.current = parseInt(value);
-    };
+const SelectField = ({
+  category,
+  options,
+  defaultValue,
+  placeholder,
+  setOption,
+  fieldName,
+}: SelectFieldProps) => {
+  const defaultString = defaultValue.toString();
+  const [selectValue, setSelectValue] = useState(defaultString);
 
-    return (
-      <div>
-        <span className="font-semibold">{category}</span>
-        <Select onValueChange={onValueChange}>
-          <SelectTrigger className="w-[180px]">
-            <SelectValue
-              placeholder={placeholder}
-              defaultValue={defaultValue.toString()}
-            />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectGroup>
-              {options.map(({ label, value }) => (
-                <SelectOptionItem key={label} label={label} value={value} />
-              ))}
-            </SelectGroup>
-          </SelectContent>
-        </Select>
-      </div>
-    );
-  },
-);
+  const onValueChange = (value: string) => {
+    setSelectValue(value);
+  };
 
-SelectField.displayName = 'SelectField';
+  useEffect(() => {
+    setOption(fieldName, parseInt(selectValue));
+  }, [selectValue, setOption, fieldName]);
 
-export default SelectField;
+  return (
+    <div>
+      <span className="font-semibold">{category}</span>
+      <Select onValueChange={onValueChange}>
+        <SelectTrigger className="w-[180px]">
+          <SelectValue placeholder={placeholder} defaultValue={defaultString} />
+        </SelectTrigger>
+        <SelectContent>
+          <SelectGroup>
+            {options.map(({ label, value }) => (
+              <SelectOptionItem key={label} label={label} value={value} />
+            ))}
+          </SelectGroup>
+        </SelectContent>
+      </Select>
+    </div>
+  );
+};
+
+export default memo(SelectField);

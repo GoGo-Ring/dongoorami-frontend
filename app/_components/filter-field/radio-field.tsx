@@ -1,9 +1,11 @@
 'use client';
 
-import { forwardRef } from 'react';
+import { MouseEvent, memo, useEffect, useState } from 'react';
 
 import { Label } from '~/components/label';
 import { RadioGroup, RadioGroupItem } from '~/components/radio-group';
+
+import { OptionsPartialType } from '../companion-recruitment-filter';
 
 interface optionProps {
   label?: string;
@@ -12,22 +14,20 @@ interface optionProps {
 interface RadioItemProps {
   label?: string;
   value: string;
-  onClick: (value: string) => void;
+  onClick: (e: MouseEvent<HTMLButtonElement>) => void;
 }
 
 interface RadioFieldProps {
   category: string;
   options: optionProps[];
+  setOption: (category: string, selectedOption: OptionsPartialType) => void;
+  fieldName: string;
 }
 
 const RadioItem = ({ label, value, onClick }: RadioItemProps) => {
   return (
     <div className="flex items-center space-x-2">
-      <RadioGroupItem
-        value={value}
-        id={label}
-        onClick={onClick.bind(null, value)}
-      />
+      <RadioGroupItem value={value} id={label} onClick={onClick} />
       <Label className="hover:cursor-pointer" htmlFor={label}>
         {label}
       </Label>
@@ -35,38 +35,40 @@ const RadioItem = ({ label, value, onClick }: RadioItemProps) => {
   );
 };
 
-const RadioField = forwardRef<string, RadioFieldProps>(
-  ({ category, options }, ref) => {
-    const defaultValue = options[0].value;
+const RadioField = ({
+  category,
+  options,
+  setOption,
+  fieldName,
+}: RadioFieldProps) => {
+  const defaultValue = options[0].value;
+  const [state, setState] = useState(defaultValue);
 
-    const onClick = (value: string) => {
-      if (!ref) {
-        return;
-      }
-      if (typeof ref === 'function') {
-        return;
-      }
-      ref.current = value;
-    };
+  const onClick = (e: MouseEvent<HTMLButtonElement>) => {
+    const { value } = e.currentTarget;
 
-    return (
-      <div>
-        <span className="font-semibold">{category}</span>
-        <RadioGroup defaultValue={defaultValue}>
-          {options.map(({ label, value }) => (
-            <RadioItem
-              key={label}
-              label={label}
-              value={value}
-              onClick={onClick}
-            />
-          ))}
-        </RadioGroup>
-      </div>
-    );
-  },
-);
+    setState(value);
+  };
 
-RadioField.displayName = 'RadioField';
+  useEffect(() => {
+    setOption(fieldName, state);
+  }, [state, setOption, fieldName]);
 
-export default RadioField;
+  return (
+    <div>
+      <span className="font-semibold">{category}</span>
+      <RadioGroup defaultValue={defaultValue}>
+        {options.map(({ label, value }) => (
+          <RadioItem
+            key={label}
+            label={label}
+            value={value}
+            onClick={onClick}
+          />
+        ))}
+      </RadioGroup>
+    </div>
+  );
+};
+
+export default memo(RadioField);
