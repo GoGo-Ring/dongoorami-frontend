@@ -17,7 +17,15 @@ export const updateMember = async (member: Partial<Member>) => {
 export const deleteMember = () => api.delete({ url: '/members' });
 
 export const registerMember = async (member: Partial<Member>) => {
-  const { data } = await api.patch<Member>({ url: '/members', data: member });
+  const registerData = {
+    gender: member.gender,
+    birthDate: member.birthdate,
+  };
+
+  const { data } = await api.patch<Member>({
+    url: '/members/signUp',
+    data: registerData,
+  });
 
   return data;
 };
