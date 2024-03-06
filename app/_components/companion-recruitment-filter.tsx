@@ -21,8 +21,7 @@ export interface OptionsType {
 export type OptionsPartialType = string | string[] | [number, number] | number;
 
 const CompanionRecruitmentFilter = () => {
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [options, setOptions] = useState({
+  const [, setOptions] = useState({
     gender: 'irrelevant',
     region: [],
     age: [20, 30],
