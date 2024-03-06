@@ -1,3 +1,5 @@
+import { Member } from '~/apis/scheme/member';
+
 export interface Companion {
   accompanyPostId: string;
   concertName: string;
@@ -25,4 +27,7 @@ export interface CompanionDetail
     Pick<Companion, 'accompanyPostId' | 'name' | 'updatedAt'> {
   viewCount: number;
   waitingCount: number;
+  concertLocation: string;
+  transportation: '미동행' | '동행';
+  memberInfo: Member;
 }
