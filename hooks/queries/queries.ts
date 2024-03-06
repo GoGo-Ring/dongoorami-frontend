@@ -1,8 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 
 import getCompanion from '~/apis/companion';
-
-import getPerformances from '../apis/performance';
+import getPerformances from '~/apis/performance';
 
 export const usePerformances = () => {
   return useQuery({
