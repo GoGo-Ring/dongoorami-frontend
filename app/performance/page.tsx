@@ -1,29 +1,74 @@
+import { VariantProps, cva } from 'class-variance-authority';
 import Image from 'next/image';
 
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '~/components/tabs';
 import { cn } from '~/libs/utils';
 
-interface InfoItemProps {
+const labelVariants = cva('', {
+  variants: {
+    width: {
+      default: '',
+      90: 'w-[90px]',
+    },
+    weight: {
+      default: '',
+      semibold: 'text-xl font-semibold',
+    },
+  },
+  defaultVariants: { width: 'default', weight: 'default' },
+});
+
+const contentVariants = cva('', {
+  variants: {
+    direction: {
+      default: '',
+      col: 'flex-col',
+    },
+    gap: {
+      default: '',
+      1: 'gap-1',
+    },
+    size: {
+      default: '',
+      sm: 'sm:flex-col',
+    },
+  },
+  defaultVariants: { direction: 'default', gap: 'default', size: 'default' },
+});
+
+interface InfoItemProps
+  extends VariantProps<typeof labelVariants>,
+    VariantProps<typeof contentVariants> {
   className?: string;
   label: string;
   contents: string[] | string;
   labelClassName?: string;
   contentClassName?: string;
+  children?: React.ReactNode;
 }
 
 const InfoItem = ({
   className,
   label,
   contents,
-  labelClassName,
-  contentClassName,
+  width,
+  weight,
+  direction,
+  gap,
+  children,
+  size,
 }: InfoItemProps) => {
   const isArray = typeof contents !== 'string';
 
   return (
     <div className={cn('flex', className)}>
-      <span className={cn('font-semibold', labelClassName)}>{label}</span>
-      <div className={cn('flex', contentClassName)}>
+      <div className="flex justify-between">
+        <span className={cn('font-semibold', labelVariants({ width, weight }))}>
+          {label}
+        </span>
+        {children}
+      </div>
+      <div className={cn('flex', contentVariants({ direction, gap, size }))}>
         {isArray ? (
           contents.map((text, index) => (
             <span key={`${text}_${index}`}>{text}</span>
@@ -46,20 +91,20 @@ const Page = () => {
           <InfoItem
             label={'장소'}
             className="sm:flex-col"
-            contents={'장소명 (장소명) (장소명)'}
-            labelClassName="w-[90px]"
+            contents={'장소명 (위치)'}
+            width={90}
           />
           <InfoItem
             label={'공연기간'}
             className="sm:flex-col"
             contents={'2024.01.01 ~ 2024.01.01'}
-            labelClassName="w-[90px]"
+            width={90}
           />
           <InfoItem
             label={'공연시간'}
             className="sm:flex-col"
             contents={'90분'}
-            labelClassName="w-[90px]"
+            width={90}
           />
           <InfoItem
             label={'가격'}
@@ -70,8 +115,8 @@ const Page = () => {
               '30,000원',
               '30,000원',
             ]}
-            labelClassName="w-[90px]"
-            contentClassName="flex-col"
+            width={90}
+            direction="col"
           />
         </div>
       </div>
@@ -90,44 +135,50 @@ const Page = () => {
               label={'출연진'}
               className="flex-col gap-4 sm:gap-1"
               contents={['출연진1', '출연진2', '출연진3']}
-              labelClassName="text-xl font-semibold"
-              contentClassName="gap-1"
+              weight="semibold"
+              gap={1}
             />
             <InfoItem
               label={'줄거리'}
               className="flex-col gap-4 sm:gap-1"
               contents={'줄거리 설명'}
-              labelClassName="text-xl font-semibold"
-            />
+              weight="semibold"
+            >
+              <button className="text-gray-300 md:hidden lg:hidden">
+                더보기
+              </button>
+            </InfoItem>
 
             <div className="grid grid-cols-2 gap-6">
               <InfoItem
                 label={'제작진'}
                 className="flex-col gap-4 sm:gap-1"
                 contents={['제작진', '제작진', '제작진']}
-                labelClassName="text-xl font-semibold"
-                contentClassName="gap-1"
+                weight="semibold"
+                gap={1}
+                size={'sm'}
               />
               <InfoItem
                 label={'기획사'}
                 className="flex-col gap-4 sm:gap-1"
                 contents={['기획사', '기획사', '기획사']}
-                labelClassName="text-xl font-semibold"
-                contentClassName="gap-1"
+                weight="semibold"
+                gap={1}
+                size={'sm'}
               />
               <InfoItem
                 label={'주최'}
                 className="flex-col gap-4 sm:gap-1"
                 contents={'주최'}
-                labelClassName="text-xl font-semibold"
-                contentClassName="gap-1"
+                weight="semibold"
+                gap={1}
               />
               <InfoItem
                 label={'주관'}
                 className="flex-col gap-4 sm:gap-1"
                 contents={'주관'}
-                labelClassName="text-xl font-semibold"
-                contentClassName="gap-1"
+                weight="semibold"
+                gap={1}
               />
             </div>
             <InfoItem
@@ -138,14 +189,14 @@ const Page = () => {
                 '토요일 (20:00)',
                 '화요일 ~ 금요일 (10:00)',
               ]}
-              labelClassName="text-xl font-semibold"
-              contentClassName="flex-col"
+              weight="semibold"
+              direction="col"
             />
             <InfoItem
               label={'공연 관람 연령'}
               className="flex-col gap-4 sm:gap-1"
               contents={'만 12세 이상'}
-              labelClassName="text-xl font-semibold"
+              weight="semibold"
             />
             <div className="flex flex-col gap-4 sm:gap-1">
               <span className="text-xl font-semibold">공연 상세</span>
