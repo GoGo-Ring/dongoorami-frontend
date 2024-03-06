@@ -1,6 +1,5 @@
 import Image from 'next/image';
 
-import api from '~/apis';
 import { Button } from '~/components/button';
 
 import { getButtonStyle, getButtonConfig, type Domain } from './utils';
@@ -15,7 +14,7 @@ const OAuthButton = ({ domain }: OAuthButtonProps) => {
   const alt = `${name} 로그인`;
 
   const linkSocialLogin = () => {
-    api.get({ url: `/oauth2/authorization/${domain}` });
+    window.location.href = `https://www.dongoorami.shop:8080/oauth2/authorization/${domain}`;
   };
 
   return (
