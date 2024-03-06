@@ -18,8 +18,7 @@ const Page = () => {
     },
   ];
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [reviews, setReviews] = useState<ReviewType[]>(
+  const [, setReviews] = useState<ReviewType[]>(
     users.map(({ userId }) => ({
       userId: userId,
       starRating: 0,
