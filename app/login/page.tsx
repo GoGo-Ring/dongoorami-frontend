@@ -10,6 +10,7 @@ const Login = () => {
         <div className="rounded-md border border-slate-200 p-8">
           <OAuthButton domain="kakao" />
           <OAuthButton domain="naver" />
+          <OAuthButton domain="google" />
         </div>
       </div>
     </div>
