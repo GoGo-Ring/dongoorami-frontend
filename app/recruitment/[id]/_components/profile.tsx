@@ -10,7 +10,7 @@ const Profile = ({ name, image }: CompanyProfileProps) => {
     <div className="flex items-center space-x-2">
       <Image
         src={image || 'https://picsum.photos/40'}
-        alt="profile image"
+        alt={`${name} profile image`}
         className="rounded-full"
         width={40}
         height={40}
