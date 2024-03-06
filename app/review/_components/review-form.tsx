@@ -1,6 +1,5 @@
 import React, { memo, useState, useRef, useEffect, useCallback } from 'react';
 
-import { ReviewType } from '~/app/page';
 import { Button } from '~/components/button';
 import {
   Collapsible,
@@ -13,11 +12,18 @@ import { cn } from '~/libs/utils';
 
 import StarRating from './star-rating';
 
+export interface ReviewType {
+  userId: string;
+  starRating: number;
+  text: string;
+}
+
 interface ReviewFormProps {
   username: string;
   userId: string;
   onUpdate: ({ userId, text, starRating }: ReviewType) => void;
 }
+
 const ReviewForm = ({ username, userId, onUpdate }: ReviewFormProps) => {
   const [isOpen, setIsOpen] = useState(false);
   const [rate, setRate] = useState(0);
