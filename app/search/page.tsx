@@ -1,11 +1,11 @@
 'use client';
 
 import { Button } from '~/components/button';
+import { useCompanion, usePerformances } from '~/hooks/queries/queries';
 
 import PerformanceInfoCard from './_component/PerformanceInfoCard';
 import CompanionRecruitmentCard from '../_components/CompanionRecruitmentCard';
 import FilterTabs from '../_components/filter-tabs';
-import { useCompanion, usePerformances } from '../queries';
 
 const Page = () => {
   const performancesQuery = usePerformances();
