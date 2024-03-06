@@ -86,8 +86,10 @@ const ButtonSelectField = ({
           />
         ))}
       </div>
-    </div>
-  );
-};
+    );
+  },
+);
+
+ButtonSelectField.displayName = 'ButtonSelectField';
 
 export default memo(ButtonSelectField);

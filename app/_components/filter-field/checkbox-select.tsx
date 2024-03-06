@@ -70,6 +70,6 @@ const CheckboxSelectField = ({
       </div>
     </div>
   );
-};
+});
 
 export default memo(CheckboxSelectField);
