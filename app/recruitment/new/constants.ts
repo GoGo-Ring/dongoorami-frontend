@@ -34,10 +34,28 @@ export const FORM_ITEMS = {
   ] as const,
 };
 
-export const INITIAL_VALUES = {
+export interface CompanionFormValue extends Record<string, string> {
+  title: string;
+  performanceName: string;
+  performanceDate: string;
+  performanceLocation: string;
+  participantCount: string;
+  region: string;
+  age: string;
+  minAge: string;
+  maxAge: string;
+  gender: string;
+  male: string;
+  female: string;
+  irrelevant: string;
+  image: string;
+  count: string;
+  content: string;
+}
+export const INITIAL_VALUES: CompanionFormValue = {
   title: '',
   performanceName: '',
-  performanceDate: '',
+  performanceDate: '~',
   performanceLocation: '',
   participantCount: '',
   region: '',
@@ -50,11 +68,11 @@ export const INITIAL_VALUES = {
   irrelevant: '',
   image: '',
   count: '',
-  textArea: '',
+  content: '',
 };
 
 export const VALIDATIONS: {
-  id: keyof typeof INITIAL_VALUES;
+  id: string;
   validate: (value: string, values: Record<string, string>) => boolean;
   message: string;
 }[] = [
@@ -70,7 +88,39 @@ export const VALIDATIONS: {
   },
   {
     id: 'performanceDate',
-    validate: value => value.length > 0,
+    validate: value => {
+      if (value.split('~').includes('')) {
+        return true;
+      }
+      const now = new Date();
+
+      const todayStart = new Date(
+        now.getFullYear(),
+        now.getMonth(),
+        now.getDate(),
+      );
+
+      const [startDate] = value.split('~');
+
+      return new Date(startDate) >= todayStart;
+    },
+    message: '오늘 이후의 날짜를 선택해주세요',
+  },
+  {
+    id: 'performanceDate',
+    validate: value => {
+      if (value.split('~').includes('')) {
+        return true;
+      }
+      const [startDate, endDate] = value.split('~');
+
+      return new Date(startDate) <= new Date(endDate);
+    },
+    message: '시작일이 종료일보다 빨라야합니다.',
+  },
+  {
+    id: 'performanceDate',
+    validate: value => !value.split('~').includes(''),
     message: '공연일을 입력해주세요',
   },
   {

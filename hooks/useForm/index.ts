@@ -44,11 +44,11 @@ const useForm = <T extends Record<string, string>>(
     });
   };
 
-  const handleChange: HandleChange = ({ currentTarget: { id, value } }) => {
-    if (!validationRules.current[id]) {
-      return;
-    }
+  const handleChangeField = (newValues: Partial<T>) => {
+    updateField(newValues as T);
+  };
 
+  const handleChange: HandleChange = ({ currentTarget: { id, value } }) => {
     const newValues = {
       [id]: value,
     };
@@ -57,10 +57,6 @@ const useForm = <T extends Record<string, string>>(
   };
 
   const handleValueChange: HandleValueChange<T> = id => value => {
-    if (!validationRules.current[id]) {
-      return;
-    }
-
     const newValues = {
       [id]: value,
     };
@@ -124,7 +120,7 @@ const useForm = <T extends Record<string, string>>(
       {} as Errors<T>,
     );
 
-    if (!Object.keys(newErrors).length) {
+    if (Object.values(newErrors).every(error => error === '')) {
       onSubmit(values);
 
       return;
@@ -149,6 +145,7 @@ const useForm = <T extends Record<string, string>>(
     errors,
     setValues,
     handleChange,
+    handleChangeField,
     handleValueChange,
     handleSubmit,
     handleSliderInputChange,

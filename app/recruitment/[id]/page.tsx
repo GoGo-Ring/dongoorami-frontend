@@ -1,6 +1,7 @@
 'use client';
 import Image from 'next/image';
 
+import { CommentSection } from '~/app/recruitment/[id]/_components/comment';
 import Field from '~/app/recruitment/[id]/_components/field';
 import PostStatus from '~/app/recruitment/[id]/_components/post-status';
 import Profile from '~/app/recruitment/[id]/_components/profile';
@@ -66,6 +67,7 @@ const Page = ({ params }: Props) => {
         </div>
       </Section>
       <Section>{data?.content}</Section>
+      <CommentSection accompanyPostId={params.id} />
     </div>
   );
 };
