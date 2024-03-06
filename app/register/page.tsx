@@ -46,10 +46,12 @@ const Register = () => {
     const data: Partial<Member> = {
       // nickname: values.nickname, 임시 삭제
       gender: values.gender === 'male' ? '남' : '여',
-      birthdate: `${values.year}${values.month}${values.day}`,
+      birthdate: `${values.year}-${values.month}-${values.day}`,
     };
 
     registerMember(data);
+
+    router.push('/');
   };
 
   return (
