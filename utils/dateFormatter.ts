@@ -14,3 +14,11 @@ export const getDate = (date: Date, format: DateFormat) => {
       return null;
   }
 };
+
+export const getAge = (date: Date) => {
+  const today = new Date();
+  const birthYear = date.getFullYear();
+  const todayYear = today.getFullYear();
+
+  return todayYear - birthYear + 1;
+};
