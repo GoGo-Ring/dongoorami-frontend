@@ -1,4 +1,7 @@
+'use client';
+
 import { VariantProps, cva } from 'class-variance-authority';
+import { Children, ReactNode, useState } from 'react';
 
 import { cn } from '~/libs/utils';
 
@@ -43,6 +46,7 @@ interface InfoItemProps
   labelClassName?: string;
   contentClassName?: string;
   children?: React.ReactNode;
+  more?: boolean;
 }
 
 const InfoItem = ({
@@ -53,28 +57,52 @@ const InfoItem = ({
   weight,
   direction,
   gap,
-  children,
   size,
+  more = false,
 }: InfoItemProps) => {
   const isArray = typeof contents !== 'string';
 
   return (
     <div className={cn('flex', className)}>
-      <div className="flex justify-between">
-        <span className={cn('font-semibold', labelVariants({ width, weight }))}>
-          {label}
-        </span>
-        {children}
-      </div>
+      <span className={cn('font-semibold', labelVariants({ width, weight }))}>
+        {label}
+      </span>
       <div className={cn('flex', contentVariants({ direction, gap, size }))}>
         {isArray ? (
           contents.map((text, index) => (
-            <span key={`${text}_${index}`}>{text}</span>
+            <li className={'list-none'} key={`${text}_${index}`}>
+              {text}
+            </li>
           ))
         ) : (
-          <span>{contents}</span>
+          <span className={cn({ 'sm:line-clamp-3': !more })}>{contents}</span>
         )}
       </div>
+    </div>
+  );
+};
+
+interface InfoItemWithButtonProps extends InfoItemProps {
+  children: ReactNode;
+}
+
+export const InfoItemWithButton = ({
+  children,
+  ...props
+}: InfoItemWithButtonProps) => {
+  const [more, setMore] = useState(false);
+
+  const [unfold, fold] = Children.toArray(children);
+
+  return (
+    <div className="relative">
+      <button
+        onClick={() => setMore(!more)}
+        className="absolute right-0 top-1 text-gray-300 md:hidden lg:hidden"
+      >
+        {more ? fold : unfold}
+      </button>
+      <InfoItem more={more} {...props} />
     </div>
   );
 };
