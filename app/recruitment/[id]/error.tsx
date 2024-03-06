@@ -2,14 +2,13 @@
 
 import { useEffect } from 'react';
 
-import { Button } from '~/components/button';
-const Error = ({
-  error,
-  reset,
-}: {
+interface ErrorProps {
   error: Error & { digest?: string };
   reset: () => void;
-}) => {
+}
+
+import { Button } from '~/components/button';
+const Error = ({ error, reset }: ErrorProps) => {
   useEffect(() => {
     console.error(error);
   }, [error]);
