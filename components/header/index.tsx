@@ -1,10 +1,15 @@
 'use client';
 
+import { useRouter } from 'next/navigation';
+
 import MainNav from './main-nav';
 import MobileNav from './mobile-nav';
 import SearchBar from './search-bar';
+import Icon from '../icon';
 
 const Header = () => {
+  const router = useRouter();
+
   return (
     <header className="border-b border-gray-200">
       <div className="mx-auto grid h-16 min-w-page-min max-w-page-max grid-cols-3 items-center px-lg sm:grid-cols-[auto,1fr,auto] sm:gap-3">
@@ -14,9 +19,9 @@ const Header = () => {
         <SearchBar />
 
         <div className="flex items-center gap-3 justify-self-end">
-          <div className="h-7 w-7 rounded-full border border-black bg-red-400"></div>
-          <div className="h-7 w-7 rounded-full border border-black bg-blue-400"></div>
-          <div className="h-7 w-7 rounded-full border border-black bg-green-400"></div>
+          <Icon iconName="alarm" />
+          <Icon iconName="message" />
+          <Icon iconName="user" onClick={() => router.push('/users/2')} />
         </div>
       </div>
     </header>

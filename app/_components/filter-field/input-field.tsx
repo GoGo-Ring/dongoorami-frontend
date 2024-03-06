@@ -1,84 +1,76 @@
 'use client';
-import { forwardRef, useRef } from 'react';
+
+import { ChangeEvent, memo, useEffect, useState } from 'react';
 
 import { Input } from '~/components/input';
 
+import { OptionsPartialType } from '../companion-recruitment-filter';
+
 interface InputItemProps {
   type: string;
-  defaultValue: number;
-  onChange: () => void;
+  name: string;
+  defaultValue?: number;
+  onChange: (e: ChangeEvent<HTMLInputElement>) => void;
+  value: number;
 }
 
 interface InputFieldProps {
   category: string;
   defaultValues: number[];
+  setOption: (category: string, selectedOption: OptionsPartialType) => void;
+  fieldName: string;
 }
 
-const InputItem = forwardRef<HTMLInputElement, InputItemProps>(
-  ({ type, defaultValue, onChange }, ref) => {
-    return (
-      <Input
-        defaultValue={defaultValue}
-        type={type}
-        className="w-16"
-        min={0}
-        max={100}
-        ref={ref}
-        onChange={onChange}
-      />
-    );
-  },
-);
+const InputItem = ({ type, name, onChange, value }: InputItemProps) => {
+  return (
+    <Input
+      type={type}
+      className="w-16"
+      name={name}
+      min={0}
+      max={100}
+      value={value}
+      onChange={onChange}
+    />
+  );
+};
 
-InputItem.displayName = 'InputItem';
+const InputField = ({
+  category,
+  defaultValues,
+  setOption,
+  fieldName,
+}: InputFieldProps) => {
+  const [minValue, maxValue] = defaultValues;
+  const [inputs, setInputs] = useState({
+    min: minValue,
+    max: maxValue,
+  });
+  const { min, max } = inputs;
 
-const InputField = forwardRef<number[], InputFieldProps>(
-  ({ category, defaultValues }, ref) => {
-    const minRef = useRef<HTMLInputElement>(null);
-    const maxRef = useRef<HTMLInputElement>(null);
-    const [minValue, maxValue] = defaultValues;
+  const onChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const { value, name } = e.currentTarget;
 
-    const onChange = () => {
-      if (!ref) {
-        return;
-      }
-      if (typeof ref === 'function') {
-        return;
-      }
-      if (!ref.current || !minRef.current || !maxRef.current) {
-        return;
-      }
-      if (typeof ref.current === 'function') {
-        return;
-      }
-      ref.current = [
-        parseInt(minRef.current.value),
-        parseInt(maxRef.current.value),
-      ];
-    };
+    setInputs({ ...inputs, [name]: parseInt(value) });
+  };
 
-    return (
-      <>
-        <span className="font-semibold">{category}</span>
-        <div className="flex flex-row gap-1">
-          <InputItem
-            defaultValue={minValue}
-            type="number"
-            ref={minRef}
-            onChange={onChange}
-          />
-          <span className="my-auto ">~</span>
-          <InputItem
-            defaultValue={maxValue}
-            type="number"
-            ref={maxRef}
-            onChange={onChange}
-          />
-        </div>
-      </>
-    );
-  },
-);
+  useEffect(() => {
+    const { min, max } = inputs;
+    const selected: [number, number] = [min, max];
 
-InputField.displayName = 'InputField';
-export default InputField;
+    setOption(fieldName, selected);
+  }, [inputs, setOption, fieldName]);
+
+  return (
+    <>
+      <span className="font-semibold">{category}</span>
+      <div className="flex flex-row gap-1">
+        <InputItem type="number" name="min" value={min} onChange={onChange} />
+        <span className="my-auto ">~</span>
+        <InputItem type="number" name="max" value={max} onChange={onChange} />
+      </div>
+    </>
+  );
+};
+
+export default memo(InputField);
