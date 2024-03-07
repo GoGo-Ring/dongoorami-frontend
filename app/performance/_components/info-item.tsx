@@ -67,17 +67,17 @@ const InfoItem = ({
       <span className={cn('font-semibold', labelVariants({ width, weight }))}>
         {label}
       </span>
-      <div className={cn('flex', contentVariants({ direction, gap, size }))}>
-        {isArray ? (
-          contents.map((text, index) => (
+      {isArray ? (
+        <ul className={cn('flex', contentVariants({ direction, gap, size }))}>
+          {contents.map((text, index) => (
             <li className={'list-none'} key={`${text}_${index}`}>
               {text}
             </li>
-          ))
-        ) : (
-          <span className={cn({ 'sm:line-clamp-3': !more })}>{contents}</span>
-        )}
-      </div>
+          ))}
+        </ul>
+      ) : (
+        <span className={cn({ 'sm:line-clamp-3': !more })}>{contents}</span>
+      )}
     </div>
   );
 };
