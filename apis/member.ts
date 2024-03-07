@@ -18,6 +18,7 @@ export const deleteMember = () => api.delete({ url: '/members' });
 
 export const registerMember = async (member: Partial<Member>) => {
   const registerData = {
+    nickname: member.nickname,
     gender: member.gender,
     birthDate: member.birthdate,
   };
