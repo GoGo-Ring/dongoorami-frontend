@@ -60,7 +60,7 @@ const InfoItem = ({
   size,
   more = false,
 }: InfoItemProps) => {
-  const isArray = typeof contents !== 'string';
+  const isArray = Array.isArray(contents);
 
   return (
     <div className={cn('flex', className)}>
