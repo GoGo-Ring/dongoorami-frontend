@@ -2,7 +2,8 @@ import Image from 'next/image';
 
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '~/components/tabs';
 
-import InfoItem, { InfoItemWithButton } from './_components/info-item';
+import InfoItem from './_components/info-item';
+import InfoItemWithButton from './_components/info-item-with-button';
 
 const Page = () => {
   return (

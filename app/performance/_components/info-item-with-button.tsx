@@ -8,7 +8,7 @@ interface InfoItemWithButtonProps extends InfoItemProps {
   children: ReactNode;
 }
 
-export const InfoItemWithButton = ({
+const InfoItemWithButton = ({
   children,
   ...props
 }: InfoItemWithButtonProps) => {
@@ -30,3 +30,5 @@ export const InfoItemWithButton = ({
     </div>
   );
 };
+
+export default InfoItemWithButton;
