@@ -44,6 +44,7 @@ const accompany: AccompanyFixture = {
         mannerTemperature: 0,
         introduction: '',
       },
+      status: '모집중',
     },
   ],
 
@@ -126,6 +127,7 @@ const createCompanion = rest.post(
         mannerTemperature: 0,
         introduction: '',
       },
+      status: '모집중',
     });
 
     return res(ctx.status(201));

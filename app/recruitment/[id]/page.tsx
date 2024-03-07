@@ -34,6 +34,7 @@ const Page = ({ params }: Props) => {
     endAge,
     gender,
     transportation,
+    status,
   } = data;
 
   return (
@@ -42,6 +43,7 @@ const Page = ({ params }: Props) => {
       <div className="flex items-center justify-between">
         <Profile name={memberInfo.nickname} image={memberInfo.profileImage} />
         <PostStatus
+          recruitStatus={status}
           createdAt={updatedAt} // TODO: CompanionDetail 에 createdAt 필드 추가
           waitingCount={waitingCount}
           viewCount={viewCount}
