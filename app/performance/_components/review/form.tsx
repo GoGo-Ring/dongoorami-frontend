@@ -2,9 +2,9 @@
 
 import { useState } from 'react';
 
-import ErrorText from '~/app/performance/_components/review/error-text';
 import StarRating from '~/app/review/_components/star-rating';
 import { Button } from '~/components/button';
+import ErrorText from '~/components/error-text';
 import { Input } from '~/components/input';
 import { Textarea } from '~/components/textarea';
 import useForm from '~/hooks/useForm';
