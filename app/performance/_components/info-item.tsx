@@ -1,7 +1,4 @@
-'use client';
-
 import { VariantProps, cva } from 'class-variance-authority';
-import { Children, ReactNode, useState } from 'react';
 
 import { cn } from '~/libs/utils';
 
@@ -37,7 +34,7 @@ const contentVariants = cva('', {
   defaultVariants: { direction: 'default', gap: 'default', size: 'default' },
 });
 
-interface InfoItemProps
+export interface InfoItemProps
   extends VariantProps<typeof labelVariants>,
     VariantProps<typeof contentVariants> {
   className?: string;
@@ -78,31 +75,6 @@ const InfoItem = ({
       ) : (
         <span className={cn({ 'sm:line-clamp-3': !more })}>{contents}</span>
       )}
-    </div>
-  );
-};
-
-interface InfoItemWithButtonProps extends InfoItemProps {
-  children: ReactNode;
-}
-
-export const InfoItemWithButton = ({
-  children,
-  ...props
-}: InfoItemWithButtonProps) => {
-  const [more, setMore] = useState(false);
-
-  const [unfold, fold] = Children.toArray(children);
-
-  return (
-    <div className="relative">
-      <button
-        onClick={() => setMore(!more)}
-        className="absolute right-0 top-1 text-gray-300 md:hidden lg:hidden"
-      >
-        {more ? fold : unfold}
-      </button>
-      <InfoItem more={more} {...props} />
     </div>
   );
 };
