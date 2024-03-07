@@ -13,6 +13,7 @@ import useMutationMessage from '~/hooks/mutations/useMutationMessage';
 import useFetchMessage from '~/hooks/queries/useFetchMessage';
 import { getDate } from '~/utils/dateFormatter';
 
+import { calculatePage } from '../_utils/pagination';
 import { MESSAGE_HEADER, MESSAGE_SIZE, getRead } from '../constatns';
 
 const MainMessage = () => {
@@ -29,16 +30,6 @@ const MainMessage = () => {
   const handleClickMessage = (id: number) => {
     mutate(id);
     router.push(`/message/${id}`);
-  };
-
-  const calculatePage = (page: number, edge: number) => {
-    if (page < 1) {
-      return 1;
-    } else if (page > edge) {
-      return edge;
-    }
-
-    return page;
   };
 
   return (
