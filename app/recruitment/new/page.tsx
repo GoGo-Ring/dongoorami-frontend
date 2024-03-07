@@ -4,13 +4,13 @@ import { useSearchParams } from 'next/navigation';
 import React, { useEffect } from 'react';
 
 import { createCompanion } from '~/apis/accompany';
-import { Button } from '~/components/button';
-import Spinner from '~/components/spinner';
-import useFetchCompanionPost from '~/hooks/queries/useFetchCompanionPost';
 import {
   companionDetailToFormValue,
   companionFormValueToRequest,
-} from '~/utils/apiCompanionDetailAdapter';
+} from '~/app/recruitment/new/utils';
+import { Button } from '~/components/button';
+import Spinner from '~/components/spinner';
+import useFetchCompanionPost from '~/hooks/queries/useFetchCompanionPost';
 
 import {
   ImageField,
