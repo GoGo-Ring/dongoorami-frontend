@@ -1,7 +1,6 @@
 import Image from 'next/image';
 
 import { linkSocialLogin } from '~/apis/login';
-
 import { Button } from '~/components/button';
 
 import { getButtonStyle, getButtonConfig, type Domain } from './utils';
