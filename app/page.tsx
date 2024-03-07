@@ -12,7 +12,7 @@ const Page = () => {
         </div>
         <div className="h-[12px] bg-green-500"></div>
       </div>
-      <div className="flex w-full border border-black">
+      <div className="flex w-full border">
         <div className="flex w-[250px] justify-center border p-8 ">
           <Filter />
         </div>
