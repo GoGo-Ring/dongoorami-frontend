@@ -1,3 +1,5 @@
+'use client';
+
 import { useRef, useState } from 'react';
 
 import {
@@ -91,7 +93,7 @@ const useForm = <T extends Record<string, string>>({
   };
 
   const handleValueChange: HandleValueChange<T> = id => value => {
-    updateField(id, value);
+    updateField(id, String(value));
   };
 
   const handleSubmit: HandleSubmit = e => {
@@ -123,7 +125,7 @@ const useForm = <T extends Record<string, string>>({
       ids.forEach(id => {
         const element = document.getElementById(id as string) as InputType;
 
-        element.value = '';
+        element.value = initialValues[id];
       });
     }
   };

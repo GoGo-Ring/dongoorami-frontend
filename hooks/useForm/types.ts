@@ -5,7 +5,7 @@ type HandleChange = <
 >(
   e: React.ChangeEvent<E>,
 ) => void;
-type HandleValueChange<T> = (id: keyof T) => (value: string) => void;
+type HandleValueChange<T> = (id: keyof T) => (value: string | number) => void;
 
 type HandleSubmit = (e: React.FormEvent<HTMLFormElement>) => void;
 
