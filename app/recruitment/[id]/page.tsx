@@ -1,6 +1,8 @@
 'use client';
 import Image from 'next/image';
+import Link from 'next/link';
 
+import AccompanyApply from '~/app/recruitment/[id]/_components/apply';
 import { CommentSection } from '~/app/recruitment/[id]/_components/comment';
 import Field from '~/app/recruitment/[id]/_components/field';
 import PostStatus from '~/app/recruitment/[id]/_components/post-status';
@@ -37,23 +39,33 @@ const Page = ({ params }: Props) => {
     status,
   } = data;
 
+  const userId = 2; // TODO: 사용자 정보에서 가져오기
+
   return (
     <div className="flex flex-col gap-8 py-8">
       <div className="text-xl font-semibold">{data?.title}</div>
-      <div className="flex items-center justify-between">
-        <Profile name={memberInfo.nickname} image={memberInfo.profileImage} />
-        <PostStatus
-          recruitStatus={status}
-          createdAt={updatedAt} // TODO: CompanionDetail 에 createdAt 필드 추가
-          waitingCount={waitingCount}
-          viewCount={viewCount}
-        />
+      <div className="flex flex-col">
+        <div className="flex items-center justify-between">
+          <Profile name={memberInfo.nickname} image={memberInfo.profileImage} />
+          <PostStatus
+            recruitStatus={status}
+            createdAt={updatedAt} // TODO: CompanionDetail 에 createdAt 필드 추가
+            waitingCount={waitingCount}
+            viewCount={viewCount}
+          />
+        </div>
+        <div className="self-end text-base font-medium text-gray-400">
+          <Link href={`/recruitment/new?id=${params.id}`}>수정</Link>
+          {' | '}
+          <Link href="/recruitment/delete">삭제</Link>
+        </div>
       </div>
       {image && (
         <div className="flex justify-center">
           <Image src={image} alt="companion image" width={300} height={300} />
         </div>
       )}
+
       <Section>
         <div className="flex w-full flex-col">
           <Field label="공연명" value={title} />
@@ -68,7 +80,13 @@ const Page = ({ params }: Props) => {
           <Field label="교통수단" value={transportation} />
         </div>
       </Section>
+
+      <Section>
+        <AccompanyApply count={2} userId={userId} />
+      </Section>
+
       <Section>{data?.content}</Section>
+
       <CommentSection accompanyPostId={params.id} />
     </div>
   );
