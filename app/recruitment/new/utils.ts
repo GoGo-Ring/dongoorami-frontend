@@ -21,7 +21,8 @@ const companionFormValueToRequest = (companionFormValue: CompanionFormValue) =>
     startDate: companionFormValue.performanceDate.split('~')[0] || '',
     startAge: Number(companionFormValue.minAge) || 0,
     totalPeople: Number(companionFormValue.participantCount.slice(0, -1)) || 1,
-    concertPlace: companionFormValue.performanceLocation || '',
+    concertLocation: companionFormValue.performanceLocation || '',
+    status: '모집중', // TODO: 상태값 추가
   }) as CompanionRequest;
 
 const genderMapReverse = {
@@ -44,7 +45,7 @@ const companionDetailToFormValue = (companionDetail: CompanionDetail) =>
       genderMapReverse[companionDetail.gender as keyof typeof genderMapReverse],
     region: companionDetail.region,
     participantCount: `${companionDetail.totalPeople}명`,
-    performanceLocation: companionDetail.concertPlace,
+    performanceLocation: companionDetail.concertLocation,
   }) as CompanionFormValue;
 
 export { companionFormValueToRequest, companionDetailToFormValue };

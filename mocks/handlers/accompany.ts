@@ -33,8 +33,18 @@ const accompany: AccompanyFixture = {
       totalPeople: 2,
       viewCount: 100,
       waitingCount: 5,
-      concertPlace: '도봉구 도봉로 1길 1-1',
       status: '모집중',
+      concertLocation: '서울시 강남구 역삼동 123-45',
+      transportation: '동행',
+      memberInfo: {
+        profileImage: 'https://picsum.photos/200',
+        name: 'John Doe',
+        nickname: 'John',
+        gender: '남',
+        birthdate: '',
+        mannerTemperature: 0,
+        introduction: '',
+      },
     },
   ],
 
@@ -106,6 +116,18 @@ const createCompanion = rest.post(
       updatedAt: new Date().toISOString(),
       viewCount: 0,
       waitingCount: 0,
+      concertLocation: 'Seoul',
+      transportation: '미동행',
+      memberInfo: {
+        profileImage: 'https://picsum.photos/200',
+        name: '',
+        nickname: '',
+        gender: '무관',
+        birthdate: '',
+        mannerTemperature: 0,
+        introduction: '',
+      },
+      status: '모집중',
     });
 
     return res(ctx.status(201));

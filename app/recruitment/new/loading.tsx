@@ -1,9 +1,7 @@
+import PageSkeleton from '~/app/recruitment/new/_components/page-skeleton';
+
 const Loading = () => {
-  return (
-    <div>
-      <h1>Loading...</h1>
-    </div>
-  );
+  return <PageSkeleton />;
 };
 
 export default Loading;
