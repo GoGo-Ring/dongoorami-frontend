@@ -1,6 +1,6 @@
 'use client';
 
-export interface PerformanceRecruitmentProps {
+interface PerformanceRecruitmentProps {
   userId: string;
   date: string;
   seenCount: number;
