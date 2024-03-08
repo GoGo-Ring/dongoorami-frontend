@@ -17,10 +17,10 @@ const PerformanceRecruitment = ({
   content,
 }: PerformanceRecruitmentProps) => {
   return (
-    <div className="flex flex-col gap-1 sm:w-[250px] md:w-[630px] lg:w-[840px]">
+    <div className="relative flex flex-col gap-1 sm:w-[250px] md:w-[630px] lg:w-[840px]">
       <div className="flex gap-3 text-gray-300 sm:justify-between md:divide-x lg:divide-x">
         <span>{userId}</span>
-        <span className="pl-3 sm:hidden">{date}</span>
+        <span className="pl-3 sm:absolute sm:bottom-0 sm:right-0">{date}</span>
         <div className="flex gap-3 divide-x pl-3">
           <div className="flex gap-1">
             <span>조회</span>
@@ -34,9 +34,7 @@ const PerformanceRecruitment = ({
       </div>
       <h3 className="text-base font-semibold">{title}</h3>
       <p className="line-clamp-3">{content}</p>
-      <span className="text-right text-gray-300 md:hidden lg:hidden">
-        {date}
-      </span>
+      <span className="md:hidden lg:hidden">&nbsp;</span>
     </div>
   );
 };
