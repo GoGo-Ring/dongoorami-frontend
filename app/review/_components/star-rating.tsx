@@ -40,7 +40,7 @@ const FilledStar = ({ filled }: FilledStarProps) => {
 interface StarRatingProps {
   starCount?: number;
   rate: number;
-  setRate: Dispatch<SetStateAction<number>>;
+  setRate?: Dispatch<SetStateAction<number>>;
 }
 
 const StarRating = ({ starCount = 5, rate, setRate }: StarRatingProps) => {
@@ -52,12 +52,15 @@ const StarRating = ({ starCount = 5, rate, setRate }: StarRatingProps) => {
   const onChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { value } = e.currentTarget;
 
+    if (!setRate) {
+      return;
+    }
     setRate(parseFloat(value));
   };
 
   return (
     <div className="relative flex w-fit flex-col">
-      <InputRating onChange={onChange} />
+      {setRate && <InputRating onChange={onChange} />}
       <div className={'flex w-36 justify-end '}>
         <div className={'flex w-[132px] justify-between '}>
           {star?.map((value, index) => (
