@@ -1,17 +1,11 @@
 import { DummyCard } from './_components/DummyCard';
 import Filter from './_components/Filter';
+import StyledCarousel from './_components/StyledCarousel';
 
 const Page = () => {
   return (
     <div>
-      <div className="flex aspect-carousel w-full flex-col gap-y-6 border border-black py-6 ">
-        <div className=" flex h-full justify-center">
-          <div className="w-[54px] bg-yellow-500"></div>
-          <div className=" w-[900px] bg-yellow-300"></div>
-          <div className="w-[54px] bg-yellow-500"></div>
-        </div>
-        <div className="h-[12px] bg-green-500"></div>
-      </div>
+      <StyledCarousel />
       <div className="flex w-full border">
         <div className="flex w-[250px] justify-center border p-8 ">
           <Filter />
