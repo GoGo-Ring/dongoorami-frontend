@@ -2,6 +2,7 @@ import { ChangeEvent, Dispatch, SetStateAction, useMemo } from 'react';
 
 import Icon from '~/components/icon';
 import { cn } from '~/libs/utils';
+import { calculateStarRating } from '~/utils/starRating';
 
 interface InputRatingProps {
   onChange: (e: ChangeEvent<HTMLInputElement>) => void;
@@ -36,40 +37,17 @@ const FilledStar = ({ filled }: FilledStarProps) => {
   );
 };
 
-enum StarState {
-  None = 'none',
-  Half = 'half',
-  Full = 'full',
-}
-
 interface StarRatingProps {
   starCount?: number;
   rate: number;
   setRate: Dispatch<SetStateAction<number>>;
 }
+
 const StarRating = ({ starCount = 5, rate, setRate }: StarRatingProps) => {
-  const star = useMemo(() => {
-    const defaultRating = Array.from(
-      { length: starCount },
-      () => StarState.None,
-    );
-    const hasHalf = Number.isInteger(rate);
-
-    if (rate === 0) {
-      return defaultRating;
-    }
-
-    const IntegerRate = Math.floor(rate);
-    const newRating = defaultRating.map((none, index) =>
-      index <= IntegerRate - 1 ? StarState.Full : none,
-    );
-
-    if (!hasHalf) {
-      newRating[IntegerRate] = StarState.Half;
-    }
-
-    return newRating;
-  }, [rate, starCount]);
+  const star = useMemo(
+    () => calculateStarRating({ starCount, rate }),
+    [rate, starCount],
+  );
 
   const onChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { value } = e.currentTarget;
