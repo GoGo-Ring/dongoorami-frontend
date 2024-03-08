@@ -2,10 +2,12 @@
 
 import StarRating from '~/app/review/_components/star-rating';
 
-import { PerformanceRecruitmentProps } from './performance-recruitment';
-
-interface PerformanceReviewProps extends PerformanceRecruitmentProps {
+interface PerformanceReviewProps {
+  userId: string;
+  date: string;
   starRating: number;
+  title: string;
+  content: string;
 }
 export const PerformanceReview = ({
   userId,
