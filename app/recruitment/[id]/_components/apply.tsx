@@ -10,6 +10,9 @@ interface AccompanyApplyProps {
 
 const AccompanyApply = ({ count, userId }: AccompanyApplyProps) => {
   const router = useRouter();
+  const handleApply = () => {
+    router.push(`/message/write?userId=${userId}`);
+  };
 
   return (
     <div className="flex w-full">
@@ -17,10 +20,7 @@ const AccompanyApply = ({ count, userId }: AccompanyApplyProps) => {
         <Field label="신청 대기자" value={count} />
       </div>
       <div className="w-1/2">
-        <Button
-          className="px-8"
-          onClick={() => router.push(`/message/write?userId=${userId}`)}
-        >
+        <Button className="px-8" onClick={handleApply}>
           동행 신청
         </Button>
       </div>
