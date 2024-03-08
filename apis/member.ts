@@ -16,16 +16,12 @@ export const updateMember = async (member: Partial<Member>) => {
 
 export const deleteMember = () => api.delete({ url: '/members' });
 
-export const registerMember = async (member: Partial<Member>) => {
-  const registerData = {
-    nickname: member.nickname,
-    gender: member.gender,
-    birthDate: member.birthdate,
-  };
-
+export const registerMember = async (
+  member: Pick<Member, 'nickname' | 'gender' | 'birthDate'>,
+) => {
   const { data } = await api.patch<Member>({
     url: '/members/signUp',
-    data: registerData,
+    data: member,
   });
 
   return data;

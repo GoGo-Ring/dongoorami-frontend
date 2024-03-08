@@ -20,7 +20,7 @@ const Register = () => {
   const [errors, setErrors] = useState({
     nickname: '',
     gender: '',
-    birthdate: '',
+    birthDate: '',
   });
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -43,10 +43,10 @@ const Register = () => {
       return;
     }
 
-    const data: Partial<Member> = {
-      // nickname: values.nickname, 임시 삭제
+    const data: Pick<Member, 'nickname' | 'gender' | 'birthDate'> = {
+      nickname: values.nickname,
       gender: values.gender === 'male' ? '남' : '여',
-      birthdate: `${values.year}-${values.month}-${values.day}`,
+      birthDate: `${values.year}-${values.month}-${values.day}`,
     };
 
     registerMember(data);
@@ -123,9 +123,9 @@ const Register = () => {
               />
               일
             </div>
-            {errors.birthdate && (
+            {errors.birthDate && (
               <span className="mt-2 px-1 text-sm text-red-500">
-                {errors.birthdate}
+                {errors.birthDate}
               </span>
             )}
           </div>

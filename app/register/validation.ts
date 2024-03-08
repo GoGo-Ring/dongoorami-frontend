@@ -10,7 +10,7 @@ const validate = (values: FormValues) => {
   const errors = {
     nickname: '',
     gender: '',
-    birthdate: '',
+    birthDate: '',
   };
 
   if (!values.nickname) {
@@ -20,9 +20,9 @@ const validate = (values: FormValues) => {
     errors.gender = '성별을 선택해주세요';
   }
   if (!values.year || !values.month || !values.day) {
-    errors.birthdate = '생년월일을 입력해주세요';
+    errors.birthDate = '생년월일을 입력해주세요';
   } else if (isNaN(values.year) || isNaN(values.month) || isNaN(values.day)) {
-    errors.birthdate = '생년월일은 숫자로 입력해주세요';
+    errors.birthDate = '생년월일은 숫자로 입력해주세요';
   }
 
   return errors;
