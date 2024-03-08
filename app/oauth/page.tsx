@@ -23,7 +23,7 @@ const OAuth = () => {
       router.push('/login');
     }
     instance.defaults.headers.common['Authorization'] = `${accessToken}`;
-    isFirstLogin === 'true' ? router.push('/register') : router.push('/');
+    isFirstLogin === 'true' ? router.replace('/register') : router.replace('/');
   });
 
   return (
