@@ -6,8 +6,9 @@ import { calculateStarRating } from '~/utils/starRating';
 
 interface InputRatingProps {
   onChange: (e: ChangeEvent<HTMLInputElement>) => void;
+  starCount?: number;
 }
-const InputRating = ({ onChange }: InputRatingProps) => {
+const InputRating = ({ onChange, starCount = 5 }: InputRatingProps) => {
   return (
     <input
       type="range"
@@ -15,7 +16,7 @@ const InputRating = ({ onChange }: InputRatingProps) => {
       defaultValue={0}
       step={0.5}
       min={0}
-      max={5}
+      max={starCount}
       className={'absolute h-6 w-full opacity-0'}
     />
   );
@@ -60,11 +61,13 @@ const StarRating = ({ starCount = 5, rate, setRate }: StarRatingProps) => {
 
   return (
     <div className="relative flex w-fit flex-col">
-      {setRate && <InputRating onChange={onChange} />}
-      <div className={'flex w-36 justify-end '}>
-        <div className={'flex w-[132px] justify-between '}>
+      <div className={'flex'}>
+        {setRate && <InputRating onChange={onChange} starCount={starCount} />}
+        <div className={'flex'}>
           {star?.map((value, index) => (
-            <FilledStar key={`star_${index}`} filled={value} />
+            <div key={`star_${index}`} className="px-[2px]">
+              <FilledStar filled={value} />
+            </div>
           ))}
         </div>
       </div>
