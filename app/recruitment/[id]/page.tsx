@@ -54,10 +54,13 @@ const Page = ({ params }: Props) => {
             viewCount={viewCount}
           />
         </div>
-        <div className="self-end text-base font-medium text-gray-400">
-          <Link href={`/recruitment/new?id=${params.id}`}>수정</Link>
-          {' | '}
-          <Link href="/recruitment/delete">삭제</Link>
+        <div className="divide-x-2 self-end text-base font-medium text-gray-400">
+          <Link className="px-1" href={`/recruitment/new?id=${params.id}`}>
+            수정
+          </Link>
+          <Link className="px-1" href="/recruitment/delete">
+            삭제
+          </Link>
         </div>
       </div>
       {image && (
