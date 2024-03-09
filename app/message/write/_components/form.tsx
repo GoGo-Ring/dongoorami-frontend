@@ -15,13 +15,13 @@ const MessageWriteForm = ({
   myId,
   accompanyPostId,
 }: MessageWriteFormProps) => {
-  const { mutate } = useMutationCreateMessage({
+  const { mutate, isPending } = useMutationCreateMessage({
     senderId: myId,
     receiverId: targetId,
     accompanyPostId,
   });
 
-  const { handleUnContolledSubmit, errors } = useForm({
+  const { handleChange, values, handleSubmit, errors } = useForm({
     initialValues: { content: '' },
     onSubmit: values => {
       mutate(values.content);
@@ -30,21 +30,35 @@ const MessageWriteForm = ({
       {
         id: 'content',
         validate: value => value.length > 0,
-        message: '내용을 입력해주세요',
+        message: ' ',
+      },
+      {
+        id: 'content',
+        validate: value => value.length <= 200,
+        message: '200자 이내로 입력해주세요',
       },
     ],
   });
 
+  const isDisabled =
+    Object.keys(errors).length === 0 ||
+    errors?.content?.length > 0 ||
+    isPending;
+
   return (
-    <form
-      onSubmit={handleUnContolledSubmit}
-      className="flex flex-nowrap gap-4 p-4"
-    >
+    <form onSubmit={handleSubmit} className="flex flex-nowrap gap-4 p-4">
       <div className="w-full">
-        <Input id="content" />
-        <ErrorText message={errors.content} />
+        <Input
+          id="content"
+          value={values.content}
+          onChange={handleChange}
+          placeholder="메시지를 입력해주세요"
+        />
+        <ErrorText message={errors?.content} />
       </div>
-      <Button type="submit">전송</Button>
+      <Button type="submit" disabled={isDisabled}>
+        전송
+      </Button>
     </form>
   );
 };

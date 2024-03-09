@@ -111,7 +111,7 @@ const useForm = <T extends Record<string, string>>({
   const handleUnContolledSubmit: HandleSubmit = e => {
     e.preventDefault();
 
-    const ids = Object.keys(validationRules.current);
+    const ids = Object.keys(initialValues);
     const values = ids.reduce((acc, id) => {
       const element = document.getElementById(id as string) as InputType;
 
