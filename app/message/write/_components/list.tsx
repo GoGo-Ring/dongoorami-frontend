@@ -1,4 +1,5 @@
 import useFetchMessageById from '~/hooks/queries/useFetchMessageById';
+import { getDateWithTime } from '~/utils/dateFormatter';
 
 interface MessageWriteListProps {
   targetId: number;
@@ -15,7 +16,9 @@ const MessageWriteList = ({ targetId }: MessageWriteListProps) => {
             {content}
           </p>
           <div className="flex gap-4 self-end text-sm ">
-            <p className="text-gray-300">{date}</p>
+            <p className="text-gray-300">
+              {getDateWithTime(new Date(date), 'yyyy.mm.dd', 'hh:mm:ss')}
+            </p>
             <p className="text-gray-700">유저 {senderId}</p>
           </div>
         </div>
