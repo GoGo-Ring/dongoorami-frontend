@@ -24,7 +24,7 @@ const MessageWriteList = ({ targetId }: MessageWriteListProps) => {
           <p className="text-gray-700">
             {`유저 ${senderId} ${isMyId(senderId) ? '(나)' : ''}`}
           </p>
-          <p className="line-clamp-4 whitespace-pre-wrap text-wrap text-gray-600 hover:block hover:overflow-visible">
+          <p className="line-clamp-2 break-words hover:block hover:overflow-visible">
             {content}
           </p>
           <div className="flex gap-4 self-end text-sm ">

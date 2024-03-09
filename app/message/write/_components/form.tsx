@@ -1,5 +1,5 @@
 import { Button } from '~/components/button';
-import ErrorText from '~/components/error-text';
+import CountErrorText from '~/components/count-error-text';
 import { Input } from '~/components/input';
 import useMutationCreateMessage from '~/hooks/mutations/useMutationCreateMessage';
 import useForm from '~/hooks/useForm';
@@ -21,29 +21,16 @@ const MessageWriteForm = ({
     accompanyPostId,
   });
 
-  const { handleChange, values, handleSubmit, errors } = useForm({
+  const { handleChange, values, handleSubmit } = useForm({
     initialValues: { content: '' },
-    onSubmit: values => {
-      mutate(values.content);
+    onSubmit: ({ content }) => {
+      mutate(content);
     },
-    validationRulesList: [
-      {
-        id: 'content',
-        validate: value => value.length > 0,
-        message: ' ',
-      },
-      {
-        id: 'content',
-        validate: value => value.length <= 200,
-        message: '200자 이내로 입력해주세요',
-      },
-    ],
   });
 
-  const isDisabled =
-    Object.keys(errors).length === 0 ||
-    errors?.content?.length > 0 ||
-    isPending;
+  const limit = 200;
+  const { content } = values;
+  const isDisabled = content === '' || content.length > limit || isPending;
 
   return (
     <form onSubmit={handleSubmit} className="flex flex-nowrap gap-4 p-4">
@@ -54,7 +41,7 @@ const MessageWriteForm = ({
           onChange={handleChange}
           placeholder="메시지를 입력해주세요"
         />
-        <ErrorText message={errors?.content} />
+        <CountErrorText limit={limit} count={values.content.length} />
       </div>
       <Button type="submit" disabled={isDisabled}>
         전송
