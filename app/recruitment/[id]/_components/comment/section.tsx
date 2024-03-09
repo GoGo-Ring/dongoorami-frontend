@@ -18,8 +18,8 @@ const CommentSection = ({ accompanyPostId }: Props) => {
   return (
     <div className="w-full">
       <h2 className="mb-4 text-xl font-semibold">댓글 {length}개</h2>
-      <CommentForm accompanyPostId={accompanyPostId} />
-      <CommentList comments={comments} />
+      <CommentForm accompanyPostId={accompanyPostId} commentId="base" />
+      <CommentList comments={comments} accompanyPostId={accompanyPostId} />
     </div>
   );
 };

@@ -3,46 +3,89 @@
 import { useRef } from 'react';
 
 import { Button } from '~/components/button';
+import ErrorText from '~/components/error-text';
 import { Label } from '~/components/label';
 import { Textarea } from '~/components/textarea';
 import useMutationComment from '~/hooks/mutations/useMutationComment';
+import useMutationUpdateComment from '~/hooks/mutations/useMutationUpdateComment';
 import useForm from '~/hooks/useForm';
 
 interface CommentFormProps {
   accompanyPostId: string;
+  initialComment?: string;
+  commentId: string | number;
+  handleCancel?: () => void;
+  editMode?: boolean;
 }
 
-const CommentForm = ({ accompanyPostId }: CommentFormProps) => {
+const CommentForm = ({
+  accompanyPostId,
+  initialComment,
+  commentId,
+  handleCancel,
+  editMode = false,
+}: CommentFormProps) => {
   const ref = useRef<HTMLTextAreaElement>(null);
-  const { mutate, isPending } = useMutationComment(accompanyPostId);
+  const { mutate: createComment, isPending: isCreatePending } =
+    useMutationComment(accompanyPostId, '1'); // TODO: userId
+  const { mutate: updateComment, isPending: isUpdatePending } =
+    useMutationUpdateComment(accompanyPostId, String(commentId));
 
-  const { handleUnContolledSubmit } = useForm({
-    initialValues: { comment: '' },
+  const isAnyPending = isCreatePending || isUpdatePending;
+  const id = `comment-${commentId}`;
+
+  const { handleUnContolledSubmit, errors } = useForm({
+    initialValues: { [id]: initialComment || '' },
     onSubmit: values => {
-      mutate({ userId: '1', content: values.comment });
+      if (editMode) {
+        updateComment({ content: values[id] });
+      } else {
+        createComment({ content: values[id] });
+      }
+      handleCancel?.();
     },
     validationRulesList: [
       {
-        id: 'comment',
+        id,
         validate: value => value.trim().length > 0,
-        message: '댓글을 입력하세요',
+        message: '댓글을 입력하세요.',
       },
     ],
   });
 
   return (
-    <form onSubmit={handleUnContolledSubmit} className="flex flex-col gap-7">
+    <form onSubmit={handleUnContolledSubmit} className="flex flex-col">
       <Label htmlFor="comment" />
       <Textarea
         className="h-20 resize-none"
         ref={ref}
-        id="comment"
+        defaultValue={initialComment}
+        id={id}
         name="comment"
         placeholder="댓글을 입력하세요"
       />
-      <Button className="w-14 self-end" type="submit" disabled={isPending}>
-        등록
-      </Button>
+      <ErrorText message={errors[id]} />
+      <div className="flex gap-2 self-end pb-2">
+        <Button
+          variant={editMode ? 'link' : 'default'}
+          className="w-14 self-end"
+          type="submit"
+          disabled={isAnyPending}
+        >
+          등록
+        </Button>
+        {editMode && (
+          <Button
+            variant="link"
+            className="w-14 self-end text-destructive"
+            type="button"
+            disabled={isAnyPending}
+            onClick={handleCancel}
+          >
+            취소
+          </Button>
+        )}
+      </div>
     </form>
   );
 };
