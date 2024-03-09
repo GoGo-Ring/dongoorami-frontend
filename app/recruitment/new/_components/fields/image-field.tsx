@@ -10,7 +10,7 @@ import { Input } from '~/components/input';
 
 export const ImageField = ({ id, placeholder, label, variant }: FieldProps) => {
   const { values, handleChange, errors } = useContext(FormContext);
-  const [selectedImage, setSelectedImage] = useState<string | null>(null);
+  const [selectedImage, setSelectedImage] = useState<string | null>(values[id]);
 
   const encodeFileToBase64 = (file: File) => {
     const reader = new FileReader();
@@ -38,7 +38,6 @@ export const ImageField = ({ id, placeholder, label, variant }: FieldProps) => {
         className="cursor-pointer"
         type="file"
         placeholder={placeholder}
-        value={values[id]}
         onChange={handleImageChange}
       />
       {selectedImage && (
