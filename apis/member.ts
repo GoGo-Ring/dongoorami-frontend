@@ -24,8 +24,13 @@ export const updateProfileImage = (data: FormData) => {
 
 export const deleteMember = () => api.delete({ url: '/members' });
 
-export const registerMember = async (member: Partial<Member>) => {
-  const { data } = await api.patch<Member>({ url: '/members', data: member });
+export const registerMember = async (
+  member: Pick<Member, 'nickname' | 'gender' | 'birthDate'>,
+) => {
+  const { data } = await api.patch<Member>({
+    url: '/members/signUp',
+    data: member,
+  });
 
   return data;
 };

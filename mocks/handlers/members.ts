@@ -15,7 +15,7 @@ const member: MemberFixture = {
     name: '최정은',
     nickname: '백둥이',
     gender: '여',
-    birthdate: '1993.09.17',
+    birthDate: '1993.09.17',
     mannerTemperature: 99,
     introduction: '~~~',
   },

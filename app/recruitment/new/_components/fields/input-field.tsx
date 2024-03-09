@@ -8,7 +8,18 @@ import {
 import { FormContext } from '~/app/recruitment/new/_components/form';
 import { Input } from '~/components/input';
 
-export const InputField = ({ id, placeholder, label, variant }: FieldProps) => {
+interface InputFieldProps
+  extends FieldProps,
+    React.InputHTMLAttributes<HTMLInputElement> {
+  id: string;
+}
+
+export const InputField = ({
+  id,
+  placeholder,
+  label,
+  variant,
+}: InputFieldProps) => {
   const { values, handleChange, errors } = useContext(FormContext);
 
   return (
