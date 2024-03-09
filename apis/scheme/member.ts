@@ -3,7 +3,7 @@ export interface Member {
   name: string;
   nickname: string;
   gender: '남' | '여' | '무관';
-  birthdate: string;
+  birthDate: string;
   mannerTemperature: number;
   introduction: string;
 }
