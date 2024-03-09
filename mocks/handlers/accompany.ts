@@ -27,12 +27,13 @@ const accompany: AccompanyFixture = {
       endDate: '2022-12-31',
       endAge: 30,
       gender: '무관',
-      region: 'Seoul',
+      region: '서울',
       startDate: '2022-01-01',
       startAge: 20,
       totalPeople: 2,
       viewCount: 100,
       waitingCount: 5,
+      status: '모집중',
       concertLocation: '서울시 강남구 역삼동 123-45',
       transportation: '동행',
       memberInfo: {
@@ -126,6 +127,7 @@ const createCompanion = rest.post(
         mannerTemperature: 0,
         introduction: '',
       },
+      status: '모집중',
     });
 
     return res(ctx.status(201));
