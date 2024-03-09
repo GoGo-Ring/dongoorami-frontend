@@ -108,7 +108,7 @@ const useForm = <T extends Record<string, string>>({
     }
   };
 
-  const handleUnContolledSubmit: HandleSubmit = e => {
+  const handleUnControlledSubmit: HandleSubmit = e => {
     e.preventDefault();
 
     const ids = Object.keys(initialValues);
@@ -138,7 +138,7 @@ const useForm = <T extends Record<string, string>>({
     handleValueChange,
     handleSubmit,
     registerValidation,
-    handleUnContolledSubmit,
+    handleUnControlledSubmit,
   };
 };
 

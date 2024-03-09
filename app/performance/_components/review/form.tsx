@@ -15,7 +15,7 @@ interface ReviewFormProps {
 
 const ReviewForm = ({ initialTitle, intialContent }: ReviewFormProps) => {
   const [rate, setRate] = useState(0);
-  const { handleUnContolledSubmit } = useForm({
+  const { handleUnControlledSubmit } = useForm({
     initialValues: {
       star: '0',
       title: initialTitle,
@@ -30,7 +30,7 @@ const ReviewForm = ({ initialTitle, intialContent }: ReviewFormProps) => {
   });
 
   return (
-    <form onSubmit={handleUnContolledSubmit} className="flex flex-col gap-4">
+    <form onSubmit={handleUnControlledSubmit} className="flex flex-col gap-4">
       <StarRating rate={rate} setRate={setRate} id="star" />
       <Input
         className="w-1/2"
