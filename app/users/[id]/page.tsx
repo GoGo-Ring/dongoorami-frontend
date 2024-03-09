@@ -88,7 +88,7 @@ const Page = ({ params }: { params: { id: string } }) => {
         />
 
         <div className="flex flex-1 flex-col gap-3">
-          <Info label="나이">{getAge(new Date(member.birthdate))}세</Info>
+          <Info label="나이">{getAge(new Date(member.birthDate))}세</Info>
           <Info label="성별">{member.gender}</Info>
           <Info label="매너지수">
             <div className="flex items-center gap-md">
