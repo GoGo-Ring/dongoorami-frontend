@@ -21,8 +21,12 @@ const Page = () => {
         <div className="flex flex-col gap-6">
           <h3 className="font-semibold">공연</h3>
           <div className="mx-auto grid grid-cols-3">
-            {performancesQuery?.data?.map(({ id, ...rest }) => (
-              <PerformanceInfoCard key={id} {...rest} />
+            {performancesQuery?.data?.map(({ id, startDate, ...rest }) => (
+              <PerformanceInfoCard
+                key={id}
+                startDate={new Date(startDate)}
+                {...rest}
+              />
             ))}
           </div>
         </div>
@@ -31,8 +35,12 @@ const Page = () => {
           <div className="flex flex-col gap-6">
             <span className="font-semibold">동행 모집</span>
             <div className="mx-auto grid grid-cols-3 gap-4">
-              {companionsQuery?.data?.map(({ id, ...rest }) => (
-                <CompanionRecruitmentCard key={id} {...rest} />
+              {companionsQuery?.data?.map(({ id, date, ...rest }) => (
+                <CompanionRecruitmentCard
+                  key={id}
+                  date={new Date(date)}
+                  {...rest}
+                />
               ))}
             </div>
           </div>
