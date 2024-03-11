@@ -2,7 +2,7 @@ import { CompanionRecruitmentCard } from './scheme/accompany';
 
 import api from '.';
 
-const getCompanion = async (): Promise<CompanionRecruitmentCard[]> => {
+const getCompanions = async (): Promise<CompanionRecruitmentCard[]> => {
   const { data } = await api.get<CompanionRecruitmentCard[]>({
     url: '/search/posts',
   });
@@ -10,4 +10,4 @@ const getCompanion = async (): Promise<CompanionRecruitmentCard[]> => {
   return data;
 };
 
-export default getCompanion;
+export default getCompanions;
