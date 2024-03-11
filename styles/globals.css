@@ -49,6 +49,7 @@
     --radius: 0.5rem;
     --kakao: 54, 100%, 49.8%;
     --naver: 3 199 90;
+    --google: 242 242 242;
 
     --font-title: 'Katuri', cursive;
     --font-sans: 'Pretendard', sans-serif;
@@ -86,6 +87,7 @@
     --ring: var(--gray-700);
     --kakao: 54, 100%, 49.8%;
     --naver: 3 199 90;
+    --google: 242 242 242;
   }
 }
 

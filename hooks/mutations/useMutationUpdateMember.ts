@@ -2,11 +2,11 @@ import { useMutation } from '@tanstack/react-query';
 
 import { updateMember } from '~/apis/member';
 
-const useMutationMember = () => {
+const useMutationUpdateMember = () => {
   return useMutation({
     mutationFn: (...args: Parameters<typeof updateMember>) =>
       updateMember(...args),
   });
 };
 
-export default useMutationMember;
+export default useMutationUpdateMember;

@@ -8,6 +8,16 @@ const nextConfig = {
         hostname: 'picsum.photos',
         port: '',
       },
+      {
+        protocol: 'http',
+        hostname: 'k.kakaocdn.net',
+        port: '',
+      },
+      {
+        protocol: 'https',
+        hostname: 's3.ap-northeast-2.amazonaws.com',
+        port: '',
+      },
     ],
   },
 };

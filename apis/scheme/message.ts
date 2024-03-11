@@ -2,6 +2,7 @@ export interface Message {
   id: number;
   accompanyPostId: number;
   senderId: number;
+  receiverId: number;
   content: string;
   date: string;
   isRead: boolean;

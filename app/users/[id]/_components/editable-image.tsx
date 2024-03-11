@@ -1,4 +1,5 @@
 import Image from 'next/image';
+import { toast } from 'sonner';
 
 import Upload from '~/components/image-uploader';
 import useMutationProfileImage from '~/hooks/mutations/useMutationProfileImage';
@@ -17,8 +18,15 @@ const EditableImage = ({ nickname, profileImage }: EditableImageProps) => {
 
     const formData = new FormData();
 
-    formData.append('imageProfile', file);
-    mutateProfileImage(formData);
+    formData.append('image', file);
+    mutateProfileImage(formData, {
+      onSuccess: () => {
+        toast.success('프로필 이미지가 변경되었습니다!');
+      },
+      onError: () => {
+        toast.error('프로필 이미지 변경에 실패했습니다. 다시 시도해주세요!');
+      },
+    });
   };
 
   return (

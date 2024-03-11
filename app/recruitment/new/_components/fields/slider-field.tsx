@@ -21,8 +21,9 @@ export const SliderField = ({
   label,
   variant,
 }: SliderFieldProps) => {
-  const { values, errors, handleSliderInputChange, handleSliderValueChange } =
-    useContext(FormContext);
+  const { values, errors, handleValueChange } = useContext(FormContext);
+
+  const [minValue, maxValue] = values[id].split('~').map(Number);
 
   return (
     <Field id={id} label={label} variant={variant}>
@@ -33,8 +34,10 @@ export const SliderField = ({
             type="number"
             min={0}
             max={100}
-            value={values[minId]}
-            onChange={handleSliderInputChange({ id, minId, maxId })}
+            value={minValue}
+            onChange={({ currentTarget: { value } }) =>
+              handleValueChange(id)(`${value}~${maxValue}`)
+            }
           />
           ~
           <Input
@@ -42,14 +45,21 @@ export const SliderField = ({
             type="number"
             min={0}
             max={100}
-            value={values[maxId]}
-            onChange={handleSliderInputChange({ id, minId, maxId })}
+            value={maxValue}
+            onChange={({ currentTarget: { value } }) =>
+              handleValueChange(id)(`${minValue}~${value}`)
+            }
           />
         </div>
         <Slider
           id={id}
-          value={[Number(values[minId]), Number(values[maxId])]}
-          onValueChange={handleSliderValueChange({ id, minId, maxId })}
+          value={[
+            Number(values[id].split('~')[0]),
+            Number(values[id].split('~')[1]),
+          ]}
+          onValueChange={([minValue, maxValue]) =>
+            handleValueChange(id)(`${minValue}~${maxValue}`)
+          }
         />
       </div>
       <Error error={errors[id]} />

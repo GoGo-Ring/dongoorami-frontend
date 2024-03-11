@@ -1,3 +1,5 @@
+import { Member } from '~/apis/scheme/member';
+
 export interface Companion {
   accompanyPostId: string;
   concertName: string;
@@ -9,7 +11,7 @@ export interface Companion {
 }
 
 export interface CompanionRequest
-  extends Pick<Companion, 'concertName' | 'title' | 'image'> {
+  extends Pick<Companion, 'concertName' | 'title' | 'image' | 'status'> {
   content: string;
   endDate: string;
   endAge: number;
@@ -22,9 +24,12 @@ export interface CompanionRequest
 
 export interface CompanionDetail
   extends CompanionRequest,
-    Pick<Companion, 'accompanyPostId' | 'name' | 'updatedAt'> {
+    Pick<Companion, 'accompanyPostId' | 'name' | 'updatedAt' | 'status'> {
   viewCount: number;
   waitingCount: number;
+  concertLocation: string;
+  transportation: '미동행' | '동행';
+  memberInfo: Member;
 }
 
 export interface CompanionRecruitmentCard {

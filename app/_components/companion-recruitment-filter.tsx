@@ -14,7 +14,7 @@ import SelectField from './filter-field/select-field';
 export type OptionsPartialType = string | string[] | [number, number] | number;
 export interface OptionsType {
   gender: string;
-  region: string[];
+  regions: string[];
   age: [number, number];
   transportation: string;
   personCount: number;
@@ -82,7 +82,7 @@ const CompanionRecruitmentFilter = ({
         category={SELECTION.REGIONS.category}
         options={SELECTION.REGIONS.options}
         setOption={getValue}
-        fieldName={'region'}
+        fieldName={'regions'}
       />
       <RadioField
         category={SELECTION.TRANSPORTATION.category}

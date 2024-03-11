@@ -1,4 +1,10 @@
-import { Companion, CompanionRequest } from './scheme/accompany';
+import { Comment } from '~/apis/scheme/comment';
+
+import {
+  Companion,
+  CompanionDetail,
+  CompanionRequest,
+} from './scheme/accompany';
 
 import api from '.';
 
@@ -16,7 +22,7 @@ export const getCompanions = async () => {
 };
 
 export const getCompanion = async (accompanyPostId: string) => {
-  const { data } = await api.get<CompanionRequest>({
+  const { data } = await api.get<CompanionDetail>({
     url: `/accompanies/posts/${accompanyPostId}`,
   });
 
@@ -38,16 +44,23 @@ export const updateCompanion = async (
 export const getCompanionProfile = async (memberId: number) =>
   await api.get({ url: `/profiles/${memberId}` });
 
-export const createComment = async (content: string) =>
+export const createComment = async (
+  accompanyPostId: string,
+  userId: string,
+  content: string,
+) =>
   await api.post({
-    url: '/comments}',
-    data: { content },
+    url: `/comments/${accompanyPostId}`,
+    data: { userId, content },
   });
 
-export const getComments = async (accompanyPostId: string) =>
-  await api.get({
+export const getComments = async (accompanyPostId: string) => {
+  const { data } = await api.get<Comment[]>({
     url: `/comments/${accompanyPostId}`,
   });
+
+  return data;
+};
 
 export const updateComment = async (accompanyPostId: string, content: string) =>
   await api.patch({
