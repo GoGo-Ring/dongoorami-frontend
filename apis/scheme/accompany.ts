@@ -28,6 +28,7 @@ export interface CompanionDetail
 }
 
 export interface CompanionRecruitmentCard {
+  id: string;
   title: string;
   concertName: string;
   userId: string;

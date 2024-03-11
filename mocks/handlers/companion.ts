@@ -10,6 +10,7 @@ interface CompanionRecruitmentCardFixture {
 const companionRecruitmentCard: CompanionRecruitmentCardFixture = {
   current: [
     {
+      id: '1',
       title: '콘서트 동행하실 분 구해요1',
       concertName: '콘서트',
       userId: '작성자',
@@ -21,6 +22,7 @@ const companionRecruitmentCard: CompanionRecruitmentCardFixture = {
       status: '모집 중' as const,
     },
     {
+      id: '2',
       title: '콘서트 동행하실 분 구해요2',
       concertName: '콘서트',
       userId: '작성자',
@@ -32,6 +34,7 @@ const companionRecruitmentCard: CompanionRecruitmentCardFixture = {
       status: '모집 중' as const,
     },
     {
+      id: '3',
       title: '콘서트 동행하실 분 구해요3',
       concertName: '콘서트',
       userId: '작성자',
@@ -43,6 +46,7 @@ const companionRecruitmentCard: CompanionRecruitmentCardFixture = {
       status: '모집 중' as const,
     },
     {
+      id: '4',
       title: '콘서트 동행하실 분 구해요4',
       concertName: '콘서트',
       userId: '작성자',
@@ -54,6 +58,7 @@ const companionRecruitmentCard: CompanionRecruitmentCardFixture = {
       status: '모집 중' as const,
     },
     {
+      id: '5',
       title: '콘서트 동행하실 분 구해요5',
       concertName: '콘서트',
       userId: '작성자',
