@@ -1,4 +1,4 @@
-import { Member } from './scheme/member';
+import { Member, RegisterMemberRequest } from './scheme/member';
 
 import api from '.';
 
@@ -24,9 +24,7 @@ export const updateProfileImage = (data: FormData) => {
 
 export const deleteMember = () => api.delete({ url: '/members' });
 
-export const registerMember = async (
-  member: Pick<Member, 'nickname' | 'gender' | 'birthDate'>,
-) => {
+export const registerMember = async (member: RegisterMemberRequest) => {
   const { data } = await api.patch<Member>({
     url: '/members/signUp',
     data: member,
