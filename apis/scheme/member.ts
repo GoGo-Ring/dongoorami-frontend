@@ -13,3 +13,8 @@ export interface Member {
   manner: number;
   introduction: string;
 }
+
+export interface Token {
+  accessToken: string;
+  refreshToken: string;
+}
