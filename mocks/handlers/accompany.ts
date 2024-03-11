@@ -45,7 +45,6 @@ const accompany: AccompanyFixture = {
         manner: 0,
         introduction: '',
       },
-      status: '모집중',
     },
   ],
 
