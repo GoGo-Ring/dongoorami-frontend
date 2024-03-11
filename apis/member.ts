@@ -15,8 +15,8 @@ export const updateMember = async (member: Partial<Member>) => {
 };
 
 export const updateProfileImage = (data: FormData) => {
-  return api.patch<string>({
-    url: '/profileImage',
+  return api.post<{ profileImageUrl: string }>({
+    url: '/members/profile-image',
     data,
     headers: { 'Content-Type': 'multipart/form-data' },
   });
