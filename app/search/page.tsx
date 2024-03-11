@@ -1,15 +1,16 @@
 'use client';
 
 import { Button } from '~/components/button';
-import { useCompanion, usePerformances } from '~/hooks/queries/queries';
+import useFetchCompanions from '~/hooks/queries/useFetchCompanions';
+import useFetchPerformances from '~/hooks/queries/useFetchPerformances';
 
-import PerformanceInfoCard from './_component/PerformanceInfoCard';
+import PerformanceInfoCard from './_component/performance-info-card';
 import CompanionRecruitmentCard from '../_components/CompanionRecruitmentCard';
 import FilterTabs from '../_components/filter-tabs';
 
 const Page = () => {
-  const performancesQuery = usePerformances();
-  const companionsQuery = useCompanion();
+  const performancesQuery = useFetchPerformances();
+  const companionsQuery = useFetchCompanions();
 
   return (
     <div className="flex">
@@ -20,8 +21,8 @@ const Page = () => {
         <div className="flex flex-col gap-6">
           <h3 className="font-semibold">공연</h3>
           <div className="mx-auto grid grid-cols-3">
-            {performancesQuery?.data?.map(({ _id, ...rest }) => (
-              <PerformanceInfoCard key={_id} {...rest} />
+            {performancesQuery?.data?.map(({ id, ...rest }) => (
+              <PerformanceInfoCard key={id} {...rest} />
             ))}
           </div>
         </div>
@@ -30,8 +31,8 @@ const Page = () => {
           <div className="flex flex-col gap-6">
             <span className="font-semibold">동행 모집</span>
             <div className="mx-auto grid grid-cols-3 gap-4">
-              {companionsQuery?.data?.map(({ _id, ...rest }) => (
-                <CompanionRecruitmentCard key={_id} {...rest} />
+              {companionsQuery?.data?.map(({ id, ...rest }) => (
+                <CompanionRecruitmentCard key={id} {...rest} />
               ))}
             </div>
           </div>
