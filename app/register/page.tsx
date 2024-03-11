@@ -2,13 +2,14 @@
 
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
+import { toast } from 'sonner';
 
-import { registerMember } from '~/apis/member';
-import { Member } from '~/apis/scheme/member';
+import { RegisterMemberRequest } from '~/apis/scheme/member';
 import { Button } from '~/components/button';
 import { Input } from '~/components/input';
 import { Label } from '~/components/label';
 import { RadioGroup, RadioGroupItem } from '~/components/radio-group';
+import useMutationRegisterMember from '~/hooks/mutations/useMutationRegisterMember';
 
 import validate, { FormValues } from './validation';
 
@@ -16,12 +17,13 @@ const Register = () => {
   const router = useRouter();
 
   const [values, setValues] = useState<FormValues>({} as FormValues);
-
   const [errors, setErrors] = useState({
     nickname: '',
     gender: '',
     birthDate: '',
   });
+
+  const { mutate: mutateRegisterMember } = useMutationRegisterMember();
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { id, value } = event.target;
@@ -43,21 +45,24 @@ const Register = () => {
       return;
     }
 
-    const data: Pick<Member, 'nickname' | 'gender' | 'birthDate'> = {
+    const data: RegisterMemberRequest = {
       nickname: values.nickname,
       gender: values.gender === 'male' ? '남' : '여',
       birthDate: `${values.year}-${values.month}-${values.day}`,
     };
 
-    registerMember(data);
-
-    router.push('/');
+    mutateRegisterMember(data, {
+      onSuccess: () => {
+        toast.success('회원가입이 완료되었습니다.');
+        router.push('/');
+      },
+    });
   };
 
   return (
     <div className=" flex h-full w-full items-center justify-center p-8">
       <form onSubmit={handleSubmit}>
-        <div className="flex-column relative h-[800px] w-96 min-w-96 space-y-1 rounded-md border  border border-primary bg-muted p-1">
+        <div className="flex-column relative h-[800px] w-96 min-w-96 space-y-1 rounded-md border border-primary bg-muted p-1">
           <h1 className="p-6 text-center text-3xl  font-semibold">회원가입</h1>
           <div className="flex h-[100px] flex-col rounded-md px-2">
             <Label className="w-24 text-nowrap p-1 text-base font-semibold">

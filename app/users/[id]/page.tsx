@@ -7,9 +7,8 @@ import { toast } from 'sonner';
 import { Progress } from '~/components/progress';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '~/components/tabs';
 import { Textarea } from '~/components/textarea';
-import useMutationMember from '~/hooks/mutations/useMutationMember';
+import useMutationUpdateMember from '~/hooks/mutations/useMutationUpdateMember';
 import useFetchMember from '~/hooks/queries/useFetchMember';
-import { getAge } from '~/utils/dateFormatter';
 
 import CompleteButton from './_components/complete-button';
 import EditableImage from './_components/editable-image';
@@ -23,8 +22,8 @@ const Page = ({ params }: { params: { id: string } }) => {
 
   const { data: member } = useFetchMember();
   const [inputs, setInputs] = useState({
-    nickname: member?.nickname || '',
-    introduction: member?.profileImage || '',
+    nickname: '',
+    introduction: '',
   });
   const handleChangeInputs = <T extends HTMLInputElement | HTMLTextAreaElement>(
     e: ChangeEvent<T>,
@@ -34,7 +33,7 @@ const Page = ({ params }: { params: { id: string } }) => {
     setInputs(prev => ({ ...prev, [name]: value }));
   };
 
-  const { mutate: mutateMember } = useMutationMember();
+  const { mutate: mutateUpdateMember } = useMutationUpdateMember();
   const onSubmitMember = (inputsObj: typeof inputs) => {
     const nextInputs = {} as typeof inputs;
 
@@ -53,9 +52,10 @@ const Page = ({ params }: { params: { id: string } }) => {
       nextInputs.introduction = inputsObj.introduction;
     }
 
-    mutateMember(nextInputs, {
+    mutateUpdateMember(nextInputs, {
       onSettled: () => setIsEdit(false),
       onSuccess: () => toast.success('수정 완료!'),
+      onError: () => toast.error('정보 수정에 실패했어요. 다시 시도해주세요!'),
     });
   };
 
@@ -88,12 +88,12 @@ const Page = ({ params }: { params: { id: string } }) => {
         />
 
         <div className="flex flex-1 flex-col gap-3">
-          <Info label="나이">{getAge(new Date(member.birthDate))}세</Info>
+          <Info label="나이">{member.age}세</Info>
           <Info label="성별">{member.gender}</Info>
           <Info label="매너지수">
             <div className="flex items-center gap-md">
-              <Progress value={member.mannerTemperature} className="w-1/2" />
-              {member.mannerTemperature}%
+              <Progress value={member.manner} className="w-1/2" />
+              {member.manner}%
             </div>
           </Info>
 
