@@ -16,7 +16,7 @@ const CommentForm = ({ accompanyPostId }: CommentFormProps) => {
   const ref = useRef<HTMLTextAreaElement>(null);
   const { mutate, isPending } = useMutationComment(accompanyPostId);
 
-  const { handleUnContolledSubmit } = useForm({
+  const { handleUnControlledSubmit } = useForm({
     initialValues: { comment: '' },
     onSubmit: values => {
       mutate({ userId: '1', content: values.comment });
@@ -31,7 +31,7 @@ const CommentForm = ({ accompanyPostId }: CommentFormProps) => {
   });
 
   return (
-    <form onSubmit={handleUnContolledSubmit} className="flex flex-col gap-7">
+    <form onSubmit={handleUnControlledSubmit} className="flex flex-col gap-7">
       <Label htmlFor="comment" />
       <Textarea
         className="h-20 resize-none"

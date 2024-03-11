@@ -5,10 +5,12 @@ import { cn } from '~/libs/utils';
 
 interface InputRatingProps {
   onChange: (e: ChangeEvent<HTMLInputElement>) => void;
+  id?: string;
 }
-const InputRating = ({ onChange }: InputRatingProps) => {
+const InputRating = ({ onChange, id }: InputRatingProps) => {
   return (
     <input
+      id={id}
       type="range"
       onChange={onChange}
       defaultValue={0}
@@ -46,8 +48,9 @@ interface StarRatingProps {
   starCount?: number;
   rate: number;
   setRate: Dispatch<SetStateAction<number>>;
+  id?: string;
 }
-const StarRating = ({ starCount = 5, rate, setRate }: StarRatingProps) => {
+const StarRating = ({ starCount = 5, rate, setRate, id }: StarRatingProps) => {
   const star = useMemo(() => {
     const defaultRating = Array.from(
       { length: starCount },
@@ -79,7 +82,7 @@ const StarRating = ({ starCount = 5, rate, setRate }: StarRatingProps) => {
 
   return (
     <div className="relative flex w-fit flex-col">
-      <InputRating onChange={onChange} />
+      <InputRating onChange={onChange} id={id} />
       <div className={'flex w-36 justify-end '}>
         <div className={'flex w-[132px] justify-between '}>
           {star?.map((value, index) => (
