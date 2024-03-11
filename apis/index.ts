@@ -13,6 +13,16 @@ export const instance = axios.create({
   headers: { 'Content-Type': 'application/json' },
 });
 
+instance.interceptors.request.use(config => {
+  const accessToken = localStorage.getItem('accessToken');
+
+  if (accessToken) {
+    config.headers['Authorization'] = `${accessToken}`;
+  }
+
+  return config;
+});
+
 const HTTP_METHODS = {
   GET: 'get',
   POST: 'post',
