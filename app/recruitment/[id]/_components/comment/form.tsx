@@ -47,7 +47,8 @@ const CommentForm = ({
   });
 
   const limit = 200;
-  const limitError = values[id].length > limit || values[id].length === 0;
+  const { length } = values[id];
+  const limitError = length > limit || length === 0;
 
   return (
     <form onSubmit={handleSubmit} className="flex flex-col">

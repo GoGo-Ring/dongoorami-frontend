@@ -14,7 +14,7 @@ interface CommentListProps {
 }
 
 const CommentList = ({ comments, accompanyPostId }: CommentListProps) => {
-  const myId = 1;
+  const myId = 1; // TODO: userId
   const [editId, setEditId] = useState(-1);
   const { mutate: deleteComment } = useMutationDeleteComment(accompanyPostId);
 
