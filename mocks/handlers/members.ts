@@ -29,9 +29,9 @@ const member: MemberFixture = {
   },
 };
 
-// const getMember = rest.get<Member>(`${BASE_URL}/members`, (_, res, ctx) =>
-//   res(ctx.status(200), ctx.json(member.current)),
-// );
+const getMember = rest.get<Member>(`${BASE_URL}/members`, (_, res, ctx) =>
+  res(ctx.status(200), ctx.json(member.current)),
+);
 
 // const updateMember = rest.patch(
 //   `${BASE_URL}/members`,
@@ -65,6 +65,6 @@ const withdrawMember = rest.delete(`${BASE_URL}/members`, (_, res, ctx) => {
   return res(ctx.status(204));
 });
 
-const memberHandlers = [updateProfileImage, withdrawMember];
+const memberHandlers = [updateProfileImage, withdrawMember, getMember];
 
 export default memberHandlers;

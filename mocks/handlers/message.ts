@@ -79,7 +79,7 @@ const message: MessageFixture = {
           id: i + 7,
           accompanyPostId: 1,
           senderId: 7,
-          receiverId: 2,
+          receiverId: 1,
           content: '안녕하세요',
           date: '2021-09-17',
           isRead: false,
@@ -142,7 +142,7 @@ const getMessagesById = rest.get<Message[]>(
   `${BASE_URL}/messages/:id`,
   (req, res, ctx) => {
     const { id } = req.params;
-    const myId = 2;
+    const myId = 1; // TODO: 로그인 정보에서 가져오기
     const page = req.url.searchParams.get('page') || 1;
     const size = req.url.searchParams.get('size') || 10;
 
