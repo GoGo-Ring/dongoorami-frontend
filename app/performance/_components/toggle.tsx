@@ -24,6 +24,7 @@ const Toggle = ({
   const hasText = defaultText && toggledText;
 
   const [open, toggled] = childrenArray;
+  const { length } = childrenArray;
 
   useEffect(() => {
     try {
@@ -35,11 +36,11 @@ const Toggle = ({
         }
       }
 
-      if (childrenArray.length !== 0 && hasText) {
+      if (length !== 0 && hasText) {
         throw new Error('chidren과 Text중 한 종류만 입력해주세요');
       }
 
-      if (childrenArray.length && childrenArray.length !== 2) {
+      if (length && length !== 2) {
         throw new Error('chidren 2개만 입력해주세요');
       }
     } catch (error) {
@@ -47,7 +48,7 @@ const Toggle = ({
         console.error(error.message);
       }
     }
-  });
+  }, [defaultText, toggledText, length, hasText]);
 
   if (hasText) {
     return (
