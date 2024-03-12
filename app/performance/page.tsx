@@ -3,7 +3,7 @@ import Image from 'next/image';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '~/components/tabs';
 
 import InfoItem from './_components/info-item';
-import InfoItemWithButton from './_components/info-item-with-button';
+import InfoItemWithToggle from './_components/info-item-with-button';
 
 const Page = () => {
   return (
@@ -62,17 +62,16 @@ const Page = () => {
               weight="semibold"
               gap={1}
             />
-            <InfoItemWithButton
+            <InfoItemWithToggle
               label={'줄거리'}
               className="flex-col gap-4 sm:gap-1"
               contents={
                 '줄거리 설명줄거리 설명줄거리 설명줄거리 설명줄거리 설명줄거리 설명줄거리 설명줄거리 설명줄거리 설명줄거리 설명줄거리 설명줄거리 설명줄거리 설명줄거리 설명줄거리 설명줄거리 설명줄거리 설명줄거리 설명줄거리 설명줄거리 설명줄거리 설명줄거리 설명줄거리 설명줄거리 설명줄거리 설명줄거리 설명줄거리 설명줄거리 설명줄거리 설명줄거리 설명줄거리 설명줄거리 설명줄거리 설명줄거리 설명줄거리 설명줄거리 설명줄거리 설명줄거리 설명줄거리 설명줄거리 설명줄거리 설명줄거리 설명줄거리 설명줄거리 설명줄거리 설명줄거리 설명줄거리 설명줄거리 설명줄거리 설명줄거리 설명줄거리 설명줄거리 설명줄거리 설명줄거리 설명줄거리 설명줄거리 설명줄거리 설명줄거리 설명줄거리 설명줄거리 설명줄거리 설명줄거리 설명줄거리 설명줄거리 설명줄거리 설명줄거리 설명줄거리 설명줄거리 설명줄거리 설명줄거리 설명줄거리 설명줄거리 설명줄거리 설명줄거리 설명줄거리 설명줄거리 설명줄거리 설명줄거리 설명줄거리 설명줄거리 설명줄거리 설명줄거리 설명줄거리 설명줄거리 설명줄거리 설명줄거리 설명줄거리 설명'
               }
               weight="semibold"
-            >
-              <span>더 보기</span>
-              <span>접기</span>
-            </InfoItemWithButton>
+              defaultText="더보기"
+              toggledText="접기"
+            />
 
             <div className="grid grid-cols-2 gap-6">
               <InfoItem
