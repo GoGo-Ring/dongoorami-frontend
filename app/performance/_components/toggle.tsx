@@ -1,6 +1,6 @@
 'use client';
 
-import { Children, ReactNode } from 'react';
+import { Children, ReactNode, useEffect } from 'react';
 
 interface ToggleProps {
   className?: string;
@@ -24,6 +24,30 @@ const Toggle = ({
   const hasText = defaultText && toggledText;
 
   const [open, toggled] = childrenArray;
+
+  useEffect(() => {
+    try {
+      if ((defaultText && !toggledText) || (!defaultText && toggledText)) {
+        if (!defaultText) {
+          throw new Error('defaultText 입력해주세요');
+        } else {
+          throw new Error('toggledText 입력해주세요');
+        }
+      }
+
+      if (childrenArray.length !== 0 && hasText) {
+        throw new Error('chidren과 Text중 한 종류만 입력해주세요');
+      }
+
+      if (childrenArray.length && childrenArray.length !== 2) {
+        throw new Error('chidren 2개만 입력해주세요');
+      }
+    } catch (error) {
+      if (error instanceof Error) {
+        console.error(error.message);
+      }
+    }
+  });
 
   if (hasText) {
     return (
