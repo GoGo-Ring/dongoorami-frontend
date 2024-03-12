@@ -30,18 +30,20 @@ const CommentList = ({ comments, accompanyPostId }: CommentListProps) => {
     <div className="pt-8">
       {comments.length > 0 &&
         comments.map(({ id, memberName, updatedAt, content, memberId }) => (
-          <div key={id}>
+          <ul key={id}>
             {editId === id && (
-              <CommentForm
-                accompanyPostId={accompanyPostId}
-                initialComment={content}
-                commentId={id}
-                handleCancel={() => setEditId(-1)}
-                editMode
-              />
+              <li>
+                <CommentForm
+                  accompanyPostId={accompanyPostId}
+                  initialComment={content}
+                  commentId={id}
+                  handleCancel={() => setEditId(-1)}
+                  editMode
+                />
+              </li>
             )}
             {editId !== id && (
-              <div className="flex flex-col gap-3 border-t-2 py-2 pb-4">
+              <li className="flex flex-col gap-3 border-t-2 py-2 pb-4">
                 <CommentContent
                   memberName={memberName}
                   updatedAt={updatedAt}
@@ -53,9 +55,9 @@ const CommentList = ({ comments, accompanyPostId }: CommentListProps) => {
                     handleDelete={handleDelete(id)}
                   />
                 )}
-              </div>
+              </li>
             )}
-          </div>
+          </ul>
         ))}
     </div>
   );
