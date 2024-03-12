@@ -1,34 +1,42 @@
 'use client';
 
-import { Children, ReactNode, useState } from 'react';
+import { ReactNode, useState } from 'react';
 
 import InfoItem, { InfoItemProps } from './info-item';
+import Toggle from './toggle';
 
 interface InfoItemWithButtonProps extends InfoItemProps {
-  children: ReactNode;
+  children?: ReactNode;
+  defaultText?: string;
+  toggledText?: string;
 }
 
-const InfoItemWithButton = ({
+const InfoItemWithToggle = ({
   children,
+  defaultText,
+  toggledText,
   ...props
 }: InfoItemWithButtonProps) => {
   const [more, setMore] = useState(false);
 
-  const childrenArray = Children.toArray(children);
-  const [button, toggle] = childrenArray;
+  const handleClick = () => {
+    setMore(!more);
+  };
 
   return (
     <div className="relative">
-      <button
-        onClick={() => setMore(!more)}
+      <Toggle
+        isToggled={more}
+        onClick={handleClick}
         className="absolute right-0 top-1 text-gray-300 md:hidden lg:hidden"
+        defaultText={defaultText}
+        toggledText={toggledText}
       >
-        {toggle && (more ? toggle : button)}
-        {!toggle && button}
-      </button>
+        {children}
+      </Toggle>
       <InfoItem more={more} {...props} />
     </div>
   );
 };
 
-export default InfoItemWithButton;
+export default InfoItemWithToggle;
