@@ -1,15 +1,25 @@
+import Profile from '~/app/recruitment/[id]/_components/profile';
 import useFetchMessageById from '~/hooks/queries/useFetchMessageById';
 import { cn } from '~/libs/utils';
 import { getDateWithTime } from '~/utils/dateFormatter';
 
 interface MessageWriteListProps {
-  targetId: number;
+  myProfileImage: string;
+  myName: string;
+  contacterId: number;
+  contacterName: string;
+  contacterProfileImage: string;
 }
 
-const MessageWriteList = ({ targetId }: MessageWriteListProps) => {
-  const { data } = useFetchMessageById(targetId, 100, 1);
-  const myId = 2; // TODO: 유저 로직 추가
-  const isMyId = (id: number) => id === myId;
+const MessageWriteList = ({
+  myProfileImage,
+  myName,
+  contacterId,
+  contacterName,
+  contacterProfileImage,
+}: MessageWriteListProps) => {
+  const { data } = useFetchMessageById(contacterId, 100, 1);
+  const isMyId = (id: number) => id === 1; // TODO: 로그인 정보로 변경
 
   return (
     <div className="divide-y">
@@ -21,9 +31,10 @@ const MessageWriteList = ({ targetId }: MessageWriteListProps) => {
             isMyId(senderId) ? ' bg-gray-150 ' : '',
           )}
         >
-          <p className="text-gray-700">
-            {`유저 ${senderId} ${isMyId(senderId) ? '(나)' : ''}`}
-          </p>
+          <Profile
+            name={isMyId(senderId) ? myName : contacterName}
+            image={isMyId(senderId) ? myProfileImage : contacterProfileImage}
+          />
           <p className="line-clamp-2 break-words hover:block hover:overflow-visible">
             {content}
           </p>
