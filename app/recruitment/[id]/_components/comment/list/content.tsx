@@ -1,5 +1,5 @@
 import { Comment } from '~/apis/scheme/comment';
-import { getDate } from '~/utils/dateFormatter';
+import { getDateWithTime } from '~/utils/dateFormatter';
 
 const CommentContent = ({
   memberName,
@@ -11,7 +11,7 @@ const CommentContent = ({
       <div className="flex justify-between">
         <p className="text-md font-semibold">{memberName}</p>
         <p className="text-sm font-medium text-gray-400">
-          {getDate(new Date(updatedAt), 'yyyy.mm.dd')}
+          {getDateWithTime(new Date(updatedAt), 'yyyy.mm.dd', 'hh:mm')}
         </p>
       </div>
       <p className="text-md font-medium">{content}</p>
