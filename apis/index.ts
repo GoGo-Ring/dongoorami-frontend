@@ -5,6 +5,8 @@ import axios, {
   Method,
 } from 'axios';
 
+import { reAuthorize } from './member';
+
 export const BASE_URL = `${process.env.NEXT_PUBLIC_API_URL}/api/v1` || '';
 
 export const instance = axios.create({
@@ -12,6 +14,50 @@ export const instance = axios.create({
   baseURL: BASE_URL,
   headers: { 'Content-Type': 'application/json' },
 });
+
+const getToken = (url = '') => {
+  if (url === '/members/reissue') {
+    return `Bearer ${localStorage.getItem('refreshToken')}`;
+  } else {
+    return localStorage.getItem('accessToken');
+  }
+};
+
+instance.interceptors.request.use(config => {
+  const token = getToken(config.url);
+
+  config.headers.Authorization = token || '';
+
+  return config;
+});
+
+instance.interceptors.response.use(
+  response => {
+    return response;
+  },
+  async error => {
+    const { config, response } = error;
+
+    if (
+      config.url === '/members/reissue' ||
+      response?.status !== 401 ||
+      config.sent
+    ) {
+      return Promise.reject(error);
+    }
+
+    const { accessToken, refreshToken } = await reAuthorize({
+      refreshToken: localStorage.getItem('refreshToken') || '',
+    });
+
+    localStorage.setItem('accessToken', accessToken);
+    localStorage.setItem('refreshToken', refreshToken);
+
+    config.headers.Authorization = accessToken;
+
+    return axios(config);
+  },
+);
 
 const HTTP_METHODS = {
   GET: 'get',

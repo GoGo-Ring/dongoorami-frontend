@@ -24,7 +24,7 @@ export interface CompanionRequest
 
 export interface CompanionDetail
   extends CompanionRequest,
-    Pick<Companion, 'accompanyPostId' | 'name' | 'updatedAt'> {
+    Pick<Companion, 'accompanyPostId' | 'name' | 'updatedAt' | 'status'> {
   viewCount: number;
   waitingCount: number;
   concertLocation: string;

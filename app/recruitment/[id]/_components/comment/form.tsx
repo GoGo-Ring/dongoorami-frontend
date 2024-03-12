@@ -34,7 +34,7 @@ const CommentForm = ({
   const isAnyPending = isCreatePending || isUpdatePending;
   const id = `comment-${commentId}`;
 
-  const { handleUnContolledSubmit, errors } = useForm({
+  const { handleUnControlledSubmit, errors } = useForm({
     initialValues: { [id]: initialComment || '' },
     onSubmit: values => {
       if (editMode) {
@@ -54,7 +54,7 @@ const CommentForm = ({
   });
 
   return (
-    <form onSubmit={handleUnContolledSubmit} className="flex flex-col">
+    <form onSubmit={handleUnControlledSubmit} className="flex flex-col gap-7">
       <Label htmlFor="comment" />
       <Textarea
         className="h-20 resize-none"

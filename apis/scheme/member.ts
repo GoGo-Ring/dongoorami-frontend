@@ -1,9 +1,20 @@
+export interface RegisterMemberRequest {
+  nickname: string;
+  gender: '남' | '여' | '무관';
+  birthDate: string;
+}
+
 export interface Member {
   profileImage: string;
   name: string;
   nickname: string;
   gender: '남' | '여' | '무관';
-  birthDate: string;
-  mannerTemperature: number;
+  age: number;
+  manner: number;
   introduction: string;
+}
+
+export interface Token {
+  accessToken: string;
+  refreshToken: string;
 }
