@@ -31,3 +31,16 @@ export interface CompanionDetail
   transportation: '미동행' | '동행';
   memberInfo: Member;
 }
+
+export interface CompanionRecruitmentCard {
+  id: string;
+  title: string;
+  concertName: string;
+  userId: string;
+  gender: '남' | '여' | '무관';
+  personCount: number;
+  viewCount: number;
+  commentsCount: number;
+  date: Date;
+  status: '모집 중' | '모집 종료';
+}

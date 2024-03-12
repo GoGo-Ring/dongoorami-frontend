@@ -23,6 +23,7 @@ interface SelectFieldProps {
   options: SelectOptionItemProps[];
   defaultValue: number;
   placeholder: string;
+
   setOption: (category: string, selectedOption: OptionsPartialType) => void;
   fieldName: string;
 }
