@@ -3,7 +3,7 @@
 import { useRef } from 'react';
 
 import { Button } from '~/components/button';
-import ErrorText from '~/components/error-text';
+import CountErrorText from '~/components/count-error-text';
 import { Label } from '~/components/label';
 import { Textarea } from '~/components/textarea';
 import useMutationComment from '~/hooks/mutations/useMutationComment';
@@ -34,7 +34,7 @@ const CommentForm = ({
   const isAnyPending = isCreatePending || isUpdatePending;
   const id = `comment-${commentId}`;
 
-  const { handleUnControlledSubmit, errors } = useForm({
+  const { handleUnControlledSubmit, handleChange, values } = useForm({
     initialValues: { [id]: initialComment || '' },
     onSubmit: values => {
       if (editMode) {
@@ -44,17 +44,13 @@ const CommentForm = ({
       }
       handleCancel?.();
     },
-    validationRulesList: [
-      {
-        id,
-        validate: value => value.trim().length > 0,
-        message: '댓글을 입력하세요.',
-      },
-    ],
   });
 
+  const limit = 200;
+  const limitError = values[id].length > limit || values[id].length === 0;
+
   return (
-    <form onSubmit={handleUnControlledSubmit} className="flex flex-col gap-7">
+    <form onSubmit={handleUnControlledSubmit} className="flex flex-col">
       <Label htmlFor="comment" />
       <Textarea
         className="h-20 resize-none"
@@ -63,14 +59,16 @@ const CommentForm = ({
         id={id}
         name="comment"
         placeholder="댓글을 입력하세요"
+        onChange={handleChange}
+        value={values[id]}
       />
-      <ErrorText message={errors[id]} />
+      <CountErrorText limit={limit} count={values[id].length} />
       <div className="flex gap-2 self-end pb-2">
         <Button
           variant={editMode ? 'link' : 'default'}
           className="w-14 self-end"
           type="submit"
-          disabled={isAnyPending}
+          disabled={isAnyPending || limitError}
         >
           등록
         </Button>
