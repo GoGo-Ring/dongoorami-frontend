@@ -2,6 +2,8 @@
 import { useContext, createContext } from 'react';
 
 import { Badge } from '~/components/badge';
+import Icon from '~/components/icon';
+import { IconNames } from '~/components/icon/icons';
 import { getDate } from '~/utils/dateFormatter';
 
 interface CompanionRecruitmentCardProps {
@@ -61,14 +63,14 @@ const ContentField = () => {
 };
 
 interface IconWithCountItemProps {
-  icon: string;
+  iconName: IconNames;
   count: number;
 }
 
-const IconWithCountItem = ({ icon, count }: IconWithCountItemProps) => {
+const IconWithCountItem = ({ iconName, count }: IconWithCountItemProps) => {
   return (
     <div className="flex gap-1">
-      <div>{icon}</div>
+      <Icon iconName={iconName} className="fill-gray-300" />
       <span>{count}</span>
     </div>
   );
@@ -81,8 +83,8 @@ const IconField = () => {
 
   return (
     <div className="flex flex-row justify-end gap-2 text-sm text-gray-300">
-      <IconWithCountItem icon={'icon'} count={viewCount} />
-      <IconWithCountItem icon={'icon'} count={commentsCount} />
+      <IconWithCountItem iconName={'chat'} count={commentsCount} />
+      <IconWithCountItem iconName={'eye'} count={viewCount} />
     </div>
   );
 };

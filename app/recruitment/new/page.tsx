@@ -1,28 +1,64 @@
 'use client';
-import React from 'react';
+import { useMutation } from '@tanstack/react-query';
+import { useSearchParams } from 'next/navigation';
+import React, { useEffect } from 'react';
 
-import { Button } from '~/components/button';
-import { Textarea } from '~/components/textarea';
-
-import { Form } from './_components/form';
+import { createCompanion } from '~/apis/accompany';
 import {
-  FileField,
+  companionDetailToFormValue,
+  companionFormValueToRequest,
+} from '~/app/recruitment/new/utils';
+import { Button } from '~/components/button';
+import Spinner from '~/components/spinner';
+import useFetchCompanionPost from '~/hooks/queries/useFetchCompanionPost';
+
+import {
+  ImageField,
   InputField,
   RadioGroupField,
   RadioGroupFieldItem,
   SelectField,
   SelectFieldItem,
   SliderField,
-} from './_components/form-field';
-import { FORM_ITEMS, INITIAL_VALUES, VALIDATIONS } from './constants';
+  TextareaField,
+  CalendarField,
+} from './_components/fields';
+import { Form } from './_components/form';
+import {
+  CompanionFormValue,
+  FORM_ITEMS,
+  INITIAL_VALUES,
+  VALIDATIONS,
+} from './constants';
 
 const Page = () => {
+  const { mutate, isPending } = useMutation({ mutationFn: createCompanion });
+  const postId = useSearchParams().get('id');
+  const isEdit = !!postId;
+
+  const { data: companionPost, refetch } = useFetchCompanionPost(postId || '');
+
+  useEffect(() => {
+    if (isEdit) {
+      refetch();
+    }
+  }, [isEdit, refetch]);
+
+  const handleSubmit = (values: CompanionFormValue) => {
+    const companionData = companionFormValueToRequest(values);
+
+    mutate(companionData);
+  };
+
   return (
     <div className="flex justify-center py-10">
       <Form
         className="flex w-[890px] flex-col justify-center gap-4"
-        initialValues={INITIAL_VALUES}
+        initialValues={
+          isEdit ? companionDetailToFormValue(companionPost) : INITIAL_VALUES
+        }
         initialValidations={VALIDATIONS}
+        submit={handleSubmit}
       >
         <div className="px-4">
           <InputField
@@ -32,9 +68,9 @@ const Page = () => {
           />
         </div>
         <div className="px-4">
-          <FileField id="image" label="이미지" />
+          <ImageField id="image" label="이미지" />
         </div>
-        <div className="mx-4 flex items-start gap-7 rounded-md border border-gray-200 p-6 sm:mx-0 sm:flex-wrap sm:border-0 md:flex-wrap">
+        <div className="mx-4 flex items-start gap-7 rounded-md border border-gray-200 px-6 pt-6 sm:mx-0 sm:flex-wrap sm:border-0 md:flex-wrap">
           <div className="flex w-full flex-col">
             <InputField
               id="performanceName"
@@ -51,6 +87,12 @@ const Page = () => {
             >
               <SelectFieldItem items={FORM_ITEMS.PARTICIPANT_COUNT} />
             </SelectField>
+            <CalendarField
+              id="performanceDate"
+              minId="performanceMinDate"
+              maxId="performanceMaxDate"
+              label="공연 날짜"
+            />
           </div>
           <div className="flex w-full flex-col ">
             <InputField
@@ -67,9 +109,10 @@ const Page = () => {
           </div>
         </div>
         <div className="px-4">
-          <Textarea
-            className="h-96 resize-none"
-            id="textarea"
+          <TextareaField
+            id="content"
+            label="내용"
+            labelClassName="hidden"
             placeholder="내용을 입력해주세요"
           />
         </div>
@@ -77,8 +120,12 @@ const Page = () => {
           <Button className="w-full bg-secondary text-secondary-foreground">
             취소
           </Button>
-          <Button className="w-full bg-primary text-primary-foreground">
-            입력 완료
+          <Button
+            className="w-full bg-primary text-primary-foreground"
+            disabled={isPending}
+          >
+            {isPending ? <Spinner /> : isEdit && '수정'}
+            {isPending ? <Spinner /> : !isEdit && '등록'}
           </Button>
         </div>
       </Form>

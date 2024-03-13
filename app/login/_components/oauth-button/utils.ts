@@ -1,10 +1,10 @@
-export type Domain = 'kakao' | 'naver';
+export type Domain = 'kakao' | 'naver' | 'google';
 
 export const getButtonStyle = (domain: Domain) => {
   return {
     kakao: 'bg-kakao text-black hover:bg-kakao',
     naver: 'bg-naver text-white hover:bg-naver',
-    google: 'bg-naver text-white hover:bg-naver',
+    google: 'bg-google text-black hover:bg-google',
   }[domain];
 };
 
@@ -18,10 +18,9 @@ export const getButtonConfig = (domain: Domain) => {
       name: '네이버',
       icon: '/naver-icon.svg',
     },
+    google: {
+      name: '구글',
+      icon: '/google-icon.svg',
+    },
   }[domain];
-};
-
-export const oAuthUrl: { [key in Domain]: string } = {
-  kakao: `${process.env.NEXT_PUBLIC_KAKAO_AUTH_URL}`,
-  naver: `${process.env.NEXT_PUBLIC_NAVER_AUTH_URL}`,
 };

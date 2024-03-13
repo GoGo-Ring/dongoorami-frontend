@@ -1,4 +1,4 @@
-import { Member } from './scheme/member';
+import { Member, RegisterMemberRequest, Token } from './scheme/member';
 
 import api from '.';
 
@@ -14,4 +14,30 @@ export const updateMember = async (member: Partial<Member>) => {
   return data;
 };
 
+export const updateProfileImage = (data: FormData) => {
+  return api.post<{ profileImageUrl: string }>({
+    url: '/members/profile-image',
+    data,
+    headers: { 'Content-Type': 'multipart/form-data' },
+  });
+};
+
 export const deleteMember = () => api.delete({ url: '/members' });
+
+export const registerMember = async (member: RegisterMemberRequest) => {
+  const { data } = await api.patch<Member>({
+    url: '/members/signUp',
+    data: member,
+  });
+
+  return data;
+};
+
+export const reAuthorize = async (token: Pick<Token, 'refreshToken'>) => {
+  const { data } = await api.patch<Token>({
+    url: '/members/reissue',
+    data: token,
+  });
+
+  return data;
+};

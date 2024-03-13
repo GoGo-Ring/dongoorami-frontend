@@ -15,8 +15,8 @@ const member: MemberFixture = {
     name: '최정은',
     nickname: '백둥이',
     gender: '여',
-    birthdate: '1993.09.17',
-    mannerTemperature: 99,
+    age: 25,
+    manner: 99,
     introduction: '~~~',
   },
 
@@ -29,23 +29,23 @@ const member: MemberFixture = {
   },
 };
 
-const getMember = rest.get<Member>(`${BASE_URL}/members`, (_, res, ctx) =>
-  res(ctx.status(200), ctx.json(member.current)),
-);
+// const getMember = rest.get<Member>(`${BASE_URL}/members`, (_, res, ctx) =>
+//   res(ctx.status(200), ctx.json(member.current)),
+// );
 
-const updateMember = rest.patch(
-  `${BASE_URL}/members`,
-  async (req, res, ctx) => {
-    const newMember = (await req.json()) as Member;
+// const updateMember = rest.patch(
+//   `${BASE_URL}/members`,
+//   async (req, res, ctx) => {
+//     const newMember = (await req.json()) as Member;
 
-    member.updateMember({ ...member.current, ...newMember });
+//     member.updateMember({ ...member.current, ...newMember });
 
-    return res(ctx.status(204));
-  },
-);
+//     return res(ctx.status(204));
+//   },
+// );
 
 const updateProfileImage = rest.patch(
-  `${BASE_URL}/members/profileImage`,
+  `${BASE_URL}/profileImage`,
   async (req, res, ctx) => {
     const newProfileImage = (await req.json()) as string;
 
@@ -65,11 +65,6 @@ const withdrawMember = rest.delete(`${BASE_URL}/members`, (_, res, ctx) => {
   return res(ctx.status(204));
 });
 
-const memberHandlers = [
-  getMember,
-  updateMember,
-  updateProfileImage,
-  withdrawMember,
-];
+const memberHandlers = [updateProfileImage, withdrawMember];
 
 export default memberHandlers;

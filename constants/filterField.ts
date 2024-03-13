@@ -1,4 +1,29 @@
 export const SELECTION = {
+  GENDER: {
+    category: '성별',
+    options: [
+      { value: 'irrelevant', label: '무관' },
+      { value: 'male', label: '남' },
+      { value: 'female', label: '여' },
+    ],
+  },
+  TRANSPORTATION: {
+    category: '교통 수단',
+    options: [
+      { value: 'together', label: '동행' },
+      { value: 'separate', label: '미동행' },
+    ],
+  },
+  PERSON_COUNT: {
+    category: '인원 수',
+    options: Array.from({ length: 10 }, (_, i) => {
+      return { value: i + 1, label: `${i + 1}명` };
+    }),
+  },
+  AGE: {
+    category: '나이',
+    options: [20, 30],
+  },
   GENRE: {
     category: '장르',
     options: ['콘서트', '클래식', ' 무용', '뮤지컬', '아동', '연극'],
