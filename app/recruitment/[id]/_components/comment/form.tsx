@@ -6,8 +6,6 @@ import { Button } from '~/components/button';
 import CountErrorText from '~/components/count-error-text';
 import { Label } from '~/components/label';
 import { Textarea } from '~/components/textarea';
-import useMutationComment from '~/hooks/mutations/useMutationComment';
-import useMutationUpdateComment from '~/hooks/mutations/useMutationUpdateComment';
 import useForm from '~/hooks/useForm';
 
 interface CommentFormProps {
@@ -16,32 +14,26 @@ interface CommentFormProps {
   commentId: string | number;
   handleCancel?: () => void;
   editMode?: boolean;
+  handleMutateComment?: (content: string) => void;
+  isPending?: boolean;
 }
 
 const CommentForm = ({
-  accompanyPostId,
   initialComment,
   commentId,
   handleCancel,
+  handleMutateComment,
   editMode = false,
+  isPending,
 }: CommentFormProps) => {
   const ref = useRef<HTMLTextAreaElement>(null);
-  const { mutate: createComment, isPending: isCreatePending } =
-    useMutationComment(accompanyPostId, '1'); // TODO: userId
-  const { mutate: updateComment, isPending: isUpdatePending } =
-    useMutationUpdateComment(accompanyPostId, String(commentId));
 
-  const isAnyPending = isCreatePending || isUpdatePending;
   const id = `comment-${commentId}`;
 
   const { handleSubmit, handleChange, values } = useForm({
     initialValues: { [id]: initialComment || '' },
     onSubmit: values => {
-      if (editMode) {
-        updateComment({ content: values[id] });
-      } else {
-        createComment({ content: values[id] });
-      }
+      handleMutateComment?.(values[id]);
       handleCancel?.();
     },
   });
@@ -69,7 +61,7 @@ const CommentForm = ({
           variant={editMode ? 'link' : 'default'}
           className="w-14 self-end"
           type="submit"
-          disabled={isAnyPending || limitError}
+          disabled={isPending || limitError}
         >
           등록
         </Button>
@@ -78,7 +70,7 @@ const CommentForm = ({
             variant="link"
             className="w-14 self-end text-destructive"
             type="button"
-            disabled={isAnyPending}
+            disabled={isPending}
             onClick={handleCancel}
           >
             취소

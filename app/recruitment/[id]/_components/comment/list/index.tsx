@@ -7,6 +7,7 @@ import CommentForm from '~/app/recruitment/[id]/_components/comment/form';
 import UpdateDeleteButtons from '~/app/recruitment/[id]/_components/comment/list/buttons';
 import CommentContent from '~/app/recruitment/[id]/_components/comment/list/content';
 import useMutationDeleteComment from '~/hooks/mutations/useMutationDeleteComment';
+import useMutationUpdateComment from '~/hooks/mutations/useMutationUpdateComment';
 
 interface CommentListProps {
   comments: Comment[];
@@ -17,6 +18,8 @@ const CommentList = ({ comments, accompanyPostId }: CommentListProps) => {
   const myId = 1; // TODO: userId
   const [editId, setEditId] = useState(-1);
   const { mutate: deleteComment } = useMutationDeleteComment(accompanyPostId);
+  const { mutate: updateComment, isPending } =
+    useMutationUpdateComment(accompanyPostId);
 
   const handleUpdate = (id: number) => () => {
     setEditId(id);
@@ -24,6 +27,11 @@ const CommentList = ({ comments, accompanyPostId }: CommentListProps) => {
 
   const handleDelete = (id: number) => () => {
     deleteComment({ commentId: String(id) });
+  };
+
+  const handleMutateComment = (commentId: string) => (content: string) => {
+    updateComment({ content, commentId });
+    setEditId(-1);
   };
 
   return (
@@ -39,6 +47,8 @@ const CommentList = ({ comments, accompanyPostId }: CommentListProps) => {
                   commentId={id}
                   handleCancel={() => setEditId(-1)}
                   editMode
+                  isPending={isPending}
+                  handleMutateComment={handleMutateComment(String(id))}
                 />
               </li>
             )}
