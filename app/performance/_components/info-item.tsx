@@ -4,16 +4,12 @@ import { cn } from '~/libs/utils';
 
 const labelVariants = cva('', {
   variants: {
-    width: {
-      default: '',
-      90: 'w-[90px]',
-    },
     weight: {
       default: '',
       semibold: 'text-xl font-semibold',
     },
   },
-  defaultVariants: { width: 'default', weight: 'default' },
+  defaultVariants: { weight: 'default' },
 });
 
 const contentVariants = cva('', {
@@ -22,16 +18,12 @@ const contentVariants = cva('', {
       default: '',
       col: 'flex-col',
     },
-    gap: {
-      default: '',
-      1: 'gap-1',
-    },
     size: {
       default: '',
       sm: 'sm:flex-col',
     },
   },
-  defaultVariants: { direction: 'default', gap: 'default', size: 'default' },
+  defaultVariants: { direction: 'default', size: 'default' },
 });
 
 export interface InfoItemProps
@@ -44,16 +36,18 @@ export interface InfoItemProps
   contentClassName?: string;
   children?: React.ReactNode;
   more?: boolean;
+  labelWidth?: string;
+  contentGap?: string;
 }
 
 const InfoItem = ({
   className,
   label,
   contents,
-  width,
+  labelWidth = '',
   weight,
   direction,
-  gap,
+  contentGap = '',
   size,
   more = false,
 }: InfoItemProps) => {
@@ -61,11 +55,19 @@ const InfoItem = ({
 
   return (
     <div className={cn('flex', className)}>
-      <span className={cn('font-semibold', labelVariants({ width, weight }))}>
+      <span
+        className={cn('font-semibold', labelWidth, labelVariants({ weight }))}
+      >
         {label}
       </span>
       {isArray ? (
-        <ul className={cn('flex', contentVariants({ direction, gap, size }))}>
+        <ul
+          className={cn(
+            'flex',
+            contentGap,
+            contentVariants({ direction, size }),
+          )}
+        >
           {contents.map((text, index) => (
             <li className={'list-none'} key={`${text}_${index}`}>
               {text}
