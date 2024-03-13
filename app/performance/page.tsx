@@ -16,19 +16,19 @@ const Page = () => {
             label={'장소'}
             className="sm:flex-col"
             contents={'장소명 (위치)'}
-            width={90}
+            labelWidth={'w-[90px]'}
           />
           <InfoItem
             label={'공연기간'}
             className="sm:flex-col"
             contents={'2024.01.01 ~ 2024.01.01'}
-            width={90}
+            labelWidth={'w-[90px]'}
           />
           <InfoItem
             label={'공연시간'}
             className="sm:flex-col"
             contents={'90분'}
-            width={90}
+            labelWidth={'w-[90px]'}
           />
           <InfoItem
             label={'가격'}
@@ -39,7 +39,7 @@ const Page = () => {
               '30,000원',
               '30,000원',
             ]}
-            width={90}
+            labelWidth={'w-[90px]'}
             direction="col"
           />
         </div>
@@ -60,7 +60,7 @@ const Page = () => {
               className="flex-col gap-4 sm:gap-1"
               contents={['출연진1', '출연진2', '출연진3']}
               weight="semibold"
-              gap={1}
+              contentGap={'gap-1'}
             />
             <InfoItemWithToggle
               label={'줄거리'}
@@ -79,7 +79,7 @@ const Page = () => {
                 className="flex-col gap-4 sm:gap-1"
                 contents={['제작진', '제작진', '제작진']}
                 weight="semibold"
-                gap={1}
+                contentGap={'gap-1'}
                 size={'sm'}
               />
               <InfoItem
@@ -87,7 +87,7 @@ const Page = () => {
                 className="flex-col gap-4 sm:gap-1"
                 contents={['기획사', '기획사', '기획사']}
                 weight="semibold"
-                gap={1}
+                contentGap={'gap-1'}
                 size={'sm'}
               />
               <InfoItem
@@ -95,14 +95,14 @@ const Page = () => {
                 className="flex-col gap-4 sm:gap-1"
                 contents={'주최'}
                 weight="semibold"
-                gap={1}
+                contentGap={'gap-1'}
               />
               <InfoItem
                 label={'주관'}
                 className="flex-col gap-4 sm:gap-1"
                 contents={'주관'}
                 weight="semibold"
-                gap={1}
+                contentGap={'gap-1'}
               />
             </div>
             <InfoItem
