@@ -22,6 +22,9 @@ module.exports = {
       sm: { max: '767px' },
       md: { min: '768px', max: '1023px' },
       lg: { min: '1024px' },
+      mainlg: { min: '900px' },
+      mainmd: { min: '506px', max: '899px' },
+      mainsm: { max: '505px' },
     },
     extend: {
       fontFamily: {

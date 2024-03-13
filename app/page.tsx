@@ -7,10 +7,10 @@ const Page = () => {
     <div>
       <StyledCarousel />
       <div className="flex w-full border">
-        <div className="flex w-[250px] justify-center border p-8 ">
+        <div className="flex w-[220px] justify-center border p-8 sm:hidden">
           <Filter />
         </div>
-        <div className="grid w-full grid-cols-3 justify-center gap-8 border p-8">
+        <div className="grid w-full grid-cols-3 gap-8 border p-8 sm:grid-cols-1 mainmd:grid-cols-2">
           {Array.from({ length: 9 }).map((_, index) => (
             <DummyCard key={index} />
           ))}
