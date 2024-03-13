@@ -145,13 +145,20 @@ export const VALIDATIONS: {
   },
   {
     id: 'age',
-    validate: (_, values) => Number(values.minAge) <= Number(values.maxAge),
+    validate: value => {
+      const [minAge, maxAge] = value.split('~');
+
+      return Number(minAge) <= Number(maxAge);
+    },
     message: '최소연령이 최대연령보다 큽니다',
   },
   {
     id: 'age',
-    validate: (_, values) =>
-      Number(values.minAge) >= 0 && Number(values.maxAge) <= 100,
+    validate: value => {
+      const [minAge, maxAge] = value.split('~');
+
+      return Number(minAge) >= 0 && Number(maxAge) <= 100;
+    },
     message: '연령은 0세 이상 100세 이하로 입력해주세요',
   },
   {

@@ -22,8 +22,8 @@ const OAuth = () => {
       alert('로그인 오류');
       router.push('/login');
     }
-    instance.defaults.headers.common['Authorization'] = `Bearer ${accessToken}`;
-    isFirstLogin === 'true' ? router.push('/register') : router.push('/');
+    instance.defaults.headers.common['Authorization'] = `${accessToken}`;
+    isFirstLogin === 'true' ? router.replace('/register') : router.replace('/');
   });
 
   return (

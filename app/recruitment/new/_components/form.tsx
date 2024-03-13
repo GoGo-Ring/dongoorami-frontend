@@ -29,7 +29,11 @@ export const Form = ({
   className,
   submit,
 }: FormProps<CompanionFormValue>) => {
-  const formValues = useForm<CompanionFormValue>(initialValues, submit);
+  const formValues = useForm<CompanionFormValue>({
+    initialValues,
+    onSubmit: submit,
+    validationRulesList: initialValidations,
+  });
   const { handleSubmit, registerValidation } = formValues;
 
   initialValidations.forEach(registerValidation);

@@ -7,10 +7,12 @@ import { calculateStarRating } from '~/utils/starRating';
 interface InputRatingProps {
   onChange: (e: ChangeEvent<HTMLInputElement>) => void;
   starCount?: number;
+  id?: string;
 }
-const InputRating = ({ onChange, starCount = 5 }: InputRatingProps) => {
+const InputRating = ({ onChange, starCount = 5, id }: InputRatingProps) => {
   return (
     <input
+      id={id}
       type="range"
       onChange={onChange}
       defaultValue={0}
@@ -42,9 +44,10 @@ interface StarRatingProps {
   starCount?: number;
   rate: number;
   setRate?: Dispatch<SetStateAction<number>>;
+  id?: string;
 }
 
-const StarRating = ({ starCount = 5, rate, setRate }: StarRatingProps) => {
+const StarRating = ({ starCount = 5, rate, setRate, id }: StarRatingProps) => {
   const star = calculateStarRating({ starCount, rate });
 
   const onChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -59,7 +62,9 @@ const StarRating = ({ starCount = 5, rate, setRate }: StarRatingProps) => {
   return (
     <div className="relative flex w-fit flex-col">
       <div className={'flex'}>
-        {setRate && <InputRating onChange={onChange} starCount={starCount} />}
+        {setRate && (
+          <InputRating onChange={onChange} id={id} starCount={starCount} />
+        )}
         <div className={'flex'}>
           {star?.map((value, index) => (
             <div key={`star_${index}`} className="px-[2px]">
