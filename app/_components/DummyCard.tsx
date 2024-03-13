@@ -4,7 +4,7 @@ export const DummyCard = () => {
   const currentDate = new Date();
 
   return (
-    <div className="flex items-center justify-center bg-gray-100">
+    <div className="flex items-center justify-center">
       <CompanionRecruitmentCard
         title="동행 구해요"
         concertName="콘"
