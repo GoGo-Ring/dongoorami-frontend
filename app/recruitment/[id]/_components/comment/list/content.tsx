@@ -1,15 +1,23 @@
-import { Comment } from '~/apis/scheme/comment';
+import Profile from '~/app/recruitment/[id]/_components/profile';
 import { getDateWithTime } from '~/utils/dateFormatter';
 
+interface CommentContentProps {
+  nickName: string;
+  profileImage: string;
+  updatedAt: string;
+  content: string;
+}
+
 const CommentContent = ({
-  memberName,
+  nickName,
+  profileImage,
   updatedAt,
   content,
-}: Pick<Comment, 'memberName' | 'updatedAt' | 'content'>) => {
+}: CommentContentProps) => {
   return (
     <>
       <div className="flex justify-between">
-        <p className="text-md font-semibold">{memberName}</p>
+        <Profile name={nickName} image={profileImage} />
         <p className="text-sm font-medium text-gray-400">
           {getDateWithTime(new Date(updatedAt), 'yyyy.mm.dd', 'hh:mm')}
         </p>

@@ -15,7 +15,6 @@ interface CommentListProps {
 }
 
 const CommentList = ({ comments, accompanyPostId }: CommentListProps) => {
-  const myId = 1; // TODO: userId
   const [editId, setEditId] = useState(-1);
   const { mutate: deleteComment } = useMutationDeleteComment(accompanyPostId);
   const { mutate: updateComment, isPending } =
@@ -35,40 +34,48 @@ const CommentList = ({ comments, accompanyPostId }: CommentListProps) => {
   };
 
   return (
-    <div className="pt-8">
+    <div className="divide-y-2 pt-8">
       {comments.length > 0 &&
-        comments.map(({ id, memberName, updatedAt, content, memberId }) => (
-          <ul key={id}>
-            {editId === id && (
-              <li>
-                <CommentForm
-                  accompanyPostId={accompanyPostId}
-                  initialComment={content}
-                  commentId={id}
-                  handleCancel={() => setEditId(-1)}
-                  editMode
-                  isPending={isPending}
-                  handleMutateComment={handleMutateComment(String(id))}
-                />
-              </li>
-            )}
-            {editId !== id && (
-              <li className="flex flex-col gap-3 border-t-2 py-2 pb-4">
-                <CommentContent
-                  memberName={memberName}
-                  updatedAt={updatedAt}
-                  content={content}
-                />
-                {myId === memberId && (
-                  <UpdateDeleteButtons
-                    handleUpdate={handleUpdate(id)}
-                    handleDelete={handleDelete(id)}
+        comments.map(
+          ({
+            id,
+            updatedAt,
+            content,
+            memberProfile: { profileImage, nickname, currentMember },
+          }) => (
+            <ul key={id}>
+              {editId === id && (
+                <li className="pt-4">
+                  <CommentForm
+                    accompanyPostId={accompanyPostId}
+                    initialComment={content}
+                    commentId={id}
+                    handleCancel={() => setEditId(-1)}
+                    editMode
+                    isPending={isPending}
+                    handleMutateComment={handleMutateComment(String(id))}
                   />
-                )}
-              </li>
-            )}
-          </ul>
-        ))}
+                </li>
+              )}
+              {editId !== id && (
+                <li className="flex flex-col gap-3 py-2">
+                  <CommentContent
+                    profileImage={profileImage}
+                    nickName={nickname}
+                    updatedAt={updatedAt}
+                    content={content}
+                  />
+                  {currentMember && (
+                    <UpdateDeleteButtons
+                      handleUpdate={handleUpdate(id)}
+                      handleDelete={handleDelete(id)}
+                    />
+                  )}
+                </li>
+              )}
+            </ul>
+          ),
+        )}
     </div>
   );
 };
