@@ -11,7 +11,7 @@ const MobileFilter = () => {
   return (
     <Sheet open={isOpen} onOpenChange={setIsOpen}>
       <SheetTrigger asChild>
-        <div className="fixed bottom-5 left-5 sm:block">
+        <div className="fixed bottom-5 left-5 hidden sm:block">
           <Icon
             className="h-[35px] w-[35px] cursor-pointer"
             iconName="filter"
