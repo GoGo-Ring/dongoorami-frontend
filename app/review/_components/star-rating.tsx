@@ -1,4 +1,4 @@
-import { ChangeEvent, Dispatch, SetStateAction, useMemo } from 'react';
+import { ChangeEvent, Dispatch, SetStateAction } from 'react';
 
 import Icon from '~/components/icon';
 import { cn } from '~/libs/utils';
@@ -45,10 +45,7 @@ interface StarRatingProps {
 }
 
 const StarRating = ({ starCount = 5, rate, setRate }: StarRatingProps) => {
-  const star = useMemo(
-    () => calculateStarRating({ starCount, rate }),
-    [rate, starCount],
-  );
+  const star = calculateStarRating({ starCount, rate });
 
   const onChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { value } = e.currentTarget;
