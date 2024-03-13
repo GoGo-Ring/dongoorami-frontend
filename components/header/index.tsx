@@ -21,9 +21,7 @@ const Header = () => {
           <Link
             href={'/login'}
             className="h-7 w-7 rounded-full border border-black bg-green-400"
-          >
-            log
-          </Link>
+          ></Link>
         </div>
       </div>
     </header>
