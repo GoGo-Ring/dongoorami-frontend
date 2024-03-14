@@ -7,21 +7,28 @@ import {
   FieldProps,
 } from '~/app/recruitment/new/_components/fields/field';
 import { FormContext } from '~/app/recruitment/new/_components/form';
+import { CompanionFormValue } from '~/app/recruitment/new/constants';
+import { GetKeysValueOf } from '~/app/recruitment/new/utils';
 import { Input } from '~/components/input';
+import { UseFormReturn } from '~/hooks/useForm/types';
 
-interface SliderFieldProps extends FieldProps {
+interface SliderFieldProps<K extends string> extends FieldProps {
+  id: K;
   minId: string;
   maxId: string;
 }
 
-export const SliderField = ({
+export const SliderField = <
+  K extends GetKeysValueOf<CompanionFormValue, string>,
+>({
   id,
   minId,
   maxId,
   label,
   variant,
-}: SliderFieldProps) => {
-  const { values, errors, handleValueChange } = useContext(FormContext);
+}: SliderFieldProps<K>) => {
+  const { values, errors, handleValueChange } =
+    useContext<UseFormReturn<CompanionFormValue, K>>(FormContext);
 
   const [minValue, maxValue] = values[id].split('~').map(Number);
 

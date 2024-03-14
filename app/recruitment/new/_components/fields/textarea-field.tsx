@@ -6,16 +6,26 @@ import {
   FieldProps,
 } from '~/app/recruitment/new/_components/fields/field';
 import { FormContext } from '~/app/recruitment/new/_components/form';
+import { CompanionFormValue } from '~/app/recruitment/new/constants';
+import { GetKeysValueOf } from '~/app/recruitment/new/utils';
 import { Textarea } from '~/components/textarea';
+import { UseFormReturn } from '~/hooks/useForm/types';
 
-export const TextareaField = ({
+interface TextareaFieldProps<K extends string> extends FieldProps {
+  id: K;
+}
+
+export const TextareaField = <
+  K extends GetKeysValueOf<CompanionFormValue, string>,
+>({
   id,
   placeholder,
   variant,
   className,
   labelClassName,
-}: FieldProps) => {
-  const { values, handleChange, errors } = useContext(FormContext);
+}: TextareaFieldProps<K>) => {
+  const { values, handleChange, errors } =
+    useContext<UseFormReturn<CompanionFormValue, K>>(FormContext);
 
   return (
     <Field
