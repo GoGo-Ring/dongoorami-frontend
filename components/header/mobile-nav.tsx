@@ -3,14 +3,15 @@ import { useState } from 'react';
 import { Sheet, SheetContent, SheetTrigger } from '~/components/sheet';
 
 import MobileLink from './mobile-link';
+import Icon from '../icon';
 
 const MobileNav = () => {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
     <Sheet open={isOpen} onOpenChange={setIsOpen}>
-      <SheetTrigger asChild>
-        <button className="hidden sm:block">햄버거</button>
+      <SheetTrigger>
+        <Icon iconName="menu" />
       </SheetTrigger>
       <SheetContent side="left">
         <MobileLink
