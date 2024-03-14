@@ -1,3 +1,6 @@
+import { factory } from '~/app/recruitment/new/utils';
+import { ValidateFn } from '~/hooks/useForm/types';
+
 export const FORM_ITEMS = {
   REGIONS: [
     '서울',
@@ -34,7 +37,7 @@ export const FORM_ITEMS = {
   ] as const,
 };
 
-export interface CompanionFormValue extends Record<string, string> {
+export interface CompanionFormValue {
   title: string;
   performanceName: string;
   performanceDate: string;
@@ -48,9 +51,9 @@ export interface CompanionFormValue extends Record<string, string> {
   male: string;
   female: string;
   irrelevant: string;
-  image: string;
   count: string;
   content: string;
+  images: string[];
 }
 export const INITIAL_VALUES: CompanionFormValue = {
   title: '',
@@ -66,119 +69,110 @@ export const INITIAL_VALUES: CompanionFormValue = {
   male: '',
   female: '',
   irrelevant: '',
-  image: '',
   count: '',
   content: '',
+  images: [],
 };
 
-export const VALIDATIONS: {
-  id: string;
-  validate: (value: string, values: Record<string, string>) => boolean;
-  message: string;
-}[] = [
-  {
-    id: 'title',
-    validate: value => value.length > 0,
-    message: '제목을 입력해주세요',
-  },
-  {
+export const VALIDATIONS = [
+  factory({
     id: 'performanceName',
     validate: value => value.length > 0,
     message: '공연명을 입력해주세요',
-  },
-  {
+  }),
+  factory({
     id: 'performanceDate',
     validate: value => {
       if (value.split('~').includes('')) {
-        return true;
+        return false;
       }
       const now = new Date();
-
       const todayStart = new Date(
         now.getFullYear(),
         now.getMonth(),
         now.getDate(),
       );
-
       const [startDate] = value.split('~');
 
       return new Date(startDate) >= todayStart;
     },
     message: '오늘 이후의 날짜를 선택해주세요',
-  },
-  {
+  }),
+  factory({
     id: 'performanceDate',
     validate: value => {
       if (value.split('~').includes('')) {
-        return true;
+        return false;
       }
       const [startDate, endDate] = value.split('~');
 
       return new Date(startDate) <= new Date(endDate);
     },
     message: '시작일이 종료일보다 빨라야합니다.',
-  },
-  {
-    id: 'performanceDate',
-    validate: value => !value.split('~').includes(''),
-    message: '공연일을 입력해주세요',
-  },
-  {
+  }),
+  factory({
     id: 'performanceLocation',
     validate: value => value.length > 0,
     message: '공연 장소를 입력해주세요',
-  },
-  {
+  }),
+  factory({
     id: 'participantCount',
     validate: value => value.length > 0,
     message: '인원수를 입력해주세요',
-  },
-  {
+  }),
+  factory({
     id: 'region',
     validate: value => value.length > 0,
     message: '지역을 선택해주세요',
-  },
-  {
-    id: 'age',
-    validate: value => value.length > 0,
-    message: '연령을 입력해주세요',
-  },
-  {
+  }),
+  factory({
     id: 'age',
     validate: value => {
       const [minAge, maxAge] = value.split('~');
 
-      return Number(minAge) <= Number(maxAge);
-    },
-    message: '최소연령이 최대연령보다 큽니다',
-  },
-  {
-    id: 'age',
-    validate: value => {
-      const [minAge, maxAge] = value.split('~');
-
-      return Number(minAge) >= 0 && Number(maxAge) <= 100;
+      return (
+        Number(minAge) <= Number(maxAge) &&
+        Number(minAge) >= 0 &&
+        Number(maxAge) <= 100
+      );
     },
     message: '연령은 0세 이상 100세 이하로 입력해주세요',
-  },
-  {
+  }),
+  factory({
     id: 'gender',
     validate: value => value.length > 0,
     message: '성별을 선택해주세요',
-  },
-  {
+  }),
+  factory({
     id: 'title',
     validate: value => value.length <= 20,
     message: '제목은 20자 이하로 입력해주세요',
-  },
-  {
+  }),
+  factory({
     id: 'performanceLocation',
     validate: value => value.length <= 20,
     message: '공연 장소는 20자 이하로 입력해주세요',
-  },
-  {
+  }),
+  factory({
     id: 'performanceName',
     validate: value => value.length <= 20,
     message: '공연명은 20자 이하로 입력해주세요',
-  },
-];
+  }),
+  factory({
+    id: 'content',
+    validate: value => value.length <= 1000,
+    message: '내용은 1000자 이하로 입력해주세요',
+  }),
+  factory({
+    id: 'images',
+    validate: value => value.length > 0,
+    message: '이미지를 업로드해주세요',
+  }),
+] as {
+  id: keyof CompanionFormValue;
+  validate: ValidateFn<
+    CompanionFormValue,
+    CompanionFormValue[keyof CompanionFormValue]
+  >;
+  message: string;
+}[];

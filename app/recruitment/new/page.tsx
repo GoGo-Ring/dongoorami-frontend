@@ -63,7 +63,7 @@ const Page = () => {
           />
         </div>
         <div className="px-4">
-          <ImageField id="image" label="이미지" />
+          <ImageField id="images" label="이미지" />
         </div>
         <div className="mx-4 flex items-start gap-7 rounded-md border border-gray-200 px-6 pt-6 sm:mx-0 sm:flex-wrap sm:border-0 md:flex-wrap">
           <div className="flex w-full flex-col">
