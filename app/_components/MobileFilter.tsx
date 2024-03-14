@@ -3,7 +3,7 @@ import { useState } from 'react';
 import Icon from '~/components/icon';
 import { Sheet, SheetContent, SheetTrigger } from '~/components/sheet';
 
-import Filter from './Filter';
+import CompanionRecruitmentFilter from './companion-recruitment-filter';
 
 const MobileFilter = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -20,7 +20,11 @@ const MobileFilter = () => {
       </SheetTrigger>
       <SheetContent side="left">
         <div className="flex w-full justify-center border p-8">
-          <Filter />
+          <CompanionRecruitmentFilter
+            onSubmit={() => {
+              return 1;
+            }}
+          />
         </div>
       </SheetContent>
     </Sheet>
