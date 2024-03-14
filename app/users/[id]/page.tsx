@@ -35,20 +35,21 @@ const Page = ({ params }: { params: { id: string } }) => {
         </Button>
       </div>
 
-      <div className="flex items-center gap-10">
+      <div className="flex items-center gap-10 sm:flex-col sm:items-start">
         <Image
           src={member.profileImage}
           alt={`${member.nickname} image`}
           width={144}
           height={144}
+          className="group mx-auto h-36 w-36 rounded-full border border-border object-cover"
         />
 
-        <div className="flex flex-1 flex-col gap-3">
+        <div className="flex flex-1 flex-col gap-3 sm:w-full">
           <Info label="나이">{member.age}세</Info>
           <Info label="성별">{member.gender}</Info>
-          <Info label="매너지수" className="sm:flex sm:flex-col">
-            <div className="flex items-center gap-md">
-              <Progress value={member.manner} className="w-1/2" />
+          <Info label="매너지수" className="sm:flex sm:flex-col sm:items-start">
+            <div className="flex items-center gap-md sm:w-full">
+              <Progress value={member.manner} className="w-1/2 sm:w-full" />
               {member.manner}%
             </div>
           </Info>
