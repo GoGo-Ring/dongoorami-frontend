@@ -3,11 +3,11 @@ interface CalculateStarRatingType {
   rate: number;
 }
 
-enum StarState {
-  None = 'none',
-  Half = 'half',
-  Full = 'full',
-}
+const StarState = {
+  None: 'none',
+  Half: 'half',
+  Full: 'full',
+};
 
 export const calculateStarRating = ({
   starCount,
