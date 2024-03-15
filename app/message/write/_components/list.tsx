@@ -18,7 +18,11 @@ const MessageWriteList = ({
   contacterName,
   contacterProfileImage,
 }: MessageWriteListProps) => {
-  const { data } = useFetchMessageById(contacterId, 100, 1);
+  const { data } = useFetchMessageById({
+    targetId: contacterId,
+    size: 100,
+    page: 1,
+  });
   const isMyId = (id: number) => id === 1; // TODO: 로그인 정보로 변경
 
   return (
