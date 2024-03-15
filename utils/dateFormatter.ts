@@ -12,7 +12,7 @@ export const getDate = (date: Date, format: DateFormat) => {
     case 'yyyy.mm.dd':
       return `${year}.${month}.${day}`;
     default:
-      return null;
+      return date.toString();
   }
 };
 
