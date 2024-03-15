@@ -6,16 +6,15 @@ import { createComment } from '~/apis/accompany';
 import { Comment } from '~/apis/scheme/comment';
 
 interface CommentData {
-  userId: string;
   content: string;
 }
 
-const useMutationComment = (accompanyPostId: string) => {
+const useMutationComment = (accompanyPostId: string, userId: string) => {
   const queryClient = useQueryClient();
   const mutation = useMutation({
-    mutationFn: ({ userId, content }: CommentData) =>
+    mutationFn: ({ content }: CommentData) =>
       createComment(accompanyPostId, userId, content),
-    onMutate: async ({ userId, content }: CommentData) => {
+    onMutate: async ({ content }: CommentData) => {
       const perviousComments = queryClient.getQueryData<Comment[]>([
         'comments',
       ]);
