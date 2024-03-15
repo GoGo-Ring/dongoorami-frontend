@@ -1,13 +1,11 @@
-import { CompanionRecruitmentCard } from './scheme/accompany';
+import { AccompanyPostInfoList } from './scheme/accompany';
 
 import api from '.';
 
-const getCompanions = async (): Promise<CompanionRecruitmentCard[]> => {
-  const { data } = await api.get<CompanionRecruitmentCard[]>({
-    url: '/search/posts',
+export const getCompanions = async (params: string, pageParam: number) => {
+  const { data } = await api.get<AccompanyPostInfoList>({
+    url: `/accompanies/posts?${params}$_size=${pageParam}`,
   });
 
   return data;
 };
-
-export default getCompanions;
