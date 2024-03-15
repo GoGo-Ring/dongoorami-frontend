@@ -1,7 +1,7 @@
 'use client';
 
 import { useSearchParams } from 'next/navigation';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import { Button } from '~/components/button';
 import useInfiniteAccompanies from '~/hooks/infinite/useInfiniteAccompanies';
@@ -14,8 +14,6 @@ import FilterTabs from '../_components/filter-tabs';
 const Page = () => {
   const searchParams = useSearchParams();
   const params = searchParams.toString();
-
-  const beforeURL = useRef<string>('');
 
   const {
     data,
@@ -49,11 +47,8 @@ const Page = () => {
   };
 
   useEffect(() => {
-    if (beforeURL.current !== params) {
-      setIsMoreCompanionInfinite(false);
-      setIsMorePerformanceInfinite(false);
-      beforeURL.current = params;
-    }
+    setIsMoreCompanionInfinite(false);
+    setIsMorePerformanceInfinite(false);
   }, [params]);
 
   return (
