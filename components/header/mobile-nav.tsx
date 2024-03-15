@@ -10,7 +10,7 @@ const MobileNav = () => {
 
   return (
     <Sheet open={isOpen} onOpenChange={setIsOpen}>
-      <SheetTrigger>
+      <SheetTrigger className="hidden sm:block">
         <Icon iconName="menu" />
       </SheetTrigger>
       <SheetContent side="left">
