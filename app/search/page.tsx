@@ -22,7 +22,7 @@ const Page = () => {
   };
 
   const handleIsMoreCompanion = () => {
-    setIsMoreCompanionInfinite(!isMoreCompanionInfinite);
+    setIsMoreCompanionInfinite(true);
   };
 
   return (
@@ -77,9 +77,15 @@ const Page = () => {
               ),
             ),
           )} */}
-        <Button variant="outline" onClick={handleIsMoreCompanion}>
-          동행 모집 더보기
-        </Button>
+        {
+          <Button
+            variant="outline"
+            onClick={handleIsMoreCompanion}
+            disabled={!hasNextPageCompanion}
+          >
+            동행 모집 더보기
+          </Button>
+        }
       </div>
     </div>
   );
