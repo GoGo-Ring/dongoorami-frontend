@@ -67,15 +67,22 @@ export const getComments = async (accompanyPostId: string) => {
   return data;
 };
 
-export const updateComment = async (accompanyPostId: string, content: string) =>
+export const updateComment = async (
+  accompanyPostId: string,
+  commentId: string,
+  content: string,
+) =>
   await api.patch({
-    url: `/comments/${accompanyPostId}`,
+    url: `/comments/${accompanyPostId}/${commentId}`,
     data: { content },
   });
 
-export const deleteComment = async (accompanyPostId: string) =>
+export const deleteComment = async (
+  accompanyPostId: string,
+  commentId: string,
+) =>
   await api.delete({
-    url: `/comments/${accompanyPostId}`,
+    url: `/comments/${accompanyPostId}/${commentId}`,
   });
 
 export const getReviews = async () =>
