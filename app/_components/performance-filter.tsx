@@ -4,7 +4,7 @@ import React, { MouseEvent, useCallback, useState } from 'react';
 
 import { Button } from '~/components/button';
 import { SEARCH, SELECTION } from '~/constants/filterField';
-import { joinQuery } from '~/utils/joinQuery';
+import { getQuery } from '~/utils/joinQuery';
 
 import ButtonSelectField from './filter-field/button-select';
 
@@ -13,32 +13,15 @@ interface PerformanceFilterProps {
 }
 
 const PerformanceFilter = ({ onSubmit }: PerformanceFilterProps) => {
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [options, setOptions] = useState({
     genre: [],
     status: [],
   });
 
-  const setObject = (genreQuery: string, statusQuery: string) => {
-    return {
-      genre: genreQuery,
-      status: statusQuery,
-    };
-  };
-
-  const getQuery = () => {
-    const { genre: optionGenre, status: optionStatus } = options;
-    const [genreQuery, statusQuery] = joinQuery(optionGenre, optionStatus);
-
-    const { genre, status } = setObject(genreQuery, statusQuery);
-
-    return `genre=${genre}&status=${status}`;
-  };
-
   const handleSubmit = (e: MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
 
-    const query = getQuery();
+    const query = getQuery(options);
 
     onSubmit(query);
   };
