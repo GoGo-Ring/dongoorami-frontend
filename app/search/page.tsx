@@ -1,12 +1,11 @@
 'use client';
 
-import { useInfiniteQuery } from '@tanstack/react-query';
 import { useSearchParams } from 'next/navigation';
 
-import api from '~/apis';
-import { AccompanyPostInfoList } from '~/apis/scheme/accompany';
 import { Button } from '~/components/button';
+import useInfiniteAccompanies from '~/hooks/infinite/useInfiniteAccompanies';
 
+import CompanionRecruitmentList from './_component/companion-recruitment-list';
 import useIntersectionObsever from './_component/useIntersectionObserver';
 import FilterTabs from '../_components/filter-tabs';
 
@@ -15,20 +14,8 @@ const Page = () => {
   const params = searchParams.toString();
 
   const { data, fetchNextPage, hasNextPage, isFetchingNextPage } =
-    useInfiniteQuery({
-      queryKey: ['accompanies', params],
-      queryFn: async ({ pageParam }): Promise<AccompanyPostInfoList> => {
-        const { data } = await api.get<AccompanyPostInfoList>({
-          url: `/accompanies/posts?${params}$_size=${pageParam}`,
-        });
+    useInfiniteAccompanies(params);
 
-        return data;
-      },
-      initialPageParam: 1,
-      getNextPageParam: (lastPage, allPage) => {
-        return lastPage.hasNext ? allPage.length + 1 : undefined;
-      },
-    });
   const handleFetchNextPage = () => {
     fetchNextPage();
   };
@@ -48,8 +35,8 @@ const Page = () => {
         >
           공연 더보기
         </Button>
-        <div className="mx-auto grid grid-cols-3">
-          {data?.pages?.map(page =>
+        {data && <CompanionRecruitmentList data={data} />}
+        {/* {data?.pages?.map(page =>
             page.accompanyPostInfos.map(
               ({
                 id,
@@ -79,8 +66,7 @@ const Page = () => {
                 </div>
               ),
             ),
-          )}
-        </div>
+          )} */}
         <Button variant="outline" onClick={handleFetchNextPage}>
           동행 모집 더보기
         </Button>
