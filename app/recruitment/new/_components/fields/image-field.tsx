@@ -1,6 +1,6 @@
-import { useContext, useState } from 'react';
+import Image from 'next/image';
+import React, { useContext } from 'react';
 
-import { Error } from '~/app/recruitment/new/_components/error';
 import {
   Field,
   FieldProps,
@@ -8,8 +8,38 @@ import {
 import { FormContext } from '~/app/recruitment/new/_components/form';
 import { CompanionFormValue } from '~/app/recruitment/new/constants';
 import { GetKeysValueOf } from '~/app/recruitment/new/utils';
-import { Input } from '~/components/input';
+import { Badge } from '~/components/badge';
+import { Button } from '~/components/button';
+import ErrorText from '~/components/error-text';
 import { UseFormReturn } from '~/hooks/useForm/types';
+
+interface ImagePreviewProps {
+  index: number;
+  url: string;
+  handleRemoveImage: (index: number) => void;
+}
+
+const ImagePreview = ({ url, index, handleRemoveImage }: ImagePreviewProps) => {
+  return (
+    <li key={index} className="flex flex-col">
+      <Badge
+        onClick={() => handleRemoveImage(index)}
+        className="mt-4 cursor-pointer self-end text-gray-600"
+        variant="secondary"
+      >
+        x
+      </Badge>
+      <Image
+        key={index}
+        src={url}
+        alt=""
+        width={300}
+        height={200}
+        className="h-20 w-20 rounded-md p-2"
+      />
+    </li>
+  );
+};
 
 interface ImageFieldProps<K extends string> extends FieldProps {
   id: K;
@@ -23,49 +53,55 @@ export const ImageField = <
   label,
   variant,
 }: ImageFieldProps<K>) => {
-  const { handleChange, errors } =
+  const { handleValueChange, errors, values } =
     useContext<UseFormReturn<CompanionFormValue, K>>(FormContext);
-  const [selectedImage, setSelectedImage] = useState<string | null>('');
-
-  const encodeFileToBase64 = (file: File) => {
-    const reader = new FileReader();
-
-    reader.onloadend = event => {
-      setSelectedImage(event.target?.result as string);
-    };
-    reader.readAsDataURL(file);
-  };
 
   const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files?.[0];
+    const files = event.target?.files;
+    const fileUrls = [...(files || [])].map(file => {
+      return URL.createObjectURL(file);
+    });
 
-    if (!file) {
-      return;
-    }
-    encodeFileToBase64(file as File);
-    handleChange(event);
+    handleValueChange(id)([...values[id], ...fileUrls]);
+  };
+
+  const handleImageButtonClick = () => {
+    const input = document.getElementById(id) as HTMLInputElement;
+
+    input.click();
+  };
+
+  const handleRemoveImage = (index: number) => {
+    const newImages = values[id].filter((_, i) => i !== index);
+
+    handleValueChange(id)(newImages);
   };
 
   return (
     <Field id={id} label={label} variant={variant}>
-      <Input
+      <input
         id={id}
-        className="cursor-pointer"
+        className="hidden"
         type="file"
         placeholder={placeholder}
         onChange={handleImageChange}
+        name="images"
+        multiple
       />
-      {selectedImage && (
-        // eslint-disable-next-line @next/next/no-img-element
-        <img
-          src={selectedImage}
-          alt="이미지"
-          width={300}
-          height={200}
-          className="self-center p-4"
-        />
-      )}
-      <Error error={errors[id]} />
+      <Button onClick={handleImageButtonClick} type="button" variant="outline">
+        추가
+      </Button>
+      <ul className="flex flex-wrap gap-8">
+        {values[id]?.map((url, index) => (
+          <ImagePreview
+            key={index}
+            index={index}
+            url={url}
+            handleRemoveImage={handleRemoveImage}
+          />
+        ))}
+      </ul>
+      <ErrorText message={errors[id]} />
     </Field>
   );
 };
