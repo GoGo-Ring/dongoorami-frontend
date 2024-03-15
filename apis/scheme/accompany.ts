@@ -45,3 +45,8 @@ export interface CompanionRecruitmentCard {
   gender: '남' | '여' | '무관';
   totalPeople: number;
 }
+
+export interface AccompanyPostInfoList {
+  hasNext: boolean;
+  accompanyPostInfos: CompanionRecruitmentCard[];
+}
