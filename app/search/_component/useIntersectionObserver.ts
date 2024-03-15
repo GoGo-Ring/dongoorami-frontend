@@ -11,8 +11,6 @@ const useIntersectionObsever = ({
 }: useIntersectionObseverProps) => {
   const ref = useRef<HTMLDivElement>(null);
 
-  const { current } = ref;
-
   useEffect(() => {
     const { current } = ref;
 
@@ -34,7 +32,7 @@ const useIntersectionObsever = ({
         intersectionObserver.unobserve(current);
       }
     };
-  }, [handleFetchNextPage, hasNextPage, current]);
+  }, [handleFetchNextPage, hasNextPage]);
 
   return [ref];
 };
