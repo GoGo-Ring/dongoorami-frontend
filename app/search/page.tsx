@@ -13,8 +13,12 @@ const Page = () => {
   const searchParams = useSearchParams();
   const params = searchParams.toString();
 
-  const { data, fetchNextPage, hasNextPage, isFetchingNextPage } =
-    useInfiniteAccompanies(params);
+  const {
+    data,
+    fetchNextPage,
+    hasNextPage: hasNextPageCompanion,
+    isFetchingNextPage,
+  } = useInfiniteAccompanies(params);
   const [isMoreCompanionInfinite, setIsMoreCompanionInfinite] = useState(false);
 
   const handleFetchNextPage = () => {
@@ -33,7 +37,7 @@ const Page = () => {
       <div className="flex flex-col gap-8 px-6 py-10">
         <Button
           variant="outline"
-          disabled={!hasNextPage || isFetchingNextPage}
+          disabled={!hasNextPageCompanion || isFetchingNextPage}
           onClick={() => fetchNextPage()}
         >
           공연 더보기
@@ -42,7 +46,7 @@ const Page = () => {
           <CompanionRecruitmentList
             data={data}
             isInfinite={isMoreCompanionInfinite}
-            hasNextPage={hasNextPage}
+            hasNextPage={hasNextPageCompanion}
             handleFetchNextPage={handleFetchNextPage}
           />
         )}
