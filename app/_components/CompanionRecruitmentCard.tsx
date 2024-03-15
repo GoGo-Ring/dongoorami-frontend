@@ -7,14 +7,15 @@ import { IconNames } from '~/components/icon/icons';
 import { getDate } from '~/utils/dateFormatter';
 
 interface CompanionRecruitmentCardProps {
+  id: string;
   title: string;
   concertName: string;
-  userId: string;
+  writer: string;
   gender: string;
-  personCount: number;
+  totalPeople: number;
   viewCount: number;
   commentsCount: number;
-  date: Date;
+  createdAt: Date;
   status: '모집 중' | '모집 종료';
 }
 
@@ -47,7 +48,7 @@ const ConditionItem = ({ label, contents }: ConditionItemProps) => {
 };
 
 const ContentField = () => {
-  const { concertName, gender, personCount } = useContext(
+  const { concertName, gender, totalPeople } = useContext(
     CompanionRecruitmentCardContext,
   );
 
@@ -56,7 +57,7 @@ const ContentField = () => {
       <div className="flex flex-col">
         <ConditionItem label="공연명" contents={concertName} />
         <ConditionItem label="성별" contents={gender} />
-        <ConditionItem label="인원 수" contents={personCount} />
+        <ConditionItem label="인원 수" contents={totalPeople} />
       </div>
     </div>
   );
@@ -90,14 +91,14 @@ const IconField = () => {
 };
 
 const UserId = () => {
-  const { userId } = useContext(CompanionRecruitmentCardContext);
+  const { writer } = useContext(CompanionRecruitmentCardContext);
 
-  return <span className="truncate text-sm text-gray-400">{userId}</span>;
+  return <span className="truncate text-sm text-gray-400">{writer}</span>;
 };
 
 const CreatedDate = () => {
-  const { date } = useContext(CompanionRecruitmentCardContext);
-  const formattedDate = getDate(date, 'yyyy.mm.dd');
+  const { createdAt } = useContext(CompanionRecruitmentCardContext);
+  const formattedDate = getDate(createdAt, 'yyyy.mm.dd');
 
   return <span className="text-xs text-gray-300">{formattedDate}</span>;
 };
@@ -121,28 +122,30 @@ const FooterField = () => {
 };
 
 const CompanionRecruitmentCard = ({
+  id,
   title,
   concertName,
-  userId,
+  writer,
   gender,
-  personCount,
+  totalPeople,
   viewCount,
   commentsCount,
-  date,
+  createdAt,
   status,
 }: CompanionRecruitmentCardProps) => {
   return (
     <div className=" w-[204px] rounded-lg border p-6">
       <CompanionRecruitmentCardContext.Provider
         value={{
+          id,
           title,
           concertName,
-          userId,
+          writer,
           gender,
-          personCount,
+          totalPeople,
           viewCount,
           commentsCount,
-          date,
+          createdAt,
           status,
         }}
       >
