@@ -1,11 +1,23 @@
 import { AccompanyPostInfoList } from '~/apis/scheme/accompany';
 import CompanionRecruitmentCard from '~/app/_components/CompanionRecruitmentCard';
 
+import useIntersectionObsever from './useIntersectionObserver';
+
 interface CompanionRecruitmentListProps {
   data: { pages: AccompanyPostInfoList[] };
+  isInfinite: boolean;
+  handleFetchNextPage: () => void;
+  hasNextPage: boolean;
 }
 
-const CompanionRecruitmentList = ({ data }: CompanionRecruitmentListProps) => {
+const CompanionRecruitmentList = ({
+  data,
+  isInfinite,
+  handleFetchNextPage,
+  hasNextPage,
+}: CompanionRecruitmentListProps) => {
+  const [ref] = useIntersectionObsever({ handleFetchNextPage, hasNextPage });
+
   return (
     <div className="flex w-full flex-col gap-6">
       <span className="font-semibold">동행 모집</span>
@@ -40,6 +52,7 @@ const CompanionRecruitmentList = ({ data }: CompanionRecruitmentListProps) => {
             ),
           ),
         )}
+        {isInfinite && <div ref={ref} />}
       </div>
     </div>
   );
