@@ -1,35 +1,33 @@
 import { ReactNode, createContext } from 'react';
 
-import { CompanionFormValue } from '~/app/recruitment/new/constants';
 import useForm from '~/hooks/useForm';
 import { UseFormReturn, ValidateFn } from '~/hooks/useForm/types';
 
-export const FormContext = createContext(
-  {} as UseFormReturn<CompanionFormValue>,
-);
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export const FormContext = createContext({} as UseFormReturn<any, any>);
 
 FormContext.displayName = 'FormContext';
 
-interface FormProps<T> {
+interface FormProps<T, K, V> {
   children: ReactNode;
   initialValues: T;
   initialValidations: {
-    id: string;
-    validate: ValidateFn;
+    id: K;
+    validate: ValidateFn<T, V>;
     message: string;
   }[];
   className?: string;
   submit: (values: T) => void;
 }
 
-export const Form = ({
+export const Form = <T extends object, K extends Extract<keyof T, string>>({
   children,
   initialValues,
   initialValidations,
   className,
   submit,
-}: FormProps<CompanionFormValue>) => {
-  const formValues = useForm<CompanionFormValue>({
+}: FormProps<T, K, T[K]>) => {
+  const formValues = useForm<T, K>({
     initialValues,
     onSubmit: submit,
     validationRulesList: initialValidations,

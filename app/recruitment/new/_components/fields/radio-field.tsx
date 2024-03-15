@@ -6,14 +6,26 @@ import {
   FieldProps,
 } from '~/app/recruitment/new/_components/fields/field';
 import { FormContext } from '~/app/recruitment/new/_components/form';
+import { CompanionFormValue } from '~/app/recruitment/new/constants';
+import { GetKeysValueOf } from '~/app/recruitment/new/utils';
 import { RadioGroup, RadioGroupItem } from '~/components/radio-group';
-export const RadioGroupField = ({
+import { UseFormReturn } from '~/hooks/useForm/types';
+
+interface RadioGroupFieldProps<K extends string>
+  extends PropsWithChildren<FieldProps> {
+  id: K;
+}
+
+export const RadioGroupField = <
+  K extends GetKeysValueOf<CompanionFormValue, string>,
+>({
   id,
   label,
   children,
   variant,
-}: PropsWithChildren<FieldProps>) => {
-  const { handleValueChange, values, errors } = useContext(FormContext);
+}: RadioGroupFieldProps<K>) => {
+  const { handleValueChange, values, errors } =
+    useContext<UseFormReturn<CompanionFormValue, K>>(FormContext);
 
   return (
     <Field id={id} label={label} variant={variant}>
@@ -30,7 +42,10 @@ export const RadioGroupField = ({
   );
 };
 
-export const RadioGroupFieldItem = ({ id, label }: FieldProps) => {
+export const RadioGroupFieldItem = ({
+  id,
+  label,
+}: RadioGroupFieldProps<GetKeysValueOf<CompanionFormValue, string>>) => {
   return (
     <Field id={id} label={label} labelVariant="radio" variant="radio">
       <RadioGroupItem value={id} id={id} />

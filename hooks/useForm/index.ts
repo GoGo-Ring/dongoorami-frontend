@@ -1,6 +1,6 @@
 'use client';
 
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 import {
   Errors,
@@ -17,26 +17,36 @@ import {
   InputType,
 } from './types';
 
-interface useFormProps<T> {
+interface useFormProps<T, K, V> {
   initialValues: T;
   onSubmit: (values: T) => void;
   validationRulesList?: {
-    id: keyof T;
-    validate: ValidateFn;
+    id: K;
+    validate: ValidateFn<T, V>;
     message: string;
   }[];
 }
 
-const useForm = <T extends Record<string, string>>({
+const useForm = <T extends object, K extends Extract<keyof T, string>>({
   initialValues,
   onSubmit,
   validationRulesList = [],
-}: useFormProps<T>): UseFormReturn<T> => {
+}: useFormProps<T, K, T[K]>): UseFormReturn<T, K> => {
   const [values, setValues] = useState<T>(initialValues);
-  const [errors, setErrors] = useState<Errors<T>>({} as Errors<T>);
-  const validationRules = useRef<ValidationRules<T>>({} as ValidationRules<T>);
+  const [errors, setErrors] = useState<Errors>({} as Errors);
+  const validationRules = useRef<ValidationRules<T, K, T[K]>>(
+    {} as ValidationRules<T, K, T[K]>,
+  );
 
-  const registerValidation: RegisterValidation<T> = ({
+  useEffect(() => {
+    for (const id in initialValues) {
+      const value = initialValues[id];
+
+      setValues(prevValues => ({ ...prevValues, [id]: value || '' }));
+    }
+  }, [initialValues]);
+
+  const registerValidation: RegisterValidation<T, K, T[K]> = ({
     id,
     message,
     validate,
@@ -51,10 +61,10 @@ const useForm = <T extends Record<string, string>>({
     registerValidation({ id, validate, message });
   });
 
-  const validateField: ValidateField<T> = (id, value, values) => {
+  const validateField: ValidateField<T, K, T[K]> = (id, value, values) => {
     const rulesAboutId = validationRules.current[id] || {};
 
-    return Object.keys(rulesAboutId).reduce<string>((acc, message) => {
+    return Object.keys(rulesAboutId).reduce((acc, message) => {
       const validate = rulesAboutId[message];
 
       if (!validate(value, values)) {
@@ -65,21 +75,21 @@ const useForm = <T extends Record<string, string>>({
     }, '');
   };
 
-  const validateForm: ValidateForm<T> = values =>
-    Object.keys(validationRules.current).reduce<Errors<T>>(
-      (acc, id: keyof T) => {
-        const fieldErrors = validateField(id, values[id], values);
+  const validateForm: ValidateForm<T> = values => {
+    const errors = {} as Errors;
 
-        if (fieldErrors.length > 0) {
-          acc[id] = fieldErrors;
-        }
+    for (const id in validationRules.current) {
+      const fieldErrors = validateField(id, values[id], values);
 
-        return acc;
-      },
-      {} as Errors<T>,
-    );
+      if (fieldErrors.length > 0) {
+        errors[id] = fieldErrors;
+      }
+    }
 
-  const updateField: UpdateField<T> = (id, value) => {
+    return errors;
+  };
+
+  const updateField: UpdateField<K, T[K]> = (id, value) => {
     setValues(prevValues => ({ ...prevValues, [id]: value }));
 
     setErrors(prevErrors => ({
@@ -89,11 +99,11 @@ const useForm = <T extends Record<string, string>>({
   };
 
   const handleChange: HandleChange = ({ currentTarget: { id, value } }) => {
-    updateField(id, value);
+    updateField(id as K, value as T[K]);
   };
 
-  const handleValueChange: HandleValueChange<T> = id => value => {
-    updateField(id, String(value));
+  const handleValueChange: HandleValueChange<K, T[K]> = id => value => {
+    updateField(id, value);
   };
 
   const handleSubmit: HandleSubmit = e => {
@@ -111,7 +121,7 @@ const useForm = <T extends Record<string, string>>({
   const handleUnControlledSubmit: HandleSubmit = e => {
     e.preventDefault();
 
-    const ids = Object.keys(initialValues);
+    const ids = Object.keys(initialValues) as K[];
     const values = ids.reduce((acc, id) => {
       const element = document.getElementById(id as string) as InputType;
 
@@ -125,7 +135,7 @@ const useForm = <T extends Record<string, string>>({
       ids.forEach(id => {
         const element = document.getElementById(id as string) as InputType;
 
-        element.value = initialValues[id];
+        element.value = initialValues[id] as string;
       });
     }
   };
