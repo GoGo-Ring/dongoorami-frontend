@@ -4,6 +4,7 @@ import {
   Companion,
   CompanionDetail,
   CompanionRequest,
+  Profile,
 } from './scheme/accompany';
 
 import api from '.';
@@ -41,9 +42,13 @@ export const updateCompanion = async (
     data: companion,
   });
 
-export const getCompanionProfile = async (memberId: number) =>
-  await api.get({ url: `/profiles/${memberId}` });
+export const getCompanionProfile = async (memberId: number) => {
+  const { data } = await api.get<Profile>({
+    url: `/accompanies/profile/${memberId}`,
+  });
 
+  return data;
+};
 export const createComment = async (
   accompanyPostId: string,
   userId: string,

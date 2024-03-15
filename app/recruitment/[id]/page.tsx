@@ -46,7 +46,7 @@ const Page = ({ params }: Props) => {
       <div className="text-xl font-semibold">{data?.title}</div>
       <div className="flex flex-col">
         <div className="flex items-center justify-between">
-          <Profile name={memberInfo.nickname} image={memberInfo.profileImage} />
+          <Profile name={memberInfo.name} image={memberInfo.profileImage} />
           <PostStatus
             recruitStatus={status}
             createdAt={updatedAt} // TODO: CompanionDetail 에 createdAt 필드 추가
