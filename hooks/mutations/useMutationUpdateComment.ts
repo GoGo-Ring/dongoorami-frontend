@@ -7,11 +7,11 @@ interface CommentData {
   commentId: string;
 }
 
-const useMutationUpdateComment = (accompanyPostId: string) => {
+const useMutationUpdateComment = () => {
   const queryClient = useQueryClient();
   const mutation = useMutation({
     mutationFn: ({ content, commentId }: CommentData) =>
-      updateComment(accompanyPostId, commentId, content),
+      updateComment(commentId, content),
     onSettled: () => {
       queryClient.invalidateQueries({ queryKey: ['comments'] });
     },
