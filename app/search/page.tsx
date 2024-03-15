@@ -1,12 +1,12 @@
 'use client';
 
 import { useSearchParams } from 'next/navigation';
+import { useState } from 'react';
 
 import { Button } from '~/components/button';
 import useInfiniteAccompanies from '~/hooks/infinite/useInfiniteAccompanies';
 
 import CompanionRecruitmentList from './_component/companion-recruitment-list';
-import useIntersectionObsever from './_component/useIntersectionObserver';
 import FilterTabs from '../_components/filter-tabs';
 
 const Page = () => {
@@ -15,12 +15,15 @@ const Page = () => {
 
   const { data, fetchNextPage, hasNextPage, isFetchingNextPage } =
     useInfiniteAccompanies(params);
+  const [isMoreCompanionInfinite, setIsMoreCompanionInfinite] = useState(false);
 
   const handleFetchNextPage = () => {
     fetchNextPage();
   };
 
-  useIntersectionObsever({ handleFetchNextPage, hasNextPage });
+  const handleIsMoreCompanion = () => {
+    setIsMoreCompanionInfinite(!isMoreCompanionInfinite);
+  };
 
   return (
     <div className="flex">
@@ -35,7 +38,14 @@ const Page = () => {
         >
           공연 더보기
         </Button>
-        {data && <CompanionRecruitmentList data={data} />}
+        {data && (
+          <CompanionRecruitmentList
+            data={data}
+            isInfinite={isMoreCompanionInfinite}
+            hasNextPage={hasNextPage}
+            handleFetchNextPage={handleFetchNextPage}
+          />
+        )}
         {/* {data?.pages?.map(page =>
             page.accompanyPostInfos.map(
               ({
@@ -67,7 +77,7 @@ const Page = () => {
               ),
             ),
           )} */}
-        <Button variant="outline" onClick={handleFetchNextPage}>
+        <Button variant="outline" onClick={handleIsMoreCompanion}>
           동행 모집 더보기
         </Button>
       </div>
