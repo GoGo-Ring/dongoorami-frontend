@@ -26,7 +26,7 @@ export const SELECTION = {
   },
   GENRE: {
     category: '장르',
-    options: ['콘서트', '클래식', ' 무용', '뮤지컬', '아동', '연극'],
+    options: ['콘서트', '클래식', '무용', '뮤지컬', '아동', '연극'],
   },
   STATUS: {
     category: '공연 상태',
