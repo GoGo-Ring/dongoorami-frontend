@@ -1,10 +1,10 @@
-import { PerformanceInfoCard } from './scheme/performance';
+import { PerformanceList } from './scheme/performance';
 
 import api from '.';
 
-const getPerformances = async (): Promise<PerformanceInfoCard[]> => {
-  const { data } = await api.get<PerformanceInfoCard[]>({
-    url: '/search/concerts',
+const getPerformances = async (params: string, pageParam: number) => {
+  const { data } = await api.get<PerformanceList>({
+    url: `/search/concerts?${params}$_size=${pageParam}`,
   });
 
   return data;
