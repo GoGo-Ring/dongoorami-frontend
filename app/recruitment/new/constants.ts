@@ -41,6 +41,7 @@ export interface CompanionFormValue {
   title: string;
   performanceName: string;
   performanceDate: string;
+  performanceId: string;
   performanceLocation: string;
   participantCount: string;
   region: string;
@@ -59,6 +60,7 @@ export const INITIAL_VALUES: CompanionFormValue = {
   title: '',
   performanceName: '',
   performanceDate: '~',
+  performanceId: '',
   performanceLocation: '',
   participantCount: '',
   region: '',
@@ -167,6 +169,11 @@ export const VALIDATIONS = [
     id: 'images',
     validate: value => value.length > 0,
     message: '이미지를 업로드해주세요',
+  }),
+  factory({
+    id: 'performanceId',
+    validate: value => value.length > 0,
+    message: '공연을 선택해주세요',
   }),
 ] as {
   id: keyof CompanionFormValue;

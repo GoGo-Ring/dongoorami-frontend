@@ -6,6 +6,7 @@ import {
   RadioGroupField,
   RadioGroupFieldItem,
 } from '~/app/recruitment/new/_components/fields/radio-field';
+import { SearchButtonField } from '~/app/recruitment/new/_components/fields/search-button-field';
 import {
   SelectField,
   SelectFieldItem,
@@ -23,4 +24,5 @@ export {
   SliderField,
   TextareaField,
   ImageField,
+  SearchButtonField,
 };

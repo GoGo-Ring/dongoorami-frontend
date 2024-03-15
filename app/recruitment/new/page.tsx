@@ -19,6 +19,7 @@ import {
   SliderField,
   TextareaField,
   CalendarField,
+  SearchButtonField,
 } from './_components/fields';
 import { Form } from './_components/form';
 import {
@@ -94,6 +95,12 @@ const Page = () => {
               id="performanceLocation"
               label="공연 장소"
               placeholder="공연 장소를 입력해주세요"
+            />
+            <SearchButtonField
+              id="performanceId"
+              label="공연id"
+              placeholder="공연 명을 입력해주세요"
+              listCount={10}
             />
             <SliderField id="age" minId="minAge" maxId="maxAge" label="연령" />
             <RadioGroupField id="gender" label="성별">
