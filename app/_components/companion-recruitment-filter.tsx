@@ -4,7 +4,6 @@ import { MouseEvent, useCallback, useState } from 'react';
 
 import { Button } from '~/components/button';
 import { SEARCH, SELECTION } from '~/constants/filterField';
-import { joinQuery } from '~/utils/joinQuery';
 
 import CheckboxSelectField from './filter-field/checkbox-select';
 import InputField from './filter-field/input-field';
@@ -30,7 +29,7 @@ const CompanionRecruitmentFilter = ({
     gender: 'irrelevant',
     regions: [],
     age: [20, 30],
-    transportation: '',
+    transportation: 'together',
     personCount: 0,
   });
 
@@ -53,12 +52,18 @@ const CompanionRecruitmentFilter = ({
   };
 
   const objectToQueryString = (object: { [key: string]: string | number }) =>
-    Object.entries(object).reduce((acc, [key, value]) => {
-      return `${acc}&${key}=${value}`;
-    }, '');
+    Object.entries(object)
+      .reduce((acc, [key, value]) => {
+        if (value === '') {
+          return acc;
+        }
+
+        return [...acc, `${key}=${value}`];
+      }, [] as string[])
+      .join('&');
 
   const getQuery = () => {
-    const [regionQuery] = joinQuery(options.regions);
+    const regionQuery = options.regions.join('&regions=');
 
     return objectToQueryString(setObject(regionQuery));
   };
