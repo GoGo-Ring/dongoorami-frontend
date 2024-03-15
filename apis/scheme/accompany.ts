@@ -35,12 +35,13 @@ export interface CompanionDetail
 export interface CompanionRecruitmentCard {
   id: string;
   title: string;
-  concertName: string;
-  userId: string;
-  gender: '남' | '여' | '무관';
-  personCount: number;
-  viewCount: number;
-  commentsCount: number;
-  date: Date;
+  writer: string;
+  createdAt: string;
+  updatedAt: string;
   status: '모집 중' | '모집 종료';
+  concertName: string;
+  viewCount: number;
+  commentCount: number;
+  gender: '남' | '여' | '무관';
+  totalPeople: number;
 }
