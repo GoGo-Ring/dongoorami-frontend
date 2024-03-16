@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import React, { useState } from 'react';
 
 import { Comment } from '~/apis/scheme/comment';
 import CommentForm from '~/app/recruitment/[id]/_components/comment/form';
@@ -32,50 +32,52 @@ const CommentList = ({ comments, accompanyPostId }: CommentListProps) => {
     setEditId(-1);
   };
 
+  const noApplyComments = comments.filter(
+    ({ isAccompanyApplyComment }) => !isAccompanyApplyComment,
+  );
+
   return (
-    <div className="divide-y-2 pt-8">
-      {comments.length > 0 &&
-        comments.map(
-          ({
-            id,
-            updatedAt,
-            content,
-            memberProfile: { profileImage, nickname, currentMember },
-          }) => (
-            <ul key={id}>
-              {editId === id && (
-                <li className="pt-4">
-                  <CommentForm
-                    accompanyPostId={accompanyPostId}
-                    initialComment={content}
-                    commentId={id}
-                    handleCancel={() => setEditId(-1)}
-                    editMode
-                    isPending={isPending}
-                    handleMutateComment={handleMutateComment(String(id))}
+    <ul className="divide-y-2 pt-8">
+      {noApplyComments.map(
+        ({
+          id,
+          updatedAt,
+          content,
+          memberProfile: { profileImage, nickname, currentMember },
+        }) => (
+          <li key={id}>
+            {editId === id && (
+              <CommentForm
+                className="pt-4"
+                accompanyPostId={accompanyPostId}
+                initialComment={content}
+                commentId={id}
+                handleCancel={() => setEditId(-1)}
+                editMode
+                isPending={isPending}
+                handleMutateComment={handleMutateComment(String(id))}
+              />
+            )}
+            {editId !== id && (
+              <div className="flex flex-col gap-3 py-2">
+                <CommentContent
+                  profileImage={profileImage}
+                  nickName={`${nickname} ${currentMember ? '(나)' : ''}`}
+                  updatedAt={updatedAt}
+                  content={content}
+                />
+                {currentMember && (
+                  <UpdateDeleteButtons
+                    handleUpdate={handleUpdate(id)}
+                    handleDelete={handleDelete(id)}
                   />
-                </li>
-              )}
-              {editId !== id && (
-                <li className="flex flex-col gap-3 py-2">
-                  <CommentContent
-                    profileImage={profileImage}
-                    nickName={nickname}
-                    updatedAt={updatedAt}
-                    content={content}
-                  />
-                  {currentMember && (
-                    <UpdateDeleteButtons
-                      handleUpdate={handleUpdate(id)}
-                      handleDelete={handleDelete(id)}
-                    />
-                  )}
-                </li>
-              )}
-            </ul>
-          ),
-        )}
-    </div>
+                )}
+              </div>
+            )}
+          </li>
+        ),
+      )}
+    </ul>
   );
 };
 

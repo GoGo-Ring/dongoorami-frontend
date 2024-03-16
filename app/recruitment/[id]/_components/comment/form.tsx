@@ -1,14 +1,15 @@
 'use client';
 
-import { useRef } from 'react';
+import React, { HTMLProps, useRef } from 'react';
 
 import { Button } from '~/components/button';
 import CountErrorText from '~/components/count-error-text';
 import { Label } from '~/components/label';
 import { Textarea } from '~/components/textarea';
 import useForm from '~/hooks/useForm';
+import { cn } from '~/libs/utils';
 
-interface CommentFormProps {
+interface CommentFormProps extends HTMLProps<HTMLFormElement> {
   accompanyPostId: string;
   initialComment?: string;
   commentId: string | number;
@@ -19,6 +20,7 @@ interface CommentFormProps {
 }
 
 const CommentForm = ({
+  className,
   initialComment,
   commentId,
   handleCancel,
@@ -42,7 +44,7 @@ const CommentForm = ({
   const limitError = length > limit || length === 0;
 
   return (
-    <form onSubmit={handleSubmit} className="flex flex-col">
+    <form onSubmit={handleSubmit} className={cn('flex flex-col', className)}>
       <Label htmlFor="comment" />
       <Textarea
         className="h-20 resize-none"

@@ -5,14 +5,14 @@ interface CommentContentProps {
   nickName: string;
   profileImage: string;
   updatedAt: string;
-  content: string;
+  content?: string;
 }
 
 const CommentContent = ({
   nickName,
   profileImage,
   updatedAt,
-  content,
+  content = '',
 }: CommentContentProps) => {
   return (
     <>
