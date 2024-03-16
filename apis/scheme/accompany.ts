@@ -44,7 +44,6 @@ export interface CompanionRecruitmentCard {
   id: string;
   title: string;
   writer: string;
-  createdAt: string;
   updatedAt: string;
   status: '모집 중' | '모집 종료';
   concertName: string;

@@ -23,34 +23,14 @@ const CompanionRecruitmentList = ({
       <span className="font-semibold">동행 모집</span>
       <div className="grid w-full grid-cols-3 ">
         {data.pages?.map(page =>
-          page.accompanyPostInfos.map(
-            ({
-              id,
-              createdAt,
-              title,
-              concertName,
-              writer,
-              gender,
-              totalPeople,
-              viewCount,
-              commentCount,
-              status,
-            }) => (
-              <CompanionRecruitmentCard
-                key={id}
-                id={id}
-                createdAt={new Date(createdAt)}
-                title={title}
-                concertName={concertName}
-                writer={writer}
-                gender={gender}
-                totalPeople={totalPeople}
-                viewCount={viewCount}
-                commentsCount={commentCount}
-                status={status}
-              />
-            ),
-          ),
+          page.accompanyPostInfos.map(({ id, updatedAt, ...rest }) => (
+            <CompanionRecruitmentCard
+              key={id}
+              id={id}
+              createdAt={new Date(updatedAt)}
+              {...rest}
+            />
+          )),
         )}
         {isInfinite && <div ref={ref} />}
       </div>
