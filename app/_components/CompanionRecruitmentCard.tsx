@@ -14,7 +14,7 @@ interface CompanionRecruitmentCardProps {
   gender: string;
   totalPeople: number;
   viewCount: number;
-  commentsCount: number;
+  commentCount: number;
   createdAt: Date;
   status: '모집 중' | '모집 종료';
 }
@@ -78,13 +78,13 @@ const IconWithCountItem = ({ iconName, count }: IconWithCountItemProps) => {
 };
 
 const IconField = () => {
-  const { viewCount, commentsCount } = useContext(
+  const { viewCount, commentCount } = useContext(
     CompanionRecruitmentCardContext,
   );
 
   return (
     <div className="flex flex-row justify-end gap-2 text-sm text-gray-300">
-      <IconWithCountItem iconName={'chat'} count={commentsCount} />
+      <IconWithCountItem iconName={'chat'} count={commentCount} />
       <IconWithCountItem iconName={'eye'} count={viewCount} />
     </div>
   );
@@ -129,7 +129,7 @@ const CompanionRecruitmentCard = ({
   gender,
   totalPeople,
   viewCount,
-  commentsCount,
+  commentCount,
   createdAt,
   status,
 }: CompanionRecruitmentCardProps) => {
@@ -144,7 +144,7 @@ const CompanionRecruitmentCard = ({
           gender,
           totalPeople,
           viewCount,
-          commentsCount,
+          commentCount,
           createdAt,
           status,
         }}
