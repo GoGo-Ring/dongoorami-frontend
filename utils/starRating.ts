@@ -27,12 +27,12 @@ export const calculateStarRating = ({
   }
 
   const IntegerRate = Math.floor(rate);
-  const newRating = defaultRating.map((none, index) =>
-    index <= IntegerRate - 1 ? (StarState.Full as FilledType) : none,
+  const newRating = defaultRating.map<FilledType>((none, index) =>
+    index <= IntegerRate - 1 ? StarState.Full : none,
   );
 
   if (!hasHalf) {
-    newRating[IntegerRate] = StarState.Half as FilledType;
+    newRating[IntegerRate] = StarState.Half;
   }
 
   return newRating;
