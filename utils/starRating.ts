@@ -7,7 +7,7 @@ const StarState = {
   None: 'none',
   Half: 'half',
   Full: 'full',
-};
+} as const;
 
 type FilledType = 'none' | 'half' | 'full';
 
