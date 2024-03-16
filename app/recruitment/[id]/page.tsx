@@ -2,8 +2,9 @@
 import Image from 'next/image';
 import Link from 'next/link';
 
-import AccompanyApply from '~/app/recruitment/[id]/_components/apply';
-// import { CommentSection } from '~/app/recruitment/[id]/_components/comment';
+import { ApplySection } from '~/app/recruitment/[id]/_components/apply';
+import ApplyList from '~/app/recruitment/[id]/_components/apply/list';
+import { CommentSection } from '~/app/recruitment/[id]/_components/comment';
 import Field from '~/app/recruitment/[id]/_components/field';
 import PostStatus from '~/app/recruitment/[id]/_components/post-status';
 import Profile from '~/app/recruitment/[id]/_components/profile';
@@ -46,7 +47,6 @@ const Page = ({ params }: Props) => {
   const {
     status,
     createdAt,
-    waitingCount,
     viewCount,
     memberProfile,
     images,
@@ -60,9 +60,9 @@ const Page = ({ params }: Props) => {
     endAge,
     gender,
     purposes,
+    isWish,
+    waitingCount,
   } = data;
-
-  const userId = 2; // TODO: 사용자 정보에서 가져오기
 
   return (
     <div className="flex flex-col gap-8 py-8">
@@ -78,6 +78,7 @@ const Page = ({ params }: Props) => {
             createdAt={createdAt}
             waitingCount={waitingCount}
             viewCount={viewCount}
+            isWish={isWish}
           />
         </div>
         <div className="divide-x-2 self-end text-base font-medium text-gray-400">
@@ -116,13 +117,20 @@ const Page = ({ params }: Props) => {
         </div>
       </Section>
 
-      <Section>
-        <AccompanyApply count={2} userId={userId} />
-      </Section>
+      <ApplySection
+        accompanyPostId={params.id}
+        isWriter={memberProfile.currentMember}
+        status={status}
+      />
 
       <Section>{data?.content}</Section>
 
-      {/* <CommentSection accompanyPostId={params.id} /> */}
+      <CommentSection accompanyPostId={params.id} />
+
+      <ApplyList
+        isWriter={memberProfile.currentMember}
+        accompanyPostId={params.id}
+      />
     </div>
   );
 };

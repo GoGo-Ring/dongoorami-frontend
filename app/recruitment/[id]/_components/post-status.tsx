@@ -1,5 +1,6 @@
 import { Badge } from '~/components/badge';
 import Icon from '~/components/icon';
+import { cn } from '~/libs/utils';
 import { getDate } from '~/utils/dateFormatter';
 
 interface PostMetaProps {
@@ -7,6 +8,7 @@ interface PostMetaProps {
   createdAt: string;
   waitingCount: number;
   viewCount: number;
+  isWish: boolean;
 }
 
 const PostStatus = ({
@@ -14,6 +16,7 @@ const PostStatus = ({
   createdAt,
   waitingCount,
   viewCount,
+  isWish,
 }: PostMetaProps) => {
   const formattedDate = getDate(new Date(createdAt || ''), 'yyyy.mm.dd');
 
@@ -25,7 +28,11 @@ const PostStatus = ({
       <p className="text-base font-medium text-gray-400">{waitingCount}</p>
       <Icon iconName="eye" size="small" className=" fill-gray-400" />
       <p className="text-base font-medium text-gray-400">{viewCount}</p>
-      <Icon iconName="heart" size="small" className=" fill-gray-400" />
+      <Icon
+        iconName="heart"
+        size="small"
+        className={cn(isWish ? 'fill-red-400' : 'fill-gray-400')}
+      />
     </div>
   );
 };
