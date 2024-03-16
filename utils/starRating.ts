@@ -15,10 +15,11 @@ export const calculateStarRating = ({
   starCount,
   rate,
 }: CalculateStarRatingType) => {
-  const defaultRating = Array.from(
+  const defaultRating = Array.from<FilledType, FilledType>(
     { length: starCount },
-    () => StarState.None as FilledType,
+    () => StarState.None,
   );
+
   const hasHalf = Number.isInteger(rate);
 
   if (rate === 0) {
