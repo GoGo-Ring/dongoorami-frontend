@@ -7,13 +7,19 @@ const StarState = {
   None: 'none',
   Half: 'half',
   Full: 'full',
-};
+} as const;
+
+type FilledType = 'none' | 'half' | 'full';
 
 export const calculateStarRating = ({
   starCount,
   rate,
 }: CalculateStarRatingType) => {
-  const defaultRating = Array.from({ length: starCount }, () => StarState.None);
+  const defaultRating = Array.from<FilledType, FilledType>(
+    { length: starCount },
+    () => StarState.None,
+  );
+
   const hasHalf = Number.isInteger(rate);
 
   if (rate === 0) {
@@ -21,7 +27,7 @@ export const calculateStarRating = ({
   }
 
   const IntegerRate = Math.floor(rate);
-  const newRating = defaultRating.map((none, index) =>
+  const newRating = defaultRating.map<FilledType>((none, index) =>
     index <= IntegerRate - 1 ? StarState.Full : none,
   );
 
