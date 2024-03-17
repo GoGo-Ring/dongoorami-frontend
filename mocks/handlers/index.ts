@@ -1,4 +1,5 @@
 import accompany from './accompany';
+import accompanyDetail from './accompanyDetail';
 import comment from './comment';
 import companions from './companion';
 import members from './members';
@@ -12,4 +13,5 @@ export const handlers = [
   ...companions,
   ...message,
   ...comment,
+  ...accompanyDetail,
 ];

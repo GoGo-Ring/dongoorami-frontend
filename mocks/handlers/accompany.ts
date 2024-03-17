@@ -5,6 +5,7 @@ import {
   Companion,
   CompanionDetail,
   CompanionRequest,
+  Profile,
 } from '~/apis/scheme/accompany';
 
 interface AccompanyFixture {
@@ -12,6 +13,7 @@ interface AccompanyFixture {
   createCompanion(newCompanion: CompanionDetail): void;
   updateCompanion(id: string, content: Partial<CompanionRequest>): boolean;
   deleteCompanion(id: string): void;
+  getMemberProfile(memberId: number): Profile | null;
 }
 
 const accompany: AccompanyFixture = {
@@ -37,13 +39,13 @@ const accompany: AccompanyFixture = {
       concertLocation: '서울시 강남구 역삼동 123-45',
       transportation: '동행',
       memberInfo: {
+        id: 7,
         profileImage: 'https://picsum.photos/200',
         name: 'John Doe',
-        nickname: 'John',
-        gender: '남',
+        gender: '남자',
         age: 5,
-        manner: 0,
         introduction: '',
+        currentMember: false,
       },
     },
   ],
@@ -80,6 +82,13 @@ const accompany: AccompanyFixture = {
 
     this.current.splice(companionIndex, 1);
   },
+
+  getMemberProfile(memberId: number) {
+    return (
+      this.current.find(companion => companion.memberInfo.id === memberId)
+        ?.memberInfo || null
+    );
+  },
 };
 
 const getCompanions = rest.get<Companion[]>(
@@ -87,82 +96,6 @@ const getCompanions = rest.get<Companion[]>(
   (_, res, ctx) => res(ctx.status(200), ctx.json(accompany.current)),
 );
 
-const getCompanion = rest.get<CompanionDetail>(
-  `${BASE_URL}/accompanies/posts/:id`,
-  (req, res, ctx) => {
-    const { id } = req.params;
-    const companion = accompany.current.find(
-      companion => companion.accompanyPostId === id,
-    );
-
-    if (!companion) {
-      return res(ctx.status(404));
-    }
-
-    return res(ctx.status(200), ctx.json(companion));
-  },
-);
-
-const createCompanion = rest.post(
-  `${BASE_URL}/accompanies/posts`,
-  async (req, res, ctx) => {
-    const newCompanion = (await req.json()) as CompanionRequest;
-    const { user } = req.cookies;
-
-    accompany.current.push({
-      ...newCompanion,
-      accompanyPostId: new Date().toISOString(),
-      name: user || '프롱이',
-      updatedAt: new Date().toISOString(),
-      viewCount: 0,
-      waitingCount: 0,
-      concertLocation: 'Seoul',
-      transportation: '미동행',
-      memberInfo: {
-        profileImage: 'https://picsum.photos/200',
-        name: '',
-        nickname: '',
-        gender: '무관',
-        age: 5,
-        manner: 0,
-        introduction: '',
-      },
-      status: '모집중',
-    });
-
-    return res(ctx.status(201));
-  },
-);
-
-const updateCompanion = rest.patch(
-  `${BASE_URL}/accompanies/posts/:id`,
-  async (req, res, ctx) => {
-    const { id } = req.params;
-    const content = (await req.json()) as Partial<CompanionRequest>;
-
-    accompany.updateCompanion(id as string, content);
-
-    return res(ctx.status(204));
-  },
-);
-
-const deleteCompanion = rest.delete(
-  `${BASE_URL}/accompanies/posts/:id`,
-  (req, res, ctx) => {
-    const { id } = req.params;
-
-    accompany.deleteCompanion(id as string);
-
-    return res(ctx.status(204));
-  },
-);
-
-const memberHandlers = [
-  getCompanions,
-  getCompanion,
-  createCompanion,
-  updateCompanion,
-  deleteCompanion,
-];
+const memberHandlers = [getCompanions];
 
 export default memberHandlers;
