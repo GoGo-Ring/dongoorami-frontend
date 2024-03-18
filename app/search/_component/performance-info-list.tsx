@@ -27,7 +27,7 @@ const PerformanceInfoList = ({
         <h3 className="font-semibold">공연</h3>
         <div className="mx-auto grid grid-cols-3">
           {data?.pages?.map(page =>
-            page.performanceList?.map(({ status, id, ...rest }) => (
+            page.concertGetShortResponses?.map(({ status, id, ...rest }) => (
               <PerformanceInfoCard
                 key={id}
                 {...rest}
