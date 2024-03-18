@@ -11,9 +11,16 @@ export const useInfinitePerformances = (params: string) => {
     queryFn: async ({ pageParam }): Promise<PerformanceList> => {
       return getPerformancesList(params, SIZE, pageParam);
     },
-    initialPageParam: 1,
-    getNextPageParam: (lastPage, allPage) => {
-      return lastPage.hasNext ? allPage.length + 1 : undefined;
+    initialPageParam: 0,
+    getNextPageParam: lastPage => {
+      const { concertGetShortResponses } = lastPage;
+      const { length } = concertGetShortResponses;
+
+      const lastId = length
+        ? concertGetShortResponses[length - 1].id
+        : undefined;
+
+      return lastPage.hasNext ? lastId : undefined;
     },
   });
 };
