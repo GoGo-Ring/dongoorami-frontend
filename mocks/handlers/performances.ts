@@ -49,6 +49,30 @@ export const getFilteredPerformances = rest.get<PerformanceInfoCardFixture>(
   (req, res, ctx) => {
     const { searchParams } = req.url;
     const size = searchParams.get('size');
+    const genre = searchParams.get('genre');
+    const status = searchParams.get('status');
+
+    if (genre === '클래식') {
+      const response = performance.current.filter(
+        ({ genre }) => '클래식' === genre,
+      );
+
+      return res(
+        ctx.status(200),
+        ctx.json({ hasNext: false, performanceList: response }),
+      );
+    }
+
+    if (status === '공연중') {
+      const response = performance.current.filter(
+        ({ status }) => '공연중' === status,
+      );
+
+      return res(
+        ctx.status(200),
+        ctx.json({ hasNext: false, performanceList: response }),
+      );
+    }
 
     if (size === '1') {
       const response = performance.current.filter((_, i) => i < 10);
