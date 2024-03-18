@@ -40,20 +40,38 @@ export interface CompanionDetail
   memberInfo: Profile;
 }
 
+export type CompanionRecruitStatus = '모집 중' | '모집 종료';
+export type CompanionRecruitGender = '남' | '여' | '무관';
+
 export interface CompanionRecruitmentCard {
   id: string;
   title: string;
   writer: string;
+  createdAt: string;
   updatedAt: string;
-  status: '모집 중' | '모집 종료';
+  status: CompanionRecruitStatus;
   concertName: string;
   viewCount: number;
   commentCount: number;
-  gender: '남' | '여' | '무관';
+  gender: CompanionRecruitGender;
+  totalPeople: number;
+}
+
+export interface CompanionRecruitmentCardApi {
+  id: string;
+  title: string;
+  writer: string;
+  createdAt: string;
+  updatedAt: string;
+  status: string;
+  concertName: string;
+  viewCount: number;
+  commentCount: number;
+  gender: string;
   totalPeople: number;
 }
 
 export interface AccompanyPostInfoList {
   hasNext: boolean;
-  accompanyPostInfos: CompanionRecruitmentCard[];
+  accompanyPostInfos: CompanionRecruitmentCardApi[];
 }
