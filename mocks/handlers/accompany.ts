@@ -5,6 +5,7 @@ import {
   Companion,
   CompanionDetail,
   CompanionRequest,
+  Profile,
 } from '~/apis/scheme/accompany';
 
 interface AccompanyFixture {
@@ -12,6 +13,7 @@ interface AccompanyFixture {
   createCompanion(newCompanion: CompanionDetail): void;
   updateCompanion(id: string, content: Partial<CompanionRequest>): boolean;
   deleteCompanion(id: string): void;
+  getMemberProfile(memberId: number): Profile | null;
 }
 
 const accompany: AccompanyFixture = {
@@ -37,13 +39,13 @@ const accompany: AccompanyFixture = {
       concertLocation: '서울시 강남구 역삼동 123-45',
       transportation: '동행',
       memberInfo: {
+        id: 7,
         profileImage: 'https://picsum.photos/200',
         name: 'John Doe',
-        nickname: 'John',
-        gender: '남',
+        gender: '남자',
         age: 5,
-        manner: 0,
         introduction: '',
+        currentMember: false,
       },
     },
   ],
@@ -79,6 +81,13 @@ const accompany: AccompanyFixture = {
     }
 
     this.current.splice(companionIndex, 1);
+  },
+
+  getMemberProfile(memberId: number) {
+    return (
+      this.current.find(companion => companion.memberInfo.id === memberId)
+        ?.memberInfo || null
+    );
   },
 };
 

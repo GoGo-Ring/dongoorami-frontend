@@ -1,4 +1,4 @@
-import { Companion } from '~/apis/scheme/accompany';
+import { Companion, Profile } from '~/apis/scheme/accompany';
 import { Comment } from '~/apis/scheme/comment';
 
 import { AccompanyPost } from './scheme/accompanyDetail';
@@ -44,9 +44,13 @@ export const updateCompanion = async (
     },
   });
 
-export const getCompanionProfile = async (memberId: number) =>
-  await api.get({ url: `/profiles/${memberId}` });
+export const getCompanionProfile = async (memberId: number) => {
+  const { data } = await api.get<Profile>({
+    url: `/accompanies/profile/${memberId}`,
+  });
 
+  return data;
+};
 export const createComment = async (
   accompanyPostId: string,
   userId: string,
@@ -65,15 +69,22 @@ export const getComments = async (accompanyPostId: string) => {
   return data;
 };
 
-export const updateComment = async (accompanyPostId: string, content: string) =>
+export const updateComment = async (
+  accompanyPostId: string,
+  commentId: string,
+  content: string,
+) =>
   await api.patch({
-    url: `/comments/${accompanyPostId}`,
+    url: `/comments/${accompanyPostId}/${commentId}`,
     data: { content },
   });
 
-export const deleteComment = async (accompanyPostId: string) =>
+export const deleteComment = async (
+  accompanyPostId: string,
+  commentId: string,
+) =>
   await api.delete({
-    url: `/comments/${accompanyPostId}`,
+    url: `/comments/${accompanyPostId}/${commentId}`,
   });
 
 export const getReviews = async () =>
