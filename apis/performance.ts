@@ -15,7 +15,7 @@ export const getPerformancesList = async (
   pageParam: number,
 ) => {
   const { data } = await api.get<PerformanceList>({
-    url: `/search/concerts?${params}$_size=${pageParam}`,
+    url: `/search/concerts?${params}&size=${pageParam}`,
   });
 
   return data;
