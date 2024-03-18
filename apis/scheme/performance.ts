@@ -11,7 +11,18 @@ export interface PerformanceInfoCard {
   status: StatusType;
 }
 
+export interface PerformanceInfoListItemApi {
+  id: number;
+  name: string;
+  place: string;
+  genre: string;
+  startedAt: string;
+  endedAt: string;
+  poster: string;
+  status: string;
+}
+
 export interface PerformanceList {
   hasNext: boolean;
-  performanceList: PerformanceInfoCard[];
+  performanceList: PerformanceInfoListItemApi[];
 }
