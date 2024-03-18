@@ -80,6 +80,11 @@ export const deleteComment = async (commentId: string) =>
     url: `/accompanies/comments/${commentId}`,
   });
 
+export const confirmCompanion = async (commentId: string) =>
+  await api.post({
+    url: `/accompanies/${commentId}`,
+  });
+
 export const getReviews = async () =>
   await api.get({
     url: '/reviews?status=written',
