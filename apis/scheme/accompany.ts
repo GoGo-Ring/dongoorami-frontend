@@ -44,7 +44,7 @@ export type CompanionRecruitStatus = '모집 중' | '모집 종료';
 export type CompanionRecruitGender = '남' | '여' | '무관';
 
 export interface CompanionRecruitmentCard {
-  id: string;
+  id: number;
   title: string;
   writer: string;
   createdAt: string;
@@ -58,7 +58,7 @@ export interface CompanionRecruitmentCard {
 }
 
 export interface CompanionRecruitmentCardApi {
-  id: string;
+  id: number;
   title: string;
   writer: string;
   createdAt: string;
