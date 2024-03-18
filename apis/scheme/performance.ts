@@ -1,10 +1,14 @@
+export type StatusType = '공연 예정' | '공연 중' | '공연 종료';
+
 export interface PerformanceInfoCard {
-  id: string;
-  posterSrc: string;
-  title: string;
-  facilityName: string;
-  startDate: Date;
-  status: '공연 예정' | '공연 중' | '공연 종료';
+  id: number;
+  name: string;
+  place: string;
+  genre: string;
+  startedAt: string;
+  endedAt: string;
+  poster: string;
+  status: StatusType;
 }
 
 export interface PerformanceList {
