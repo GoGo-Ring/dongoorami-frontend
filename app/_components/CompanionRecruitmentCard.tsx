@@ -1,26 +1,13 @@
 'use client';
 import { useContext, createContext } from 'react';
 
+import { CompanionRecruitmentCard } from '~/apis/scheme/accompany';
 import { Badge } from '~/components/badge';
 import Icon from '~/components/icon';
 import { IconNames } from '~/components/icon/icons';
-import { getDate } from '~/utils/dateFormatter';
-
-interface CompanionRecruitmentCardProps {
-  id: string;
-  title: string;
-  concertName: string;
-  writer: string;
-  gender: string;
-  totalPeople: number;
-  viewCount: number;
-  commentCount: number;
-  createdAt: Date;
-  status: '모집 중' | '모집 종료';
-}
 
 const CompanionRecruitmentCardContext = createContext(
-  {} as CompanionRecruitmentCardProps,
+  {} as CompanionRecruitmentCard,
 );
 
 const Title = () => {
@@ -98,9 +85,8 @@ const UserId = () => {
 
 const CreatedDate = () => {
   const { createdAt } = useContext(CompanionRecruitmentCardContext);
-  const formattedDate = getDate(createdAt, 'yyyy.mm.dd');
 
-  return <span className="text-xs text-gray-300">{formattedDate}</span>;
+  return <span className="text-xs text-gray-300">{createdAt}</span>;
 };
 
 const BadgeItem = () => {
@@ -121,32 +107,12 @@ const FooterField = () => {
   );
 };
 
-const CompanionRecruitmentCard = ({
-  id,
-  title,
-  concertName,
-  writer,
-  gender,
-  totalPeople,
-  viewCount,
-  commentCount,
-  createdAt,
-  status,
-}: CompanionRecruitmentCardProps) => {
+const CompanionRecruitmentCard = ({ ...props }: CompanionRecruitmentCard) => {
   return (
     <div className=" w-[204px] rounded-lg border p-6">
       <CompanionRecruitmentCardContext.Provider
         value={{
-          id,
-          title,
-          concertName,
-          writer,
-          gender,
-          totalPeople,
-          viewCount,
-          commentCount,
-          createdAt,
-          status,
+          ...props,
         }}
       >
         <Title />
