@@ -13,9 +13,12 @@ export const getPerformances = async () => {
 export const getPerformancesList = async (
   params: string,
   pageParam: number,
+  lastId: number,
 ) => {
+  const cursorId = lastId ? `&cursorId=${lastId}` : '';
+
   const { data } = await api.get<PerformanceList>({
-    url: `/search/concerts?${params}&size=${pageParam}`,
+    url: `/concerts?${params}&size=${pageParam}${cursorId}`,
   });
 
   return data;
