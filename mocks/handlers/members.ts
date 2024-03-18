@@ -29,24 +29,13 @@ const member: MemberFixture = {
   },
 };
 
-// const getMember = rest.get<Member>(`${BASE_URL}/members`, (_, res, ctx) =>
-//   res(ctx.status(200), ctx.json(member.current)),
-// );
+const getMember = rest.get<Member>(`${BASE_URL}/members`, (_, res, ctx) =>
+  res(ctx.status(200), ctx.json(member.current)),
+);
 
 const getProfile = rest.get<Member>(
   `${BASE_URL}/accompanies/profile/:id`,
   (_, res, ctx) => res(ctx.status(200), ctx.json(member.current)),
-);
-
-const updateMember = rest.patch(
-  `${BASE_URL}/members`,
-  async (req, res, ctx) => {
-    const newMember = (await req.json()) as Member;
-
-    member.updateMember({ ...member.current, ...newMember });
-
-    return res(ctx.status(204));
-  },
 );
 
 const updateProfileImage = rest.patch(
@@ -70,11 +59,6 @@ const withdrawMember = rest.delete(`${BASE_URL}/members`, (_, res, ctx) => {
   return res(ctx.status(204));
 });
 
-const memberHandlers = [
-  getProfile,
-  updateMember,
-  updateProfileImage,
-  withdrawMember,
-];
+const memberHandlers = [updateProfileImage, withdrawMember, getMember];
 
 export default memberHandlers;

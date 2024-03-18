@@ -4,10 +4,7 @@ import { useSearchParams } from 'next/navigation';
 import React, { useEffect } from 'react';
 
 import { createCompanion } from '~/apis/accompany';
-import {
-  companionDetailToFormValue,
-  companionFormValueToRequest,
-} from '~/app/recruitment/new/utils';
+import { companionFormValueToRequest } from '~/app/recruitment/new/utils';
 import { Button } from '~/components/button';
 import Spinner from '~/components/spinner';
 import useFetchCompanionPost from '~/hooks/queries/useFetchCompanionPost';
@@ -36,7 +33,7 @@ const Page = () => {
   const postId = useSearchParams().get('id');
   const isEdit = !!postId;
 
-  const { data: companionPost, refetch } = useFetchCompanionPost(postId || '');
+  const { refetch } = useFetchCompanionPost(postId || '');
 
   useEffect(() => {
     if (isEdit) {
@@ -47,16 +44,14 @@ const Page = () => {
   const handleSubmit = (values: CompanionFormValue) => {
     const companionData = companionFormValueToRequest(values);
 
-    mutate(companionData);
+    mutate(companionData as unknown as FormData);
   };
 
   return (
     <div className="flex justify-center py-10">
       <Form
         className="flex w-[890px] flex-col justify-center gap-4"
-        initialValues={
-          isEdit ? companionDetailToFormValue(companionPost) : INITIAL_VALUES
-        }
+        initialValues={INITIAL_VALUES}
         initialValidations={VALIDATIONS}
         submit={handleSubmit}
       >
