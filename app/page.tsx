@@ -11,8 +11,8 @@ const Page = () => {
       <StyledCarousel />
       <div className="flex w-full border">
         <MainFilter />
-        <div className="grid w-full grid-cols-3 gap-8 border p-8 sm:grid-cols-1 mainmd:grid-cols-2">
-          {Array.from({ length: 9 }).map((_, index) => (
+        <div className=" grid w-full grid-cols-3 gap-8 border p-8 sm:grid-cols-1 mainmd:grid-cols-2">
+          {Array.from({ length: 100 }).map((_, index) => (
             <DummyCard key={index} />
           ))}
         </div>
