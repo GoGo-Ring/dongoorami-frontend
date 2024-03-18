@@ -24,5 +24,5 @@ export interface PerformanceInfoListItemApi {
 
 export interface PerformanceList {
   hasNext: boolean;
-  performanceList: PerformanceInfoListItemApi[];
+  concertGetShortResponses: PerformanceInfoListItemApi[];
 }
