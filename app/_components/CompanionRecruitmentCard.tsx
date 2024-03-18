@@ -109,7 +109,7 @@ const FooterField = () => {
 
 const CompanionRecruitmentCard = ({ ...props }: CompanionRecruitmentCard) => {
   return (
-    <div className=" w-[204px] rounded-lg border p-6">
+    <div className="flex-column w-[204px] justify-center rounded-lg border p-6 mainsm:w-[350px]">
       <CompanionRecruitmentCardContext.Provider
         value={{
           ...props,
