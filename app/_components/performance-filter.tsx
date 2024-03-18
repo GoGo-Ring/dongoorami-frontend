@@ -14,8 +14,8 @@ interface PerformanceFilterProps {
 
 const PerformanceFilter = ({ onSubmit }: PerformanceFilterProps) => {
   const [options, setOptions] = useState({
-    genre: [],
-    status: [],
+    genres: [],
+    statuses: [],
   });
 
   const handleSubmit = (e: MouseEvent<HTMLButtonElement>) => {
@@ -37,14 +37,14 @@ const PerformanceFilter = ({ onSubmit }: PerformanceFilterProps) => {
         options={SELECTION.GENRE.options}
         isMultipleSelection
         setOption={getValue}
-        fieldName={'genre'}
+        fieldName={'genres'}
       />
       <ButtonSelectField
         category={SELECTION.STATUS.category}
         options={SELECTION.STATUS.options}
         isMultipleSelection
         setOption={getValue}
-        fieldName={'status'}
+        fieldName={'statuses'}
       />
       <Button variant="outline" type="submit" onClick={handleSubmit}>
         {SEARCH}
