@@ -16,8 +16,8 @@ const Page = () => {
   const params = searchParams.toString();
 
   const {
-    data,
-    fetchNextPage,
+    data: accompaniesData,
+    fetchNextPage: fetchNextAccompaniesPage,
     hasNextPage: hasNextPageCompanion,
   } = useInfiniteAccompanies(params);
   const {
@@ -31,7 +31,7 @@ const Page = () => {
     useState(false);
 
   const handleFetchNextPage = () => {
-    fetchNextPage();
+    fetchNextAccompaniesPage();
   };
 
   const handleFetchNextPerformancesPage = () => {
@@ -74,9 +74,9 @@ const Page = () => {
             공연 더보기
           </Button>
         )}
-        {data && (
+        {accompaniesData && (
           <CompanionRecruitmentList
-            data={data}
+            data={accompaniesData}
             isInfinite={isMoreCompanionInfinite}
             hasNextPage={hasNextPageCompanion}
             handleFetchNextPage={handleFetchNextPage}
