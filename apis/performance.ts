@@ -10,4 +10,12 @@ const getPerformances = async (): Promise<PerformanceInfoCard[]> => {
   return data;
 };
 
+export const getContertDetail = async (id: string): Promise<ConcertDetail> => {
+  const { data } = await api.get<ConcertDetail>({
+    url: `/concerts/${id}`,
+  });
+
+  return data;
+};
+
 export default getPerformances;
