@@ -49,12 +49,11 @@ const CommentForm = ({
       <Textarea
         className="h-20 resize-none"
         ref={ref}
-        defaultValue={initialComment}
         id={id}
         name="comment"
         placeholder="댓글을 입력하세요"
         onChange={handleChange}
-        value={values[id]}
+        value={values[id] ? values[id] : initialComment}
       />
       <CountErrorText limit={limit} count={values[id].length} />
       <div className="flex gap-2 self-end pb-2">

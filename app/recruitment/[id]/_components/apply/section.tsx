@@ -35,6 +35,10 @@ const ApplySection = ({
     ({ memberProfile: { currentMember } }) => currentMember,
   )?.id;
 
+  const confirmedApplies = applies.filter(
+    ({ isAccompanyConfirmedComment }) => isAccompanyConfirmedComment,
+  );
+
   useEffect(() => {
     if (!isWriter && isApply) {
       setContent('동행 취소');
@@ -93,12 +97,12 @@ const ApplySection = ({
   };
 
   return (
-    <Section className={cn('flex items-center', className)}>
-      <h2 className="h-full w-full text-xl font-semibold">
-        신청자 목록 ({`${applies.length}`}명)
+    <Section className={cn('flex items-center md:flex-nowrap', className)}>
+      <h2 className="h-full w-1/2 text-xl font-semibold">
+        신청자 목록 ({`${confirmedApplies.length}/${applies.length}`}명)
       </h2>
       <ApplyForm
-        className="w-full"
+        className="flex sm:w-full"
         handleMutate={handleMutate}
         isPending={isPending}
         content={content}
