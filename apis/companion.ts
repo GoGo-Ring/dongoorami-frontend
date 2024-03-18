@@ -12,7 +12,7 @@ export const getCompanions = async () => {
 
 export const getCompanionsList = async (params: string, pageParam: number) => {
   const { data } = await api.get<AccompanyPostInfoList>({
-    url: `/accompanies/posts?${params}$_size=${pageParam}`,
+    url: `/accompanies/posts?${params}&size=${pageParam}`,
   });
 
   return data;
