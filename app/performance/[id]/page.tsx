@@ -2,13 +2,11 @@
 import Image from 'next/image';
 
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '~/components/tabs';
-import useFetchAccompanyRecruitmentList from '~/hooks/queries/useFetchAccompanyRecruitmentList';
 import useFetchConcertReviews from '~/hooks/queries/useFetchConcertReviews';
 import { useFetchConcerts } from '~/hooks/queries/useFetchConcerts';
 
 import InfoItem from '../_components/info-item';
 import InfoItemWithToggle from '../_components/info-item-with-button';
-import PerformanceRecruitment from '../_components/performance-recruitment';
 import { PerformanceReview } from '../_components/performance-review';
 
 interface Params {
@@ -20,12 +18,10 @@ interface Props {
 }
 
 const Page = ({ params }: Props) => {
-  const { id } = params;
+  const paramsId = params.id;
 
-  const { data, isLoading } = useFetchConcerts(id);
-  const { data: performanceReviewList } = useFetchConcertReviews(id);
-  const { data: performanceRecruitmentList } =
-    useFetchAccompanyRecruitmentList(id);
+  const { data, isLoading } = useFetchConcerts(paramsId);
+  const { data: performanceReviewList } = useFetchConcertReviews(paramsId);
 
   if (isLoading || !data) {
     return;
@@ -33,26 +29,30 @@ const Page = ({ params }: Props) => {
 
   const {
     name,
+    startedAt,
+    endedAt,
     place,
-    term,
-    time,
-    price,
-    casting,
-    summary,
+    actor,
     crew,
+    runtime,
+    age,
     agency,
     host,
-    organization,
-    performanceTime,
-    age,
-    image,
+    management,
+    cost,
+    poster,
+    summary,
+    introductionImages,
+    schedule,
+    totalAccompanies,
+    totalReviews,
   } = data;
 
   return (
     <div className="mx-auto mb-20 mt-8 flex flex-col gap-[54px] sm:w-[328px] md:w-[680px] lg:w-[890px]">
       <h2 className="text-xl font-semibold">{name}</h2>
       <div className="flex items-center gap-14 sm:flex-col">
-        <Image src={''} width={300} height={400} alt={`${name} 포스터`} />
+        <Image src={poster} width={300} height={400} alt={`${name} 포스터`} />
         <div className="flex w-full flex-col gap-4 px-3 pt-3">
           <InfoItem
             label={'장소'}
@@ -63,18 +63,18 @@ const Page = ({ params }: Props) => {
           <InfoItem
             label={'공연기간'}
             className="sm:flex-col"
-            contents={term}
+            contents={`${startedAt} ~ ${endedAt}`}
             labelWidth={'w-[90px]'}
           />
           <InfoItem
             label={'공연시간'}
             className="sm:flex-col"
-            contents={time.toString()}
+            contents={runtime}
             labelWidth={'w-[90px]'}
           />
           <InfoItem
             label={'가격'}
-            contents={price}
+            contents={cost}
             labelWidth={'w-[90px]'}
             direction="col"
           />
@@ -85,11 +85,9 @@ const Page = ({ params }: Props) => {
           <TabsList className="grid w-full grid-cols-3">
             <TabsTrigger value="information">공연 정보</TabsTrigger>
             <TabsTrigger value="recruitment">
-              공연 구인 ({performanceRecruitmentList?.length})
+              공연 구인 ({totalAccompanies})
             </TabsTrigger>
-            <TabsTrigger value="review">
-              관람 후기 ({performanceReviewList?.length})
-            </TabsTrigger>
+            <TabsTrigger value="review">관람 후기 ({totalReviews})</TabsTrigger>
           </TabsList>
           <TabsContent
             value="information"
@@ -98,7 +96,7 @@ const Page = ({ params }: Props) => {
             <InfoItem
               label={'출연진'}
               className="flex-col gap-4 sm:gap-1"
-              contents={casting}
+              contents={actor}
               weight="semibold"
               contentGap={'gap-1'}
             />
@@ -138,7 +136,7 @@ const Page = ({ params }: Props) => {
               <InfoItem
                 label={'주관'}
                 className="flex-col gap-4 sm:gap-1"
-                contents={organization}
+                contents={management}
                 weight="semibold"
                 contentGap={'gap-1'}
               />
@@ -146,7 +144,7 @@ const Page = ({ params }: Props) => {
             <InfoItem
               label={'공연 시간'}
               className="flex-col gap-4 sm:gap-1"
-              contents={performanceTime}
+              contents={schedule}
               weight="semibold"
               direction="col"
             />
@@ -158,7 +156,7 @@ const Page = ({ params }: Props) => {
             />
             <div className="flex flex-col gap-4 sm:gap-1">
               <span className="text-xl font-semibold">공연 상세</span>
-              {image.map(src => (
+              {introductionImages.map(src => (
                 <Image
                   key={src}
                   src={src}
@@ -171,16 +169,16 @@ const Page = ({ params }: Props) => {
           </TabsContent>
           <TabsContent value="recruitment">
             <div className="m-auto flex w-fit flex-col justify-center gap-6">
-              {performanceRecruitmentList?.map((performance, i) => (
+              {/* {performanceRecruitmentList?.map((performance, i) => (
                 <PerformanceRecruitment {...performance} key={i} />
-              ))}
+              ))} */}
             </div>
           </TabsContent>
           <TabsContent value="review">
             <div className="m-auto flex w-fit flex-col justify-center gap-6">
-              {performanceReviewList?.map((review, i) => (
-                <PerformanceReview {...review} key={i} />
-              ))}
+              {performanceReviewList?.concertReviewGetResponses.map(
+                (review, i) => <PerformanceReview {...review} key={i} />,
+              )}
             </div>
           </TabsContent>
         </Tabs>
