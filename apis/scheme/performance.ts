@@ -31,3 +31,18 @@ export interface ConcertDetail {
   totalAccompanies: number;
   totalReviews: number;
 }
+
+export interface ConcertReview {
+  id: number;
+  nickname: string;
+  title: string;
+  content: string;
+  rating: number;
+  isWriter: boolean;
+  updatedAt: string;
+}
+
+export interface ConcertReviewList {
+  hasNext: boolean;
+  concertReviewGetResponses: ConcertReview[];
+}
