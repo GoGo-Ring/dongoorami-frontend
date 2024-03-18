@@ -1,4 +1,8 @@
-import { AccompanyPostInfoList } from '~/apis/scheme/accompany';
+import {
+  AccompanyPostInfoList,
+  CompanionRecruitGender,
+  CompanionRecruitStatus,
+} from '~/apis/scheme/accompany';
 import CompanionRecruitmentCard from '~/app/_components/CompanionRecruitmentCard';
 
 import useIntersectionObsever from './useIntersectionObserver';
@@ -23,11 +27,12 @@ const CompanionRecruitmentList = ({
       <span className="font-semibold">동행 모집</span>
       <div className="grid w-full grid-cols-3 ">
         {data.pages?.map(page =>
-          page.accompanyPostInfos.map(({ id, updatedAt, ...rest }) => (
+          page?.accompanyPostInfos.map(({ id, status, gender, ...rest }) => (
             <CompanionRecruitmentCard
               key={id}
               id={id}
-              createdAt={new Date(updatedAt)}
+              status={status as CompanionRecruitStatus}
+              gender={gender as CompanionRecruitGender}
               {...rest}
             />
           )),
