@@ -18,4 +18,14 @@ export const getContertDetail = async (id: string): Promise<ConcertDetail> => {
   return data;
 };
 
+export const getConcertReviews = async (
+  id: string,
+): Promise<ConcertReviewList> => {
+  const { data } = await api.get<ConcertReviewList>({
+    url: `/concerts/reviews/${id}`,
+  });
+
+  return data;
+};
+
 export default getPerformances;
