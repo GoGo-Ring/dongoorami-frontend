@@ -1,3 +1,5 @@
+import { PropsWithChildren } from 'react';
+
 import Profile from '~/app/recruitment/[id]/_components/profile';
 import { getDateWithTime } from '~/utils/dateFormatter';
 
@@ -13,12 +15,14 @@ const CommentContent = ({
   profileImage,
   updatedAt,
   content = '',
-}: CommentContentProps) => {
+  children,
+}: PropsWithChildren<CommentContentProps>) => {
   return (
     <>
       <div className="flex justify-between">
         <Profile name={nickName} image={profileImage} />
         <p className="text-sm font-medium text-gray-400">
+          {children}
           {getDateWithTime(new Date(updatedAt), 'yyyy.mm.dd', 'hh:mm')}
         </p>
       </div>

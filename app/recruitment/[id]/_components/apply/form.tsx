@@ -1,22 +1,29 @@
 import { HTMLProps } from 'react';
 
 import { Button } from '~/components/button';
+import { cn } from '~/libs/utils';
 
-interface ApplyFormProps extends HTMLProps<HTMLDivElement> {
+interface ApplyFormProps extends HTMLProps<HTMLButtonElement> {
   handleMutate: () => void;
   content: string;
   isPending: boolean;
 }
 
-const ApplyForm = ({ handleMutate, content, isPending }: ApplyFormProps) => {
+const ApplyForm = ({
+  handleMutate,
+  content,
+  isPending,
+  className,
+}: ApplyFormProps) => {
   return (
-    <div className="flex w-full">
-      <div className="w-1/2">
-        <Button className="px-8" onClick={handleMutate} disabled={isPending}>
-          {content}
-        </Button>
-      </div>
-    </div>
+    <Button
+      className={cn('w-fit', className)}
+      onClick={handleMutate}
+      disabled={isPending}
+      type="button"
+    >
+      {content}
+    </Button>
   );
 };
 
