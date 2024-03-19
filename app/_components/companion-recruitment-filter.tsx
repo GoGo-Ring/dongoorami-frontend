@@ -4,7 +4,6 @@ import { MouseEvent, useCallback, useState } from 'react';
 
 import { Button } from '~/components/button';
 import { SEARCH, SELECTION } from '~/constants/filterField';
-import { joinQuery } from '~/utils/joinQuery';
 
 import CheckboxSelectField from './filter-field/checkbox-select';
 import InputField from './filter-field/input-field';
@@ -17,7 +16,7 @@ export interface OptionsType {
   regions: string[];
   age: [number, number];
   transportation: string;
-  personCount: number;
+  totalCount: number;
 }
 
 interface CompanionRecruitmentFilterProps {
@@ -27,11 +26,11 @@ const CompanionRecruitmentFilter = ({
   onSubmit,
 }: CompanionRecruitmentFilterProps) => {
   const [options, setOptions] = useState({
-    gender: 'irrelevant',
-    regions: [],
+    gender: '무관',
+    region: [],
     age: [20, 30],
-    transportation: '',
-    personCount: 0,
+    transportation: '동행',
+    totalCount: 0,
   });
 
   const getValue = useCallback(
@@ -44,21 +43,27 @@ const CompanionRecruitmentFilter = ({
   const setObject = (regionQuery: string) => {
     return {
       gender: options.gender,
-      regions: regionQuery,
+      region: regionQuery,
       transportation: options.transportation,
       startAge: options.age[0],
       endAge: options.age[1],
-      totalPeople: options.personCount,
+      totalPeople: options.totalCount,
     };
   };
 
   const objectToQueryString = (object: { [key: string]: string | number }) =>
-    Object.entries(object).reduce((acc, [key, value]) => {
-      return `${acc}&${key}=${value}`;
-    }, '');
+    Object.entries(object)
+      .reduce((acc, [key, value]) => {
+        if (value === '') {
+          return acc;
+        }
+
+        return [...acc, `${key}=${value}`];
+      }, [] as string[])
+      .join('&');
 
   const getQuery = () => {
-    const [regionQuery] = joinQuery(options.regions);
+    const regionQuery = options.region.join('&region=');
 
     return objectToQueryString(setObject(regionQuery));
   };
@@ -82,7 +87,7 @@ const CompanionRecruitmentFilter = ({
         category={SELECTION.REGIONS.category}
         options={SELECTION.REGIONS.options}
         setOption={getValue}
-        fieldName={'regions'}
+        fieldName={'region'}
       />
       <RadioField
         category={SELECTION.TRANSPORTATION.category}
@@ -102,7 +107,7 @@ const CompanionRecruitmentFilter = ({
         defaultValue={SELECTION.PERSON_COUNT.options[0].value}
         placeholder={SELECTION.PERSON_COUNT.options[0].label}
         setOption={getValue}
-        fieldName={'personCount'}
+        fieldName={'totalCount'}
       />
       <Button variant="outline" onClick={handleSubmit}>
         {SEARCH}

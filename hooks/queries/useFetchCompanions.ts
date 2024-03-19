@@ -1,6 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
 
-import getCompanions from '~/apis/companion';
+import { getCompanions } from '~/apis/companion';
 
 const useFetchCompanions = () => {
   return useQuery({

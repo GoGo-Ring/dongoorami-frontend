@@ -16,6 +16,35 @@ interface AccompanyFixture {
   getMemberProfile(memberId: number): Profile | null;
 }
 
+const accompanyList = [
+  ...Array.from({ length: 40 }, i => ({
+    id: `${i}`,
+    title: `${i}서울 같이 갈 울싼 사람 구합니다~~`,
+    writer: '김뫄뫄',
+    createdAt: '2024-03-18T01:17:39.692638',
+    updatedAt: '2024-03-14T16:23:31.229165',
+    status: '모집 중',
+    concertName: '고고링 백걸즈의 스프링 탐방기',
+    viewCount: 0,
+    commentCount: 0,
+    gender: '여',
+    totalPeople: 1,
+  })),
+  {
+    id: '99',
+    title: '99울싼 같이 갈 서울 사람 구합니다~~',
+    writer: '김뫄뫄',
+    createdAt: '2024-03-18T01:17:39.692638',
+    updatedAt: '2024-03-14T16:23:31.229165',
+    status: '모집 중',
+    concertName: '고고링 JS 탐방기',
+    viewCount: 0,
+    commentCount: 0,
+    gender: '남',
+    totalPeople: 1,
+  },
+];
+
 const accompany: AccompanyFixture = {
   current: [
     {
@@ -93,7 +122,50 @@ const accompany: AccompanyFixture = {
 
 const getCompanions = rest.get<Companion[]>(
   `${BASE_URL}/accompanies/posts`,
-  (_, res, ctx) => res(ctx.status(200), ctx.json(accompany.current)),
+  (req, res, ctx) => {
+    const size = req.url.searchParams.get('size');
+    const paramsGender = req.url.searchParams.get('gender');
+    const paramsRegion = req.url.searchParams.get('region');
+
+    if (paramsGender === 'male') {
+      const filtered = {
+        hasNext: false,
+        accompanyPostInfos: accompanyList.filter(
+          ({ gender }) => gender === '남',
+        ),
+      };
+
+      return res(ctx.status(200), ctx.json(filtered));
+    }
+    if (paramsRegion) {
+      const filtered = {
+        hasNext: false,
+        accompanyPostInfos: accompanyList.filter(
+          ({ gender }) => gender === paramsRegion,
+        ),
+      };
+
+      return res(ctx.status(200), ctx.json(filtered));
+    }
+
+    if (size) {
+      const nSize = parseInt(size);
+      const filtered = {
+        hasNext: true,
+        accompanyPostInfos: accompanyList.filter(
+          (_v, i) => nSize <= i && nSize * 10 > i,
+        ),
+      };
+
+      if (size === '4') {
+        filtered.hasNext = false;
+      }
+
+      return res(ctx.status(200), ctx.json(filtered));
+    }
+
+    return res(ctx.status(404));
+  },
 );
 
 const memberHandlers = [getCompanions];
