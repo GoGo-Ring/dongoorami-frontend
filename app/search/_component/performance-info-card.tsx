@@ -1,7 +1,6 @@
 import Image from 'next/image';
 import Link from 'next/link';
 
-import { BASE_URL } from '~/apis';
 import { PerformanceInfoCard } from '~/apis/scheme/performance';
 import { Badge } from '~/components/badge';
 
@@ -18,7 +17,7 @@ const PerformanceInfoCard = ({
 
   return (
     <div className="mr-5 w-56 cursor-pointer flex-col">
-      <Link href={`${BASE_URL}/performance/${id}`}>
+      <Link href={`/performance/${id}`}>
         <Image
           className="h-72 w-56 rounded-lg"
           width={width}
