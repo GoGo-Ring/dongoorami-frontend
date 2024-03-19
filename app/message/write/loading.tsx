@@ -1,9 +1,7 @@
+import PageSkeleton from '~/app/message/write/_components/page-skeleton';
+
 const Loading = () => {
-  return (
-    <div>
-      <p>Loading...</p>
-    </div>
-  );
+  return <PageSkeleton />;
 };
 
 export default Loading;
