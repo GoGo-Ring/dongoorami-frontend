@@ -1,6 +1,14 @@
-import React, { memo, useState, useRef, useEffect, useCallback } from 'react';
+import React, {
+  memo,
+  useState,
+  useRef,
+  useEffect,
+  useCallback,
+  ChangeEvent,
+} from 'react';
 
 import { Button } from '~/components/button';
+import { Checkbox } from '~/components/checkbox';
 import {
   Collapsible,
   CollapsibleContent,
@@ -44,6 +52,11 @@ const ReviewForm = ({ username, userId, onUpdate }: ReviewFormProps) => {
   const [isOpen, setIsOpen] = useState(false);
   const [rate, setRate] = useState(0);
   const ref = useRef<HTMLTextAreaElement>(null);
+  const [isChecked, setIsChecked] = useState<RatingItem>(
+    RATING_ITEMS.reduce((acc, cur) => {
+      return { ...acc, [cur]: false };
+    }, {} as RatingItem),
+  );
 
   const onChange = useCallback(() => {
     if (!ref.current) {
@@ -51,8 +64,14 @@ const ReviewForm = ({ username, userId, onUpdate }: ReviewFormProps) => {
     }
     const { value } = ref.current;
 
-    onUpdate({ userId, text: value, starRating: rate });
-  }, [onUpdate, rate, userId]);
+    onUpdate({ userId, text: value, starRating: rate, isChecked });
+  }, [onUpdate, rate, userId, isChecked]);
+
+  const handleCheckbox = (e: ChangeEvent<HTMLDivElement>) => {
+    const { id } = e.currentTarget;
+
+    setIsChecked({ ...isChecked, [id]: !isChecked[id] });
+  };
 
   useEffect(() => {
     onChange();
@@ -82,6 +101,23 @@ const ReviewForm = ({ username, userId, onUpdate }: ReviewFormProps) => {
         <div className="flex justify-center ">
           <StarRating rate={rate} setRate={setRate} />
         </div>
+        {RATING_ITEMS.map(label => (
+          <div
+            id={label}
+            className="flex items-center space-x-2"
+            key={label}
+            onChange={handleCheckbox}
+          >
+            <Checkbox id={`${label}_${username}`} />
+            <label
+              htmlFor={`${label}_${username}`}
+              className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+            >
+              {label}
+            </label>
+          </div>
+        ))}
+
         <Textarea
           ref={ref}
           onBlur={onChange}
