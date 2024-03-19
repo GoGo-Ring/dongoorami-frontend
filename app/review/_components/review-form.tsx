@@ -101,22 +101,26 @@ const ReviewForm = ({ username, userId, onUpdate }: ReviewFormProps) => {
         <div className="flex justify-center ">
           <StarRating rate={rate} setRate={setRate} />
         </div>
-        {RATING_ITEMS.map(label => (
-          <div
-            id={label}
-            className="flex items-center space-x-2"
-            key={label}
-            onChange={handleCheckbox}
-          >
-            <Checkbox id={`${label}_${username}`} />
-            <label
-              htmlFor={`${label}_${username}`}
-              className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-            >
-              {label}
-            </label>
+        <div className="flex flex-col items-center">
+          <div className="flex flex-col items-start gap-2">
+            {RATING_ITEMS.map(label => (
+              <div
+                id={label}
+                className="flex w-fit items-center space-x-2"
+                key={label}
+                onChange={handleCheckbox}
+              >
+                <Checkbox id={`${label}_${username}`} />
+                <label
+                  htmlFor={`${label}_${username}`}
+                  className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                >
+                  {label}
+                </label>
+              </div>
+            ))}
           </div>
-        ))}
+        </div>
 
         <Textarea
           ref={ref}
