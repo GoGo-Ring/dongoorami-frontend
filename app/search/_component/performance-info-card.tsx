@@ -11,10 +11,9 @@ const PerformanceInfoCard = ({
   startedAt,
   poster,
   status,
+  width = 224,
+  height = 288,
 }: PerformanceInfoCard) => {
-  const width = 224;
-  const height = 288;
-
   return (
     <div className="mr-5 w-56 cursor-pointer flex-col">
       <Link href={`/performance/${id}`}>

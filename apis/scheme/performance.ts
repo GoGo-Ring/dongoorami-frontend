@@ -10,6 +10,8 @@ interface Performance {
   poster: string;
 }
 export interface PerformanceInfoCard extends Performance {
+  width?: number;
+  height?: number;
   status: StatusType;
 }
 
