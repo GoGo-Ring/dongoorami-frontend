@@ -3,6 +3,7 @@
 import React, { MouseEvent, memo, useEffect, useState } from 'react';
 
 import { Checkbox } from '~/components/checkbox';
+import { cn } from '~/libs/utils';
 
 import { OptionsPartialType } from '../companion-recruitment-filter';
 
@@ -15,6 +16,7 @@ interface CheckboxSelectFieldProps {
   options: string[];
   setOption: (category: string, selectedOption: OptionsPartialType) => void;
   fieldName: string;
+  className?: string;
 }
 
 const CheckboxItem = ({ label, onClick }: ItemProps) => {
@@ -36,6 +38,7 @@ const CheckboxSelectField = ({
   options,
   setOption,
   fieldName,
+  className = 'flex-col',
 }: CheckboxSelectFieldProps) => {
   const [checkbox, setCheckbox] = useState(
     options.reduce(
@@ -63,7 +66,7 @@ const CheckboxSelectField = ({
   return (
     <div className="flex flex-col gap-2">
       <span className="font-semibold">{category}</span>
-      <div className="flex flex-col gap-1">
+      <div className={cn('flex gap-1', className)}>
         {options.map(option => (
           <CheckboxItem key={option} label={option} onClick={onClick} />
         ))}
