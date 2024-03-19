@@ -35,10 +35,12 @@ export interface ReviewType {
   isChecked: RatingItem;
 }
 
+type OnUpdateType = ({ userId, text, starRating }: ReviewType) => void;
+
 interface ReviewFormProps {
   username: string;
   userId: string;
-  onUpdate: ({ userId, text, starRating }: ReviewType) => void;
+  onUpdate: OnUpdateType;
 }
 
 export const RATING_ITEMS = [
@@ -58,14 +60,17 @@ const ReviewForm = ({ username, userId, onUpdate }: ReviewFormProps) => {
     }, {} as RatingItem),
   );
 
-  const onChange = useCallback(() => {
-    if (!ref.current) {
-      return;
-    }
-    const { value } = ref.current;
+  const onChange = useCallback(
+    (callbackFn: OnUpdateType) => {
+      if (!ref.current) {
+        return;
+      }
+      const { value } = ref.current;
 
-    onUpdate({ userId, text: value, starRating: rate, isChecked });
-  }, [onUpdate, rate, userId, isChecked]);
+      callbackFn({ userId, text: value, starRating: rate, isChecked });
+    },
+    [rate, userId, isChecked],
+  );
 
   const handleCheckbox = (e: ChangeEvent<HTMLDivElement>) => {
     const { id } = e.currentTarget;
@@ -73,9 +78,13 @@ const ReviewForm = ({ username, userId, onUpdate }: ReviewFormProps) => {
     setIsChecked({ ...isChecked, [id]: !isChecked[id] });
   };
 
+  const handleTextareaBlur = () => {
+    onChange(onUpdate);
+  };
+
   useEffect(() => {
-    onChange();
-  }, [onChange]);
+    onChange(onUpdate);
+  }, [onChange, onUpdate]);
 
   return (
     <Collapsible
@@ -124,7 +133,7 @@ const ReviewForm = ({ username, userId, onUpdate }: ReviewFormProps) => {
 
         <Textarea
           ref={ref}
-          onBlur={onChange}
+          onBlur={handleTextareaBlur}
           className="resize-none"
           placeholder="동행자, 동행 상황에 대한 솔직한 리뷰를 남겨주세요."
         />
