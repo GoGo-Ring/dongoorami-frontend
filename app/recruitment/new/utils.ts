@@ -1,5 +1,6 @@
 import { CompanionDetail, CompanionRequest } from '~/apis/scheme/accompany';
 import { CompanionFormValue } from '~/app/recruitment/new/constants';
+import { ValidateFn } from '~/hooks/useForm/types';
 
 const genderMap = {
   irrelevant: '무관',
@@ -11,7 +12,7 @@ const companionFormValueToRequest = (companionFormValue: CompanionFormValue) =>
   ({
     concertName: companionFormValue.performanceName,
     title: companionFormValue.title,
-    image: companionFormValue.image,
+    image: companionFormValue.images[0] || '',
     content: companionFormValue.content,
     endDate: companionFormValue.performanceDate.split('~')[1] || '',
     endAge: Number(companionFormValue.maxAge) || 0,
@@ -46,6 +47,26 @@ const companionDetailToFormValue = (companionDetail: CompanionDetail) =>
     region: companionDetail.region,
     participantCount: `${companionDetail.totalPeople}명`,
     performanceLocation: companionDetail.concertLocation,
-  }) as CompanionFormValue;
+  }) as unknown as CompanionFormValue;
 
 export { companionFormValueToRequest, companionDetailToFormValue };
+
+export type GetKeysValueOf<T, V> = {
+  [K in keyof T]: T[K] extends V ? K : never;
+}[keyof T];
+
+interface FactoryProps<K extends Extract<keyof CompanionFormValue, string>> {
+  id: K;
+  validate: ValidateFn<CompanionFormValue, CompanionFormValue[K]>;
+  message: string;
+}
+
+export const factory = <K extends keyof CompanionFormValue>({
+  id,
+  validate,
+  message,
+}: FactoryProps<K>) => ({
+  id,
+  validate,
+  message,
+});

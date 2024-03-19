@@ -6,6 +6,8 @@ import {
   FieldProps,
 } from '~/app/recruitment/new/_components/fields/field';
 import { FormContext } from '~/app/recruitment/new/_components/form';
+import { CompanionFormValue } from '~/app/recruitment/new/constants';
+import { GetKeysValueOf } from '~/app/recruitment/new/utils';
 import {
   Select,
   SelectContent,
@@ -14,18 +16,27 @@ import {
   SelectValue,
   SelectItem,
 } from '~/components/select';
+import { UseFormReturn } from '~/hooks/useForm/types';
 
 interface SelectFieldItemProps {
   items: string[];
 }
-export const SelectField = ({
+
+interface SelectFieldProps<K extends string> extends FieldProps {
+  id: K;
+  placeholder: string;
+}
+export const SelectField = <
+  K extends GetKeysValueOf<CompanionFormValue, string>,
+>({
   id,
   placeholder,
   label,
   variant,
   children,
-}: PropsWithChildren<FieldProps>) => {
-  const { values, handleValueChange, errors } = useContext(FormContext);
+}: PropsWithChildren<SelectFieldProps<K>>) => {
+  const { values, handleValueChange, errors } =
+    useContext<UseFormReturn<CompanionFormValue, K>>(FormContext);
 
   return (
     <Field id={id} label={label} variant={variant}>

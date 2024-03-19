@@ -1,38 +1,40 @@
 type InputType = HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement;
-
 type HandleChange = <
   E extends HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement,
 >(
   e: React.ChangeEvent<E>,
 ) => void;
-type HandleValueChange<T> = (id: keyof T) => (value: string | number) => void;
+type HandleValueChange<K, V> = (id: K) => (value: V) => void;
 
 type HandleSubmit = (e: React.FormEvent<HTMLFormElement>) => void;
 
-type Errors<T> = Record<keyof T, string>;
+type Errors = Record<string, string>;
 
-type ValidateFn = (value: string, values: Record<string, string>) => boolean;
-type ValidateForm<T extends Record<string, string>> = (values: T) => Errors<T>;
-type ValidateField<T> = (id: keyof T, value: string, values: T) => string;
+type ValidateFn<T, V> = (value: V, values: T) => boolean;
+type ValidateForm<T> = (values: T) => Errors;
+type ValidateField<T, K, V> = (id: K, value: V, values: T) => string;
 
-type UpdateField<T> = (id: keyof T, value: string) => void;
+type UpdateField<K, V> = (id: K, value: V) => void;
 
-type ValidationRules<T> = Record<keyof T, Record<string, ValidateFn>>;
-type RegisterValidation<T> = (props: {
-  id: keyof T;
-  validate: ValidateFn;
+type ValidationRules<T, K extends Extract<keyof T, string>, V> = Record<
+  K,
+  Record<string, ValidateFn<T, V>>
+>;
+type RegisterValidation<T, K, V> = (props: {
+  id: K;
+  validate: ValidateFn<T, V>;
   message: string;
 }) => void;
 
-type UseFormReturn<T> = {
+type UseFormReturn<T, K extends Extract<keyof T, string>> = {
   values: T;
-  errors: Errors<T>;
+  errors: Errors;
   setValues: React.Dispatch<React.SetStateAction<T>>;
   handleChange: HandleChange;
-  handleValueChange: HandleValueChange<T>;
+  handleValueChange: HandleValueChange<K, T[K]>;
   handleUnControlledSubmit: HandleSubmit;
   handleSubmit: HandleSubmit;
-  registerValidation: RegisterValidation<T>;
+  registerValidation: RegisterValidation<T, K, T[K]>;
 };
 
 export type {

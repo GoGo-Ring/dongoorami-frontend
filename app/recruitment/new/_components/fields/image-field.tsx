@@ -6,11 +6,26 @@ import {
   FieldProps,
 } from '~/app/recruitment/new/_components/fields/field';
 import { FormContext } from '~/app/recruitment/new/_components/form';
+import { CompanionFormValue } from '~/app/recruitment/new/constants';
+import { GetKeysValueOf } from '~/app/recruitment/new/utils';
 import { Input } from '~/components/input';
+import { UseFormReturn } from '~/hooks/useForm/types';
 
-export const ImageField = ({ id, placeholder, label, variant }: FieldProps) => {
-  const { values, handleChange, errors } = useContext(FormContext);
-  const [selectedImage, setSelectedImage] = useState<string | null>(values[id]);
+interface ImageFieldProps<K extends string> extends FieldProps {
+  id: K;
+}
+
+export const ImageField = <
+  K extends GetKeysValueOf<CompanionFormValue, string[]>,
+>({
+  id,
+  placeholder,
+  label,
+  variant,
+}: ImageFieldProps<K>) => {
+  const { handleChange, errors } =
+    useContext<UseFormReturn<CompanionFormValue, K>>(FormContext);
+  const [selectedImage, setSelectedImage] = useState<string | null>('');
 
   const encodeFileToBase64 = (file: File) => {
     const reader = new FileReader();
