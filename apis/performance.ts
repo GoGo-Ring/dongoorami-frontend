@@ -15,7 +15,7 @@ export const getPerformancesList = async (
   size: number,
   lastId: number,
 ) => {
-  const cursorId = lastId ? `&cursorId=${lastId}` : '';
+  const cursorId = lastId ? lastId : '';
 
   const { data } = await api.get<PerformanceList>({
     url: `/concerts?${searchParams}`,
