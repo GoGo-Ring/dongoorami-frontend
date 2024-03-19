@@ -58,7 +58,7 @@ export const ImageField = <
     useContext<UseFormReturn<CompanionFormValue, K>>(FormContext);
 
   const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const files = event.target?.files;
+    const { files } = event.target;
     const fileUrls = [...(files || [])].map(file => {
       return URL.createObjectURL(file);
     });

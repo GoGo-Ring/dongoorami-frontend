@@ -68,12 +68,12 @@ export const INITIAL_VALUES: CompanionFormValue = {
 export const VALIDATIONS = [
   factory({
     id: 'title',
-    validate: value => value.length > 0,
+    validate: ({ length }) => length > 0,
     message: '제목을 입력해주세요',
   }),
   factory({
     id: 'performanceId',
-    validate: value => value.length > 0,
+    validate: ({ length }) => length > 0,
     message: '공연을 선택해주세요',
   }),
   factory({
@@ -108,12 +108,12 @@ export const VALIDATIONS = [
   }),
   factory({
     id: 'participantCount',
-    validate: value => value.length > 0,
+    validate: ({ length }) => length > 0,
     message: '인원수를 입력해주세요',
   }),
   factory({
     id: 'region',
-    validate: value => value.length > 0,
+    validate: ({ length }) => length > 0,
     message: '지역을 선택해주세요',
   }),
   factory({
@@ -131,27 +131,27 @@ export const VALIDATIONS = [
   }),
   factory({
     id: 'gender',
-    validate: value => value.length > 0,
+    validate: ({ length }) => length > 0,
     message: '성별을 선택해주세요',
   }),
   factory({
     id: 'title',
-    validate: value => value.length <= 20,
+    validate: ({ length }) => length <= 20,
     message: '제목은 20자 이하로 입력해주세요',
   }),
   factory({
     id: 'content',
-    validate: value => value.length <= 1000,
+    validate: ({ length }) => length <= 1000,
     message: '내용은 1000자 이하로 입력해주세요',
   }),
   factory({
     id: 'images',
-    validate: value => value.length > 0,
+    validate: ({ length }) => length > 0,
     message: '이미지를 업로드해주세요',
   }),
   factory({
     id: 'purposes',
-    validate: value => value.length > 0,
+    validate: ({ length }) => length > 0,
     message: '목적을 선택해주세요',
   }),
 ] as {
