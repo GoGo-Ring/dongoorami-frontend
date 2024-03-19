@@ -11,6 +11,7 @@ import { GetKeysValueOf } from '~/app/recruitment/new/utils';
 import { Badge } from '~/components/badge';
 import { Button } from '~/components/button';
 import ErrorText from '~/components/error-text';
+import Icon from '~/components/icon';
 import { UseFormReturn } from '~/hooks/useForm/types';
 
 interface ImagePreviewProps {
@@ -24,10 +25,10 @@ const ImagePreview = ({ url, index, handleRemoveImage }: ImagePreviewProps) => {
     <li key={index} className="flex flex-col">
       <Badge
         onClick={() => handleRemoveImage(index)}
-        className="mt-4 cursor-pointer self-end text-gray-600"
+        className="mt-4 size-6 cursor-pointer justify-center self-end rounded-full p-0 text-gray-600"
         variant="secondary"
       >
-        x
+        <Icon iconName="remove" size={12} />
       </Badge>
       <Image
         key={index}
