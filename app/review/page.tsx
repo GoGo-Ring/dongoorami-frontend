@@ -51,7 +51,7 @@ const Page = () => {
   );
 
   return (
-    <form className="flex w-fit flex-col justify-center gap-3">
+    <form className="m-auto flex w-fit flex-col justify-center gap-3">
       {users?.map(({ userName, userId }) => (
         <ReviewForm
           key={userId}
