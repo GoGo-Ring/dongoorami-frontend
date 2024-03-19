@@ -7,9 +7,7 @@ const SIZE = 6;
 export const useInfinitePerformances = (params: string) => {
   return useInfiniteQuery({
     queryKey: ['performances', params],
-    queryFn: ({ pageParam }) => {
-      return getPerformancesList(params, SIZE, pageParam);
-    },
+    queryFn: ({ pageParam }) => getPerformancesList(params, SIZE, pageParam),
     initialPageParam: 0,
     getNextPageParam: lastPage => {
       const { concertGetShortResponses } = lastPage;

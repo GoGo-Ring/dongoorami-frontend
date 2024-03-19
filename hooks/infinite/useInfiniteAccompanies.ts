@@ -6,9 +6,7 @@ const SIZE = 6;
 const useInfiniteAccompanies = (params: string) => {
   return useInfiniteQuery({
     queryKey: ['accompanies', params],
-    queryFn: ({ pageParam }) => {
-      return getCompanionsList(params, SIZE, pageParam);
-    },
+    queryFn: ({ pageParam }) => getCompanionsList(params, SIZE, pageParam),
     initialPageParam: 0,
     getNextPageParam: lastPage => {
       const { accompanyPostInfos } = lastPage;
