@@ -14,6 +14,10 @@ export interface Member {
   introduction: string;
 }
 
+export interface Profile extends Member {
+  currentMember: boolean;
+}
+
 export interface Token {
   accessToken: string;
   refreshToken: string;

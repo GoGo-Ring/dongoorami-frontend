@@ -30,7 +30,10 @@ const EditableImage = ({ nickname, profileImage }: EditableImageProps) => {
   };
 
   return (
-    <Upload onChange={file => onSubmitProfileImage(file)} className="relative">
+    <Upload
+      onChange={file => onSubmitProfileImage(file)}
+      className="relative mx-auto"
+    >
       <div className="group absolute flex h-36 w-36 items-center justify-center rounded-full bg-gray-800/0 duration-150 hover:bg-gray-800/80">
         <div className="rounded-sm border border-border px-2 py-1.5 text-white opacity-0 transition-opacity duration-150 group-hover:opacity-100">
           이미지 변경
