@@ -4,7 +4,11 @@ import { MouseEvent, useCallback, useState } from 'react';
 
 import { Button } from '~/components/button';
 
-import ReviewForm, { ReviewType } from './_components/review-form';
+import ReviewForm, {
+  RATING_ITEMS,
+  RatingItem,
+  ReviewType,
+} from './_components/review-form';
 
 const Page = () => {
   const users = [
@@ -23,20 +27,28 @@ const Page = () => {
       userId: userId,
       starRating: 0,
       text: '',
+      isChecked: RATING_ITEMS.reduce((acc, cur) => {
+        return { ...acc, [cur]: false };
+      }, {} as RatingItem),
     })),
   );
 
-  const handler = (e: MouseEvent<HTMLButtonElement>) => {
+  const handleSubmit = (e: MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
   };
 
-  const onUpdate = useCallback(({ userId, text, starRating }: ReviewType) => {
-    setReviews(reviews =>
-      reviews.map(review =>
-        userId === review.userId ? { userId, text, starRating } : review,
-      ),
-    );
-  }, []);
+  const onUpdate = useCallback(
+    ({ userId, text, starRating, isChecked }: ReviewType) => {
+      setReviews(reviews =>
+        reviews.map(review =>
+          userId === review.userId
+            ? { userId, text, starRating, isChecked }
+            : review,
+        ),
+      );
+    },
+    [],
+  );
 
   return (
     <form className="flex w-fit flex-col justify-center gap-3">
@@ -49,7 +61,7 @@ const Page = () => {
         />
       ))}
 
-      <Button onClick={handler} type="submit">
+      <Button onClick={handleSubmit} type="submit">
         제출 완료!
       </Button>
     </form>
