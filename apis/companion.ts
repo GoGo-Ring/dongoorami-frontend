@@ -11,14 +11,14 @@ export const getCompanions = async () => {
 };
 
 export const getCompanionsList = async (
-  params: string,
+  searchParams: string,
   size: number,
   lastId: number,
 ) => {
   const cursorId = lastId ? lastId : '';
 
   const { data } = await api.get<AccompanyPostInfoList>({
-    url: `/accompanies/posts?${params}`,
+    url: `/accompanies/posts?${searchParams}`,
     params: { size, cursorId },
   });
 
