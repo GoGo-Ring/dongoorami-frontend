@@ -19,7 +19,7 @@ const PerformanceInfoList = ({
   handleFetchNextPage,
   hasNextPage,
 }: PerformanceInfoListProps) => {
-  const [ref] = useIntersectionObsever({ handleFetchNextPage, hasNextPage });
+  const ref = useIntersectionObsever({ handleFetchNextPage, hasNextPage });
 
   return (
     <>

@@ -40,7 +40,7 @@ const useIntersectionObsever = ({
     };
   }, [handleFetchNextPage, hasNextPage, threshold]);
 
-  return [ref];
+  return ref;
 };
 
 export default useIntersectionObsever;

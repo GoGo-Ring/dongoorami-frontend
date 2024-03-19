@@ -20,7 +20,7 @@ const CompanionRecruitmentList = ({
   handleFetchNextPage,
   hasNextPage,
 }: CompanionRecruitmentListProps) => {
-  const [ref] = useIntersectionObsever({ handleFetchNextPage, hasNextPage });
+  const ref = useIntersectionObsever({ handleFetchNextPage, hasNextPage });
 
   return (
     <div className="flex w-full flex-col gap-6">
