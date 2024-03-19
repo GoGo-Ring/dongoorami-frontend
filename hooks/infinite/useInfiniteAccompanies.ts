@@ -1,13 +1,12 @@
 import { useInfiniteQuery } from '@tanstack/react-query';
 
 import { getCompanionsList } from '~/apis/companion';
-import { AccompanyPostInfoList } from '~/apis/scheme/accompany';
 
 const SIZE = 6;
 const useInfiniteAccompanies = (params: string) => {
   return useInfiniteQuery({
     queryKey: ['accompanies', params],
-    queryFn: async ({ pageParam }): Promise<AccompanyPostInfoList> => {
+    queryFn: ({ pageParam }) => {
       return getCompanionsList(params, SIZE, pageParam);
     },
     initialPageParam: 0,
