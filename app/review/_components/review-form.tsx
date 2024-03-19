@@ -83,7 +83,7 @@ const ReviewForm = ({ username, userId, onUpdate }: ReviewFormProps) => {
       onOpenChange={setIsOpen}
       className="w-[350px] space-y-2"
     >
-      <div className="flex items-center justify-between space-x-4 px-4">
+      <div className="flex items-center justify-between space-x-4 pl-4">
         <span className="text-sm font-semibold">{username}</span>
         <CollapsibleTrigger asChild>
           <Button variant="ghost" size="sm">
