@@ -1,6 +1,6 @@
 export type StatusType = '공연 예정' | '공연 중' | '공연 종료';
 
-export interface PerformanceInfoCard {
+interface Performance {
   id: number;
   name: string;
   place: string;
@@ -8,17 +8,12 @@ export interface PerformanceInfoCard {
   startedAt: string;
   endedAt: string;
   poster: string;
+}
+export interface PerformanceInfoCard extends Performance {
   status: StatusType;
 }
 
-export interface PerformanceInfoListItemApi {
-  id: number;
-  name: string;
-  place: string;
-  genre: string;
-  startedAt: string;
-  endedAt: string;
-  poster: string;
+export interface PerformanceInfoListItemApi extends Performance {
   status: string;
 }
 
