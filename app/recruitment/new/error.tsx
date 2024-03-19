@@ -16,7 +16,7 @@ const Error = ({
 
   return (
     <div className="flex h-[80vh] flex-col items-center justify-center gap-8">
-      <h2>에러가 발생했습니다.</h2>
+      <h2>{error.message || '오류가 발생했습니다.'}</h2>
       <Button onClick={() => reset()}>재시도</Button>
     </div>
   );
