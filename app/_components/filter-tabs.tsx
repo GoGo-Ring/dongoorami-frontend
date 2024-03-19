@@ -9,12 +9,14 @@ import PerformanceFilter from './performance-filter';
 
 interface FilterTabsProps {
   baseUrl?: string;
+  className?: string;
   hasFilterTitle?: boolean;
 }
 
 const FilterTabs = ({
   baseUrl = 'search',
   hasFilterTitle = true,
+  className = '',
 }: FilterTabsProps) => {
   const router = useRouter();
 
@@ -23,7 +25,7 @@ const FilterTabs = ({
   };
 
   return (
-    <div className="flex w-[300px] flex-col gap-3">
+    <div className={`flex w-[300px] flex-col gap-3 ${className}`}>
       {hasFilterTitle && (
         <div className="flex gap-3 p-3">
           <Icon iconName="filter" />
