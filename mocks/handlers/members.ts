@@ -29,35 +29,29 @@ const member: MemberFixture = {
   },
 };
 
-const getMember = rest.get<Member>(`${BASE_URL}/members`, (_, res, ctx) =>
-  res(ctx.status(200), ctx.json(member.current)),
-);
+// const getMember = rest.get<Member>(`${BASE_URL}/members`, (_, res, ctx) =>
+//   res(ctx.status(200), ctx.json(member.current)),
+// );
 
-// const updateMember = rest.patch(
-//   `${BASE_URL}/members`,
+// const getProfile = rest.get<Member>(
+//   `${BASE_URL}/accompanies/profile/:id`,
+//   (_, res, ctx) => res(ctx.status(200), ctx.json(member.current)),
+// );
+
+// const updateProfileImage = rest.patch(
+//   `${BASE_URL}/profileImage`,
 //   async (req, res, ctx) => {
-//     const newMember = (await req.json()) as Member;
+//     const newProfileImage = (await req.json()) as string;
 
-//     member.updateMember({ ...member.current, ...newMember });
+//     if (member.current === null) {
+//       return res(ctx.status(400));
+//     }
+
+//     member.current.profileImage = newProfileImage;
 
 //     return res(ctx.status(204));
 //   },
 // );
-
-const updateProfileImage = rest.patch(
-  `${BASE_URL}/profileImage`,
-  async (req, res, ctx) => {
-    const newProfileImage = (await req.json()) as string;
-
-    if (member.current === null) {
-      return res(ctx.status(400));
-    }
-
-    member.current.profileImage = newProfileImage;
-
-    return res(ctx.status(204));
-  },
-);
 
 const withdrawMember = rest.delete(`${BASE_URL}/members`, (_, res, ctx) => {
   member.withdrawMember();
@@ -65,6 +59,6 @@ const withdrawMember = rest.delete(`${BASE_URL}/members`, (_, res, ctx) => {
   return res(ctx.status(204));
 });
 
-const memberHandlers = [updateProfileImage, withdrawMember, getMember];
+const memberHandlers = [withdrawMember];
 
 export default memberHandlers;
