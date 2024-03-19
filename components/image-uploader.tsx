@@ -7,6 +7,8 @@ import {
   useState,
 } from 'react';
 
+import { cn } from '~/libs/utils';
+
 interface UploadProps
   extends Omit<ComponentPropsWithoutRef<'div'>, 'children' | 'onChange'> {
   id?: string;
@@ -17,7 +19,17 @@ interface UploadProps
 }
 
 const Upload = forwardRef<HTMLDivElement, UploadProps>(
-  ({ id, name, access = 'image/*', onChange, children }: UploadProps, ref) => {
+  (
+    {
+      id,
+      name,
+      access = 'image/*',
+      onChange,
+      className,
+      children,
+    }: UploadProps,
+    ref,
+  ) => {
     const [file, setFile] = useState<File>();
     const [src, setSrc] = useState<string>('');
     const inputRef = useRef<HTMLInputElement | null>(null);
@@ -59,7 +71,7 @@ const Upload = forwardRef<HTMLDivElement, UploadProps>(
 
     return (
       <div
-        className="inline-block"
+        className={cn('inline-block', className)}
         onClick={handleFileClick}
         ref={ref}
         role="presentation"
