@@ -16,6 +16,10 @@ const useIntersectionObsever = ({
   useEffect(() => {
     const { current } = ref;
 
+    if (!current) {
+      return;
+    }
+
     const intersectionObserver = new IntersectionObserver(entries => {
       entries.forEach(entry => {
         if (entry.isIntersecting && hasNextPage) {
