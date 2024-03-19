@@ -12,10 +12,19 @@ import { cn } from '~/libs/utils';
 
 import StarRating from './star-rating';
 
+export interface RatingItem {
+  '시간 약속을 잘 지켜요.': boolean;
+  '응답이 빨라요.': boolean;
+  '친절하고 매너가 좋아요.': boolean;
+  '정산이 확실해요.': boolean;
+  [key: string]: boolean;
+}
+
 export interface ReviewType {
   userId: string;
   starRating: number;
   text: string;
+  isChecked: RatingItem;
 }
 
 interface ReviewFormProps {
