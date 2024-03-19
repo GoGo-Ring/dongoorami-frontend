@@ -3,11 +3,13 @@ import { useEffect, useRef } from 'react';
 interface useIntersectionObseverProps {
   handleFetchNextPage: () => void;
   hasNextPage: boolean;
+  threshold?: number;
 }
 
 const useIntersectionObsever = ({
   handleFetchNextPage,
   hasNextPage,
+  threshold = 0,
 }: useIntersectionObseverProps) => {
   const ref = useRef<HTMLDivElement>(null);
 
@@ -20,7 +22,7 @@ const useIntersectionObsever = ({
           handleFetchNextPage();
         }
       }),
-        { threshold: 0 };
+        { threshold };
     });
 
     if (current) {
@@ -32,7 +34,7 @@ const useIntersectionObsever = ({
         intersectionObserver.unobserve(current);
       }
     };
-  }, [handleFetchNextPage, hasNextPage]);
+  }, [handleFetchNextPage, hasNextPage, threshold]);
 
   return [ref];
 };
