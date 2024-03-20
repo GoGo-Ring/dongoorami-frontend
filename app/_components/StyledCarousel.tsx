@@ -26,7 +26,7 @@ const StyledCarousel = ({ datas }: StyledCarouselProps) => {
         ))} */}
         {images.map((image, index) => (
           <CarouselItem className=" flex justify-center " key={index}>
-            <div className="bg-red flex w-[350px] justify-center border p-8">
+            <div className="flex w-[350px] justify-center border p-2">
               <Image
                 width={500}
                 height={288}
