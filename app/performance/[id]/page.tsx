@@ -179,12 +179,21 @@ const Page = ({ params }: Props) => {
           <TabsContent value="review">
             <div className="m-auto flex w-fit flex-col justify-center gap-6">
               {performanceReviewList?.concertReviewGetResponses.map(
-                (review, i) => <PerformanceReview {...review} key={i} />,
+                ({ id, ...props }) => (
+                  <PerformanceReview
+                    id={id}
+                    {...props}
+                    refetch={refetch}
+                    concertId={parseInt(paramsId)}
+                    key={id}
+                  />
+                ),
               )}
             </div>
             <ReviewForm
               initialTitle={name}
               id={parseInt(paramsId)}
+              concertId={parseInt(paramsId)}
               refetch={refetch}
             />
           </TabsContent>
