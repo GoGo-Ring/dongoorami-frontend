@@ -150,6 +150,11 @@ export const VALIDATIONS = [
     message: '이미지를 업로드해주세요',
   }),
   factory({
+    id: 'performanceId',
+    validate: ({ length }) => length > 0,
+    message: '공연을 선택해주세요',
+  }),
+  factory({
     id: 'purposes',
     validate: ({ length }) => length > 0,
     message: '목적을 선택해주세요',
