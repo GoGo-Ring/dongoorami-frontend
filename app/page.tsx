@@ -1,7 +1,9 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
+import { getPerformancesList } from '~/apis/performance';
+import { PerformanceInfoListItemApi } from '~/apis/scheme/performance';
 import CompanionRecruitmentList from '~/app/search/_component/companion-recruitment-list';
 import { Button } from '~/components/button';
 import useInfiniteAccompanies from '~/hooks/infinite/useInfiniteAccompanies';
@@ -12,15 +14,31 @@ import StyledCarousel from './_components/StyledCarousel';
 
 const Page = () => {
   const [isMoreCompanionInfinite, setIsMoreCompanionInfinite] = useState(false);
+  const [performancesData, setPerformancesData] = useState<
+    PerformanceInfoListItemApi[] | null
+  >(null);
+
   const {
     data: accompaniesData,
     fetchNextPage: fetchNextAccompaniesPage,
     hasNextPage: hasNextPageCompanion,
   } = useInfiniteAccompanies('');
 
+  const fetchPerformances = async () => {
+    const { concertGetShortResponses } = await getPerformancesList('', 6, 0);
+
+    setPerformancesData(concertGetShortResponses);
+  };
+
+  useEffect(() => {
+    fetchPerformances();
+  }, []);
+
   return (
-    <div>
-      <StyledCarousel />
+    <div className="flex flex-col ">
+      <div className="flex w-[500px]  border">
+        {performancesData && <StyledCarousel datas={performancesData} />}
+      </div>
       <div className="flex w-full border">
         <MainFilter />
         {accompaniesData && (
