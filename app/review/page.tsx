@@ -4,11 +4,8 @@ import { MouseEvent, useCallback, useState } from 'react';
 
 import { Button } from '~/components/button';
 
-import ReviewForm, {
-  RATING_ITEMS,
-  RatingItem,
-  ReviewType,
-} from './_components/review-form';
+import { RATING_ITEMS } from './_components/constants';
+import ReviewForm, { RatingItem, ReviewType } from './_components/review-form';
 
 const Page = () => {
   const users = [

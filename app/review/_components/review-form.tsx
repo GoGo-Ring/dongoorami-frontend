@@ -18,6 +18,7 @@ import Icon from '~/components/icon';
 import { Textarea } from '~/components/textarea';
 import { cn } from '~/libs/utils';
 
+import { RATING_ITEMS } from './constants';
 import StarRating from './star-rating';
 
 export interface RatingItem {
@@ -42,13 +43,6 @@ interface ReviewFormProps {
   userId: string;
   onUpdate: OnUpdateType;
 }
-
-export const RATING_ITEMS = [
-  '시간 약속을 잘 지켜요.',
-  '응답이 빨라요.',
-  '친절하고 매너가 좋아요.',
-  '정산이 확실해요.',
-];
 
 const ReviewForm = ({ username, userId, onUpdate }: ReviewFormProps) => {
   const [isOpen, setIsOpen] = useState(false);
