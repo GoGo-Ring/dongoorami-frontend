@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 
 import {
   Errors,
@@ -38,14 +38,6 @@ const useForm = <T extends object, K extends Extract<keyof T, string>>({
     {} as ValidationRules<T, K, T[K]>,
   );
 
-  useEffect(() => {
-    for (const id in initialValues) {
-      const value = initialValues[id];
-
-      setValues(prevValues => ({ ...prevValues, [id]: value || '' }));
-    }
-  }, [initialValues]);
-
   const registerValidation: RegisterValidation<T, K, T[K]> = ({
     id,
     message,
@@ -64,15 +56,13 @@ const useForm = <T extends object, K extends Extract<keyof T, string>>({
   const validateField: ValidateField<T, K, T[K]> = (id, value, values) => {
     const rulesAboutId = validationRules.current[id] || {};
 
-    return Object.keys(rulesAboutId).reduce((acc, message) => {
-      const validate = rulesAboutId[message];
+    return (
+      Object.keys(rulesAboutId).find(message => {
+        const validate = rulesAboutId[message];
 
-      if (!validate(value, values)) {
-        return `${acc}${message}`;
-      }
-
-      return acc;
-    }, '');
+        return !validate(value, values) ? message : '';
+      }) || ''
+    );
   };
 
   const validateForm: ValidateForm<T> = values => {
