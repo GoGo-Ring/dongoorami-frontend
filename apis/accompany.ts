@@ -52,40 +52,38 @@ export const getCompanionProfile = async (memberId: number) => {
 
   return data;
 };
-export const createComment = async (
-  accompanyPostId: string,
-  userId: string,
-  content: string,
-) =>
+export const createAcompanyApplyComment = async (accompanyPostId: string) =>
   await api.post({
-    url: `/comments/${accompanyPostId}`,
-    data: { userId, content },
+    url: `/accompanies/${accompanyPostId}`,
+  });
+export const createComment = async (accompanyPostId: string, content: string) =>
+  await api.post({
+    url: `/accompanies/comments/${accompanyPostId}`,
+    data: { content },
   });
 
 export const getComments = async (accompanyPostId: string) => {
   const { data } = await api.get<Comment[]>({
-    url: `/comments/${accompanyPostId}`,
+    url: `/accompanies/comments/${accompanyPostId}`,
   });
 
   return data;
 };
 
-export const updateComment = async (
-  accompanyPostId: string,
-  commentId: string,
-  content: string,
-) =>
+export const updateComment = async (commentId: string, content: string) =>
   await api.patch({
-    url: `/comments/${accompanyPostId}/${commentId}`,
+    url: `/accompanies/comments/${commentId}`,
     data: { content },
   });
 
-export const deleteComment = async (
-  accompanyPostId: string,
-  commentId: string,
-) =>
+export const deleteComment = async (commentId: string) =>
   await api.delete({
-    url: `/comments/${accompanyPostId}/${commentId}`,
+    url: `/accompanies/comments/${commentId}`,
+  });
+
+export const confirmCompanion = async (commentId: string) =>
+  await api.post({
+    url: `/accompanies/${commentId}`,
   });
 
 export const getReviews = async () =>

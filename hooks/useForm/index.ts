@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 
 import {
   Errors,
@@ -37,14 +37,6 @@ const useForm = <T extends object, K extends Extract<keyof T, string>>({
   const validationRules = useRef<ValidationRules<T, K, T[K]>>(
     {} as ValidationRules<T, K, T[K]>,
   );
-
-  useEffect(() => {
-    for (const id in initialValues) {
-      const value = initialValues[id];
-
-      setValues(prevValues => ({ ...prevValues, [id]: value || '' }));
-    }
-  }, [initialValues]);
 
   const registerValidation: RegisterValidation<T, K, T[K]> = ({
     id,

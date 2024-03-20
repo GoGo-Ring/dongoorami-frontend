@@ -27,7 +27,6 @@ const CommentForm = ({
   isPending,
 }: CommentFormProps) => {
   const ref = useRef<HTMLTextAreaElement>(null);
-
   const id = `comment-${commentId}`;
 
   const { handleSubmit, handleChange, values } = useForm({
