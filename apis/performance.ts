@@ -6,7 +6,7 @@ import {
 
 import api from '.';
 
-const getPerformances = async (): Promise<PerformanceInfoCard[]> => {
+const getPerformances = async () => {
   const { data } = await api.get<PerformanceInfoCard[]>({
     url: '/search/concerts',
   });
@@ -14,7 +14,7 @@ const getPerformances = async (): Promise<PerformanceInfoCard[]> => {
   return data;
 };
 
-export const getContertDetail = async (id: string): Promise<ConcertDetail> => {
+export const getContertDetail = async (id: string) => {
   const { data } = await api.get<ConcertDetail>({
     url: `/concerts/${id}`,
   });
@@ -22,9 +22,7 @@ export const getContertDetail = async (id: string): Promise<ConcertDetail> => {
   return data;
 };
 
-export const getConcertReviews = async (
-  id: string,
-): Promise<ConcertReviewList> => {
+export const getConcertReviews = async (id: string) => {
   const { data } = await api.get<ConcertReviewList>({
     url: `/concerts/reviews/${id}`,
   });
