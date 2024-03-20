@@ -22,7 +22,7 @@ interface Props {
 }
 
 const Page = ({ params }: Props) => {
-  const { mutate: mutateDeletePost } = useMutationDeleteCompanyPost();
+  const { mutate: mutateDeletePost } = useMutationDeleteCompanyPost(params.id);
   const { data, isPending, isError, error, refetch } = useFetchCompanionPost(
     params.id,
     true,
@@ -51,6 +51,7 @@ const Page = ({ params }: Props) => {
     memberProfile,
     images,
     title,
+    concertName,
     region,
     totalPeople,
     startDate,
@@ -103,7 +104,7 @@ const Page = ({ params }: Props) => {
 
       <Section>
         <div className="flex w-full flex-col">
-          <Field label="공연명" value={title} />
+          <Field label="공연명" value={concertName} />
           <Field label="지역" value={region} />
           <Field label="인원수" value={totalPeople} />
           <Field label="공연 날짜" value={`${startDate}~${endDate}`} />

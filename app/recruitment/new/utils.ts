@@ -1,4 +1,8 @@
-import { CompanionDetail, CompanionRequest } from '~/apis/scheme/accompany';
+import { getImage } from '~/apis/accompany';
+import {
+  AccompanyPost,
+  RequestAcompaniPost,
+} from '~/apis/scheme/accompanyDetail';
 import { CompanionFormValue } from '~/app/recruitment/new/constants';
 import { ValidateFn } from '~/hooks/useForm/types';
 
@@ -6,25 +10,27 @@ const genderMap = {
   irrelevant: '무관',
   male: '남',
   female: '여',
-};
+} as const;
 
-const companionFormValueToRequest = (companionFormValue: CompanionFormValue) =>
-  ({
-    concertName: companionFormValue.performanceId,
-    title: companionFormValue.title,
-    image: companionFormValue.images[0] || '',
-    content: companionFormValue.content,
-    endDate: companionFormValue.performanceDate.split('~')[1] || '',
-    endAge: Number(companionFormValue.maxAge) || 0,
-    gender:
-      genderMap[companionFormValue.gender as keyof typeof genderMap] || '무관',
-    region: companionFormValue.region || '',
-    startDate: companionFormValue.performanceDate.split('~')[0] || '',
-    startAge: Number(companionFormValue.minAge) || 0,
-    totalPeople: Number(companionFormValue.participantCount.slice(0, -1)) || 1,
-    concertLocation: companionFormValue.performanceId || '',
-    status: '모집중', // TODO: 상태값 추가
-  }) as CompanionRequest;
+const companionFormValueToRequest = (
+  companionFormValue: CompanionFormValue,
+): RequestAcompaniPost => ({
+  concertId: Number(companionFormValue.performanceId),
+  title: companionFormValue.title,
+  content: companionFormValue.content,
+  endDate: companionFormValue.performanceDate.split('~')[1] || '',
+  endAge: Number(companionFormValue.maxAge) || 0,
+  gender:
+    genderMap[companionFormValue.gender as keyof typeof genderMap] || '무관',
+  region: companionFormValue.region || '',
+  startDate: companionFormValue.performanceDate.split('~')[0] || '',
+  startAge: Number(companionFormValue.minAge) || 0,
+  totalPeople: Number(companionFormValue.participantCount.slice(0, -1)) || 1,
+  purposes: companionFormValue.purposes.filter(
+    (purpose): purpose is '숙박' | '이동' | '관람' =>
+      ['숙박', '이동', '관람'].includes(purpose),
+  ),
+});
 
 const genderMapReverse = {
   무관: 'irrelevant',
@@ -32,22 +38,39 @@ const genderMapReverse = {
   여: 'female',
 };
 
-const companionDetailToFormValue = (companionDetail: CompanionDetail) =>
-  ({
-    performanceName: companionDetail.concertName,
-    title: companionDetail.title,
-    image: companionDetail.image,
-    content: companionDetail.content,
-    performanceDate: `${companionDetail.startDate}~${companionDetail.endDate}`,
-    maxAge: companionDetail.endAge.toString(),
-    minAge: companionDetail.startAge.toString(),
-    age: `${companionDetail.startAge}~${companionDetail.endAge}`,
-    gender:
-      genderMapReverse[companionDetail.gender as keyof typeof genderMapReverse],
-    region: companionDetail.region,
-    participantCount: `${companionDetail.totalPeople}명`,
-    performanceLocation: companionDetail.concertLocation,
-  }) as unknown as CompanionFormValue;
+interface PostDataToFormValue {
+  datas?: AccompanyPost;
+  INITIAL_VALUES: CompanionFormValue;
+}
+
+const companionDetailToFormValue = ({
+  datas,
+  INITIAL_VALUES,
+}: PostDataToFormValue): CompanionFormValue => {
+  if (!datas) {
+    return INITIAL_VALUES;
+  }
+
+  return {
+    performanceId: '',
+    male: '',
+    female: '',
+    irrelevant: '',
+    count: '',
+    performanceName: datas.concertName,
+    title: datas.title,
+    images: datas.images,
+    content: datas.content,
+    performanceDate: `${datas.startDate}~${datas.endDate}`,
+    maxAge: datas.endAge.toString(),
+    minAge: datas.startAge.toString(),
+    age: `${datas.startAge}~${datas.endAge}`,
+    gender: genderMapReverse[datas.gender as keyof typeof genderMapReverse],
+    region: datas.region,
+    participantCount: `${datas.totalPeople}명`,
+    purposes: datas.purposes,
+  };
+};
 
 export { companionFormValueToRequest, companionDetailToFormValue };
 
@@ -70,3 +93,13 @@ export const factory = <K extends keyof CompanionFormValue>({
   validate,
   message,
 });
+
+export const convertURLtoFile = async (filename: string, url: string) => {
+  const blob = await getImage(url);
+
+  const ext = blob.type.split('/').pop();
+  const fullName = `${filename}.${ext}`;
+  const metadata = { type: blob.type };
+
+  return new File([blob], fullName!, metadata);
+};
