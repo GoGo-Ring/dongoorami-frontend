@@ -5,6 +5,7 @@ import { useState } from 'react';
 import { ConcertReview } from '~/apis/scheme/performance';
 import StarRating from '~/app/review/_components/star-rating';
 import { Button } from '~/components/button';
+import useMutationDeletePerformanceReview from '~/hooks/mutations/useMutationDeletePerformanceReview';
 
 import ReviewForm from './review/form';
 
@@ -19,10 +20,18 @@ export const PerformanceReview = ({
   refetch,
   concertId,
 }: ConcertReview) => {
+  const { mutate: del } = useMutationDeletePerformanceReview();
   const [isOpen, setIsOpen] = useState(false);
 
   const handleDeleteClick = () => {
-    setIsOpen(!isOpen);
+    del(
+      { concertReviewId: id },
+      {
+        onSuccess: () => {
+          refetch();
+        },
+      },
+    );
   };
   const handleToggle = () => {
     setIsOpen(!isOpen);
