@@ -1,6 +1,5 @@
 import { PropsWithChildren, useContext } from 'react';
 
-import { Error } from '~/app/recruitment/new/_components/error';
 import {
   Field,
   FieldProps,
@@ -8,6 +7,7 @@ import {
 import { FormContext } from '~/app/recruitment/new/_components/form';
 import { CompanionFormValue } from '~/app/recruitment/new/constants';
 import { GetKeysValueOf } from '~/app/recruitment/new/utils';
+import ErrorText from '~/components/error-text';
 import { RadioGroup, RadioGroupItem } from '~/components/radio-group';
 import { UseFormReturn } from '~/hooks/useForm/types';
 
@@ -37,7 +37,7 @@ export const RadioGroupField = <
       >
         {children}
       </RadioGroup>
-      <Error error={errors[id]} />
+      <ErrorText message={errors[id]} />
     </Field>
   );
 };

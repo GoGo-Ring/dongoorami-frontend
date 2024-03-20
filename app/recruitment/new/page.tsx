@@ -69,7 +69,7 @@ const Page = () => {
         <div className="mx-4 flex items-start gap-7 rounded-md border border-gray-200 px-6 pt-6 sm:mx-0 sm:flex-wrap sm:border-0 md:flex-wrap">
           <div className="flex w-full flex-col">
             <InputField
-              id="performanceName"
+              id="performanceId"
               label="공연명"
               placeholder="공연명을 입력해주세요"
             />
@@ -91,14 +91,9 @@ const Page = () => {
             />
           </div>
           <div className="flex w-full flex-col ">
-            <InputField
-              id="performanceLocation"
-              label="공연 장소"
-              placeholder="공연 장소를 입력해주세요"
-            />
             <SearchButtonField
               id="performanceId"
-              label="공연id"
+              label="공연명"
               placeholder="공연 명을 입력해주세요"
               listCount={10}
             />

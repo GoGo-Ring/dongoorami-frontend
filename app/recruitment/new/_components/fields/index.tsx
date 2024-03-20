@@ -1,5 +1,6 @@
 'use client';
 import { CalendarField } from '~/app/recruitment/new/_components/fields/calendar-field';
+import { CheckBoxField } from '~/app/recruitment/new/_components/fields/checkbox-field';
 import { ImageField } from '~/app/recruitment/new/_components/fields/image-field';
 import { InputField } from '~/app/recruitment/new/_components/fields/input-field';
 import {
@@ -25,4 +26,5 @@ export {
   TextareaField,
   ImageField,
   SearchButtonField,
+  CheckBoxField,
 };
