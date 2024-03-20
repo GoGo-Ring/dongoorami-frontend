@@ -27,6 +27,7 @@ interface ConcertFixture {
     rating: number,
     title: string,
   ): void;
+  deleteReview(id: number): void;
 }
 
 const concertReview: ConcertFixture = {
@@ -79,6 +80,14 @@ const concertReview: ConcertFixture = {
 
     this.current.concertReviewGetResponses = [...newReviews];
   },
+
+  deleteReview(id) {
+    const newReviews = this.current.concertReviewGetResponses.filter(
+      item => item.id !== id,
+    );
+
+    this.current.concertReviewGetResponses = [...newReviews];
+  },
 };
 
 export const getConcertReviews = rest.get<ConcertFixture>(
@@ -119,10 +128,33 @@ export const updateConcertReviews = rest.patch<ConcertFixture>(
     }
     concertReview.updateReview(id, content, rating, title);
 
-    return await res(ctx.status(200), ctx.json(concertReview.current));
+    return res(ctx.status(200), ctx.json(concertReview.current));
   },
 );
 
-const reviews = [getConcertReviews, createConcertReviews, updateConcertReviews];
+export const deleteConcertReviews = rest.delete<ConcertFixture>(
+  `${BASE_URL}/concerts/reviews/:concertReviewId`,
+
+  async (req, res, ctx) => {
+    const { concertReviewId } = req.params;
+
+    const id = parseInt(concertReviewId as string);
+
+    if (typeof id !== 'number') {
+      return res(ctx.status(404));
+    }
+
+    concertReview.deleteReview(id);
+
+    return res(ctx.status(200), ctx.json(concertReview.current));
+  },
+);
+
+const reviews = [
+  getConcertReviews,
+  createConcertReviews,
+  updateConcertReviews,
+  deleteConcertReviews,
+];
 
 export default reviews;
