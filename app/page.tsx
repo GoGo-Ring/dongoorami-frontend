@@ -35,7 +35,7 @@ const Page = () => {
   return (
     <div className="flex flex-col ">
       <div className="flex w-full  border">
-        {performancesData && <StyledCarousel datas={performancesData} />}
+        {performancesData && <StyledCarousel performances={performancesData} />}
       </div>
       <div className="flex w-full border">
         <MainFilter />

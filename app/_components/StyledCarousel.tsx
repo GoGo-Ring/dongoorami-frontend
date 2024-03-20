@@ -10,20 +10,15 @@ import {
 } from '~/components/carousel';
 
 interface StyledCarouselProps {
-  datas: PerformanceInfoListItemApi[];
+  performances: PerformanceInfoListItemApi[];
 }
 
-const StyledCarousel = ({ datas }: StyledCarouselProps) => {
-  const images = datas.map(data => data.poster);
+const StyledCarousel = ({ performances }: StyledCarouselProps) => {
+  const images = performances.map(performance => performance.poster);
 
   return (
     <Carousel className="flex w-full justify-center border py-8 sm:aspect-square">
       <CarouselContent className="flex">
-        {/* {Array.from({ length: 3 }).map((_, index) => (
-          <CarouselItem key={index}>
-            <div className="h-full w-full bg-primary">{index}번 공연 정보</div>
-          </CarouselItem>
-        ))} */}
         {images.map((image, index) => (
           <CarouselItem className=" flex justify-center " key={index}>
             <div className="flex w-[350px] justify-center border p-2">
