@@ -9,7 +9,6 @@ import reviews from './review';
 export const handlers = [
   ...members,
   ...accompany,
-  // ...performances,
   ...message,
   ...comment,
   ...accompanyDetail,
