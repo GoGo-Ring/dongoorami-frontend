@@ -69,3 +69,9 @@ export const updatePerformanceReview = async ({
     data,
   });
 };
+
+export const deletePerformanceReview = async (concertReviewId: number) => {
+  return await api.delete<PerformanceList>({
+    url: `/concerts/reviews/${concertReviewId}`,
+  });
+};
