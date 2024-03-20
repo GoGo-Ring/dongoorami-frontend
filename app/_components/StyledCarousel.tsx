@@ -17,7 +17,7 @@ const StyledCarousel = ({ datas }: StyledCarouselProps) => {
   const images = datas.map(data => data.poster);
 
   return (
-    <Carousel className="flex aspect-carousel w-[300] justify-center border py-8 sm:aspect-square">
+    <Carousel className="flex w-full justify-center border py-8 sm:aspect-square">
       <CarouselContent className="flex">
         {/* {Array.from({ length: 3 }).map((_, index) => (
           <CarouselItem key={index}>
@@ -25,14 +25,16 @@ const StyledCarousel = ({ datas }: StyledCarouselProps) => {
           </CarouselItem>
         ))} */}
         {images.map((image, index) => (
-          <CarouselItem key={index}>
-            <Image
-              width={224}
-              height={288}
-              className="h-full w-full "
-              src={image}
-              alt={`${image} 포스터`}
-            />
+          <CarouselItem className=" flex justify-center " key={index}>
+            <div className="bg-red flex w-[350px] justify-center border p-8">
+              <Image
+                width={500}
+                height={288}
+                className="h-full w-full "
+                src={image}
+                alt={`${image} 포스터`}
+              />
+            </div>
           </CarouselItem>
         ))}
       </CarouselContent>

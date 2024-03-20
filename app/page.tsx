@@ -36,7 +36,7 @@ const Page = () => {
 
   return (
     <div className="flex flex-col ">
-      <div className="flex w-[500px]  border">
+      <div className="flex w-full  border">
         {performancesData && <StyledCarousel datas={performancesData} />}
       </div>
       <div className="flex w-full border">
