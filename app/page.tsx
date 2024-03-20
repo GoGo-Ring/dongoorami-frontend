@@ -22,7 +22,7 @@ const Page = () => {
     data: accompaniesData,
     fetchNextPage: fetchNextAccompaniesPage,
     hasNextPage: hasNextPageCompanion,
-  } = useInfiniteAccompanies('');
+  } = useInfiniteAccompanies('', 9);
 
   const fetchPerformances = async () => {
     const { concertGetShortResponses } = await getPerformancesList('', 6, 0);
@@ -41,24 +41,27 @@ const Page = () => {
       </div>
       <div className="flex w-full border">
         <MainFilter />
-        {accompaniesData && (
-          <CompanionRecruitmentList
-            data={accompaniesData}
-            isInfinite={isMoreCompanionInfinite}
-            hasNextPage={hasNextPageCompanion}
-            handleFetchNextPage={() => fetchNextAccompaniesPage()}
-          />
-        )}
+        <div className="flex w-full flex-col justify-start gap-4 p-4">
+          {accompaniesData && (
+            <CompanionRecruitmentList
+              data={accompaniesData}
+              isInfinite={isMoreCompanionInfinite}
+              hasNextPage={hasNextPageCompanion}
+              handleFetchNextPage={() => fetchNextAccompaniesPage()}
+            />
+          )}
+          {!isMoreCompanionInfinite && (
+            <Button
+              variant="outline"
+              onClick={() => setIsMoreCompanionInfinite(true)}
+              disabled={isMoreCompanionInfinite}
+            >
+              동행 모집 더보기
+            </Button>
+          )}
+        </div>
       </div>
-      {!isMoreCompanionInfinite && (
-        <Button
-          variant="outline"
-          onClick={() => setIsMoreCompanionInfinite(true)}
-          disabled={isMoreCompanionInfinite}
-        >
-          동행 모집 더보기
-        </Button>
-      )}
+
       <MobileFilter />
     </div>
   );
