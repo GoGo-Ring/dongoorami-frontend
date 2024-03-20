@@ -5,6 +5,12 @@ import { ConcertReviewList } from '~/apis/scheme/performance';
 
 interface ConcertFixture {
   current: ConcertReviewList;
+  createReview(
+    id: number,
+    userId: string,
+    content: string,
+    rating: number,
+  ): void;
 }
 
 const concertReview: ConcertFixture = {
@@ -22,6 +28,22 @@ const concertReview: ConcertFixture = {
         isWriter: false,
       })),
     ],
+  },
+  createReview(concertId, content, title, rating) {
+    const newReview = {
+      id: concertId,
+      nickname: 'new고고링',
+      updatedAt: '2024.03.18',
+      content,
+      title,
+      rating,
+      isWriter: true,
+    };
+
+    this.current.concertReviewGetResponses = [
+      ...this.current.concertReviewGetResponses,
+      newReview,
+    ];
   },
 };
 
