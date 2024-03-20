@@ -1,13 +1,15 @@
-import { ChangeEvent, Dispatch, SetStateAction, useMemo } from 'react';
+import { ChangeEvent, Dispatch, SetStateAction } from 'react';
 
 import Icon from '~/components/icon';
 import { cn } from '~/libs/utils';
+import { calculateStarRating } from '~/utils/starRating';
 
 interface InputRatingProps {
   onChange: (e: ChangeEvent<HTMLInputElement>) => void;
+  starCount?: number;
   id?: string;
 }
-const InputRating = ({ onChange, id }: InputRatingProps) => {
+const InputRating = ({ onChange, starCount = 5, id }: InputRatingProps) => {
   return (
     <input
       id={id}
@@ -16,7 +18,7 @@ const InputRating = ({ onChange, id }: InputRatingProps) => {
       defaultValue={0}
       step={0.5}
       min={0}
-      max={5}
+      max={starCount}
       className={'absolute h-6 w-full opacity-0'}
     />
   );
@@ -38,55 +40,36 @@ const FilledStar = ({ filled }: FilledStarProps) => {
   );
 };
 
-enum StarState {
-  None = 'none',
-  Half = 'half',
-  Full = 'full',
-}
-
 interface StarRatingProps {
   starCount?: number;
   rate: number;
-  setRate: Dispatch<SetStateAction<number>>;
+  setRate?: Dispatch<SetStateAction<number>>;
   id?: string;
 }
+
 const StarRating = ({ starCount = 5, rate, setRate, id }: StarRatingProps) => {
-  const star = useMemo(() => {
-    const defaultRating = Array.from(
-      { length: starCount },
-      () => StarState.None,
-    );
-    const hasHalf = Number.isInteger(rate);
-
-    if (rate === 0) {
-      return defaultRating;
-    }
-
-    const IntegerRate = Math.floor(rate);
-    const newRating = defaultRating.map((none, index) =>
-      index <= IntegerRate - 1 ? StarState.Full : none,
-    );
-
-    if (!hasHalf) {
-      newRating[IntegerRate] = StarState.Half;
-    }
-
-    return newRating;
-  }, [rate, starCount]);
+  const star = calculateStarRating({ starCount, rate });
 
   const onChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { value } = e.currentTarget;
 
+    if (!setRate) {
+      return;
+    }
     setRate(parseFloat(value));
   };
 
   return (
     <div className="relative flex w-fit flex-col">
-      <InputRating onChange={onChange} id={id} />
-      <div className={'flex w-36 justify-end '}>
-        <div className={'flex w-[132px] justify-between '}>
+      <div className={'flex'}>
+        {setRate && (
+          <InputRating onChange={onChange} id={id} starCount={starCount} />
+        )}
+        <div className={'flex'}>
           {star?.map((value, index) => (
-            <FilledStar key={`star_${index}`} filled={value} />
+            <div key={`star_${index}`} className="px-[2px]">
+              <FilledStar filled={value} />
+            </div>
           ))}
         </div>
       </div>

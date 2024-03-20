@@ -3,14 +3,14 @@ import Icon from '~/components/icon';
 import { getDate } from '~/utils/dateFormatter';
 
 interface PostMetaProps {
-  recruitStatus: '모집중' | 'OFF';
+  status: '모집 중' | '모집 완료';
   createdAt: string;
   waitingCount: number;
   viewCount: number;
 }
 
 const PostStatus = ({
-  recruitStatus,
+  status,
   createdAt,
   waitingCount,
   viewCount,
@@ -19,7 +19,7 @@ const PostStatus = ({
 
   return (
     <div className="flex items-center gap-1.5">
-      <Badge className=" rounded-md">{recruitStatus}</Badge>
+      <Badge className=" rounded-md">{status}</Badge>
       <p className="text-base font-medium text-gray-400">{formattedDate}</p>
       <Icon iconName="chat" size="small" className=" fill-gray-400" />
       <p className="text-base font-medium text-gray-400">{waitingCount}</p>

@@ -15,7 +15,7 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => {
           <AuthProvider>
             <MSWProvider>
               <Header />
-              <section className="mx-auto min-w-page-min max-w-page-max px-lg">
+              <section className="mx-auto mt-16 min-w-page-min max-w-page-max px-lg">
                 {children}
               </section>
               <Toaster richColors />

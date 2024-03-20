@@ -3,12 +3,15 @@ import Image from 'next/image';
 import Link from 'next/link';
 
 import AccompanyApply from '~/app/recruitment/[id]/_components/apply';
-import { CommentSection } from '~/app/recruitment/[id]/_components/comment';
+// import { CommentSection } from '~/app/recruitment/[id]/_components/comment';
 import Field from '~/app/recruitment/[id]/_components/field';
 import PostStatus from '~/app/recruitment/[id]/_components/post-status';
 import Profile from '~/app/recruitment/[id]/_components/profile';
 import Section from '~/app/recruitment/[id]/_components/section';
-import useQueryCompanionPost from '~/hooks/queries/useQueryCompanionPost';
+import Error from '~/app/recruitment/[id]/error';
+import Loading from '~/app/recruitment/[id]/loading';
+import useMutationDeleteCompanyPost from '~/hooks/mutations/useMutationDeleteCompanyPost';
+import useFetchCompanionPost from '~/hooks/queries/useFetchCompanionPost';
 
 interface Params {
   id: string;
@@ -19,37 +22,60 @@ interface Props {
 }
 
 const Page = ({ params }: Props) => {
-  const { data } = useQueryCompanionPost(params.id);
+  const { mutate: mutateDeletePost } = useMutationDeleteCompanyPost();
+  const { data, isPending, isError, error, refetch } = useFetchCompanionPost(
+    params.id,
+    true,
+  );
+
+  if (isError) {
+    return (
+      <Error
+        error={error}
+        reset={() => {
+          refetch();
+        }}
+      />
+    );
+  }
+
+  if (!data || isPending) {
+    return <Loading />;
+  }
+
   const {
-    memberInfo,
-    updatedAt,
+    status,
+    createdAt,
     waitingCount,
     viewCount,
-    image,
+    memberProfile,
+    images,
     title,
     region,
     totalPeople,
     startDate,
     endDate,
-    concertLocation,
+    concertPlace,
     startAge,
     endAge,
     gender,
-    transportation,
-    status,
+    purposes,
   } = data;
 
   const userId = 2; // TODO: 사용자 정보에서 가져오기
 
   return (
     <div className="flex flex-col gap-8 py-8">
-      <div className="text-xl font-semibold">{data?.title}</div>
+      <div className="text-xl font-semibold">{title}</div>
       <div className="flex flex-col">
         <div className="flex items-center justify-between">
-          <Profile name={memberInfo.nickname} image={memberInfo.profileImage} />
+          <Profile
+            name={memberProfile.nickname}
+            image={memberProfile.profileImage}
+          />
           <PostStatus
-            recruitStatus={status}
-            createdAt={updatedAt} // TODO: CompanionDetail 에 createdAt 필드 추가
+            status={status}
+            createdAt={createdAt}
             waitingCount={waitingCount}
             viewCount={viewCount}
           />
@@ -58,16 +84,22 @@ const Page = ({ params }: Props) => {
           <Link className="px-1" href={`/recruitment/new?id=${params.id}`}>
             수정
           </Link>
-          <Link className="px-1" href="/recruitment/delete">
+          <Link
+            className="px-1"
+            href="/"
+            onClick={() => {
+              mutateDeletePost({ accompanyPostId: params.id });
+            }}
+          >
             삭제
           </Link>
         </div>
       </div>
-      {image && (
-        <div className="flex justify-center">
+      {images.map((image, index) => (
+        <div className="flex justify-center" key={index}>
           <Image src={image} alt="companion image" width={300} height={300} />
         </div>
-      )}
+      ))}
 
       <Section>
         <div className="flex w-full flex-col">
@@ -77,10 +109,10 @@ const Page = ({ params }: Props) => {
           <Field label="공연 날짜" value={`${startDate}~${endDate}`} />
         </div>
         <div className="flex w-full flex-col">
-          <Field label="공연장소" value={concertLocation} />
+          <Field label="공연장소" value={concertPlace} />
           <Field label="연령" value={`${startAge}~${endAge}`} />
           <Field label="성별" value={gender} />
-          <Field label="교통수단" value={transportation} />
+          <Field label="교통수단" value={purposes} />
         </div>
       </Section>
 
@@ -90,7 +122,7 @@ const Page = ({ params }: Props) => {
 
       <Section>{data?.content}</Section>
 
-      <CommentSection accompanyPostId={params.id} />
+      {/* <CommentSection accompanyPostId={params.id} /> */}
     </div>
   );
 };

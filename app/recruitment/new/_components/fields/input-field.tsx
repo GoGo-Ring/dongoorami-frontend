@@ -1,26 +1,32 @@
 import { useContext } from 'react';
 
-import { Error } from '~/app/recruitment/new/_components/error';
 import {
   Field,
   FieldProps,
 } from '~/app/recruitment/new/_components/fields/field';
 import { FormContext } from '~/app/recruitment/new/_components/form';
+import { CompanionFormValue } from '~/app/recruitment/new/constants';
+import { GetKeysValueOf } from '~/app/recruitment/new/utils';
+import ErrorText from '~/components/error-text';
 import { Input } from '~/components/input';
+import { UseFormReturn } from '~/hooks/useForm/types';
 
-interface InputFieldProps
+interface InputFieldProps<K extends string>
   extends FieldProps,
     React.InputHTMLAttributes<HTMLInputElement> {
-  id: string;
+  id: K;
 }
 
-export const InputField = ({
+export const InputField = <
+  K extends GetKeysValueOf<CompanionFormValue, string>,
+>({
   id,
   placeholder,
   label,
   variant,
-}: InputFieldProps) => {
-  const { values, handleChange, errors } = useContext(FormContext);
+}: InputFieldProps<K>) => {
+  const { values, handleChange, errors } =
+    useContext<UseFormReturn<CompanionFormValue, K>>(FormContext);
 
   return (
     <Field id={id} label={label} variant={variant}>
@@ -31,7 +37,7 @@ export const InputField = ({
         value={values[id]}
         onChange={handleChange}
       />
-      <Error error={errors[id]} />
+      <ErrorText message={errors[id]} />
     </Field>
   );
 };
