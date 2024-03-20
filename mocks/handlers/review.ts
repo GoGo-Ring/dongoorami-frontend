@@ -1,7 +1,10 @@
 import { rest } from 'msw';
 
 import { BASE_URL } from '~/apis';
-import { ConcertReviewList } from '~/apis/scheme/performance';
+import {
+  ConcertReviewList,
+  PerformanceReview,
+} from '~/apis/scheme/performance';
 
 interface ConcertFixture {
   current: ConcertReviewList;
@@ -51,10 +54,27 @@ export const getConcertReviews = rest.get<ConcertFixture>(
   `${BASE_URL}/concerts/reviews/:id`,
 
   (_, res, ctx) => {
-    return res(ctx.status(201), ctx.json(concertReview.current));
+    return res(ctx.status(200), ctx.json(concertReview.current));
   },
 );
 
-const reviews = [getConcertReviews];
+export const createConcertReviews = rest.post<ConcertFixture>(
+  `${BASE_URL}/concerts/reviews/:concertId`,
+
+  async (req, res, ctx) => {
+    const { concertId } = req.params;
+    const id = parseInt(concertId as string);
+    const { content, title, rating } = await req.json<PerformanceReview>();
+
+    if (typeof id !== 'number') {
+      return res(ctx.status(404));
+    }
+    concertReview.createReview(id, content, title, rating);
+
+    return res(ctx.status(200), ctx.json(concertReview.current));
+  },
+);
+
+const reviews = [getConcertReviews, createConcertReviews];
 
 export default reviews;
