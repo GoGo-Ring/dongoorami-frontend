@@ -69,3 +69,7 @@ export interface PerformanceReview {
   content: string;
   rating: number;
 }
+
+export interface PerformanceReviewPost extends PerformanceReview {
+  concertId: number;
+}
