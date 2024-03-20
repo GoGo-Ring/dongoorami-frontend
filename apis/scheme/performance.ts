@@ -79,3 +79,6 @@ export interface PerformanceReviewPost extends PerformanceReview {
 export interface PerformanceReviewUpdate extends PerformanceReview {
   concertReviewId: number;
 }
+export interface ConcertReviewId {
+  concertReviewId: number;
+}
