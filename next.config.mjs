@@ -27,6 +27,10 @@ const nextConfig = {
         hostname: 'www.kopis.or.kr',
         port: '',
       },
+      {
+        hostname: 'www.kopis.or.kr',
+        port: '',
+      },
     ],
   },
 };

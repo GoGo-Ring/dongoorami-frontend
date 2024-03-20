@@ -23,3 +23,43 @@ export interface PerformanceList {
   hasNext: boolean;
   concertGetShortResponses: PerformanceInfoListItemApi[];
 }
+
+export interface ConcertDetail {
+  id: number;
+  name: string;
+  startedAt: string;
+  endedAt: string;
+  place: string;
+  actor: string;
+  crew: string;
+  runtime: string;
+  age: string;
+  producer: string;
+  agency: string;
+  host: string;
+  management: string;
+  cost: string;
+  poster: string;
+  summary: string;
+  genre: string;
+  status: string;
+  introductionImages: string[];
+  schedule: string;
+  totalAccompanies: number;
+  totalReviews: number;
+}
+
+export interface ConcertReview {
+  id: number;
+  nickname: string;
+  title: string;
+  content: string;
+  rating: number;
+  isWriter: boolean;
+  updatedAt: string;
+}
+
+export interface ConcertReviewList {
+  hasNext: boolean;
+  concertReviewGetResponses: ConcertReview[];
+}

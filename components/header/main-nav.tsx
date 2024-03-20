@@ -16,10 +16,10 @@ const MainNav = () => {
       </Link>
       <nav className="flex items-center gap-4">
         <Link
-          href="/concerts"
+          href="/search"
           className={cn(
             'transition-colors hover:text-foreground/80',
-            pathname?.startsWith('/concerts')
+            pathname?.startsWith('/search')
               ? 'text-foreground'
               : 'text-foreground/60',
           )}

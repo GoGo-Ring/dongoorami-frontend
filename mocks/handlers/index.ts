@@ -4,14 +4,15 @@ import accompanyPerformances from './accompanyPerformances';
 import comment from './comment';
 import members from './members';
 import message from './message';
-import performances from './performances';
+import reviews from './review';
 
 export const handlers = [
   ...members,
   ...accompany,
-  ...performances,
+  // ...performances,
   ...message,
   ...comment,
   ...accompanyDetail,
   ...accompanyPerformances,
+  ...reviews,
 ];
