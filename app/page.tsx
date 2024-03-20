@@ -5,7 +5,6 @@ import { useEffect, useState } from 'react';
 import { getPerformancesList } from '~/apis/performance';
 import { PerformanceInfoListItemApi } from '~/apis/scheme/performance';
 import CompanionRecruitmentList from '~/app/search/_component/companion-recruitment-list';
-import { Button } from '~/components/button';
 import useInfiniteAccompanies from '~/hooks/infinite/useInfiniteAccompanies';
 
 import MainFilter from './_components/MainFilter';
@@ -13,7 +12,6 @@ import MobileFilter from './_components/MobileFilter';
 import StyledCarousel from './_components/StyledCarousel';
 
 const Page = () => {
-  const [isMoreCompanionInfinite, setIsMoreCompanionInfinite] = useState(false);
   const [performancesData, setPerformancesData] = useState<
     PerformanceInfoListItemApi[] | null
   >(null);
@@ -45,19 +43,10 @@ const Page = () => {
           {accompaniesData && (
             <CompanionRecruitmentList
               data={accompaniesData}
-              isInfinite={isMoreCompanionInfinite}
+              isInfinite={true}
               hasNextPage={hasNextPageCompanion}
               handleFetchNextPage={() => fetchNextAccompaniesPage()}
             />
-          )}
-          {!isMoreCompanionInfinite && (
-            <Button
-              variant="outline"
-              onClick={() => setIsMoreCompanionInfinite(true)}
-              disabled={isMoreCompanionInfinite}
-            >
-              동행 모집 더보기
-            </Button>
           )}
         </div>
       </div>
