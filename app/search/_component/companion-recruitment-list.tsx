@@ -9,7 +9,7 @@ import useIntersectionObsever from './useIntersectionObserver';
 
 interface CompanionRecruitmentListProps {
   data: { pages: AccompanyPostInfoList[] };
-  isInfinite: boolean;
+  isInfinite?: boolean;
   handleFetchNextPage: () => void;
   hasNextPage: boolean;
 }
