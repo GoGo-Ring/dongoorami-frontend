@@ -3,6 +3,7 @@ import { useRouter } from 'next/navigation';
 
 import Icon from '~/components/icon';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '~/components/tabs';
+import { cn } from '~/libs/utils';
 
 import CompanionRecruitmentFilter from './companion-recruitment-filter';
 import PerformanceFilter from './performance-filter';
@@ -25,7 +26,7 @@ const FilterTabs = ({
   };
 
   return (
-    <div className={`flex w-[300px] flex-col gap-3 ${className}`}>
+    <div className={cn('flex w-[300px] flex-col gap-3', className)}>
       {hasFilterTitle && (
         <div className="flex gap-3 p-3">
           <Icon iconName="filter" />
