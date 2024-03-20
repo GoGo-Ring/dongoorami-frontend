@@ -10,7 +10,7 @@ const genderMap = {
 
 const companionFormValueToRequest = (companionFormValue: CompanionFormValue) =>
   ({
-    concertName: companionFormValue.performanceName,
+    concertName: companionFormValue.performanceId,
     title: companionFormValue.title,
     image: companionFormValue.images[0] || '',
     content: companionFormValue.content,
@@ -22,7 +22,7 @@ const companionFormValueToRequest = (companionFormValue: CompanionFormValue) =>
     startDate: companionFormValue.performanceDate.split('~')[0] || '',
     startAge: Number(companionFormValue.minAge) || 0,
     totalPeople: Number(companionFormValue.participantCount.slice(0, -1)) || 1,
-    concertLocation: companionFormValue.performanceLocation || '',
+    concertLocation: companionFormValue.performanceId || '',
     status: '모집중', // TODO: 상태값 추가
   }) as CompanionRequest;
 

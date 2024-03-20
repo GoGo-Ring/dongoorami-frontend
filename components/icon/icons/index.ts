@@ -7,6 +7,7 @@ import FilterIcon from './filter';
 import HeartIcon from './heart';
 import MenuIcon from './menu';
 import MessageIcon from './message';
+import RemoveIcon from './remove';
 import SearchIcon from './search';
 import StarIcon from './star';
 import UserIcon from './user';
@@ -14,6 +15,7 @@ import UserIcon from './user';
 const iconName = {
   alarm: AlarmIcon,
   chat: ChatIcon,
+  remove: RemoveIcon,
   'chevron-down': ChevronDownIcon,
   eye: EyeIcon,
   filter: FilterIcon,
