@@ -8,6 +8,7 @@ import { useFetchConcerts } from '~/hooks/queries/useFetchConcerts';
 import InfoItem from '../_components/info-item';
 import InfoItemWithToggle from '../_components/info-item-with-button';
 import { PerformanceReview } from '../_components/performance-review';
+import ReviewForm from '../_components/review/form';
 
 interface Params {
   id: string;
@@ -180,6 +181,7 @@ const Page = ({ params }: Props) => {
                 (review, i) => <PerformanceReview {...review} key={i} />,
               )}
             </div>
+            <ReviewForm initialTitle={name} />
           </TabsContent>
         </Tabs>
       </div>
