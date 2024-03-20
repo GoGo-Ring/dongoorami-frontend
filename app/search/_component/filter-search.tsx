@@ -52,11 +52,11 @@ const FilterSearch = () => {
   }, [params]);
 
   return (
-    <div className="flex">
-      <div className="box-border py-5">
-        <FilterTabs />
+    <div className="relative flex  h-fit">
+      <div className=" box-border py-5">
+        <FilterTabs className="sticky top-24 -z-10" />
       </div>
-      <div className="flex flex-col gap-8 px-6 py-10">
+      <div className="flex shrink-0 flex-col gap-8 py-10 sm:w-[328px] md:w-[400px] lg:w-[700px]">
         {performancesData && (
           <PerformanceInfoList
             data={performancesData}

@@ -15,10 +15,8 @@ const CommentSection = ({ accompanyPostId }: Props) => {
   const { data: comments } = useFetchComments(accompanyPostId);
   const { length } = comments;
 
-  const { mutate: createComment, isPending } = useMutationComment(
-    accompanyPostId,
-    '1',
-  ); // TODO: userId
+  const { mutate: createComment, isPending } =
+    useMutationComment(accompanyPostId); // TODO: userId
 
   const handleCreateComment = (content: string) => {
     createComment({ content });

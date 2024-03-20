@@ -43,6 +43,10 @@ export const SELECTION = {
       '제주도',
     ],
   },
+  PURPOSE: {
+    category: '목적',
+    options: ['관람', '숙박', '이동'],
+  },
 };
 
 export const SEARCH = '검색';

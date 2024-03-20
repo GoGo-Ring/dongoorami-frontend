@@ -22,14 +22,9 @@ import {
 } from '~/components/command';
 import ErrorText from '~/components/error-text';
 import { Popover, PopoverContent, PopoverTrigger } from '~/components/popover';
+import useFetchCompanionPerformances from '~/hooks/queries/useFetchCompanionPerformances';
 import { UseFormReturn } from '~/hooks/useForm/types';
 import { cn } from '~/libs/utils';
-
-const performances = Array.from({ length: 100 }, (_, i) => ({
-  id: String(i),
-  name: `Performance ${i}`,
-  place: `Place ${i}`,
-}));
 
 interface SearchButtonFieldProps<K extends string> extends FieldProps {
   id: K;
@@ -49,6 +44,7 @@ export const SearchButtonField = <
 }: SearchButtonFieldProps<K>) => {
   const [open, setOpen] = useState(false);
   const [name, setName] = useState<string>('');
+  const [value, setValue] = useState<string>('');
   const { values, handleValueChange, errors } =
     React.useContext<UseFormReturn<CompanionFormValue, K>>(FormContext);
 
@@ -57,6 +53,12 @@ export const SearchButtonField = <
     setName(currentValue);
 
     setOpen(false);
+  };
+
+  const { data: performances } = useFetchCompanionPerformances(value);
+
+  const handleInputValueChange = (value: string) => {
+    setValue(value);
   };
 
   return (
@@ -75,21 +77,24 @@ export const SearchButtonField = <
         </PopoverTrigger>
         <PopoverContent className="w-[200px] p-0">
           <Command>
-            <CommandInput placeholder={placeholder} />
+            <CommandInput
+              placeholder={placeholder}
+              onValueChange={handleInputValueChange}
+            />
             <CommandList>
               <CommandEmpty>{notFoundText}</CommandEmpty>
               <CommandGroup>
                 {performances
-                  .map(({ id: commandId, name }) => (
+                  ?.map(({ id: commandId, name }) => (
                     <CommandItem
                       key={commandId}
                       value={name}
-                      onSelect={handleSelect(commandId)}
+                      onSelect={handleSelect(String(commandId))}
                     >
                       <Check
                         className={cn(
                           'mr-2 h-4 w-4',
-                          values[id] === commandId
+                          +values[id] === commandId
                             ? 'opacity-100'
                             : 'opacity-0',
                         )}

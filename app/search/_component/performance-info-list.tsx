@@ -28,7 +28,7 @@ const PerformanceInfoList = ({
     <>
       <div className="flex flex-col gap-6">
         <h3 className="font-semibold">공연</h3>
-        <div className="mx-auto grid grid-cols-3">
+        <div className="mx-auto grid sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-3">
           {data?.pages?.map(page =>
             page.concertGetShortResponses?.map(({ status, id, ...rest }) => (
               <PerformanceInfoCard
