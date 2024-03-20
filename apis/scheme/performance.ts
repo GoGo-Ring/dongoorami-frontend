@@ -63,3 +63,9 @@ export interface ConcertReviewList {
   hasNext: boolean;
   concertReviewGetResponses: ConcertReview[];
 }
+
+export interface PerformanceReview {
+  title: string;
+  content: string;
+  rating: number;
+}
