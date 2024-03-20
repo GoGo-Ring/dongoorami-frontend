@@ -1,10 +1,27 @@
-export interface PerformanceInfoCard {
-  id: string;
-  posterSrc: string;
-  title: string;
-  facilityName: string;
-  startDate: Date;
-  status: '공연 예정' | '공연 중' | '공연 종료';
+export type StatusType = '공연 예정' | '공연 중' | '공연 종료';
+
+interface Performance {
+  id: number;
+  name: string;
+  place: string;
+  genre: string;
+  startedAt: string;
+  endedAt: string;
+  poster: string;
+}
+export interface PerformanceInfoCard extends Performance {
+  width?: number;
+  height?: number;
+  status: StatusType;
+}
+
+export interface PerformanceInfoListItemApi extends Performance {
+  status: string;
+}
+
+export interface PerformanceList {
+  hasNext: boolean;
+  concertGetShortResponses: PerformanceInfoListItemApi[];
 }
 
 export interface ConcertDetail {

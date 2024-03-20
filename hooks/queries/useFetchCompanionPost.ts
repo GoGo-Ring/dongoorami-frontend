@@ -1,16 +1,16 @@
 'use client';
 
-import { useSuspenseQuery } from '@tanstack/react-query';
+import { useQuery } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
 
 import { getCompanion } from '~/apis/accompany';
-import { CompanionDetail } from '~/apis/scheme/accompany';
+import { AccompanyPost } from '~/apis/scheme/accompanyDetail';
 
-const useFetchCompanionPost = (accompanyPostId: string) => {
-  return useSuspenseQuery<CompanionDetail, AxiosError>({
+const useFetchCompanionPost = (accompanyPostId: string, enabled = false) => {
+  return useQuery<AccompanyPost, AxiosError>({
     queryKey: ['companionPost', accompanyPostId],
     queryFn: () => getCompanion(accompanyPostId),
-    refetchOnMount: false,
+    enabled,
   });
 };
 

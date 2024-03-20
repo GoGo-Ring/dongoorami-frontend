@@ -1,19 +1,18 @@
+import { Companion, Profile } from '~/apis/scheme/accompany';
 import { Comment } from '~/apis/scheme/comment';
 
-import {
-  Companion,
-  CompanionDetail,
-  CompanionRequest,
-  Profile,
-} from './scheme/accompany';
+import { AccompanyPost } from './scheme/accompanyDetail';
 
 import api from '.';
 
 // 동행 구인
-export const createCompanion = async (companion: CompanionRequest) =>
+export const createCompanion = async (companion: FormData) =>
   await api.post({
     url: '/accompanies/posts',
     data: companion,
+    headers: {
+      'Content-Type': 'multipart/form-data',
+    },
   });
 
 export const getCompanions = async () => {
@@ -23,7 +22,7 @@ export const getCompanions = async () => {
 };
 
 export const getCompanion = async (accompanyPostId: string) => {
-  const { data } = await api.get<CompanionDetail>({
+  const { data } = await api.get<AccompanyPost>({
     url: `/accompanies/posts/${accompanyPostId}`,
   });
 
@@ -35,11 +34,14 @@ export const deleteCompanion = async (accompanyPostId: string) =>
 
 export const updateCompanion = async (
   accompanyPostId: string,
-  companion: Partial<CompanionRequest>,
+  companion: FormData,
 ) =>
-  await api.patch({
+  await api.post({
     url: `/accompanies/posts/${accompanyPostId}`,
     data: companion,
+    headers: {
+      'Content-Type': 'multipart/form-data',
+    },
   });
 
 export const getCompanionProfile = async (memberId: number) => {

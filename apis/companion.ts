@@ -1,13 +1,26 @@
-import { CompanionRecruitmentCard } from './scheme/accompany';
+import { AccompanyPostInfoList } from './scheme/accompany';
 
 import api from '.';
 
-const getCompanions = async (): Promise<CompanionRecruitmentCard[]> => {
-  const { data } = await api.get<CompanionRecruitmentCard[]>({
-    url: '/search/posts',
+export const getCompanions = async () => {
+  const { data } = await api.get<AccompanyPostInfoList>({
+    url: '/accompanies/posts',
   });
 
   return data;
 };
 
-export default getCompanions;
+export const getCompanionsList = async (
+  searchParams: string,
+  size: number,
+  lastId: number,
+) => {
+  const cursorId = lastId ? lastId : '';
+
+  const { data } = await api.get<AccompanyPostInfoList>({
+    url: `/accompanies/posts?${searchParams}`,
+    params: { size, cursorId },
+  });
+
+  return data;
+};

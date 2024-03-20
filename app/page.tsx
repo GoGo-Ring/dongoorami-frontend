@@ -1,11 +1,23 @@
-import { Button } from '~/components/button';
+'use client';
+
+import { DummyCard } from './_components/DummyCard';
+import MainFilter from './_components/MainFilter';
+import MobileFilter from './_components/MobileFilter';
+import StyledCarousel from './_components/StyledCarousel';
 
 const Page = () => {
   return (
     <div>
-      <div className="bg-red-500">test</div>
-      <div className="bg-blue-500">test</div>
-      <Button>test</Button>
+      <StyledCarousel />
+      <div className="flex w-full border">
+        <MainFilter />
+        <div className="grid w-full grid-cols-3 gap-8 border p-8 sm:grid-cols-1 mainmd:grid-cols-2">
+          {Array.from({ length: 9 }).map((_, index) => (
+            <DummyCard key={index} />
+          ))}
+        </div>
+      </div>
+      <MobileFilter />
     </div>
   );
 };

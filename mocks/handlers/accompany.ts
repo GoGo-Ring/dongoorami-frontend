@@ -16,6 +16,35 @@ interface AccompanyFixture {
   getMemberProfile(memberId: number): Profile | null;
 }
 
+const accompanyList = [
+  ...Array.from({ length: 40 }, i => ({
+    id: `${i}`,
+    title: `${i}서울 같이 갈 울싼 사람 구합니다~~`,
+    writer: '김뫄뫄',
+    createdAt: '2024-03-18T01:17:39.692638',
+    updatedAt: '2024-03-14T16:23:31.229165',
+    status: '모집 중',
+    concertName: '고고링 백걸즈의 스프링 탐방기',
+    viewCount: 0,
+    commentCount: 0,
+    gender: '여',
+    totalPeople: 1,
+  })),
+  {
+    id: '99',
+    title: '99울싼 같이 갈 서울 사람 구합니다~~',
+    writer: '김뫄뫄',
+    createdAt: '2024-03-18T01:17:39.692638',
+    updatedAt: '2024-03-14T16:23:31.229165',
+    status: '모집 중',
+    concertName: '고고링 JS 탐방기',
+    viewCount: 0,
+    commentCount: 0,
+    gender: '남',
+    totalPeople: 1,
+  },
+];
+
 const accompany: AccompanyFixture = {
   current: [
     {
@@ -93,104 +122,52 @@ const accompany: AccompanyFixture = {
 
 const getCompanions = rest.get<Companion[]>(
   `${BASE_URL}/accompanies/posts`,
-  (_, res, ctx) => res(ctx.status(200), ctx.json(accompany.current)),
-);
-
-const getCompanion = rest.get<CompanionDetail>(
-  `${BASE_URL}/accompanies/posts/:id`,
   (req, res, ctx) => {
-    const { id } = req.params;
-    const companion = accompany.current.find(
-      companion => companion.accompanyPostId === id,
-    );
+    const size = req.url.searchParams.get('size');
+    const paramsGender = req.url.searchParams.get('gender');
+    const paramsRegion = req.url.searchParams.get('region');
 
-    if (!companion) {
-      return res(ctx.status(404));
+    if (paramsGender === 'male') {
+      const filtered = {
+        hasNext: false,
+        accompanyPostInfos: accompanyList.filter(
+          ({ gender }) => gender === '남',
+        ),
+      };
+
+      return res(ctx.status(200), ctx.json(filtered));
+    }
+    if (paramsRegion) {
+      const filtered = {
+        hasNext: false,
+        accompanyPostInfos: accompanyList.filter(
+          ({ gender }) => gender === paramsRegion,
+        ),
+      };
+
+      return res(ctx.status(200), ctx.json(filtered));
     }
 
-    return res(ctx.status(200), ctx.json(companion));
-  },
-);
+    if (size) {
+      const nSize = parseInt(size);
+      const filtered = {
+        hasNext: true,
+        accompanyPostInfos: accompanyList.filter(
+          (_v, i) => nSize <= i && nSize * 10 > i,
+        ),
+      };
 
-const createCompanion = rest.post(
-  `${BASE_URL}/accompanies/posts`,
-  async (req, res, ctx) => {
-    const newCompanion = (await req.json()) as CompanionRequest;
-    const { user } = req.cookies;
+      if (size === '4') {
+        filtered.hasNext = false;
+      }
 
-    accompany.current.push({
-      ...newCompanion,
-      accompanyPostId: new Date().toISOString(),
-      name: user || '프롱이',
-      updatedAt: new Date().toISOString(),
-      viewCount: 0,
-      waitingCount: 0,
-      concertLocation: 'Seoul',
-      transportation: '미동행',
-      memberInfo: {
-        profileImage: 'https://picsum.photos/200',
-        name: '',
-        gender: '남자',
-        age: 5,
-        introduction: '',
-        id: 7,
-        currentMember: false,
-      },
-      status: '모집중',
-    });
-
-    return res(ctx.status(201));
-  },
-);
-
-const updateCompanion = rest.patch(
-  `${BASE_URL}/accompanies/posts/:id`,
-  async (req, res, ctx) => {
-    const { id } = req.params;
-    const content = (await req.json()) as Partial<CompanionRequest>;
-
-    accompany.updateCompanion(id as string, content);
-
-    return res(ctx.status(204));
-  },
-);
-
-const deleteCompanion = rest.delete(
-  `${BASE_URL}/accompanies/posts/:id`,
-  (req, res, ctx) => {
-    const { id } = req.params;
-
-    accompany.deleteCompanion(id as string);
-
-    return res(ctx.status(204));
-  },
-);
-
-const getCompanionProfile = rest.get<Profile>(
-  `${BASE_URL}/accompanies/profile/:id`,
-  (req, res, ctx) => {
-    const { id } = req.params;
-    const member = accompany.getMemberProfile(Number(id));
-
-    if (!member) {
-      return res(ctx.status(404));
+      return res(ctx.status(200), ctx.json(filtered));
     }
 
-    if (String(member.id) === (id as string)) {
-      member.currentMember = false;
-    }
-
-    return res(ctx.status(200), ctx.json(member));
+    return res(ctx.status(404));
   },
 );
 
-const memberHandlers = [
-  getCompanions,
-  getCompanion,
-  createCompanion,
-  updateCompanion,
-  deleteCompanion,
-  getCompanionProfile,
-];
+const memberHandlers = [getCompanions];
 
 export default memberHandlers;

@@ -1,9 +1,17 @@
-import { Member, RegisterMemberRequest, Token } from './scheme/member';
+import { Member, Profile, RegisterMemberRequest, Token } from './scheme/member';
 
 import api from '.';
 
 export const getMember = async () => {
   const { data } = await api.get<Member>({ url: '/members' });
+
+  return data;
+};
+
+export const getProfile = async (id: number) => {
+  const { data } = await api.get<Profile>({
+    url: `/accompanies/profile/${id}`,
+  });
 
   return data;
 };
