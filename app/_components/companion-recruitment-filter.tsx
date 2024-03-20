@@ -31,6 +31,7 @@ const CompanionRecruitmentFilter = ({
     age: [20, 30],
     transportation: '동행',
     totalCount: 0,
+    purpose: [],
   });
 
   const getValue = useCallback(
@@ -47,18 +48,25 @@ const CompanionRecruitmentFilter = ({
       transportation: options.transportation,
       startAge: options.age[0],
       endAge: options.age[1],
-      totalPeople: options.totalCount,
+      totalCount: options.totalCount,
+      purpose: options.purpose,
     };
   };
 
-  const objectToQueryString = (object: { [key: string]: string | number }) =>
+  const objectToQueryString = (object: {
+    [key: string]: string | number | string[];
+  }) =>
     Object.entries(object)
       .reduce((acc, [key, value]) => {
         if (value === '') {
           return acc;
         }
+        if (!Array.isArray(value)) {
+          return [...acc, `${key}=${value}`];
+        }
+        const joinedValues = value.map(v => `${key}=${v}`).join('&');
 
-        return [...acc, `${key}=${value}`];
+        return [...acc, joinedValues];
       }, [] as string[])
       .join('&');
 
@@ -108,6 +116,13 @@ const CompanionRecruitmentFilter = ({
         placeholder={SELECTION.PERSON_COUNT.options[0].label}
         setOption={getValue}
         fieldName={'totalCount'}
+      />
+      <CheckboxSelectField
+        category={SELECTION.PURPOSE.category}
+        options={SELECTION.PURPOSE.options}
+        setOption={getValue}
+        fieldName={'purpose'}
+        className="flex-row gap-2"
       />
       <Button variant="outline" onClick={handleSubmit}>
         {SEARCH}
