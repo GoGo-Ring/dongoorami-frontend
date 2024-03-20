@@ -57,6 +57,8 @@ export interface ConcertReview {
   rating: number;
   isWriter: boolean;
   updatedAt: string;
+  refetch: () => void;
+  concertId: number;
 }
 
 export interface ConcertReviewList {
@@ -72,4 +74,8 @@ export interface PerformanceReview {
 
 export interface PerformanceReviewPost extends PerformanceReview {
   concertId: number;
+}
+
+export interface PerformanceReviewUpdate extends PerformanceReview {
+  concertReviewId: number;
 }
