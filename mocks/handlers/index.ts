@@ -4,6 +4,7 @@ import comment from './comment';
 import members from './members';
 import message from './message';
 import performances from './performances';
+import wish from './wish';
 
 export const handlers = [
   ...members,
@@ -12,4 +13,5 @@ export const handlers = [
   ...message,
   ...comment,
   ...accompanyDetail,
+  ...wish,
 ];
