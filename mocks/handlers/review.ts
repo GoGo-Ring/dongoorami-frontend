@@ -28,9 +28,11 @@ const concertReview: ConcertFixture = {
 export const getConcertReviews = rest.get<ConcertFixture>(
   `${BASE_URL}/concerts/reviews/:id`,
 
-  (_, res, ctx) => res(ctx.status(200), ctx.json(concertReview.current)),
+  (_, res, ctx) => {
+    return res(ctx.status(201), ctx.json(concertReview.current));
+  },
 );
 
-const reviewsHandlers = [getConcertReviews];
+const reviews = [getConcertReviews];
 
-export default reviewsHandlers;
+export default reviews;
