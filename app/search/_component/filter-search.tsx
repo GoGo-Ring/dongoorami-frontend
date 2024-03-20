@@ -56,7 +56,7 @@ const FilterSearch = () => {
       <div className=" box-border py-5">
         <FilterTabs className="sticky top-24 -z-10" />
       </div>
-      <div className="-z-10 flex shrink-0 flex-col gap-8 py-10 sm:w-[328px] md:w-[400px] lg:w-[700px]">
+      <div className="flex shrink-0 flex-col gap-8 py-10 sm:w-[328px] md:w-[400px] lg:w-[700px]">
         {performancesData && (
           <PerformanceInfoList
             data={performancesData}
