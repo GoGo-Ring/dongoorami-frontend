@@ -1,3 +1,5 @@
+import axios from 'axios';
+
 import { Companion, Profile } from '~/apis/scheme/accompany';
 import { PerformanceInfo } from '~/apis/scheme/accompanyInput';
 import { Comment } from '~/apis/scheme/comment';
@@ -102,6 +104,15 @@ export const createReview = async (content: string) =>
 export const getPerformanceInfos = async (keyword: string) => {
   const { data } = await api.get<PerformanceInfo[]>({
     url: `/concerts/keywords?keyword=${keyword}`,
+  });
+
+  return data;
+};
+
+export const getImage = async (url: string) => {
+  const { data } = await axios<Blob>({
+    url,
+    responseType: 'blob',
   });
 
   return data;
