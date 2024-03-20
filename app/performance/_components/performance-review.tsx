@@ -1,29 +1,23 @@
 'use client';
 
+import { ConcertReview } from '~/apis/scheme/performance';
 import StarRating from '~/app/review/_components/star-rating';
 
-interface PerformanceReviewProps {
-  userId: string;
-  date: string;
-  starRating: number;
-  title: string;
-  content: string;
-}
 export const PerformanceReview = ({
-  userId,
-  date,
+  nickname,
   title,
   content,
-  starRating,
-}: PerformanceReviewProps) => {
+  rating,
+  updatedAt,
+}: ConcertReview) => {
   return (
-    <div className="relative flex flex-col gap-1 sm:w-[250px] md:w-[630px] lg:w-[840px]">
+    <div className="relative flex w-full flex-col gap-1 rounded-lg border border-gray-200 p-4">
       <div className="flex justify-between">
-        <StarRating rate={starRating} />
+        <StarRating rate={rating} />
         <div className="flex gap-3 text-gray-300 md:divide-x lg:divide-x">
-          <span>{userId}</span>
-          <span className="pl-3 sm:absolute sm:bottom-0 sm:right-0">
-            {date}
+          <span>{nickname}</span>
+          <span className="pl-3 sm:absolute sm:bottom-4 sm:right-4">
+            {updatedAt}
           </span>
         </div>
       </div>
