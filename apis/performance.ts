@@ -3,6 +3,7 @@ import {
   ConcertReviewList,
   PerformanceList,
   PerformanceReviewPost,
+  PerformanceReviewUpdate,
 } from './scheme/performance';
 
 import api from '.';
@@ -55,6 +56,16 @@ export const createPerformanceReview = async ({
 }: PerformanceReviewPost) => {
   return await api.post<PerformanceList>({
     url: `/concerts/reviews/${concertId}`,
+    data,
+  });
+};
+
+export const updatePerformanceReview = async ({
+  concertReviewId,
+  ...data
+}: PerformanceReviewUpdate) => {
+  return await api.patch<PerformanceList>({
+    url: `/concerts/reviews/${concertReviewId}`,
     data,
   });
 };
