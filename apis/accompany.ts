@@ -1,4 +1,5 @@
 import { Companion, Profile } from '~/apis/scheme/accompany';
+import { PerformanceInfo } from '~/apis/scheme/accompanyInput';
 import { Comment } from '~/apis/scheme/comment';
 
 import { AccompanyPost } from './scheme/accompanyDetail';
@@ -95,3 +96,11 @@ export const createReview = async (content: string) =>
     url: '/reviews',
     data: { content },
   });
+
+export const getPerformanceInfos = async (keyword: string) => {
+  const { data } = await api.get<PerformanceInfo[]>({
+    url: `/concerts/keywords?keyword=${keyword}`,
+  });
+
+  return data;
+};

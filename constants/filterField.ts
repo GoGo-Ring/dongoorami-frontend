@@ -2,16 +2,16 @@ export const SELECTION = {
   GENDER: {
     category: '성별',
     options: [
-      { value: 'irrelevant', label: '무관' },
-      { value: 'male', label: '남' },
-      { value: 'female', label: '여' },
+      { value: '무관', label: '무관' },
+      { value: '남', label: '남' },
+      { value: '여', label: '여' },
     ],
   },
   TRANSPORTATION: {
     category: '교통 수단',
     options: [
-      { value: 'together', label: '동행' },
-      { value: 'separate', label: '미동행' },
+      { value: '동행', label: '동행' },
+      { value: '미동행', label: '미동행' },
     ],
   },
   PERSON_COUNT: {
@@ -26,7 +26,7 @@ export const SELECTION = {
   },
   GENRE: {
     category: '장르',
-    options: ['콘서트', '클래식', ' 무용', '뮤지컬', '아동', '연극'],
+    options: ['콘서트', '클래식', '무용', '뮤지컬', '아동', '연극'],
   },
   STATUS: {
     category: '공연 상태',
@@ -42,6 +42,10 @@ export const SELECTION = {
       '전라북도/전라남도',
       '제주도',
     ],
+  },
+  PURPOSE: {
+    category: '목적',
+    options: ['관람', '숙박', '이동'],
   },
 };
 
