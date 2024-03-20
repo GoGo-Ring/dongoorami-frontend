@@ -6,14 +6,23 @@ import StarRating from '~/app/review/_components/star-rating';
 import { Button } from '~/components/button';
 import { Input } from '~/components/input';
 import { Textarea } from '~/components/textarea';
+import useMutationPerformanceReviewComment from '~/hooks/mutations/useMutationPerformanceReviewComment';
 import useForm from '~/hooks/useForm';
 
 interface ReviewFormProps {
   initialTitle: string;
   intialContent?: string;
+  id: number;
+  refetch: () => void;
 }
 
-const ReviewForm = ({ initialTitle, intialContent }: ReviewFormProps) => {
+const ReviewForm = ({
+  id,
+  initialTitle,
+  intialContent,
+  refetch,
+}: ReviewFormProps) => {
+  const { mutate } = useMutationPerformanceReviewComment();
   const [rate, setRate] = useState(0);
   const { handleUnControlledSubmit } = useForm({
     initialValues: {
@@ -22,7 +31,16 @@ const ReviewForm = ({ initialTitle, intialContent }: ReviewFormProps) => {
       content: intialContent || '',
     },
     onSubmit: values => {
-      // TODO: submit review
+      const { star, content, title } = values;
+
+      mutate(
+        { rating: parseInt(star), concertId: id, content, title },
+        {
+          onSuccess: () => {
+            refetch();
+          },
+        },
+      );
       setRate(0);
 
       return values;
@@ -33,7 +51,7 @@ const ReviewForm = ({ initialTitle, intialContent }: ReviewFormProps) => {
     <form onSubmit={handleUnControlledSubmit} className="flex flex-col gap-4">
       <StarRating rate={rate} setRate={setRate} id="star" />
       <Input
-        className="w-1/2"
+        className="w-1/2 sm:w-full"
         placeholder={initialTitle}
         defaultValue={initialTitle}
         id="title"
