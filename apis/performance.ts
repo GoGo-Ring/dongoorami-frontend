@@ -2,6 +2,7 @@ import {
   ConcertDetail,
   ConcertReviewList,
   PerformanceList,
+  PerformanceReviewPost,
 } from './scheme/performance';
 
 import api from '.';
@@ -46,4 +47,14 @@ export const getPerformancesList = async (
   });
 
   return data;
+};
+
+export const createPerformanceReview = async ({
+  concertId,
+  ...data
+}: PerformanceReviewPost) => {
+  return await api.post<PerformanceList>({
+    url: `/concerts/reviews/${concertId}`,
+    data,
+  });
 };
