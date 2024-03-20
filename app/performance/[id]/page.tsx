@@ -22,7 +22,8 @@ const Page = ({ params }: Props) => {
   const paramsId = params.id;
 
   const { data, isLoading } = useFetchConcerts(paramsId);
-  const { data: performanceReviewList } = useFetchConcertReviews(paramsId);
+  const { data: performanceReviewList, refetch } =
+    useFetchConcertReviews(paramsId);
 
   if (isLoading || !data) {
     return;
@@ -181,7 +182,11 @@ const Page = ({ params }: Props) => {
                 (review, i) => <PerformanceReview {...review} key={i} />,
               )}
             </div>
-            <ReviewForm initialTitle={name} />
+            <ReviewForm
+              initialTitle={name}
+              id={parseInt(paramsId)}
+              refetch={refetch}
+            />
           </TabsContent>
         </Tabs>
       </div>
