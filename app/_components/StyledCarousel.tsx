@@ -18,7 +18,7 @@ interface StyledCarouselProps {
 
 const StyledCarousel = ({ performances }: StyledCarouselProps) => {
   return (
-    <Carousel className="flex w-full justify-center border py-8 sm:aspect-square">
+    <Carousel className="flex w-full justify-center border py-8">
       {performances ? (
         <>
           <CarouselContent className="flex">
