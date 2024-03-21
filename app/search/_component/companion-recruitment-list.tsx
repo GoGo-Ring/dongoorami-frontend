@@ -25,7 +25,7 @@ const CompanionRecruitmentList = ({
   return (
     <div className="flex w-full flex-col gap-6">
       <span className="font-semibold">동행 모집</span>
-      <div className="grid w-full grid-cols-3 ">
+      <div className="grid gap-3 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
         {data.pages?.map(page =>
           page?.accompanyPostInfos.map(({ id, status, gender, ...rest }) => (
             <CompanionRecruitmentCard
