@@ -2,6 +2,8 @@
 import { useSearchParams, useRouter } from 'next/navigation';
 import React, { useEffect } from 'react';
 
+import Error from '~/app/recruitment/new/error';
+import Loading from '~/app/recruitment/new/loading';
 import {
   companionDetailToFormValue,
   companionFormValueToRequest,
@@ -38,19 +40,56 @@ const Page = () => {
   const router = useRouter();
 
   const postId = useSearchParams().get('id');
-  const { mutate: createPost, isPending } = useMutationCreateCompanyPost(
-    postId || '',
-  );
+  const {
+    mutate: createPost,
+    isPending,
+    isError: isMutateError,
+    error: mutateError,
+  } = useMutationCreateCompanyPost(postId || '');
   const { mutate: updatePost } = useMutationUpdateCompanyPost(postId || '');
   const isEdit = !!postId;
 
-  const { data: postData, refetch } = useFetchCompanionPost(postId || '');
+  const {
+    data: postData,
+    refetch,
+    isFetching,
+    isError: isFetchError,
+    error: fetchError,
+  } = useFetchCompanionPost(postId || '');
 
   useEffect(() => {
     if (isEdit) {
       refetch();
     }
   }, [isEdit, refetch]);
+
+  if (isMutateError) {
+    return (
+      <Error
+        error={mutateError}
+        reset={() => {
+          if (isEdit) {
+            refetch();
+          }
+        }}
+      />
+    );
+  }
+
+  if (isEdit && isFetchError) {
+    return (
+      <Error
+        error={fetchError}
+        reset={() => {
+          refetch();
+        }}
+      />
+    );
+  }
+
+  if (isEdit && isFetching) {
+    return <Loading />;
+  }
 
   const handleSubmit = async (values: CompanionFormValue) => {
     const companionData = companionFormValueToRequest(values);
