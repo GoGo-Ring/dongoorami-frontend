@@ -6,17 +6,11 @@ import useForm from '~/hooks/useForm';
 
 interface MessageWriteFormProps {
   targetId: number;
-  accompanyPostId: number;
 }
 
-const MessageWriteForm = ({
-  targetId,
-  accompanyPostId,
-}: MessageWriteFormProps) => {
+const MessageWriteForm = ({ targetId }: MessageWriteFormProps) => {
   const { mutate, isPending } = useMutationCreateMessage({
-    senderId: 1, // TODO: 로그인 정보로 변경
-    receiverId: targetId,
-    accompanyPostId,
+    partnerId: targetId,
   });
 
   const { handleChange, values, handleSubmit } = useForm({
