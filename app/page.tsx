@@ -48,7 +48,6 @@ const Page = () => {
           )}
         </div>
       </div>
-
       <MobileFilter />
     </div>
   );
