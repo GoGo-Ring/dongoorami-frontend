@@ -7,83 +7,32 @@ interface MessageFixture {
   current: MessageWithPage;
   getMessages(size: number, page: number): MessageWithPage;
   updateMessage(id: number): void;
-  createMessage(
-    senderId: number,
-    receiverId: number,
-    content: string,
-    accompanyPostId?: number,
-  ): void;
+  createMessage(receiverId: number, content: string): void;
 }
+
+const MY_ID = 7;
 
 const message: MessageFixture = {
   current: {
-    allPage: 6,
-    messages: [
-      {
-        id: 1,
-        accompanyPostId: 1,
-        senderId: 1,
-        receiverId: 2,
+    hasNext: false,
+    messageResponses: [
+      ...Array.from<unknown, Message>({ length: 10 }, (_, i) => ({
+        id: i + 2,
+        partner: {
+          id: (i % 2) + MY_ID,
+          nickname: i % 2 === 0 ? '백둥이' : '흰둥이',
+          profileImage: 'https://picsum.photos/200/300?grayscale',
+          gender: (i % 2) + MY_ID === MY_ID ? '여자' : '남자',
+          age: i % 2 === 0 ? 25 : 26,
+          introduction: '안녕하세요',
+          currentMember: false,
+          manner: 0,
+        },
         content: '안녕하세요',
-        date: '2021-09-17',
-        isRead: false,
-      },
-      {
-        id: 2,
-        accompanyPostId: 1,
-        senderId: 2,
-        receiverId: 2,
-        content: '안녕하세요',
-        date: '2021-09-17',
-        isRead: false,
-      },
-      {
-        id: 3,
-        accompanyPostId: 1,
-        senderId: 3,
-        receiverId: 2,
-        content: '안녕하세요',
-        date: '2021-09-17',
-        isRead: false,
-      },
-      {
-        id: 4,
-        accompanyPostId: 1,
-        senderId: 4,
-        receiverId: 2,
-        content: '안녕하세요',
-        date: '2021-09-17',
-        isRead: false,
-      },
-      {
-        id: 5,
-        accompanyPostId: 1,
-        senderId: 5,
-        receiverId: 2,
-        content: '안녕하세요',
-        date: '2021-09-17',
-        isRead: false,
-      },
-      {
-        id: 6,
-        accompanyPostId: 1,
-        senderId: 6,
-        receiverId: 2,
-        content: '안녕하세요',
-        date: '2021-09-17',
-        isRead: false,
-      },
-      ...Array(5)
-        .fill(0)
-        .map((_, i) => ({
-          id: i + 7,
-          accompanyPostId: 1,
-          senderId: 7,
-          receiverId: 1,
-          content: '안녕하세요',
-          date: '2021-09-17',
-          isRead: false,
-        })),
+        createdAt: '2021-09-17',
+        hasUnRead: true,
+        myMessage: (i % 2) + MY_ID === MY_ID,
+      })),
     ],
   },
   getMessages(size: number, page: number) {
@@ -92,26 +41,27 @@ const message: MessageFixture = {
 
     return {
       ...this.current,
-      messages: this.current.messages.slice(start, end),
+      messages: this.current.messageResponses.slice(start, end),
     };
   },
   updateMessage(id: number) {
-    const index = this.current.messages.findIndex(message => message.id === id);
+    const index = this.current.messageResponses.findIndex(
+      message => message.id === id,
+    );
 
-    this.current.messages[index].isRead = true;
+    this.current.messageResponses[index].hasUnRead = false;
   },
-  createMessage(senderId, receiverId, content, accompanyPostId) {
+  createMessage(receiverId, content) {
     const newMessage = {
-      id: this.current.messages.length + 1,
-      accompanyPostId: accompanyPostId || 1,
-      senderId,
-      receiverId,
+      id: this.current.messageResponses.length + 1,
+      partner: { ...this.current.messageResponses[0].partner, id: receiverId },
       content,
-      date: new Date().toISOString(),
-      isRead: false,
+      createdAt: new Date().toISOString(),
+      hasUnRead: true,
+      myMessage: true,
     };
 
-    this.current.messages.unshift(newMessage);
+    this.current.messageResponses.unshift(newMessage);
   },
 };
 
@@ -138,19 +88,16 @@ const updateMessage = rest.patch(
   },
 );
 
-const getMessagesById = rest.get<Message[]>(
+const getMessagesById = rest.get<MessageWithPage>(
   `${BASE_URL}/messages/:id`,
   (req, res, ctx) => {
     const { id } = req.params;
-    const myId = 1; // TODO: 로그인 정보에서 가져오기
-    const page = req.url.searchParams.get('page') || 1;
-    const size = req.url.searchParams.get('size') || 10;
+    const size = req.url.searchParams.get('size');
+    const cursorId = req.url.searchParams.get('cursorId');
 
-    const data = message.getMessages(+size, +page);
-    const messages = data.messages.filter(
-      message =>
-        (message.senderId === +id && message.receiverId === +myId) ||
-        (message.senderId === +myId && message.receiverId === +id),
+    const data = message.getMessages(Number(size) || 10, Number(cursorId) || 1);
+    const messages = data.messageResponses.filter(
+      message => message.partner.id === +id,
     );
 
     const result = { ...data, messages };
@@ -162,15 +109,14 @@ const getMessagesById = rest.get<Message[]>(
 const createMessage = rest.post(
   `${BASE_URL}/messages`,
   async (req, res, ctx) => {
-    const { senderId, receiverId, content, accompanyPostId } =
-      (await req.json()) as Pick<
-        Message,
-        'senderId' | 'receiverId' | 'content' | 'accompanyPostId'
-      >;
+    const { partnerId, content } = (await req.json()) as {
+      partnerId: number;
+      content: string;
+    };
 
-    message.createMessage(senderId, receiverId, content, accompanyPostId);
+    message.createMessage(partnerId, content);
 
-    return res(ctx.status(201), ctx.json(message.current.messages));
+    return res(ctx.status(201), ctx.json(message.current.messageResponses));
   },
 );
 
