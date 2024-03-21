@@ -47,3 +47,14 @@ export const getPerformancesList = async (
 
   return data;
 };
+
+export const getCarouselPerformances = async () => {
+  const { data } = await api.get<PerformanceList>({
+    url: '/concerts',
+    params: {
+      size: 6,
+    },
+  });
+
+  return data;
+};
