@@ -43,13 +43,9 @@ const Wishes = ({ children }: WishesProps) => {
           </DialogHeader>
           <ScrollArea className="max-h-96">
             <ul className="flex flex-col gap-sm">
-              {wishes.map(wish => (
-                <Link key={wish.wishId} href={`/recruitment/${wish.wishId}`}>
-                  <Item
-                    title={wish.title}
-                    content={wish.content}
-                    date={wish.updatedAt}
-                    totalPeople={wish.totalPeople}
+              {wishes.map(({ wishId, updatedAt, ...props }) => (
+                <Link key={wishId} href={`/recruitment/${wishId}`}>
+                  <Item date={updatedAt} {...props} />
                   />
                 </Link>
               ))}
