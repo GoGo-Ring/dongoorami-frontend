@@ -13,7 +13,7 @@ import {
 import Spinner from '~/components/spinner';
 
 interface StyledCarouselProps {
-  performances: PerformanceInfoListItemApi[] | null;
+  performances: PerformanceInfoListItemApi[] | undefined;
 }
 
 const StyledCarousel = ({ performances }: StyledCarouselProps) => {

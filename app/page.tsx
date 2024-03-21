@@ -2,10 +2,10 @@
 
 import { useEffect, useState } from 'react';
 
-import { getPerformancesList } from '~/apis/performance';
 import { PerformanceInfoListItemApi } from '~/apis/scheme/performance';
 import CompanionRecruitmentList from '~/app/search/_component/companion-recruitment-list';
 import useInfiniteAccompanies from '~/hooks/infinite/useInfiniteAccompanies';
+import { useFetchCarouselPerformances } from '~/hooks/queries/useFetchCarouselPerformances';
 
 import MainFilter from './_components/MainFilter';
 import MobileFilter from './_components/MobileFilter';
@@ -13,8 +13,8 @@ import StyledCarousel from './_components/StyledCarousel';
 
 const Page = () => {
   const [performancesData, setPerformancesData] = useState<
-    PerformanceInfoListItemApi[] | null
-  >(null);
+    PerformanceInfoListItemApi[] | undefined
+  >(undefined);
 
   const {
     data: accompaniesData,
@@ -22,15 +22,13 @@ const Page = () => {
     hasNextPage: hasNextPageCompanion,
   } = useInfiniteAccompanies('', 9);
 
-  const fetchPerformances = async () => {
-    const { concertGetShortResponses } = await getPerformancesList('', 6, 0);
-
-    setPerformancesData(concertGetShortResponses);
-  };
+  const { data } = useFetchCarouselPerformances();
 
   useEffect(() => {
-    fetchPerformances();
-  }, []);
+    if (data) {
+      setPerformancesData(data.concertGetShortResponses);
+    }
+  }, [data]);
 
   return (
     <div className="flex flex-col ">
