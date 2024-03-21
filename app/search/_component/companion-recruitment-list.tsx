@@ -3,7 +3,7 @@ import {
   CompanionRecruitGender,
   CompanionRecruitStatus,
 } from '~/apis/scheme/accompany';
-import CompanionRecruitmentCard from '~/app/_components/CompanionRecruitmentCard';
+import CompanionRecruitmentCard from '~/app/_components/companion-recruitment-card';
 
 import useIntersectionObsever from './useIntersectionObserver';
 
