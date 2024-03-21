@@ -15,16 +15,20 @@ const FilterSearch = () => {
   const searchParams = useSearchParams();
   const params = searchParams.toString();
 
+  const searchWord = searchParams.get('q');
+
+  const query = searchWord ? `${searchWord}` : params;
+
   const {
     data: accompaniesData,
     fetchNextPage: fetchNextAccompaniesPage,
     hasNextPage: hasNextPageCompanion,
-  } = useInfiniteAccompanies(params);
+  } = useInfiniteAccompanies(query);
   const {
     data: performancesData,
     fetchNextPage: fetchNextPerformancesPage,
     hasNextPage: hasNextPagePerformance,
-  } = useInfinitePerformances(params);
+  } = useInfinitePerformances(query);
 
   const [isMoreCompanionInfinite, setIsMoreCompanionInfinite] = useState(false);
   const [isMorePerformanceInfinite, setIsMorePerformanceInfinite] =
@@ -54,7 +58,7 @@ const FilterSearch = () => {
   return (
     <div className="relative flex  h-fit">
       <div className=" box-border py-5">
-        <FilterTabs className="sticky top-24 -z-10" />
+        <FilterTabs className="sticky top-24" />
       </div>
       <div className="flex shrink-0 flex-col gap-8 py-10 sm:w-[328px] md:w-[400px] lg:w-[700px]">
         {performancesData && (
