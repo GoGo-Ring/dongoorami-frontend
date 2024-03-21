@@ -22,7 +22,7 @@ export interface CompanionRequest
 
 export interface Profile {
   id: number;
-  name: string;
+  nickname: string;
   profileImage: string;
   gender: '남자' | '여자';
   age: number;
