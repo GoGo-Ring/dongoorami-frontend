@@ -22,7 +22,7 @@ const PostStatus = ({
 
   return (
     <div className="flex items-center gap-1.5">
-      <Badge className=" rounded-md">{status}</Badge>
+      <Badge className="text-nowrap rounded-md px-1">{status}</Badge>
       <p className="text-base font-medium text-gray-400">{formattedDate}</p>
       <Icon iconName="chat" size="small" className=" fill-gray-400" />
       <p className="text-base font-medium text-gray-400">{waitingCount}</p>

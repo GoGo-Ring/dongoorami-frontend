@@ -22,6 +22,11 @@ const ApplyList = ({ isWriter, accompanyPostId }: ApplyListProps) => {
     return null;
   }
 
+  const handleConfirmApply = (id: string) => () => {
+    confirm('동행 신청을 수락하시겠습니까? 수락 취소는 불가능합니다.') &&
+      confirmApply(id);
+  };
+
   return (
     <ul className="divide-y-2">
       <h2 className="mb-4 text-xl font-semibold">신청자 목록</h2>
@@ -40,7 +45,7 @@ const ApplyList = ({ isWriter, accompanyPostId }: ApplyListProps) => {
             >
               {!isAccompanyConfirmedComment && (
                 <Button
-                  onClick={() => confirmApply(String(id))}
+                  onClick={handleConfirmApply(String(id))}
                   variant="link"
                   className=" self-end text-gray-700"
                 >
