@@ -14,6 +14,7 @@ const useMutationUpdateCompanyPost = (accompanyPostId: string) => {
       formData: FormData;
     }) => updateCompanion(accompanyPostId, formData),
     onSettled: () => {
+      queryClient.invalidateQueries({ queryKey: ['companions'] });
       queryClient.invalidateQueries({
         queryKey: ['companionPost', accompanyPostId],
       });

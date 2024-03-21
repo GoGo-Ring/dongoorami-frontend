@@ -124,7 +124,7 @@ module.exports = {
         'page-min': '360px',
       },
       aspectRatio: {
-        carousel: '3/1',
+        carousel: '1/1',
       },
     },
   },

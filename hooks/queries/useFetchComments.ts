@@ -8,6 +8,7 @@ const useFetchComments = (accompanyPostId: string) => {
   const query = useSuspenseQuery({
     queryKey: ['comments', accompanyPostId],
     queryFn: () => getComments(accompanyPostId),
+    select: data => data.accompanyCommentInfos,
   });
 
   return query;

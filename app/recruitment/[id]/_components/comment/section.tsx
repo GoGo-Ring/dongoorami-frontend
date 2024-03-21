@@ -6,27 +6,28 @@ import {
 } from '~/app/recruitment/[id]/_components/comment';
 import useMutationComment from '~/hooks/mutations/useMutationComment';
 import useFetchComments from '~/hooks/queries/useFetchComments';
+import { cn } from '~/libs/utils';
 
-interface Props {
+interface Props extends React.HTMLProps<HTMLDivElement> {
   accompanyPostId: string;
 }
 
-const CommentSection = ({ accompanyPostId }: Props) => {
+const CommentSection = ({ accompanyPostId, className }: Props) => {
   const { data: comments } = useFetchComments(accompanyPostId);
-  const { length } = comments;
+  const notAppliedComments = comments?.filter(
+    ({ isAccompanyApplyComment }) => !isAccompanyApplyComment,
+  );
 
-  const { mutate: createComment, isPending } = useMutationComment(
-    accompanyPostId,
-    '1',
-  ); // TODO: userId
+  const { mutate: createComment, isPending } =
+    useMutationComment(accompanyPostId);
 
-  const handleCreateComment = (content: string) => {
-    createComment({ content });
-  };
+  const handleCreateComment = (content: string) => createComment({ content });
 
   return (
-    <div className="w-full">
-      <h2 className="mb-4 text-xl font-semibold">댓글 {length}개</h2>
+    <div className={cn('flex w-full flex-col', className)}>
+      <h2 className="mb-4 text-xl font-semibold">
+        댓글 {notAppliedComments.length}개
+      </h2>
       <CommentForm
         accompanyPostId={accompanyPostId}
         commentId="base"

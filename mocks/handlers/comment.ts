@@ -3,11 +3,18 @@ import { rest } from 'msw';
 import { BASE_URL } from '~/apis';
 import { Comment } from '~/apis/scheme/comment';
 
+const currentUserId = '14';
+
 interface CommentFixture {
   current: Comment[];
   getComments(): Comment[] | undefined;
-  createComment(userId: string, content: string): void;
+  createComment(
+    userId: string,
+    content: string,
+    isAccompanyApplyComment?: boolean,
+  ): void;
   updateComment(userId: string, content: string): void;
+  updateCommentInfos(userId: string, infos: Partial<Comment>): void;
   deleteComment(userId: string): void;
 }
 const comment: CommentFixture = {
@@ -15,7 +22,7 @@ const comment: CommentFixture = {
     {
       id: 11,
       memberProfile: {
-        id: 14,
+        id: +currentUserId,
         nickname: '김뫄뫄',
         profileImage: 'https://picsum.photos/200?random=1',
         gender: '여자',
@@ -25,6 +32,7 @@ const comment: CommentFixture = {
       },
       content: '가는 길만 동행해도 괜찮을까요!?',
       isAccompanyApplyComment: false,
+      isAccompanyConfirmedComment: false,
       createdAt: '2024-03-13T06:24:20.767104',
       updatedAt: '2024-03-13T06:24:20.767104',
     },
@@ -41,36 +49,41 @@ const comment: CommentFixture = {
       },
       content: '물론이죠! 어디로 가시나요?',
       isAccompanyApplyComment: false,
+      isAccompanyConfirmedComment: false,
       createdAt: '2024-03-13T06:30:45.123456',
       updatedAt: '2024-03-13T06:30:45.123456',
     },
-    {
-      id: 13,
-      memberProfile: {
-        id: 14,
-        nickname: '김뫄뫄',
-        profileImage: 'https://picsum.photos/200?random?=1',
-        gender: '여자',
-        age: 24,
-        introduction: '안녕하세요~',
-        currentMember: true,
+    ...Array.from<unknown, Comment>(
+      {
+        length: 4,
       },
-      content: '서울에서 부산까지 가려고 해요. 같이 가시겠어요?',
-      isAccompanyApplyComment: false,
-      createdAt: '2024-03-13T06:35:20.789012',
-      updatedAt: '2024-03-13T06:35:20.789012',
-    },
+      (_, index) => ({
+        id: 13 + index,
+        memberProfile: {
+          id: 15 + index,
+          nickname: `김 ${index}`,
+          profileImage: `https://picsum.photos/200?random?=${index + currentUserId}`,
+          gender: index % 2 === 0 ? '여자' : '남자',
+          age: 24 + index,
+          introduction: '안녕하세요~',
+          currentMember: currentUserId === String(15 + index),
+        },
+        content: '',
+        isAccompanyApplyComment: true,
+        isAccompanyConfirmedComment: false,
+        createdAt: '2024-03-13T06:35:20.789012',
+        updatedAt: '2024-03-13T06:35:20.789012',
+      }),
+    ),
   ],
 
   getComments() {
     return this.current;
   },
 
-  createComment(userId, content) {
-    const randomId = Math.floor(Math.random() * 1000);
-
+  createComment(userId, content, isAccompanyApplyComment = false) {
     const newComment = {
-      id: randomId,
+      id: this.current.length + 17,
       memberProfile: {
         id: Number(userId),
         nickname: '김뫄뫄',
@@ -78,10 +91,11 @@ const comment: CommentFixture = {
         gender: '여자' as const,
         age: 24,
         introduction: '안녕하세요~',
-        currentMember: true,
+        currentMember: currentUserId === userId,
       },
       content,
-      isAccompanyApplyComment: false,
+      isAccompanyApplyComment,
+      isAccompanyConfirmedComment: false,
       createdAt: new Date().toISOString(),
       updatedAt: new Date().toISOString(),
     };
@@ -98,6 +112,18 @@ const comment: CommentFixture = {
       targetComment.updatedAt = new Date().toISOString();
     }
   },
+  updateCommentInfos(commentId, infos) {
+    const targetIndex = this.current.findIndex(
+      comment => comment.id === Number(commentId),
+    );
+
+    if (targetIndex) {
+      this.current.splice(targetIndex, 1, {
+        ...this.current[targetIndex],
+        ...infos,
+      });
+    }
+  },
   deleteComment(commentId) {
     this.current = this.current.filter(
       comment => comment.id !== Number(commentId),
@@ -106,7 +132,7 @@ const comment: CommentFixture = {
 };
 
 const getComments = rest.get<Comment[]>(
-  `${BASE_URL}/comments/:accompanyPostId`,
+  `${BASE_URL}/accompanies/comments/:accompanyPostId`,
   (req, res, ctx) => {
     const { accompanyPostId } = req.params;
 
@@ -119,39 +145,30 @@ const getComments = rest.get<Comment[]>(
 );
 
 const createComment = rest.post<Comment>(
-  `${BASE_URL}/comments/:accompanyPostId`,
+  `${BASE_URL}/accompanies/comments/:accompanyPostId`,
   async (req, res, ctx) => {
     const { accompanyPostId } = req.params;
-    const { content, userId } = (await req.json()) as {
+    const { content } = (await req.json()) as {
       content: string;
-      userId: string;
     };
 
-    if (
-      typeof accompanyPostId !== 'string' ||
-      typeof content !== 'string' ||
-      typeof userId !== 'string'
-    ) {
+    if (typeof accompanyPostId !== 'string' || typeof content !== 'string') {
       return res(ctx.status(400));
     }
 
-    comment.createComment(userId, content);
+    comment.createComment(currentUserId, content);
 
     return res(ctx.status(201), ctx.json(content));
   },
 );
 
 const updateComment = rest.patch<Comment>(
-  `${BASE_URL}/comments/:accompanyPostId/:commentId`,
+  `${BASE_URL}/accompanies/comments/:commentId`,
   async (req, res, ctx) => {
-    const { accompanyPostId, commentId } = req.params;
+    const { commentId } = req.params;
     const { content } = (await req.json()) as { content: string };
 
-    if (
-      typeof accompanyPostId !== 'string' ||
-      typeof commentId !== 'string' ||
-      typeof content !== 'string'
-    ) {
+    if (typeof commentId !== 'string' || typeof content !== 'string') {
       return res(ctx.status(400));
     }
 
@@ -162,11 +179,11 @@ const updateComment = rest.patch<Comment>(
 );
 
 const deleteComment = rest.delete<Comment>(
-  `${BASE_URL}/comments/:accompanyPostId/:commentId`,
+  `${BASE_URL}/accompanies/comments/:commentId`,
   async (req, res, ctx) => {
-    const { accompanyPostId, commentId } = req.params;
+    const { commentId } = req.params;
 
-    if (typeof accompanyPostId !== 'string' || typeof commentId !== 'string') {
+    if (typeof commentId !== 'string') {
       return res(ctx.status(400));
     }
 
@@ -176,6 +193,41 @@ const deleteComment = rest.delete<Comment>(
   },
 );
 
-const handlers = [getComments, createComment, updateComment, deleteComment];
+const createAcompanyApplyComment = rest.post(
+  `${BASE_URL}/accompanies/:accompanyPostId`,
+  async (req, res, ctx) => {
+    const { accompanyPostId } = req.params;
+
+    if (typeof accompanyPostId !== 'string') {
+      return res(ctx.status(400));
+    }
+
+    comment.createComment(currentUserId, '동행 신청을 하였습니다.', true);
+
+    return res(ctx.status(201));
+  },
+);
+
+const confirmCompanion = rest.patch(
+  `${BASE_URL}/accompanies/:commentId`,
+  (req, res, ctx) => {
+    const { commentId } = req.params;
+
+    comment.updateCommentInfos(String(commentId), {
+      isAccompanyConfirmedComment: true,
+    });
+
+    return res(ctx.status(204));
+  },
+);
+
+const handlers = [
+  getComments,
+  createComment,
+  updateComment,
+  deleteComment,
+  createAcompanyApplyComment,
+  confirmCompanion,
+];
 
 export default handlers;

@@ -39,9 +39,7 @@ const MessageWriteList = ({
             name={isMyId(senderId) ? myName : contacterName}
             image={isMyId(senderId) ? myProfileImage : contacterProfileImage}
           />
-          <p className="line-clamp-2 break-words hover:block hover:overflow-visible">
-            {content}
-          </p>
+          <p className="break-words p-4">{content}</p>
           <div className="flex gap-4 self-end text-sm ">
             <p className="text-gray-300">
               {getDateWithTime(new Date(date), 'yyyy.mm.dd', 'hh:mm:ss')}

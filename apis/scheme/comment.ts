@@ -11,6 +11,7 @@ export interface Comment {
   };
   content: string;
   isAccompanyApplyComment: boolean;
+  isAccompanyConfirmedComment: boolean;
   createdAt: string;
   updatedAt: string;
 }

@@ -6,11 +6,10 @@ interface CommentData {
   commentId: string;
 }
 
-const useMutationDeleteComment = (accompanyPostId: string) => {
+const useMutationDeleteComment = () => {
   const queryClient = useQueryClient();
   const mutation = useMutation({
-    mutationFn: ({ commentId }: CommentData) =>
-      deleteComment(accompanyPostId, commentId),
+    mutationFn: ({ commentId }: CommentData) => deleteComment(commentId),
     onSettled: () => {
       queryClient.invalidateQueries({ queryKey: ['comments'] });
     },
