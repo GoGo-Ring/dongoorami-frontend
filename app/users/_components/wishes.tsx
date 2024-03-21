@@ -46,7 +46,6 @@ const Wishes = ({ children }: WishesProps) => {
               {wishes.map(({ wishId, updatedAt, ...props }) => (
                 <Link key={wishId} href={`/recruitment/${wishId}`}>
                   <Item date={updatedAt} {...props} />
-                  />
                 </Link>
               ))}
               <li ref={ref} />
