@@ -16,6 +16,8 @@ import { getDate } from '~/utils/dateFormatter';
 import { calculatePage } from '../_utils/pagination';
 import { MESSAGE_HEADER, MESSAGE_SIZE, getRead } from '../constatns';
 
+const ALL_PAGE = 10; // INFO: 임시로 10개로 설정,, 확인부탁드립니다.
+
 const MainMessage = () => {
   const router = useRouter();
   const page = useSearchParams().get('page') || '1';
@@ -23,7 +25,7 @@ const MainMessage = () => {
   const { data } = useFetchMessage(MESSAGE_SIZE, +page);
   const { mutate } = useMutationMessage();
 
-  if (!data || !data.messages) {
+  if (!data || !data.messageResponses) {
     return null;
   }
 
@@ -64,23 +66,23 @@ const MainMessage = () => {
           </tr>
         </thead>
         <tbody className="[&_tr:last-child]:border-0">
-          {data.messages?.map(message => (
+          {data.messageResponses?.map(message => (
             <tr
               key={message.id}
               className="border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted"
               onClick={() => handleClickMessage(message.id)}
             >
               <td className="cursor-pointer p-4 align-middle font-medium [&:has([role=checkbox])]:pr-0">
-                {message.senderId}
+                {message.partner.nickname}
               </td>
               <td className="cursor-pointer p-4 align-middle font-medium [&:has([role=checkbox])]:pr-0">
                 {message.content}
               </td>
               <td className="cursor-pointer p-4 align-middle font-medium [&:has([role=checkbox])]:pr-0">
-                {getDate(new Date(message.date), 'yyyy.mm.dd')}
+                {getDate(new Date(message.createdAt), 'yyyy.mm.dd')}
               </td>
               <td className="cursor-pointer p-4 align-middle font-medium [&:has([role=checkbox])]:pr-0">
-                {getRead(message.isRead)}
+                {getRead(!message.hasUnRead)}
               </td>
             </tr>
           ))}
@@ -93,7 +95,7 @@ const MainMessage = () => {
             <PaginationLink
               href={{
                 query: {
-                  page: calculatePage(+page - 1, data.allPage),
+                  page: calculatePage(+page - 1, ALL_PAGE),
                 },
               }}
             >
@@ -104,7 +106,7 @@ const MainMessage = () => {
               />
             </PaginationLink>
           </PaginationItem>
-          {Array.from({ length: data.allPage }, (_, index) => (
+          {Array.from({ length: ALL_PAGE }, (_, index) => (
             <PaginationItem key={index}>
               <PaginationLink href={{ query: { page: index + 1 } }}>
                 {index + 1}
@@ -115,7 +117,7 @@ const MainMessage = () => {
             <PaginationLink
               href={{
                 query: {
-                  page: calculatePage(+page + 1, data.allPage),
+                  page: calculatePage(+page + 1, ALL_PAGE),
                 },
               }}
             >
