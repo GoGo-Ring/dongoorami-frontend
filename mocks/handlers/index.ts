@@ -1,6 +1,7 @@
 import accompany from './accompany';
 import accompanyDetail from './accompanyDetail';
 import accompanyPerformances from './accompanyPerformances';
+import accompanyReviews from './accompanyReview';
 import comment from './comment';
 import members from './members';
 import message from './message';
@@ -15,4 +16,5 @@ export const handlers = [
   ...accompanyDetail,
   ...accompanyPerformances,
   ...reviews,
+  ...accompanyReviews,
 ];
