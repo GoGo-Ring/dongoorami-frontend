@@ -104,3 +104,8 @@ export const getPerformanceInfos = async (keyword: string) => {
 
   return data;
 };
+
+export const patchCloseAccompanyStatus = async (accompanyPostId: string) =>
+  await api.patch({
+    url: `/accompanies/posts/${accompanyPostId}/status`,
+  });
