@@ -9,7 +9,7 @@ import Icon from '../icon';
 
 const Header = () => {
   return (
-    <header className="fixed top-0 w-full border-b border-gray-200 bg-background">
+    <header className="fixed top-0 z-10 w-full border-b border-gray-200 bg-background">
       <div className="mx-auto grid h-16 min-w-page-min max-w-page-max grid-cols-3 items-center px-lg sm:grid-cols-[auto,1fr,auto] sm:gap-3">
         <MainNav />
         <MobileNav />
