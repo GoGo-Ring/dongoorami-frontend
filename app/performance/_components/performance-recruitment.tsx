@@ -1,13 +1,7 @@
 'use client';
 
-interface PerformanceRecruitmentProps {
-  userId: string;
-  date: string;
-  seenCount: number;
-  commentCount: number;
-  title: string;
-  content: string;
-}
+import { PerformanceRecruitment } from '~/apis/scheme/accompany';
+
 const PerformanceRecruitment = ({
   userId,
   date,
@@ -15,7 +9,7 @@ const PerformanceRecruitment = ({
   commentCount,
   title,
   content,
-}: PerformanceRecruitmentProps) => {
+}: PerformanceRecruitment) => {
   return (
     <div className="relative flex flex-col gap-1 rounded-lg border border-gray-200 p-4">
       <div className="flex gap-3 text-gray-300 sm:justify-between md:divide-x lg:divide-x">
