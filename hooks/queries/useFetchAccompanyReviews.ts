@@ -1,12 +1,19 @@
 import { useQuery } from '@tanstack/react-query';
 
 import { getAccompanyList } from '~/apis/companion';
-import { PerformanceRecruitment } from '~/apis/scheme/accompany';
+import {
+  AccompaniesPostsConcerts,
+  AccompanyPostConcertResponses,
+} from '~/apis/scheme/performance';
 
-const useFetchAccompanyCommentList = (concertId: string) => {
+const useFetchAccompanyCommentList = ({
+  concertId,
+  size = 10,
+}: AccompaniesPostsConcerts) => {
   return useQuery({
-    queryKey: ['accompanyCommentList', concertId],
-    queryFn: () => getAccompanyList<PerformanceRecruitment[]>(concertId),
+    queryKey: ['accompaniesPostsConcerts', concertId],
+    queryFn: () =>
+      getAccompanyList<AccompanyPostConcertResponses>({ concertId, size }),
   });
 };
 
