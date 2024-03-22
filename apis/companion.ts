@@ -1,5 +1,11 @@
-import { AccompanyPostInfoList } from './scheme/accompany';
-import { AccompaniesPostsConcerts } from './scheme/performance';
+import {
+  AccompanyPostInfoList,
+  CompanionRecruitmentCardApi,
+} from './scheme/accompany';
+import {
+  AccompaniesPostsConcerts,
+  PerformanceInfoListItemApi,
+} from './scheme/performance';
 
 import api from '.';
 
@@ -10,17 +16,23 @@ export const getCompanions = async () => {
 
   return data;
 };
-
-export const getCompanionsList = async (
-  searchParams: string,
-  size: number,
-  lastId: number,
-) => {
+interface accompanySearchListParam {
+  searchParams?: string;
+  size: number;
+  lastId?: number;
+  keyword?: string;
+}
+export const getCompanionsList = async ({
+  searchParams,
+  size,
+  lastId,
+  keyword,
+}: accompanySearchListParam) => {
   const cursorId = lastId ? lastId : '';
 
   const { data } = await api.get<AccompanyPostInfoList>({
     url: `/accompanies/posts?${searchParams}`,
-    params: { size, cursorId },
+    params: { size, cursorId, keyword },
   });
 
   return data;
@@ -36,4 +48,35 @@ export const getAccompanyList = async <T>({
   });
 
   return data;
+};
+
+interface CompanionsAccompanyList {
+  keyword: string;
+  size: number;
+  lastId?: number;
+}
+
+interface CompanionsAccompanySearchInfoList {
+  hasNextAccompanyPost: boolean;
+  hasNextConcert: boolean;
+  accompanyPostInfos: CompanionRecruitmentCardApi[];
+  concertGetShortResponses: PerformanceInfoListItemApi[];
+}
+
+export const getCompanionsAccompanyList = async ({
+  keyword,
+  size,
+  lastId,
+}: CompanionsAccompanyList) => {
+  const cursorId = lastId ? lastId : '';
+
+  const { data } = await api.get<CompanionsAccompanySearchInfoList>({
+    url: '/accompanies-concerts',
+    params: { keyword, size, cursorId },
+  });
+
+  return {
+    hasNext: data.hasNextAccompanyPost,
+    accompanyPostInfos: data.accompanyPostInfos,
+  };
 };
