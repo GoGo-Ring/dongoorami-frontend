@@ -24,3 +24,11 @@ export const getCompanionsList = async (
 
   return data;
 };
+
+export const getAccompanyList = async <T>(id: string) => {
+  const { data } = await api.get<T>({
+    url: `/concerts/accompany/${id}`,
+  });
+
+  return data;
+};
