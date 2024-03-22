@@ -11,7 +11,7 @@ const PerformanceRecruitment = ({
   content,
 }: PerformanceRecruitment) => {
   return (
-    <div className="relative flex flex-col gap-1 rounded-lg border border-gray-200 p-4">
+    <div className="relative flex w-full flex-col gap-1 rounded-lg border border-gray-200 p-4">
       <div className="flex gap-3 text-gray-300 sm:justify-between md:divide-x lg:divide-x">
         <span>{userId}</span>
         <span className="pl-3 sm:absolute sm:bottom-4 sm:right-4">{date}</span>

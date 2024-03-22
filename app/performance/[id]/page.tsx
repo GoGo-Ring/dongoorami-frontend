@@ -172,7 +172,7 @@ const Page = ({ params }: Props) => {
             </div>
           </TabsContent>
           <TabsContent value="recruitment">
-            <div className="m-auto flex w-fit flex-col justify-center gap-6">
+            <div className="m-auto flex w-full flex-col justify-center gap-6">
               {performanceRecruitmentList?.map((performance, i) => (
                 <PerformanceRecruitment {...performance} key={i} />
               ))}
