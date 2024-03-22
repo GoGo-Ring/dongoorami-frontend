@@ -1,7 +1,7 @@
 import { PerformanceList, StatusType } from '~/apis/scheme/performance';
+import useIntersectionObsever from '~/hooks/useIntersectionObserver';
 
 import PerformanceInfoCard from './performance-info-card';
-import useIntersectionObsever from '~/hooks/useIntersectionObserver';
 
 interface Data {
   pages: PerformanceList[];
