@@ -33,7 +33,7 @@ const Page = ({ params }: Props) => {
     params.id,
   );
 
-  const { data: comments, isFetching } = useFetchComments(params.id);
+  const { data: comments } = useFetchComments(params.id);
   const { data, isPending, isError, error, refetch } = useFetchCompanionPost(
     params.id,
     true,
@@ -50,15 +50,15 @@ const Page = ({ params }: Props) => {
     );
   }
 
-  if (!data || isPending || isFetching) {
+  if (!data || isPending) {
     return <Loading />;
   }
 
-  const confirmedApplies = comments.filter(
+  const confirmedApplies = comments?.filter(
     ({ isAccompanyConfirmedComment }) => isAccompanyConfirmedComment,
   );
 
-  const isApplied = comments.some(
+  const isApplied = comments?.some(
     ({ memberProfile: { currentMember }, isAccompanyApplyComment }) =>
       currentMember && isAccompanyApplyComment,
   );

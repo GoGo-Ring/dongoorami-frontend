@@ -13,20 +13,19 @@ const genderMap = {
 } as const;
 
 const companionFormValueToRequest = (
-  companionFormValue: CompanionFormValue,
+  datas: CompanionFormValue,
 ): RequestAcompaniPost => ({
-  concertId: Number(companionFormValue.performanceId),
-  title: companionFormValue.title,
-  content: companionFormValue.content,
-  endDate: companionFormValue.performanceDate.split('~')[1] || '',
-  endAge: Number(companionFormValue.maxAge) || 0,
-  gender:
-    genderMap[companionFormValue.gender as keyof typeof genderMap] || '무관',
-  region: companionFormValue.region || '',
-  startDate: companionFormValue.performanceDate.split('~')[0] || '',
-  startAge: Number(companionFormValue.minAge) || 0,
-  totalPeople: Number(companionFormValue.participantCount.slice(0, -1)) || 1,
-  purposes: companionFormValue.purposes.filter(
+  concertId: Number(datas.performanceId),
+  title: datas.title,
+  content: datas.content,
+  endDate: datas.performanceDate.split('~')[1] || '',
+  endAge: Number(datas.age.split('~')[1]),
+  gender: genderMap[datas.gender as keyof typeof genderMap] || '무관',
+  region: datas.region || '',
+  startDate: datas.performanceDate.split('~')[0] || '',
+  startAge: Number(datas.age.split('~')[0]),
+  totalPeople: Number(datas.participantCount.slice(0, -1)) || 1,
+  purposes: datas.purposes.filter(
     (purpose): purpose is '숙박' | '이동' | '관람' =>
       ['숙박', '이동', '관람'].includes(purpose),
   ),
