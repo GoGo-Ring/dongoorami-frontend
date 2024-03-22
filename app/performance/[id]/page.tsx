@@ -24,8 +24,9 @@ const Page = ({ params }: Props) => {
 
   const { data, isLoading } = useFetchConcerts(paramsId);
   const { data: performanceReviewList } = useFetchConcertReviews(paramsId);
-  const { data: performanceRecruitmentList } =
-    useFetchAccompanyCommentList(paramsId);
+  const { data: performanceRecruitmentList } = useFetchAccompanyCommentList({
+    concertId: paramsId,
+  });
 
   if (isLoading || !data) {
     return;
@@ -173,9 +174,11 @@ const Page = ({ params }: Props) => {
           </TabsContent>
           <TabsContent value="recruitment">
             <div className="m-auto flex w-full flex-col justify-center gap-6">
-              {performanceRecruitmentList?.map((performance, i) => (
-                <PerformanceRecruitment {...performance} key={i} />
-              ))}
+              {performanceRecruitmentList?.accompanyPostConcertResponses.map(
+                (performance, i) => (
+                  <PerformanceRecruitment {...performance} key={i} />
+                ),
+              )}
             </div>
           </TabsContent>
           <TabsContent value="review">
