@@ -1,4 +1,5 @@
 import { AccompanyPostInfoList } from './scheme/accompany';
+import { AccompaniesPostsConcerts } from './scheme/performance';
 
 import api from '.';
 
@@ -25,9 +26,13 @@ export const getCompanionsList = async (
   return data;
 };
 
-export const getAccompanyList = async <T>(id: string) => {
+export const getAccompanyList = async <T>({
+  concertId,
+  size,
+}: AccompaniesPostsConcerts) => {
   const { data } = await api.get<T>({
-    url: `/concerts/accompany/${id}`,
+    url: `/accompanies/posts/concerts/${concertId}`,
+    params: { size },
   });
 
   return data;
