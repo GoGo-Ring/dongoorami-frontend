@@ -1,3 +1,5 @@
+import { PerformanceRecruitment } from './accompany';
+
 export type StatusType = '공연 예정' | '공연 중' | '공연 종료';
 
 interface Performance {
@@ -62,4 +64,14 @@ export interface ConcertReview {
 export interface ConcertReviewList {
   hasNext: boolean;
   concertReviewGetResponses: ConcertReview[];
+}
+
+export interface AccompaniesPostsConcerts {
+  concertId: string;
+  size?: number;
+}
+
+export interface AccompanyPostConcertResponses {
+  hasNext: false;
+  accompanyPostConcertResponses: PerformanceRecruitment[];
 }
