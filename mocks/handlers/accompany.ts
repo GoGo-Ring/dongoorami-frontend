@@ -5,9 +5,9 @@ import {
   Companion,
   CompanionDetail,
   CompanionRequest,
-  PerformanceRecruitment,
   Profile,
 } from '~/apis/scheme/accompany';
+import { AccompanyPostConcertResponses } from '~/apis/scheme/performance';
 
 interface AccompanyFixture {
   current: CompanionDetail[];
@@ -169,19 +169,22 @@ const getCompanions = rest.get<Companion[]>(
   },
 );
 
-const accompanyRecruitmentList = [
-  ...Array.from({ length: 5 }, i => ({
-    title: `${i}서울 같이 갈 울싼 사람 구합니다~~`,
-    userId: '김뫄뫄',
-    date: '2024-03-18T01:17:39.692638',
-    content: '고고링 백걸즈의 스프링 탐방기',
-    seenCount: 0,
-    commentCount: 0,
-  })),
-];
+const accompanyRecruitmentList = {
+  hasNext: false,
+  accompanyPostConcertResponses: [
+    ...Array.from({ length: 5 }, i => ({
+      title: `${i}서울 같이 갈 울싼 사람 구합니다~~`,
+      nickname: '김뫄뫄',
+      updatedAt: '2024.03.22',
+      content: '고고링 백걸즈의 스프링 탐방기',
+      viewCount: 0,
+      commentCount: 0,
+    })),
+  ],
+};
 
-const getConcertAccompanyList = rest.get<PerformanceRecruitment[]>(
-  `${BASE_URL}/concerts/accompany/:id`,
+const getConcertAccompanyList = rest.get<AccompanyPostConcertResponses>(
+  `${BASE_URL}/accompanies/posts/concerts/:id`,
   (_req, res, ctx) => {
     return res(ctx.status(200), ctx.json(accompanyRecruitmentList));
   },
