@@ -5,6 +5,7 @@ import {
   Companion,
   CompanionDetail,
   CompanionRequest,
+  PerformanceRecruitment,
   Profile,
 } from '~/apis/scheme/accompany';
 
@@ -168,6 +169,24 @@ const getCompanions = rest.get<Companion[]>(
   },
 );
 
-const memberHandlers = [getCompanions];
+const accompanyRecruitmentList = [
+  ...Array.from({ length: 5 }, i => ({
+    title: `${i}서울 같이 갈 울싼 사람 구합니다~~`,
+    userId: '김뫄뫄',
+    date: '2024-03-18T01:17:39.692638',
+    content: '고고링 백걸즈의 스프링 탐방기',
+    seenCount: 0,
+    commentCount: 0,
+  })),
+];
 
-export default memberHandlers;
+const getConcertAccompanyList = rest.get<PerformanceRecruitment[]>(
+  `${BASE_URL}/concerts/accompany/:id`,
+  (_req, res, ctx) => {
+    return res(ctx.status(200), ctx.json(accompanyRecruitmentList));
+  },
+);
+
+const accompanyHandlers = [getCompanions, getConcertAccompanyList];
+
+export default accompanyHandlers;
