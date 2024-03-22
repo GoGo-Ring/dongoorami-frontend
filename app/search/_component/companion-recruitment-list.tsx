@@ -4,7 +4,6 @@ import {
   CompanionRecruitStatus,
 } from '~/apis/scheme/accompany';
 import CompanionRecruitmentCard from '~/app/_components/CompanionRecruitmentCard';
-
 import useIntersectionObsever from '~/hooks/useIntersectionObserver';
 
 interface CompanionRecruitmentListProps {
