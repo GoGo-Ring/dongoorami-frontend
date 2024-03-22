@@ -2,6 +2,7 @@
 
 import { useRouter } from 'next/navigation';
 import { MouseEvent, useCallback, useEffect, useState } from 'react';
+import { toast } from 'sonner';
 
 import { ReviewTarget } from '~/apis/scheme/accompanyReview';
 import { Button } from '~/components/button';
@@ -32,7 +33,7 @@ const Page = ({ params }: Props) => {
 
   const { data: targetUsers } =
     useFetchAccompanyReviews<ReviewTarget>(paramsId);
-  const { mutate } = useMutationUpdateAccompanyReviews();
+  const { mutate, isPending, isSuccess } = useMutationUpdateAccompanyReviews();
 
   const [reviews, setReviews] = useState<PageUsers[]>();
 
@@ -72,6 +73,7 @@ const Page = ({ params }: Props) => {
       { data, id: paramsId },
       {
         onSuccess: () => {
+          toast.success('리뷰 제출이 완료되었습니다.');
           router.replace('/');
         },
       },
@@ -109,7 +111,11 @@ const Page = ({ params }: Props) => {
         />
       ))}
 
-      <Button onClick={handleSubmit} type="submit">
+      <Button
+        onClick={handleSubmit}
+        type="submit"
+        disabled={isPending || isSuccess}
+      >
         제출 완료!
       </Button>
     </form>
