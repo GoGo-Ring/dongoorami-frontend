@@ -77,10 +77,11 @@ export interface AccompanyPostInfoList {
 }
 
 export interface PerformanceRecruitment {
-  userId: string;
-  date: string;
-  seenCount: number;
-  commentCount: number;
+  id: number;
+  nickname: string;
   title: string;
   content: string;
+  viewCount: number;
+  commentCount: number;
+  updatedAt: string;
 }
