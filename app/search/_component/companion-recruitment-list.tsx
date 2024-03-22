@@ -1,5 +1,5 @@
 import {
-  AccompanyPostInfoList,
+  AccompanyPostInfoListPage,
   CompanionRecruitGender,
   CompanionRecruitStatus,
 } from '~/apis/scheme/accompany';
@@ -8,7 +8,7 @@ import CompanionRecruitmentCard from '~/app/_components/CompanionRecruitmentCard
 import useIntersectionObsever from './useIntersectionObserver';
 
 interface CompanionRecruitmentListProps {
-  data: { pages: AccompanyPostInfoList[] };
+  data: AccompanyPostInfoListPage;
   isInfinite?: boolean;
   handleFetchNextPage: () => void;
   hasNextPage: boolean;
