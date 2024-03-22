@@ -209,7 +209,11 @@ const Page = () => {
           />
         </div>
         <div className="flex gap-8 px-4">
-          <Button className="w-full bg-secondary text-secondary-foreground">
+          <Button
+            className="w-full bg-secondary text-secondary-foreground"
+            type="button"
+            onClick={() => router.back()}
+          >
             취소
           </Button>
           <Button
