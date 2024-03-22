@@ -4,10 +4,25 @@ import { getPerformancesList } from '~/apis/performance';
 
 const SIZE = 6;
 
-export const useInfinitePerformances = (params: string) => {
+interface accompaniesParam {
+  searchParams: string;
+  keyword?: string;
+  size?: number;
+}
+export const useInfinitePerformances = ({
+  searchParams,
+  keyword,
+  size = SIZE,
+}: accompaniesParam) => {
   return useInfiniteQuery({
-    queryKey: ['performances', params],
-    queryFn: ({ pageParam }) => getPerformancesList(params, SIZE, pageParam),
+    queryKey: ['performances', searchParams, keyword],
+    queryFn: ({ pageParam }) =>
+      getPerformancesList({
+        searchParams,
+        size,
+        lastId: pageParam,
+        keyword,
+      }),
     initialPageParam: 0,
     getNextPageParam: lastPage => {
       const { concertGetShortResponses } = lastPage;
