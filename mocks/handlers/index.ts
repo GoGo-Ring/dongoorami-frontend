@@ -1,15 +1,11 @@
-import accompanyDetail from './accompanyDetail';
-import accompanyPerformances from './accompanyPerformances';
-import comment from './comment';
-import members from './members';
-import message from './message';
+import accompany from './accompany';
 import reviews from './review';
 
 export const handlers = [
-  ...members,
-  ...message,
-  ...comment,
-  ...accompanyDetail,
-  ...accompanyPerformances,
+  // ...members,
+  // ...message,
+  // ...comment,
+  // ...accompanyDetail,
+  ...accompany,
   ...reviews,
 ];
