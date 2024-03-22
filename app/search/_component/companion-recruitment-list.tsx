@@ -4,6 +4,7 @@ import {
   CompanionRecruitStatus,
 } from '~/apis/scheme/accompany';
 import CompanionRecruitmentCard from '~/app/_components/CompanionRecruitmentCard';
+import { getDate } from '~/utils/dateFormatter';
 
 import useIntersectionObsever from './useIntersectionObserver';
 
@@ -27,17 +28,20 @@ const CompanionRecruitmentList = ({
       <span className="p-4 font-semibold">동행 모집</span>
       <div className="grid w-full grid-cols-3 gap-4 sm:grid-cols-1 mainmd:grid-cols-2 ">
         {data.pages?.map(page =>
-          page?.accompanyPostInfos.map(({ id, status, gender, ...rest }) => (
-            <div key={id} className="flex justify-center pt-4">
-              <CompanionRecruitmentCard
-                key={id}
-                id={id}
-                status={status as CompanionRecruitStatus}
-                gender={gender as CompanionRecruitGender}
-                {...rest}
-              />
-            </div>
-          )),
+          page?.accompanyPostInfos.map(
+            ({ id, createdAt, status, gender, ...rest }) => (
+              <div key={id} className="flex justify-center pt-4">
+                <CompanionRecruitmentCard
+                  key={id}
+                  id={id}
+                  createdAt={getDate(new Date(createdAt), 'yyyy.mm.dd')}
+                  status={status as CompanionRecruitStatus}
+                  gender={gender as CompanionRecruitGender}
+                  {...rest}
+                />
+              </div>
+            ),
+          ),
         )}
         {isInfinite && <div ref={ref} />}
       </div>
