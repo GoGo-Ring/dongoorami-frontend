@@ -6,12 +6,9 @@ import { useRouter } from 'next/navigation';
 
 import { Button } from '~/components/button';
 import { Progress } from '~/components/progress';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '~/components/tabs';
 import useFetchProfile from '~/hooks/queries/useFetchProfile';
 
 import Info from '../_components/info';
-import Review from '../_components/review';
-import { TABS_VALUE } from '../constants';
 
 const Page = ({ params }: { params: { id: string } }) => {
   const router = useRouter();
@@ -53,18 +50,6 @@ const Page = ({ params }: { params: { id: string } }) => {
               {member.manner}%
             </div>
           </Info>
-
-          <div className="flex items-center">
-            <Link
-              href={`${params.id}/wish`}
-              className="block border-r pr-2 text-gray-400"
-            >
-              찜 목록
-            </Link>
-            <Link href={`${params.id}/message`} className="pl-2 text-gray-400">
-              쪽지 목록
-            </Link>
-          </div>
         </div>
       </div>
 
@@ -74,21 +59,6 @@ const Page = ({ params }: { params: { id: string } }) => {
           {member.introduction}
         </div>
       </div>
-
-      <Tabs defaultValue={TABS_VALUE.RECEIVED}>
-        <TabsList>
-          <TabsTrigger value={TABS_VALUE.RECEIVED}>받은 후기</TabsTrigger>
-          <TabsTrigger value={TABS_VALUE.SENT}>작성 후기</TabsTrigger>
-        </TabsList>
-        <TabsContent value={TABS_VALUE.RECEIVED}>
-          <Review
-            title="concert"
-            content="리뷰입니다. 리뷰입니다. 리뷰입니다."
-            date={new Date().toString()}
-          />
-        </TabsContent>
-        <TabsContent value={TABS_VALUE.SENT}></TabsContent>
-      </Tabs>
     </section>
   );
 };
