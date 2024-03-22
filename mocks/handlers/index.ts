@@ -1,4 +1,3 @@
-import accompany from './accompany';
 import reviews from './review';
 
 export const handlers = [
@@ -6,6 +5,6 @@ export const handlers = [
   // ...message,
   // ...comment,
   // ...accompanyDetail,
-  ...accompany,
+  // ...accompany,
   ...reviews,
 ];
