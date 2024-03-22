@@ -75,3 +75,12 @@ export interface AccompanyPostInfoList {
   hasNext: boolean;
   accompanyPostInfos: CompanionRecruitmentCardApi[];
 }
+
+export interface PerformanceRecruitment {
+  userId: string;
+  date: string;
+  seenCount: number;
+  commentCount: number;
+  title: string;
+  content: string;
+}
