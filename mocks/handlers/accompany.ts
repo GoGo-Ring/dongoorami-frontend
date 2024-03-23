@@ -71,7 +71,7 @@ const accompany: AccompanyFixture = {
       memberInfo: {
         id: 7,
         profileImage: 'https://picsum.photos/200',
-        name: 'John Doe',
+        nickname: 'John Doe',
         gender: '남자',
         age: 5,
         introduction: '',
