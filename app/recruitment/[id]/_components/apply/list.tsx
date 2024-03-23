@@ -1,5 +1,7 @@
 'use client';
 
+import { toast } from 'sonner';
+
 import CommentContent from '~/app/recruitment/[id]/_components/comment/list/content';
 import { Button } from '~/components/button';
 import useMutationConfirmCompanion from '~/hooks/mutations/useMutationConfirmCompanion';
@@ -24,7 +26,14 @@ const ApplyList = ({ isWriter, accompanyPostId }: ApplyListProps) => {
 
   const handleConfirmApply = (id: string) => () => {
     confirm('동행 신청을 수락하시겠습니까? 수락 취소는 불가능합니다.') &&
-      confirmApply(id);
+      confirmApply(id, {
+        onSuccess: () => {
+          toast.success('동행 신청을 수락했습니다.');
+        },
+        onError: () => {
+          toast.error('동행 신청 수락에 실패했습니다.');
+        },
+      });
   };
 
   return (

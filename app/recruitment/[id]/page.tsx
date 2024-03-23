@@ -1,6 +1,7 @@
 'use client';
 import Image from 'next/image';
 import Link from 'next/link';
+import { toast } from 'sonner';
 
 import { ApplyForm } from '~/app/recruitment/[id]/_components/apply';
 import ApplyList from '~/app/recruitment/[id]/_components/apply/list';
@@ -88,12 +89,26 @@ const Page = ({ params }: Props) => {
 
   const handleApply = () => {
     confirm('신청하시겠습니까? 신청 취소는 불가능합니다.') &&
-      createApplyComment();
+      createApplyComment(undefined, {
+        onSuccess: () => {
+          toast.success('신청이 완료되었습니다.');
+        },
+        onError: () => {
+          toast.error('신청에 실패했습니다.');
+        },
+      });
   };
 
   const handleClose = () => {
     confirm('모집을 마감하시겠습니까? 모집 마감 취소는 불가능합니다.') &&
-      createCloseStatus();
+      createCloseStatus(undefined, {
+        onSuccess: () => {
+          toast.success('모집이 마감되었습니다.');
+        },
+        onError: () => {
+          toast.error('모집 마감에 실패했습니다.');
+        },
+      });
   };
 
   return (
@@ -102,6 +117,7 @@ const Page = ({ params }: Props) => {
       <div className="flex flex-col">
         <div className="flex items-center justify-between">
           <Profile
+            id={memberProfile.id}
             name={memberProfile.nickname}
             image={memberProfile.profileImage}
           />
