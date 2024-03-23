@@ -14,7 +14,6 @@ interface ReviewFormProps {
   initialTitle: string;
   intialContent?: string;
   id: number;
-  refetch: () => void;
   isModify?: boolean;
   handleToggle?: () => void;
   concertId: number;
@@ -24,13 +23,14 @@ const ReviewForm = ({
   id,
   initialTitle,
   intialContent,
-  refetch,
   isModify = false,
   handleToggle,
   concertId,
 }: ReviewFormProps) => {
   const { mutate } = useMutationPerformanceReviewComment();
-  const { mutate: update } = useMutationUpdatePerformanceReview();
+  const { mutate: update } = useMutationUpdatePerformanceReview({
+    callback: handleToggle,
+  });
   const [rate, setRate] = useState(0);
 
   const { handleUnControlledSubmit } = useForm({
@@ -43,38 +43,14 @@ const ReviewForm = ({
       const { star, content, title } = values;
 
       if (isModify) {
-        update(
-          {
-            title,
-            content,
-            rating: parseInt(star),
-            concertReviewId: id,
-          },
-          {
-            onSuccess: () => {
-              refetch();
-
-              if (!handleToggle) {
-                return;
-              }
-              handleToggle();
-            },
-          },
-        );
+        update({
+          title,
+          content,
+          rating: parseInt(star),
+          concertReviewId: id,
+        });
       } else {
-        mutate(
-          { rating: parseInt(star), concertId, content, title },
-          {
-            onSuccess: () => {
-              refetch();
-
-              if (!handleToggle) {
-                return;
-              }
-              handleToggle();
-            },
-          },
-        );
+        mutate({ rating: parseInt(star), concertId, content, title });
       }
 
       return values;
