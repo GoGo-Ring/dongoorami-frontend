@@ -28,7 +28,7 @@ const useInfiniteMessagesById = ({
 
       return lastMessage.hasNext ? lastId : undefined;
     },
-    select: data => data.pages.flatMap(page => page.messageResponses),
+    select: ({ pages }) => pages.flatMap(page => page.messageResponses),
   });
 };
 
