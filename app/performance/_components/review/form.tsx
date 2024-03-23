@@ -51,7 +51,7 @@ const ReviewForm = ({
             concertReviewId: id,
           },
           {
-            onSuccess: async () => {
+            onSuccess: () => {
               refetch();
 
               if (!handleToggle) {
