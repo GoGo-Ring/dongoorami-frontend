@@ -32,11 +32,19 @@ export const getConcertReviews = async (id: string) => {
   return data;
 };
 
-export const getPerformancesList = async (
-  searchParams: string,
-  size: number,
-  lastId: number,
-) => {
+interface accompaniesSearchParam {
+  searchParams: string;
+  size: number;
+  lastId?: number;
+  keyword?: string;
+}
+
+export const getPerformancesList = async ({
+  searchParams,
+  size,
+  lastId,
+  keyword,
+}: accompaniesSearchParam) => {
   const cursorId = lastId ? lastId : '';
 
   const { data } = await api.get<PerformanceList>({
@@ -44,6 +52,7 @@ export const getPerformancesList = async (
     params: {
       size,
       cursorId,
+      keyword,
     },
   });
 
