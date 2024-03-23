@@ -16,8 +16,6 @@ import { getDate } from '~/utils/dateFormatter';
 import { calculatePage } from '../_utils/pagination';
 import { MESSAGE_HEADER, MESSAGE_SIZE, getRead } from '../constatns';
 
-const ALL_PAGE = 10; // INFO: 임시로 10개로 설정,, 확인부탁드립니다.
-
 const MainMessage = () => {
   const router = useRouter();
   const page = useSearchParams().get('page') || '1';
@@ -31,7 +29,7 @@ const MainMessage = () => {
 
   const handleClickMessage = (id: number) => {
     mutate(id);
-    router.push(`/message/${id}`);
+    router.push(`/message/write?userId=${id}`);
   };
 
   return (
@@ -70,7 +68,7 @@ const MainMessage = () => {
             <tr
               key={message.id}
               className="border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted"
-              onClick={() => handleClickMessage(message.id)}
+              onClick={() => handleClickMessage(message.partner.id)}
             >
               <td className="cursor-pointer p-4 align-middle font-medium [&:has([role=checkbox])]:pr-0">
                 {message.partner.nickname}
@@ -95,7 +93,7 @@ const MainMessage = () => {
             <PaginationLink
               href={{
                 query: {
-                  page: calculatePage(+page - 1, ALL_PAGE),
+                  page: calculatePage(+page - 1, data.messageResponses.length),
                 },
               }}
             >
@@ -106,7 +104,7 @@ const MainMessage = () => {
               />
             </PaginationLink>
           </PaginationItem>
-          {Array.from({ length: ALL_PAGE }, (_, index) => (
+          {Array.from({ length: data.messageResponses.length }, (_, index) => (
             <PaginationItem key={index}>
               <PaginationLink href={{ query: { page: index + 1 } }}>
                 {index + 1}
@@ -117,7 +115,7 @@ const MainMessage = () => {
             <PaginationLink
               href={{
                 query: {
-                  page: calculatePage(+page + 1, ALL_PAGE),
+                  page: calculatePage(+page + 1, data.messageResponses.length),
                 },
               }}
             >
