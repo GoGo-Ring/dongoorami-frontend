@@ -1,8 +1,7 @@
 'use client';
 
 import { Check, ChevronsUpDown } from 'lucide-react';
-import * as React from 'react';
-import { useState } from 'react';
+import { useState, useEffect, useContext } from 'react';
 
 import {
   Field,
@@ -46,7 +45,7 @@ export const SearchButtonField = <
 }: SearchButtonFieldProps<K>) => {
   const [open, setOpen] = useState(false);
   const { values, handleValueChange, errors } =
-    React.useContext<UseFormReturn<CompanionFormValue, K>>(FormContext);
+    useContext<UseFormReturn<CompanionFormValue, K>>(FormContext);
 
   const handleSelect = (commandId: string) => (currentValue: string) => {
     handleValueChange(id)(commandId);
@@ -63,7 +62,7 @@ export const SearchButtonField = <
     handleValueChange(valueId)(value);
   };
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (isSuccess && !values[id]) {
       handleValueChange(id)(String(performances?.[0]?.id));
     }

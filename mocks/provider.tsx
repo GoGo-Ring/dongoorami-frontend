@@ -12,8 +12,9 @@ const initMocks = async () => {
 
     server.listen();
   } else {
-    // const { worker } = await import('./browser');
-    // worker.start({ onUnhandledRequest: 'bypass' });
+    const { worker } = await import('./browser');
+
+    worker.start({ onUnhandledRequest: 'bypass' });
   }
 };
 
