@@ -25,12 +25,13 @@ export const FORM_ITEMS = {
       id: 'irrelevant',
     },
   ] as const,
-  PURPOSES: ['숙박', '이동', '관람'],
+  PURPOSES: ['숙박', '이동', '관람'] as ('숙박' | '이동' | '관람')[],
 };
 
 export interface CompanionFormValue {
   title: string;
   performanceId: string;
+  performanceName: string;
   performanceDate: string;
   participantCount: string;
   region: string;
@@ -49,6 +50,7 @@ export interface CompanionFormValue {
 export const INITIAL_VALUES: CompanionFormValue = {
   title: '',
   performanceId: '',
+  performanceName: '',
   performanceDate: '~',
   participantCount: '',
   region: '',
@@ -145,11 +147,6 @@ export const VALIDATIONS = [
     message: '내용은 1000자 이하로 입력해주세요',
   }),
   factory({
-    id: 'images',
-    validate: ({ length }) => length > 0,
-    message: '이미지를 업로드해주세요',
-  }),
-  factory({
     id: 'performanceId',
     validate: ({ length }) => length > 0,
     message: '공연을 선택해주세요',
@@ -158,6 +155,11 @@ export const VALIDATIONS = [
     id: 'purposes',
     validate: ({ length }) => length > 0,
     message: '목적을 선택해주세요',
+  }),
+  factory({
+    id: 'content',
+    validate: ({ length }) => length > 0,
+    message: '내용을 입력해주세요',
   }),
 ] as {
   id: keyof CompanionFormValue;

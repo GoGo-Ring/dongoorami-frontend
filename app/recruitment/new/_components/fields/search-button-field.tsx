@@ -1,8 +1,7 @@
 'use client';
 
 import { Check, ChevronsUpDown } from 'lucide-react';
-import * as React from 'react';
-import { useState } from 'react';
+import { useState, useEffect, useContext } from 'react';
 
 import {
   Field,
@@ -28,6 +27,7 @@ import { cn } from '~/libs/utils';
 
 interface SearchButtonFieldProps<K extends string> extends FieldProps {
   id: K;
+  valueId: K;
   listCount?: number;
   notFoundText?: string;
 }
@@ -36,6 +36,7 @@ export const SearchButtonField = <
   K extends GetKeysValueOf<CompanionFormValue, string>,
 >({
   id,
+  valueId,
   placeholder,
   notFoundText = '검색 결과가 없습니다.',
   label,
@@ -43,39 +44,42 @@ export const SearchButtonField = <
   listCount,
 }: SearchButtonFieldProps<K>) => {
   const [open, setOpen] = useState(false);
-  const [name, setName] = useState<string>('');
-  const [value, setValue] = useState<string>('');
   const { values, handleValueChange, errors } =
-    React.useContext<UseFormReturn<CompanionFormValue, K>>(FormContext);
+    useContext<UseFormReturn<CompanionFormValue, K>>(FormContext);
 
   const handleSelect = (commandId: string) => (currentValue: string) => {
-    handleValueChange(id)(commandId === values[id] ? '' : commandId);
-    setName(currentValue);
+    handleValueChange(id)(commandId);
+    handleValueChange(valueId)(currentValue);
 
     setOpen(false);
   };
 
-  const { data: performances } = useFetchCompanionPerformances(value);
+  const { data: performances, isSuccess } = useFetchCompanionPerformances(
+    values[valueId],
+  );
 
   const handleInputValueChange = (value: string) => {
-    setValue(value);
+    handleValueChange(valueId)(value);
   };
+
+  useEffect(() => {
+    if (isSuccess && !values[id]) {
+      handleValueChange(id)(String(performances?.[0]?.id));
+    }
+  }, [isSuccess, id, handleValueChange, values, performances]);
 
   return (
     <Field id={id} label={label} variant={variant}>
       <Popover open={open} onOpenChange={setOpen}>
         <PopoverTrigger asChild>
-          <Button
-            variant="outline"
-            role="combobox"
-            aria-expanded={open}
-            className="w-[200px] justify-between"
-          >
-            {values[id] ? name : placeholder}
-            <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+          <Button variant="outline" role="combobox" aria-expanded={open}>
+            <span className="truncate">
+              {values[valueId] ? values[valueId] : placeholder}
+            </span>
+            <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 self-end opacity-50" />
           </Button>
         </PopoverTrigger>
-        <PopoverContent className="w-[200px] p-0">
+        <PopoverContent className="w-full p-0">
           <Command>
             <CommandInput
               placeholder={placeholder}

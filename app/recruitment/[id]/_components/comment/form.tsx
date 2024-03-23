@@ -11,7 +11,7 @@ import { cn } from '~/libs/utils';
 
 interface CommentFormProps extends HTMLProps<HTMLFormElement> {
   accompanyPostId: string;
-  initialComment?: string;
+  initialComment: string;
   commentId: string | number;
   handleCancel?: () => void;
   editMode?: boolean;

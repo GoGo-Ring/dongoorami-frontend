@@ -25,8 +25,10 @@ const getToken = (url = '') => {
 
 instance.interceptors.request.use(config => {
   const token = getToken(config.url);
+  const imageUrlEnv = process.env.NEXT_PUBLIC_API_IMAGE_URL;
+  const isImageUrl = imageUrlEnv ? config?.url?.includes(imageUrlEnv) : false;
 
-  config.headers.Authorization = token || '';
+  config.headers.Authorization = isImageUrl ? '' : token || '';
 
   return config;
 });
