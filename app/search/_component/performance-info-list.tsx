@@ -1,7 +1,7 @@
 import { PerformanceList, StatusType } from '~/apis/scheme/performance';
+import useIntersectionObsever from '~/hooks/useIntersectionObserver';
 
 import PerformanceInfoCard from './performance-info-card';
-import useIntersectionObsever from './useIntersectionObserver';
 
 interface Data {
   pages: PerformanceList[];
@@ -19,7 +19,10 @@ const PerformanceInfoList = ({
   handleFetchNextPage,
   hasNextPage,
 }: PerformanceInfoListProps) => {
-  const ref = useIntersectionObsever({ handleFetchNextPage, hasNextPage });
+  const ref = useIntersectionObsever<HTMLDivElement>({
+    callback: handleFetchNextPage,
+    condition: hasNextPage,
+  });
 
   return (
     <>

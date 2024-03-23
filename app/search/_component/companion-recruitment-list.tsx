@@ -3,10 +3,9 @@ import {
   CompanionRecruitGender,
   CompanionRecruitStatus,
 } from '~/apis/scheme/accompany';
-import CompanionRecruitmentCard from '~/app/_components/CompanionRecruitmentCard';
+import CompanionRecruitmentCard from '~/app/_components/companion-recruitment-card';
+import useIntersectionObsever from '~/hooks/useIntersectionObserver';
 import { getDate } from '~/utils/dateFormatter';
-
-import useIntersectionObsever from './useIntersectionObserver';
 
 interface CompanionRecruitmentListProps {
   data: AccompanyPostInfoListPage;
@@ -21,7 +20,10 @@ const CompanionRecruitmentList = ({
   handleFetchNextPage,
   hasNextPage,
 }: CompanionRecruitmentListProps) => {
-  const ref = useIntersectionObsever({ handleFetchNextPage, hasNextPage });
+  const ref = useIntersectionObsever<HTMLDivElement>({
+    callback: handleFetchNextPage,
+    condition: hasNextPage,
+  });
 
   return (
     <div className="flex w-full flex-col gap-6">

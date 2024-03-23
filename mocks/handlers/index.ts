@@ -1,4 +1,5 @@
 import reviews from './review';
+import wish from './wish';
 
 export const handlers = [
   // ...members,
@@ -7,4 +8,5 @@ export const handlers = [
   // ...accompanyDetail,
   // ...accompany,
   ...reviews,
+  ...wish,
 ];

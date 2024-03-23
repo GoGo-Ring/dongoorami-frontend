@@ -2,6 +2,8 @@ import {
   ConcertDetail,
   ConcertReviewList,
   PerformanceList,
+  PerformanceReviewPost,
+  PerformanceReviewUpdate,
 } from './scheme/performance';
 
 import api from '.';
@@ -55,6 +57,32 @@ export const getPerformancesList = async ({
   });
 
   return data;
+};
+
+export const createPerformanceReview = async ({
+  concertId,
+  ...data
+}: PerformanceReviewPost) => {
+  return await api.post<PerformanceList>({
+    url: `/concerts/reviews/${concertId}`,
+    data,
+  });
+};
+
+export const updatePerformanceReview = async ({
+  concertReviewId,
+  ...data
+}: PerformanceReviewUpdate) => {
+  return await api.patch<PerformanceList>({
+    url: `/concerts/reviews/${concertReviewId}`,
+    data,
+  });
+};
+
+export const deletePerformanceReview = async (concertReviewId: number) => {
+  return await api.delete<PerformanceList>({
+    url: `/concerts/reviews/${concertReviewId}`,
+  });
 };
 
 export const getCarouselPerformances = async () => {

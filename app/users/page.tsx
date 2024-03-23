@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { ChangeEvent, useState } from 'react';
 import { toast } from 'sonner';
 
+import { Button } from '~/components/button';
 import { Progress } from '~/components/progress';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '~/components/tabs';
 import { Textarea } from '~/components/textarea';
@@ -15,7 +16,8 @@ import CompleteButton from './_components/complete-button';
 import EditableImage from './_components/editable-image';
 import EditableInput from './_components/editable-input';
 import Info from './_components/info';
-import Review from './_components/review';
+import Review from './_components/list-item';
+import Wishes from './_components/wishes';
 import { TABS_VALUE } from './constants';
 
 const Page = ({ params }: { params: { id: string } }) => {
@@ -101,12 +103,14 @@ const Page = ({ params }: { params: { id: string } }) => {
           </Info>
 
           <div className="flex items-center">
-            <Link
-              href={`${params.id}/wish`}
-              className="block border-r pr-2 text-gray-400"
-            >
-              찜 목록
-            </Link>
+            <Wishes>
+              <Button
+                variant="link"
+                className="block border-r pr-2 text-gray-400"
+              >
+                찜 목록
+              </Button>
+            </Wishes>
             <Link href={`${params.id}/message`} className="pl-2 text-gray-400">
               쪽지 목록
             </Link>

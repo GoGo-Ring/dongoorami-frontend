@@ -10,6 +10,7 @@ import InfoItem from '../_components/info-item';
 import InfoItemWithToggle from '../_components/info-item-with-button';
 import PerformanceRecruitment from '../_components/performance-recruitment';
 import { PerformanceReview } from '../_components/performance-review';
+import ReviewForm from '../_components/review/form';
 
 interface Params {
   id: string;
@@ -184,9 +185,21 @@ const Page = ({ params }: Props) => {
           <TabsContent value="review">
             <div className="m-auto flex w-fit flex-col justify-center gap-6">
               {performanceReviewList?.concertReviewGetResponses.map(
-                (review, i) => <PerformanceReview {...review} key={i} />,
+                ({ id, ...props }) => (
+                  <PerformanceReview
+                    id={id}
+                    {...props}
+                    concertId={parseInt(paramsId)}
+                    key={id}
+                  />
+                ),
               )}
             </div>
+            <ReviewForm
+              initialTitle={name}
+              id={parseInt(paramsId)}
+              concertId={parseInt(paramsId)}
+            />
           </TabsContent>
         </Tabs>
       </div>
