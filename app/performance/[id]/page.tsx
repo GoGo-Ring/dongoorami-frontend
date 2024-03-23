@@ -22,8 +22,7 @@ const Page = ({ params }: Props) => {
   const paramsId = params.id;
 
   const { data, isLoading } = useFetchConcerts(paramsId);
-  const { data: performanceReviewList, refetch } =
-    useFetchConcertReviews(paramsId);
+  const { data: performanceReviewList } = useFetchConcertReviews(paramsId);
 
   if (isLoading || !data) {
     return;
@@ -183,7 +182,6 @@ const Page = ({ params }: Props) => {
                   <PerformanceReview
                     id={id}
                     {...props}
-                    refetch={refetch}
                     concertId={parseInt(paramsId)}
                     key={id}
                   />
@@ -194,7 +192,6 @@ const Page = ({ params }: Props) => {
               initialTitle={name}
               id={parseInt(paramsId)}
               concertId={parseInt(paramsId)}
-              refetch={refetch}
             />
           </TabsContent>
         </Tabs>
