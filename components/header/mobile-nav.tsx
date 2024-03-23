@@ -22,7 +22,7 @@ const MobileNav = () => {
           동구라미
         </MobileLink>
         <nav className="mt-5 flex flex-col gap-4">
-          <MobileLink onOpenChange={setIsOpen} href="/concerts">
+          <MobileLink onOpenChange={setIsOpen} href="/search">
             공연
           </MobileLink>
           <MobileLink onOpenChange={setIsOpen} href="/accompanies">
