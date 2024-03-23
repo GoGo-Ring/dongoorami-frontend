@@ -12,9 +12,9 @@ const accompanyReviewTargetUser: AccompanyReviewFixture = {
   current: [
     {
       id: 11,
-      nickname: '김김',
+      nickname: '백둥이',
       profileImage: 'image.png',
-      gender: '여자',
+      gender: '여',
       age: 24,
       introduction: '안녕하세요~',
       currentMember: false,
@@ -22,9 +22,9 @@ const accompanyReviewTargetUser: AccompanyReviewFixture = {
     },
     {
       id: 12,
-      nickname: '이이',
+      nickname: '프롱이',
       profileImage: 'image.png',
-      gender: '여자',
+      gender: '남',
       age: 24,
       introduction: '안녕하세요~',
       currentMember: false,
