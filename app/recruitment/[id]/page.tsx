@@ -94,7 +94,9 @@ const Page = ({ params }: Props) => {
           toast.success('신청이 완료되었습니다.');
         },
         onError: () => {
-          toast.error('신청에 실패했습니다.');
+          toast.error(
+            '네트워크 오류가 발생했습니다. 잠시 뒤에 다시 시도해주세요.',
+          );
         },
       });
   };
@@ -106,7 +108,9 @@ const Page = ({ params }: Props) => {
           toast.success('모집이 마감되었습니다.');
         },
         onError: () => {
-          toast.error('모집 마감에 실패했습니다.');
+          toast.error(
+            '네트워크 오류가 발생했습니다. 잠시 뒤에 다시 시도해주세요.',
+          );
         },
       });
   };

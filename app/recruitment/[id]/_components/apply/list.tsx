@@ -31,7 +31,7 @@ const ApplyList = ({ isWriter, accompanyPostId }: ApplyListProps) => {
           toast.success('동행 신청을 수락했습니다.');
         },
         onError: () => {
-          toast.error('동행 신청 수락에 실패했습니다.');
+          toast.error('네트워크 오류가 발생했습니다. 다시 시도해주세요.');
         },
       });
   };
