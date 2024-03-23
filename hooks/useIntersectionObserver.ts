@@ -1,17 +1,23 @@
 import { useEffect, useRef } from 'react';
 
 interface useIntersectionObseverProps {
-  handleFetchNextPage: () => void;
-  hasNextPage: boolean;
-  threshold?: number;
+  callback: () => void;
+  condition: boolean;
+  options?: IntersectionObserverInit;
 }
 
-const useIntersectionObsever = ({
-  handleFetchNextPage,
-  hasNextPage,
-  threshold = 0,
+const defaultOptions = {
+  root: null,
+  rootMargin: '0px',
+  threshold: 0,
+};
+
+const useIntersectionObsever = <T extends HTMLElement>({
+  callback,
+  condition,
+  options = defaultOptions,
 }: useIntersectionObseverProps) => {
-  const ref = useRef<HTMLDivElement>(null);
+  const ref = useRef<T>(null);
 
   useEffect(() => {
     const { current } = ref;
@@ -22,23 +28,21 @@ const useIntersectionObsever = ({
 
     const intersectionObserver = new IntersectionObserver(entries => {
       entries.forEach(entry => {
-        if (entry.isIntersecting && hasNextPage) {
-          handleFetchNextPage();
+        if (entry.isIntersecting && condition) {
+          callback();
         }
       }),
-        { threshold };
+        options;
     });
 
-    if (current) {
-      intersectionObserver.observe(current);
-    }
+    intersectionObserver.observe(current);
 
     return () => {
       if (current) {
         intersectionObserver.unobserve(current);
       }
     };
-  }, [handleFetchNextPage, hasNextPage, threshold]);
+  }, [callback, condition, options]);
 
   return ref;
 };

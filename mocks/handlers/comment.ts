@@ -14,6 +14,7 @@ interface CommentFixture {
     isAccompanyApplyComment?: boolean,
   ): void;
   updateComment(userId: string, content: string): void;
+  updateCommentInfos(userId: string, infos: Partial<Comment>): void;
   deleteComment(userId: string): void;
 }
 const comment: CommentFixture = {
@@ -21,7 +22,7 @@ const comment: CommentFixture = {
     {
       id: 11,
       memberProfile: {
-        id: 14,
+        id: +currentUserId,
         nickname: '김뫄뫄',
         profileImage: 'https://picsum.photos/200?random=1',
         gender: '여자',
@@ -31,6 +32,7 @@ const comment: CommentFixture = {
       },
       content: '가는 길만 동행해도 괜찮을까요!?',
       isAccompanyApplyComment: false,
+      isAccompanyConfirmedComment: false,
       createdAt: '2024-03-13T06:24:20.767104',
       updatedAt: '2024-03-13T06:24:20.767104',
     },
@@ -47,25 +49,32 @@ const comment: CommentFixture = {
       },
       content: '물론이죠! 어디로 가시나요?',
       isAccompanyApplyComment: false,
+      isAccompanyConfirmedComment: false,
       createdAt: '2024-03-13T06:30:45.123456',
       updatedAt: '2024-03-13T06:30:45.123456',
     },
-    {
-      id: 13,
-      memberProfile: {
-        id: 14,
-        nickname: '김뫄뫄',
-        profileImage: 'https://picsum.photos/200?random?=1',
-        gender: '여자',
-        age: 24,
-        introduction: '안녕하세요~',
-        currentMember: true,
+    ...Array.from<unknown, Comment>(
+      {
+        length: 4,
       },
-      content: '서울에서 부산까지 가려고 해요. 같이 가시겠어요?',
-      isAccompanyApplyComment: false,
-      createdAt: '2024-03-13T06:35:20.789012',
-      updatedAt: '2024-03-13T06:35:20.789012',
-    },
+      (_, index) => ({
+        id: 13 + index,
+        memberProfile: {
+          id: 15 + index,
+          nickname: `김 ${index}`,
+          profileImage: `https://picsum.photos/200?random?=${index + currentUserId}`,
+          gender: index % 2 === 0 ? '여자' : '남자',
+          age: 24 + index,
+          introduction: '안녕하세요~',
+          currentMember: currentUserId === String(15 + index),
+        },
+        content: '',
+        isAccompanyApplyComment: true,
+        isAccompanyConfirmedComment: false,
+        createdAt: '2024-03-13T06:35:20.789012',
+        updatedAt: '2024-03-13T06:35:20.789012',
+      }),
+    ),
   ],
 
   getComments() {
@@ -86,6 +95,7 @@ const comment: CommentFixture = {
       },
       content,
       isAccompanyApplyComment,
+      isAccompanyConfirmedComment: false,
       createdAt: new Date().toISOString(),
       updatedAt: new Date().toISOString(),
     };
@@ -100,6 +110,18 @@ const comment: CommentFixture = {
     if (targetComment) {
       targetComment.content = content;
       targetComment.updatedAt = new Date().toISOString();
+    }
+  },
+  updateCommentInfos(commentId, infos) {
+    const targetIndex = this.current.findIndex(
+      comment => comment.id === Number(commentId),
+    );
+
+    if (targetIndex) {
+      this.current.splice(targetIndex, 1, {
+        ...this.current[targetIndex],
+        ...infos,
+      });
     }
   },
   deleteComment(commentId) {
@@ -186,12 +208,26 @@ const createAcompanyApplyComment = rest.post(
   },
 );
 
+const confirmCompanion = rest.patch(
+  `${BASE_URL}/accompanies/:commentId`,
+  (req, res, ctx) => {
+    const { commentId } = req.params;
+
+    comment.updateCommentInfos(String(commentId), {
+      isAccompanyConfirmedComment: true,
+    });
+
+    return res(ctx.status(204));
+  },
+);
+
 const handlers = [
   getComments,
   createComment,
   updateComment,
   deleteComment,
   createAcompanyApplyComment,
+  confirmCompanion,
 ];
 
 export default handlers;

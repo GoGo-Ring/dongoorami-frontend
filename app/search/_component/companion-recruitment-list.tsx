@@ -3,13 +3,12 @@ import {
   CompanionRecruitGender,
   CompanionRecruitStatus,
 } from '~/apis/scheme/accompany';
-import CompanionRecruitmentCard from '~/app/_components/CompanionRecruitmentCard';
-
-import useIntersectionObsever from './useIntersectionObserver';
+import CompanionRecruitmentCard from '~/app/_components/companion-recruitment-card';
+import useIntersectionObsever from '~/hooks/useIntersectionObserver';
 
 interface CompanionRecruitmentListProps {
   data: { pages: AccompanyPostInfoList[] };
-  isInfinite: boolean;
+  isInfinite?: boolean;
   handleFetchNextPage: () => void;
   hasNextPage: boolean;
 }
@@ -20,7 +19,10 @@ const CompanionRecruitmentList = ({
   handleFetchNextPage,
   hasNextPage,
 }: CompanionRecruitmentListProps) => {
-  const ref = useIntersectionObsever({ handleFetchNextPage, hasNextPage });
+  const ref = useIntersectionObsever<HTMLDivElement>({
+    callback: handleFetchNextPage,
+    condition: hasNextPage,
+  });
 
   return (
     <div className="flex w-full flex-col gap-6">
@@ -28,13 +30,15 @@ const CompanionRecruitmentList = ({
       <div className="grid gap-3 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
         {data.pages?.map(page =>
           page?.accompanyPostInfos.map(({ id, status, gender, ...rest }) => (
-            <CompanionRecruitmentCard
-              key={id}
-              id={id}
-              status={status as CompanionRecruitStatus}
-              gender={gender as CompanionRecruitGender}
-              {...rest}
-            />
+            <div key={id} className="flex justify-center pt-4">
+              <CompanionRecruitmentCard
+                key={id}
+                id={id}
+                status={status as CompanionRecruitStatus}
+                gender={gender as CompanionRecruitGender}
+                {...rest}
+              />
+            </div>
           )),
         )}
         {isInfinite && <div ref={ref} />}
