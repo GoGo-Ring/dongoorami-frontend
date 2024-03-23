@@ -2,15 +2,21 @@ import { useInfiniteQuery } from '@tanstack/react-query';
 
 import { getMessagesById } from '~/apis/message';
 
-const SIZE = 6;
+interface useInfiniteMessagesByIdParmas {
+  partnerId: number;
+  size: number;
+}
 
-const useInfiniteMessagesById = (partnerId: number) => {
+const useInfiniteMessagesById = ({
+  partnerId,
+  size,
+}: useInfiniteMessagesByIdParmas) => {
   return useInfiniteQuery({
     queryKey: ['messages', partnerId],
     queryFn: ({ pageParam }) =>
       getMessagesById({
         partnerId,
-        size: SIZE,
+        size,
         cursorId: pageParam || undefined,
       }),
     initialPageParam: 0,

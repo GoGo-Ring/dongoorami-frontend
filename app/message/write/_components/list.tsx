@@ -13,6 +13,8 @@ interface MessageWriteListProps {
   isInifinity: boolean;
 }
 
+const SIZE = 6;
+
 const MessageWriteList = ({
   myProfileImage,
   myName,
@@ -21,8 +23,10 @@ const MessageWriteList = ({
   contacterProfileImage,
   isInifinity,
 }: MessageWriteListProps) => {
-  const { data, hasNextPage, fetchNextPage } =
-    useInfiniteSendingMessagesById(contacterId);
+  const { data, hasNextPage, fetchNextPage } = useInfiniteSendingMessagesById({
+    partnerId: contacterId,
+    size: SIZE,
+  });
 
   const handleFetchNextPage = () => {
     fetchNextPage();
