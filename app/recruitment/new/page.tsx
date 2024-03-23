@@ -91,6 +91,13 @@ const Page = () => {
     return <Loading />;
   }
 
+  const initialValues = isEdit
+    ? companionDetailToFormValue({
+        datas: postData,
+        INITIAL_VALUES,
+      })
+    : INITIAL_VALUES;
+
   const handleSubmit = async (values: CompanionFormValue) => {
     const companionData = companionFormValueToRequest(values);
     const imageUrls = values.images;
@@ -127,9 +134,9 @@ const Page = () => {
     } else {
       createPost(formData, {
         onSuccess: ({ headers }) => {
-          router.push(
-            `/recruitment/${headers.location.split('accompanies/posts/')[1]}`,
-          );
+          const [, id] = headers.location.split('accompanies/posts/');
+
+          router.push(`/recruitment/${id}`);
         },
       });
     }
@@ -139,14 +146,7 @@ const Page = () => {
     <div className="flex justify-center py-10">
       <Form
         className="flex w-full flex-col justify-center gap-4"
-        initialValues={
-          isEdit
-            ? companionDetailToFormValue({
-                datas: postData,
-                INITIAL_VALUES,
-              })
-            : INITIAL_VALUES
-        }
+        initialValues={initialValues}
         initialValidations={VALIDATIONS}
         submit={handleSubmit}
       >
