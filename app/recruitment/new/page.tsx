@@ -87,7 +87,7 @@ const Page = () => {
     );
   }
 
-  if ((isEdit && (isFetching || !postData)) || isPending) {
+  if ((isEdit && isFetching) || isPending) {
     return <Loading />;
   }
 
