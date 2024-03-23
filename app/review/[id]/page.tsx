@@ -101,7 +101,7 @@ const Page = ({ params }: Props) => {
   );
 
   return (
-    <form className="m-auto flex w-fit flex-col justify-center gap-3">
+    <form className="m-auto flex w-[350px] flex-col justify-center gap-3">
       {targetUsers?.map(({ nickname, id }, index) => (
         <ReviewForm
           key={`${id}_${index}`}
