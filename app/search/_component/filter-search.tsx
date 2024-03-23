@@ -5,6 +5,8 @@ import { useEffect, useState } from 'react';
 
 import FilterTabs from '~/app/_components/filter-tabs';
 import { Button } from '~/components/button';
+import Icon from '~/components/icon';
+import { Sheet, SheetContent, SheetTrigger } from '~/components/sheet';
 import useInfiniteAccompanies from '~/hooks/infinite/useInfiniteAccompanies';
 import { useInfiniteAccompanyPostKeyword } from '~/hooks/infinite/useInfiniteAccompanyPostKeyword';
 import { useInfinitePerformances } from '~/hooks/infinite/useInfinitePerformances';
@@ -40,6 +42,7 @@ const FilterSearch = () => {
     useState(false);
   const [isMoreCompanionKeywordInfinite, setIsMoreCompanionKeywordInfinite] =
     useState(false);
+  const [isOpen, setIsOpen] = useState(false);
 
   const handleFetchNextPage = () => {
     fetchNextAccompaniesPage();
@@ -65,17 +68,39 @@ const FilterSearch = () => {
     setIsMoreCompanionKeywordInfinite(true);
   };
 
+  const handleSubmit = () => {
+    setIsOpen(false);
+  };
+
   useEffect(() => {
     setIsMoreCompanionInfinite(false);
     setIsMorePerformanceInfinite(false);
   }, [params]);
 
   return (
-    <div className="relative flex  h-fit">
+    <div className="relative flex h-fit w-full">
       <div className=" box-border py-5">
-        <FilterTabs className="sticky top-24" />
+        <div className="fixed bottom-5 right-5 rounded-full border-solid border-gray-250 bg-white sm:block">
+          <Sheet open={isOpen} onOpenChange={setIsOpen}>
+            <SheetTrigger asChild>
+              <div className="fixed bottom-5 left-5 hidden sm:block">
+                <Icon
+                  className="cursor-pointer"
+                  size="large"
+                  iconName="filter"
+                />
+              </div>
+            </SheetTrigger>
+            <SheetContent side="left">
+              <div className="flex w-full justify-center ">
+                <FilterTabs handleSubmit={handleSubmit} />
+              </div>
+            </SheetContent>
+          </Sheet>
+        </div>
+        <FilterTabs className="sticky top-24 sm:hidden" />
       </div>
-      <div className="flex shrink-0 flex-col gap-8 py-10 sm:w-[328px] md:w-[400px] lg:w-[700px]">
+      <div className="flex shrink-0 flex-col gap-8 py-10 sm:w-full md:w-[400px] lg:w-[700px]">
         {performancesData && (
           <PerformanceInfoList
             data={performancesData}
