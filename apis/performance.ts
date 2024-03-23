@@ -75,3 +75,14 @@ export const deletePerformanceReview = async (concertReviewId: number) => {
     url: `/concerts/reviews/${concertReviewId}`,
   });
 };
+
+export const getCarouselPerformances = async () => {
+  const { data } = await api.get<PerformanceList>({
+    url: '/concerts',
+    params: {
+      size: 6,
+    },
+  });
+
+  return data;
+};

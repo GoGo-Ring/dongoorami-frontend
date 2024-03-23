@@ -63,7 +63,7 @@ export const createComment = async (accompanyPostId: string, content: string) =>
   });
 
 export const getComments = async (accompanyPostId: string) => {
-  const { data } = await api.get<Comment[]>({
+  const { data } = await api.get<{ accompanyCommentInfos: Comment[] }>({
     url: `/accompanies/comments/${accompanyPostId}`,
   });
 
@@ -82,7 +82,7 @@ export const deleteComment = async (commentId: string) =>
   });
 
 export const confirmCompanion = async (commentId: string) =>
-  await api.post({
+  await api.patch({
     url: `/accompanies/${commentId}`,
   });
 
@@ -104,3 +104,8 @@ export const getPerformanceInfos = async (keyword: string) => {
 
   return data;
 };
+
+export const patchCloseAccompanyStatus = async (accompanyPostId: string) =>
+  await api.patch({
+    url: `/accompanies/posts/${accompanyPostId}/status`,
+  });
