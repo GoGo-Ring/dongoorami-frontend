@@ -17,21 +17,15 @@ export const PerformanceReview = ({
   rating,
   updatedAt,
   isWriter,
-  refetch,
   concertId,
 }: ConcertReview) => {
-  const { mutate: del } = useMutationDeletePerformanceReview();
   const [isOpen, setIsOpen] = useState(false);
+  const { mutate: del } = useMutationDeletePerformanceReview({
+    callback: () => setIsOpen(false),
+  });
 
   const handleDeleteClick = () => {
-    del(
-      { concertReviewId: id },
-      {
-        onSuccess: () => {
-          refetch();
-        },
-      },
-    );
+    del({ concertReviewId: id });
   };
   const handleToggle = () => {
     setIsOpen(!isOpen);
@@ -42,7 +36,6 @@ export const PerformanceReview = ({
       {isOpen ? (
         <ReviewForm
           isModify={isOpen}
-          refetch={refetch}
           id={id}
           initialTitle={title}
           intialContent={content}
