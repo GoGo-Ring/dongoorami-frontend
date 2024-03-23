@@ -1,4 +1,5 @@
 'use client';
+import Link from 'next/link';
 import { useContext, createContext } from 'react';
 
 import { CompanionRecruitmentCard } from '~/apis/scheme/accompany';
@@ -106,21 +107,22 @@ const FooterField = () => {
     </div>
   );
 };
-
-const CompanionRecruitmentCard = ({ ...props }: CompanionRecruitmentCard) => {
+const CompanionRecruitmentCard = ({
+  id,
+  ...props
+}: CompanionRecruitmentCard) => {
   return (
-    <div className="flex-column w-[204px] justify-center rounded-lg border p-6 mainsm:w-[350px]">
-      <CompanionRecruitmentCardContext.Provider
-        value={{
-          ...props,
-        }}
-      >
+    <Link
+      href={`recruitment/${id}`}
+      className="flex-column w-[204px] justify-center rounded-lg border p-6 mainsm:w-[350px]"
+    >
+      <CompanionRecruitmentCardContext.Provider value={{ id, ...props }}>
         <Title />
         <ContentField />
         <IconField />
         <FooterField />
       </CompanionRecruitmentCardContext.Provider>
-    </div>
+    </Link>
   );
 };
 
