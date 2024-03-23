@@ -2,12 +2,15 @@
 import Image from 'next/image';
 
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '~/components/tabs';
+import useFetchAccompanyCommentList from '~/hooks/queries/useFetchAccompanyReviews';
 import useFetchConcertReviews from '~/hooks/queries/useFetchConcertReviews';
 import { useFetchConcerts } from '~/hooks/queries/useFetchConcerts';
 
 import InfoItem from '../_components/info-item';
 import InfoItemWithToggle from '../_components/info-item-with-button';
+import PerformanceRecruitment from '../_components/performance-recruitment';
 import { PerformanceReview } from '../_components/performance-review';
+import ReviewForm from '../_components/review/form';
 
 interface Params {
   id: string;
@@ -22,6 +25,9 @@ const Page = ({ params }: Props) => {
 
   const { data, isLoading } = useFetchConcerts(paramsId);
   const { data: performanceReviewList } = useFetchConcertReviews(paramsId);
+  const { data: performanceRecruitmentList } = useFetchAccompanyCommentList({
+    concertId: paramsId,
+  });
 
   if (isLoading || !data) {
     return;
@@ -168,18 +174,32 @@ const Page = ({ params }: Props) => {
             </div>
           </TabsContent>
           <TabsContent value="recruitment">
-            <div className="m-auto flex w-fit flex-col justify-center gap-6">
-              {/* {performanceRecruitmentList?.map((performance, i) => (
-                <PerformanceRecruitment {...performance} key={i} />
-              ))} */}
+            <div className="m-auto flex w-full flex-col justify-center gap-6">
+              {performanceRecruitmentList?.accompanyPostConcertResponses.map(
+                (performance, i) => (
+                  <PerformanceRecruitment {...performance} key={i} />
+                ),
+              )}
             </div>
           </TabsContent>
           <TabsContent value="review">
             <div className="m-auto flex w-fit flex-col justify-center gap-6">
               {performanceReviewList?.concertReviewGetResponses.map(
-                (review, i) => <PerformanceReview {...review} key={i} />,
+                ({ id, ...props }) => (
+                  <PerformanceReview
+                    id={id}
+                    {...props}
+                    concertId={parseInt(paramsId)}
+                    key={id}
+                  />
+                ),
               )}
             </div>
+            <ReviewForm
+              initialTitle={name}
+              id={parseInt(paramsId)}
+              concertId={parseInt(paramsId)}
+            />
           </TabsContent>
         </Tabs>
       </div>

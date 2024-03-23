@@ -11,14 +11,14 @@ const MobileFilter = () => {
   return (
     <Sheet open={isOpen} onOpenChange={setIsOpen}>
       <SheetTrigger asChild>
-        <div className="fixed bottom-5 left-5 hidden sm:block">
+        <div className="fixed bottom-4 left-4 hidden sm:absolute sm:bottom-0 sm:bottom-16 sm:left-0 sm:block">
           <Icon
-            className="h-[35px] w-[35px] cursor-pointer"
+            className="fixed h-[35px] w-[35px] cursor-pointer"
             iconName="filter"
           />
         </div>
       </SheetTrigger>
-      <SheetContent side="left">
+      <SheetContent side="left" className="overflow-scroll">
         <div className="flex w-full justify-center border p-8">
           <CompanionRecruitmentFilter
             onSubmit={() => {

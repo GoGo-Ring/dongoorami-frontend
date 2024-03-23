@@ -1,3 +1,5 @@
+import { PerformanceInfoListItemApi } from './performance';
+
 export interface Companion {
   accompanyPostId: string;
   concertName: string;
@@ -74,4 +76,25 @@ export interface CompanionRecruitmentCardApi {
 export interface AccompanyPostInfoList {
   hasNext: boolean;
   accompanyPostInfos: CompanionRecruitmentCardApi[];
+}
+
+export interface AccompanyPostInfoListPage {
+  pages: AccompanyPostInfoList[];
+}
+
+export interface PerformanceRecruitment {
+  id: number;
+  nickname: string;
+  title: string;
+  content: string;
+  viewCount: number;
+  commentCount: number;
+  updatedAt: string;
+}
+
+export interface CompanionsAccompanySearchInfoList {
+  hasNextAccompanyPost: boolean;
+  hasNextConcert: boolean;
+  accompanyPostInfos: CompanionRecruitmentCardApi[];
+  concertGetShortResponses: PerformanceInfoListItemApi[];
 }
