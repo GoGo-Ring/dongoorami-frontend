@@ -8,6 +8,7 @@ import { Button } from '~/components/button';
 import Icon from '~/components/icon';
 import { Sheet, SheetContent, SheetTrigger } from '~/components/sheet';
 import useInfiniteAccompanies from '~/hooks/infinite/useInfiniteAccompanies';
+import { useInfiniteAccompanyPostKeyword } from '~/hooks/infinite/useInfiniteAccompanyPostKeyword';
 import { useInfinitePerformances } from '~/hooks/infinite/useInfinitePerformances';
 
 import CompanionRecruitmentList from './companion-recruitment-list';
@@ -17,19 +18,29 @@ const FilterSearch = () => {
   const searchParams = useSearchParams();
   const params = searchParams.toString();
 
+  const q = searchParams.get('q');
+  const keyword = q ? q : '';
+
   const {
     data: accompaniesData,
     fetchNextPage: fetchNextAccompaniesPage,
     hasNextPage: hasNextPageCompanion,
-  } = useInfiniteAccompanies(params);
+  } = useInfiniteAccompanies({ searchParams: params, keyword });
   const {
     data: performancesData,
     fetchNextPage: fetchNextPerformancesPage,
     hasNextPage: hasNextPagePerformance,
-  } = useInfinitePerformances(params);
+  } = useInfinitePerformances({ searchParams: params, keyword });
+  const {
+    data: AccompanyPerformancesKeywordData,
+    fetchNextPage: fetchNextAccompanyPerformancesKeywordPage,
+    hasNextPage: hasNextPageAccompanyPerformancesKeyword,
+  } = useInfiniteAccompanyPostKeyword({ keyword });
 
   const [isMoreCompanionInfinite, setIsMoreCompanionInfinite] = useState(false);
   const [isMorePerformanceInfinite, setIsMorePerformanceInfinite] =
+    useState(false);
+  const [isMoreCompanionKeywordInfinite, setIsMoreCompanionKeywordInfinite] =
     useState(false);
   const [isOpen, setIsOpen] = useState(false);
 
@@ -41,12 +52,20 @@ const FilterSearch = () => {
     fetchNextPerformancesPage();
   };
 
+  const handleFetchNextAccompanyPerformancesKeyword = () => {
+    fetchNextAccompanyPerformancesKeywordPage();
+  };
+
   const handleIsMoreCompanion = () => {
     setIsMoreCompanionInfinite(true);
   };
 
   const handleIsMorePerformance = () => {
     setIsMorePerformanceInfinite(true);
+  };
+
+  const handleIsMoreCompanionKeyword = () => {
+    setIsMoreCompanionKeywordInfinite(true);
   };
 
   const handleSubmit = () => {
@@ -99,23 +118,44 @@ const FilterSearch = () => {
             공연 더보기
           </Button>
         )}
-        {accompaniesData && (
-          <CompanionRecruitmentList
-            data={accompaniesData}
-            isInfinite={isMoreCompanionInfinite}
-            hasNextPage={hasNextPageCompanion}
-            handleFetchNextPage={handleFetchNextPage}
-          />
-        )}
-        {!isMoreCompanionInfinite && (
-          <Button
-            variant="outline"
-            onClick={handleIsMoreCompanion}
-            disabled={isMoreCompanionInfinite}
-          >
-            동행 모집 더보기
-          </Button>
-        )}
+        {keyword
+          ? AccompanyPerformancesKeywordData && (
+              <CompanionRecruitmentList
+                data={AccompanyPerformancesKeywordData}
+                isInfinite={isMoreCompanionKeywordInfinite}
+                hasNextPage={hasNextPageAccompanyPerformancesKeyword}
+                handleFetchNextPage={
+                  handleFetchNextAccompanyPerformancesKeyword
+                }
+              />
+            )
+          : accompaniesData && (
+              <CompanionRecruitmentList
+                data={accompaniesData}
+                isInfinite={isMoreCompanionInfinite}
+                hasNextPage={hasNextPageCompanion}
+                handleFetchNextPage={handleFetchNextPage}
+              />
+            )}
+        {keyword
+          ? !isMoreCompanionKeywordInfinite && (
+              <Button
+                variant="outline"
+                onClick={handleIsMoreCompanionKeyword}
+                disabled={isMoreCompanionKeywordInfinite}
+              >
+                동행 모집 더보기
+              </Button>
+            )
+          : !isMoreCompanionInfinite && (
+              <Button
+                variant="outline"
+                onClick={handleIsMoreCompanion}
+                disabled={isMoreCompanionInfinite}
+              >
+                동행 모집 더보기
+              </Button>
+            )}
       </div>
     </div>
   );
