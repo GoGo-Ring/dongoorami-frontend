@@ -1,7 +1,6 @@
 'use client';
 
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
 import { ChangeEvent, useState } from 'react';
 import { toast } from 'sonner';
 
@@ -22,7 +21,6 @@ import Wishes from './_components/wishes';
 import { TABS_VALUE } from './constants';
 
 const Page = ({ params }: { params: { id: string } }) => {
-  const router = useRouter();
   const [isEdit, setIsEdit] = useState(false);
 
   const { data: member } = useFetchMember();
@@ -34,8 +32,6 @@ const Page = ({ params }: { params: { id: string } }) => {
   const { mutate: mutateUpdateMember } = useMutationUpdateMember();
 
   if (!member) {
-    router.push('/login');
-
     return null;
   }
 
