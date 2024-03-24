@@ -107,7 +107,6 @@ const FooterField = () => {
     </div>
   );
 };
-
 const CompanionRecruitmentCard = ({
   id,
   ...props
