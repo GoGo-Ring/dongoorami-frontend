@@ -1,3 +1,5 @@
+import axios from 'axios';
+
 import { Companion, Profile } from '~/apis/scheme/accompany';
 import { PerformanceInfo } from '~/apis/scheme/accompanyInput';
 import { Comment } from '~/apis/scheme/comment';
@@ -106,7 +108,7 @@ export const getPerformanceInfos = async (keyword: string) => {
 };
 
 export const getImage = async (url: string) => {
-  const { data } = await api.get<Blob>({
+  const { data } = await axios<Blob>({
     url,
     responseType: 'blob',
   });
