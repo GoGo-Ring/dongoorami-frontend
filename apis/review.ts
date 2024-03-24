@@ -1,6 +1,28 @@
-import { ReviewResponse, SentReview } from './scheme/review';
+import {
+  ReviewResponse,
+  SentReview,
+  UpdateAccompanyReviews,
+} from './scheme/review';
 
 import api from '.';
+
+export const getAccompanyReviews = async <T>(id: number) => {
+  const { data } = await api.get<T[]>({
+    url: `/accompanies/reviews/reviewees/${id}`,
+  });
+
+  return data;
+};
+
+export const updateAccompanyReviews = async ({
+  id,
+  data,
+}: UpdateAccompanyReviews) => {
+  return await api.patch({
+    url: `/accompanies/reviews/${id}`,
+    data,
+  });
+};
 
 export const getReviews = async ({
   id,

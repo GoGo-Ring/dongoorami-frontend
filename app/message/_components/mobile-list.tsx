@@ -8,19 +8,19 @@ const MobileMessage = () => {
 
   return (
     <ul className="flex flex-col gap-3 md:hidden lg:hidden">
-      {data?.messages.map(message => (
+      {data?.messageResponses.map(message => (
         <li
           key={message.id}
           className="flex items-center justify-between gap-4 border-b px-2 pb-2"
         >
           <div className="flex flex-col">
-            <h3>{message.senderId}</h3>
+            <h3>{message.partner.id}</h3>
             <p className="text-gray-400">
-              {getDate(new Date(message.date), 'yyyy.mm.dd')}
+              {getDate(new Date(message.createdAt), 'yyyy.mm.dd')}
             </p>
             <p className="line-clamp-1 text-ellipsis">{message.content}</p>
           </div>
-          <span className="text-nowrap">{getRead(message.isRead)}</span>
+          <span className="text-nowrap">{getRead(!message.hasUnRead)}</span>
         </li>
       ))}
       <li className="flex items-center justify-between gap-4 border-b px-2 pb-2">

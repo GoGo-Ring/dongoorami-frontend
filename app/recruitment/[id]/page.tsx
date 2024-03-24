@@ -1,6 +1,7 @@
 'use client';
 import Image from 'next/image';
 import Link from 'next/link';
+import { toast } from 'sonner';
 
 import { ApplyForm } from '~/app/recruitment/[id]/_components/apply';
 import ApplyList from '~/app/recruitment/[id]/_components/apply/list';
@@ -26,14 +27,14 @@ interface Props {
 }
 
 const Page = ({ params }: Props) => {
-  const { mutate: mutateDeletePost } = useMutationDeleteCompanyPost();
+  const { mutate: mutateDeletePost } = useMutationDeleteCompanyPost(params.id);
   const { mutate: createApplyComment, isPending: isCreatePending } =
     useMutationCreateCompanyComment(params.id);
   const { mutate: createCloseStatus } = useMutationCloseCompanyStatus(
     params.id,
   );
 
-  const { data: comments, isFetching } = useFetchComments(params.id);
+  const { data: comments } = useFetchComments(params.id);
   const { data, isPending, isError, error, refetch } = useFetchCompanionPost(
     params.id,
     true,
@@ -50,15 +51,15 @@ const Page = ({ params }: Props) => {
     );
   }
 
-  if (!data || isPending || isFetching) {
+  if (!data || isPending) {
     return <Loading />;
   }
 
-  const confirmedApplies = comments.filter(
+  const confirmedApplies = comments?.filter(
     ({ isAccompanyConfirmedComment }) => isAccompanyConfirmedComment,
   );
 
-  const isApplied = comments.some(
+  const isApplied = comments?.some(
     ({ memberProfile: { currentMember }, isAccompanyApplyComment }) =>
       currentMember && isAccompanyApplyComment,
   );
@@ -88,12 +89,30 @@ const Page = ({ params }: Props) => {
 
   const handleApply = () => {
     confirm('신청하시겠습니까? 신청 취소는 불가능합니다.') &&
-      createApplyComment();
+      createApplyComment(undefined, {
+        onSuccess: () => {
+          toast.success('신청이 완료되었습니다.');
+        },
+        onError: () => {
+          toast.error(
+            '네트워크 오류가 발생했습니다. 잠시 뒤에 다시 시도해주세요.',
+          );
+        },
+      });
   };
 
   const handleClose = () => {
     confirm('모집을 마감하시겠습니까? 모집 마감 취소는 불가능합니다.') &&
-      createCloseStatus();
+      createCloseStatus(undefined, {
+        onSuccess: () => {
+          toast.success('모집이 마감되었습니다.');
+        },
+        onError: () => {
+          toast.error(
+            '네트워크 오류가 발생했습니다. 잠시 뒤에 다시 시도해주세요.',
+          );
+        },
+      });
   };
 
   return (
@@ -102,6 +121,7 @@ const Page = ({ params }: Props) => {
       <div className="flex flex-col">
         <div className="flex items-center justify-between">
           <Profile
+            id={memberProfile.id}
             name={memberProfile.nickname}
             image={memberProfile.profileImage}
           />
@@ -118,13 +138,7 @@ const Page = ({ params }: Props) => {
             <Link className="px-1" href={`/recruitment/new?id=${params.id}`}>
               수정
             </Link>
-            <Link
-              className="px-1"
-              href="/"
-              onClick={() => {
-                mutateDeletePost({ accompanyPostId: params.id });
-              }}
-            >
+            <Link className="px-1" href="/" onClick={() => mutateDeletePost()}>
               삭제
             </Link>
           </div>
@@ -152,7 +166,7 @@ const Page = ({ params }: Props) => {
       </Section>
 
       <Section className="flex items-center md:flex-nowrap">
-        <h2 className="h-full w-1/2 text-xl font-semibold">
+        <h2 className="h-full w-1/2 text-nowrap text-xl font-semibold">
           신청자 목록 ({`${confirmedApplies.length}/${totalPeople}`}명)
         </h2>
         <ApplyForm

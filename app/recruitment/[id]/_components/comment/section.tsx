@@ -33,6 +33,7 @@ const CommentSection = ({ accompanyPostId, className }: Props) => {
         commentId="base"
         handleMutateComment={handleCreateComment}
         isPending={isPending}
+        initialComment=""
       />
       <CommentList comments={comments} accompanyPostId={accompanyPostId} />
     </div>

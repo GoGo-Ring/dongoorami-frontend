@@ -55,6 +55,8 @@ export const Field = ({
     >
       {label}
     </Label>
-    <div className="flex w-full flex-col justify-start">{children}</div>
+    <div className="flex w-full flex-col justify-start truncate p-1">
+      {children}
+    </div>
   </div>
 );
