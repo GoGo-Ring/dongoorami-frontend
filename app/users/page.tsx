@@ -1,11 +1,12 @@
 'use client';
 
 import Link from 'next/link';
-import { ChangeEvent, useState } from 'react';
+import { ChangeEvent, Suspense, useState } from 'react';
 import { toast } from 'sonner';
 
 import { Button } from '~/components/button';
 import { Progress } from '~/components/progress';
+import Spinner from '~/components/spinner';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '~/components/tabs';
 import { Textarea } from '~/components/textarea';
 import useMutationUpdateMember from '~/hooks/mutations/useMutationUpdateMember';
@@ -16,8 +17,11 @@ import CompleteButton from './_components/complete-button';
 import EditableImage from './_components/editable-image';
 import EditableInput from './_components/editable-input';
 import Info from './_components/info';
-import Review from './_components/list-item';
+import RecievedReview from './_components/recieved-review';
+import SentReview from './_components/sent-review';
 import Wishes from './_components/wishes';
+import WrittenComments from './_components/written-comments';
+import WrittenPosts from './_components/written-posts';
 import { TABS_VALUE } from './constants';
 
 const Page = ({ params }: { params: { id: string } }) => {
@@ -136,15 +140,29 @@ const Page = ({ params }: { params: { id: string } }) => {
         <TabsList>
           <TabsTrigger value={TABS_VALUE.RECEIVED}>받은 후기</TabsTrigger>
           <TabsTrigger value={TABS_VALUE.SENT}>작성 후기</TabsTrigger>
+          <TabsTrigger value={TABS_VALUE.POSTS}>작성한 글</TabsTrigger>
+          <TabsTrigger value={TABS_VALUE.COMMENTS}>작성한 댓글</TabsTrigger>
         </TabsList>
         <TabsContent value={TABS_VALUE.RECEIVED}>
-          <Review
-            title="concert"
-            content="리뷰입니다. 리뷰입니다. 리뷰입니다."
-            date={new Date().toString()}
-          />
+          <Suspense fallback={<Spinner />}>
+            <RecievedReview />
+          </Suspense>
         </TabsContent>
-        <TabsContent value={TABS_VALUE.SENT}></TabsContent>
+        <TabsContent value={TABS_VALUE.SENT}>
+          <Suspense fallback={<Spinner />}>
+            <SentReview />
+          </Suspense>
+        </TabsContent>
+        <TabsContent value={TABS_VALUE.POSTS}>
+          <Suspense fallback={<Spinner />}>
+            <WrittenPosts />
+          </Suspense>
+        </TabsContent>
+        <TabsContent value={TABS_VALUE.COMMENTS}>
+          <Suspense fallback={<Spinner />}>
+            <WrittenComments />
+          </Suspense>
+        </TabsContent>
       </Tabs>
     </section>
   );
