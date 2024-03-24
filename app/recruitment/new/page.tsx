@@ -145,7 +145,7 @@ const Page = () => {
   return (
     <div className="flex justify-center py-10">
       <Form
-        className="flex w-full flex-col justify-center gap-4"
+        className="flex w-full flex-col justify-center gap-4 sm:gap-0"
         initialValues={initialValues}
         initialValidations={VALIDATIONS}
         submit={handleSubmit}
@@ -160,7 +160,7 @@ const Page = () => {
         <div className="px-4">
           <ImageField id="images" label="이미지" />
         </div>
-        <div className="mx-4 flex items-start gap-7 rounded-md border border-gray-200 px-6 pt-6 sm:mx-0 sm:flex-wrap sm:border-0 md:flex-wrap">
+        <div className="mx-4 flex items-start gap-7 rounded-md border border-gray-200 px-6 pt-6 sm:mx-0 sm:flex-wrap sm:border-0 sm:px-3 sm:py-0 md:flex-wrap">
           <div className="flex w-full flex-col lg:w-1/2">
             <SearchButtonField
               id="performanceId"
@@ -184,7 +184,7 @@ const Page = () => {
             />
             <CheckBoxField
               id="purposes"
-              label="목적"
+              label="동행 목적"
               items={FORM_ITEMS.PURPOSES}
             />
           </div>
