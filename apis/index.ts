@@ -28,7 +28,7 @@ instance.interceptors.request.use(config => {
   const imageUrlEnv = process.env.NEXT_PUBLIC_API_IMAGE_URL;
   const isImageUrl = imageUrlEnv ? config?.url?.includes(imageUrlEnv) : false;
 
-  config.headers.Authorization = isImageUrl ? undefined : token || '';
+  config.headers.Authorization = isImageUrl ? '' : token || '';
 
   return config;
 });
