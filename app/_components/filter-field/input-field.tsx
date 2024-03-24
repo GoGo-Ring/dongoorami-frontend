@@ -62,14 +62,14 @@ const InputField = ({
   }, [inputs, setOption, fieldName]);
 
   return (
-    <>
+    <div className="flex flex-col">
       <span className="font-semibold">{category}</span>
       <div className="flex flex-row gap-1">
         <InputItem type="number" name="min" value={min} onChange={onChange} />
         <span className="my-auto ">~</span>
         <InputItem type="number" name="max" value={max} onChange={onChange} />
       </div>
-    </>
+    </div>
   );
 };
 

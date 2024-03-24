@@ -22,16 +22,17 @@ export interface OptionsType {
 interface CompanionRecruitmentFilterProps {
   onSubmit: (query: string) => void;
 }
+
 const CompanionRecruitmentFilter = ({
   onSubmit,
 }: CompanionRecruitmentFilterProps) => {
   const [options, setOptions] = useState({
     gender: '무관',
-    region: [],
+    region: '',
     age: [20, 30],
     transportation: '동행',
     totalCount: 0,
-    purpose: [],
+    purposes: [],
   });
 
   const getValue = useCallback(
@@ -41,15 +42,14 @@ const CompanionRecruitmentFilter = ({
     [],
   );
 
-  const setObject = (regionQuery: string) => {
+  const setObject = () => {
     return {
       gender: options.gender,
-      region: regionQuery,
-      transportation: options.transportation,
+      region: options.region,
       startAge: options.age[0],
       endAge: options.age[1],
-      totalCount: options.totalCount,
-      purpose: options.purpose,
+      totalPeople: options.totalCount,
+      purposes: options.purposes,
     };
   };
 
@@ -71,9 +71,7 @@ const CompanionRecruitmentFilter = ({
       .join('&');
 
   const getQuery = () => {
-    const regionQuery = options.region.join('&region=');
-
-    return objectToQueryString(setObject(regionQuery));
+    return objectToQueryString(setObject());
   };
 
   const handleSubmit = (e: MouseEvent<HTMLButtonElement>) => {
@@ -84,24 +82,18 @@ const CompanionRecruitmentFilter = ({
   };
 
   return (
-    <div className="flex w-[260px] flex-col gap-6 px-3">
+    <div className="flex w-[260px] flex-col gap-3 px-3">
       <RadioField
         category={SELECTION.GENDER.category}
         options={SELECTION.GENDER.options}
         setOption={getValue}
         fieldName={'gender'}
       />
-      <CheckboxSelectField
+      <RadioField
         category={SELECTION.REGIONS.category}
         options={SELECTION.REGIONS.options}
         setOption={getValue}
         fieldName={'region'}
-      />
-      <RadioField
-        category={SELECTION.TRANSPORTATION.category}
-        options={SELECTION.TRANSPORTATION.options}
-        setOption={getValue}
-        fieldName={'transportation'}
       />
       <InputField
         category={SELECTION.AGE.category}
@@ -121,7 +113,7 @@ const CompanionRecruitmentFilter = ({
         category={SELECTION.PURPOSE.category}
         options={SELECTION.PURPOSE.options}
         setOption={getValue}
-        fieldName={'purpose'}
+        fieldName={'purposes'}
         className="flex-row gap-2"
       />
       <Button variant="outline" onClick={handleSubmit}>

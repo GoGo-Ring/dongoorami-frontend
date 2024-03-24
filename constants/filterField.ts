@@ -45,12 +45,13 @@ export const SELECTION = {
   REGIONS: {
     category: '지역',
     options: [
-      '수도권(경기, 인천 포함)',
-      '강원도',
-      '충청북도/충청남도',
-      '경상북도/경상남도',
-      '전라북도/전라남도',
-      '제주도',
+      { value: '', label: '무관' },
+      { value: '수도권(경기, 인천 포함)', label: '수도권(경기, 인천 포함)' },
+      { value: '강원도', label: '강원도' },
+      { value: '충청북도/충청남도', label: '충청북도/충청남도' },
+      { value: '경상북도/경상남도', label: '경상북도/경상남도' },
+      { value: '전라북도/전라남도', label: '전라북도/전라남도' },
+      { value: '제주도', label: '제주도' },
     ],
   },
   PURPOSE: {
