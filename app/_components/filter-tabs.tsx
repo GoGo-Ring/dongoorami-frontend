@@ -12,17 +12,22 @@ interface FilterTabsProps {
   baseUrl?: string;
   className?: string;
   hasFilterTitle?: boolean;
+  handleSubmit?: () => void;
 }
 
 const FilterTabs = ({
   baseUrl = 'search',
   hasFilterTitle = true,
   className = '',
+  handleSubmit,
 }: FilterTabsProps) => {
   const router = useRouter();
 
   const onSubmit = (query: string) => {
     router.push(`/${baseUrl}?${query}`);
+    if (handleSubmit) {
+      handleSubmit();
+    }
   };
 
   return (

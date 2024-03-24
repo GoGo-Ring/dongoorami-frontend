@@ -7,6 +7,7 @@ import {
   CompanionRequest,
   Profile,
 } from '~/apis/scheme/accompany';
+import { AccompanyPostConcertResponses } from '~/apis/scheme/performance';
 
 interface AccompanyFixture {
   current: CompanionDetail[];
@@ -70,7 +71,7 @@ const accompany: AccompanyFixture = {
       memberInfo: {
         id: 7,
         profileImage: 'https://picsum.photos/200',
-        name: 'John Doe',
+        nickname: 'John Doe',
         gender: '남자',
         age: 5,
         introduction: '',
@@ -168,6 +169,27 @@ const getCompanions = rest.get<Companion[]>(
   },
 );
 
-const memberHandlers = [getCompanions];
+const accompanyRecruitmentList = {
+  hasNext: false,
+  accompanyPostConcertResponses: [
+    ...Array.from({ length: 5 }, i => ({
+      title: `${i}서울 같이 갈 울싼 사람 구합니다~~`,
+      nickname: '김뫄뫄',
+      updatedAt: '2024.03.22',
+      content: '고고링 백걸즈의 스프링 탐방기',
+      viewCount: 0,
+      commentCount: 0,
+    })),
+  ],
+};
 
-export default memberHandlers;
+const getConcertAccompanyList = rest.get<AccompanyPostConcertResponses>(
+  `${BASE_URL}/accompanies/posts/concerts/:id`,
+  (_req, res, ctx) => {
+    return res(ctx.status(200), ctx.json(accompanyRecruitmentList));
+  },
+);
+
+const accompanyHandlers = [getCompanions, getConcertAccompanyList];
+
+export default accompanyHandlers;

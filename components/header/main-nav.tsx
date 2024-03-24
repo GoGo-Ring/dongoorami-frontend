@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 
+import { Badge } from '~/components/badge';
 import { cn } from '~/libs/utils';
 
 const MainNav = () => {
@@ -27,15 +28,15 @@ const MainNav = () => {
           공연
         </Link>
         <Link
-          href="/accompanies"
+          href="/recruitment/new"
           className={cn(
             'transition-colors hover:text-foreground/80',
-            pathname?.startsWith('/accompanies')
+            pathname?.startsWith('/recruitment')
               ? 'text-foreground'
               : 'text-foreground/60',
           )}
         >
-          동행
+          <Badge variant="outline">동행 글 작성</Badge>
         </Link>
       </nav>
     </div>

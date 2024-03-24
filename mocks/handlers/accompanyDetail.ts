@@ -137,11 +137,7 @@ const getCompanion = rest.get<AccompanyPost>(
 
 const createCompanion = rest.post(
   `${BASE_URL}/accompanies/posts`,
-  async (req, res, ctx) => {
-    const newCompanion = (await req.json()) as AccompanyPost;
-
-    accompany.current.push(newCompanion);
-
+  async (_, res, ctx) => {
     return res(ctx.status(201));
   },
 );

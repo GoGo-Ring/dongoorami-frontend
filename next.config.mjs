@@ -28,7 +28,7 @@ const nextConfig = {
         port: '',
       },
       {
-        hostname: 'www.kopis.or.kr',
+        hostname: 't1.kakaocdn.net',
         port: '',
       },
     ],

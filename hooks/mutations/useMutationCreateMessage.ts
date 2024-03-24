@@ -3,23 +3,18 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { createMessage } from '~/apis/message';
 
 interface useMutationCreateMessageParams {
-  senderId: number;
-  receiverId: number;
-  accompanyPostId?: number;
+  partnerId: number;
 }
 
 const useMutationCreateMessage = ({
-  senderId,
-  receiverId,
-  accompanyPostId,
+  partnerId,
 }: useMutationCreateMessageParams) => {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: (content: string) =>
-      createMessage({ senderId, receiverId, accompanyPostId, content }),
+    mutationFn: (content: string) => createMessage({ partnerId, content }),
     onSettled: () => {
-      queryClient.invalidateQueries({ queryKey: ['message', receiverId] });
+      queryClient.invalidateQueries({ queryKey: ['messages', partnerId] });
     },
   });
 };

@@ -36,8 +36,7 @@ export interface AccompanyPost {
 
 export interface RequestAcompaniPost {
   title: string;
-  concertName: string;
-  concertPlace: string;
+  concertId: number;
   region: '수도권(경기, 인천 포함)' | string;
   startAge: number;
   endAge: number;

@@ -30,7 +30,7 @@ export interface RatingItem {
 }
 
 export interface ReviewType {
-  userId: string;
+  userId: number;
   starRating: number;
   text: string;
   isChecked: RatingItem;
@@ -40,7 +40,7 @@ type OnUpdateType = ({ userId, text, starRating }: ReviewType) => void;
 
 interface ReviewFormProps {
   username: string;
-  userId: string;
+  userId: number;
   onUpdate: OnUpdateType;
 }
 
@@ -61,7 +61,12 @@ const ReviewForm = ({ username, userId, onUpdate }: ReviewFormProps) => {
       }
       const { value } = ref.current;
 
-      callbackFn({ userId, text: value, starRating: rate, isChecked });
+      callbackFn({
+        userId,
+        text: value,
+        starRating: rate,
+        isChecked,
+      });
     },
     [rate, userId, isChecked],
   );
@@ -69,7 +74,9 @@ const ReviewForm = ({ username, userId, onUpdate }: ReviewFormProps) => {
   const handleCheckbox = (e: ChangeEvent<HTMLDivElement>) => {
     const { id } = e.currentTarget;
 
-    setIsChecked({ ...isChecked, [id]: !isChecked[id] });
+    const [_id] = id.split('-');
+
+    setIsChecked({ ...isChecked, [_id]: !isChecked[_id] });
   };
 
   const handleTextareaBlur = () => {
@@ -78,13 +85,13 @@ const ReviewForm = ({ username, userId, onUpdate }: ReviewFormProps) => {
 
   useEffect(() => {
     onChange(onUpdate);
-  }, [onChange, onUpdate]);
+  }, [onChange, onUpdate, isChecked]);
 
   return (
     <Collapsible
       open={isOpen}
       onOpenChange={setIsOpen}
-      className="w-[350px] space-y-2"
+      className=" w-full space-y-2"
     >
       <div className="flex items-center justify-between space-x-4 pl-4">
         <span className="text-sm font-semibold">{username}</span>
@@ -108,14 +115,15 @@ const ReviewForm = ({ username, userId, onUpdate }: ReviewFormProps) => {
           <div className="flex flex-col items-start gap-2">
             {RATING_ITEMS.map(label => (
               <div
-                id={label}
+                id={`${label}-${userId}`}
                 className="flex w-fit items-center space-x-2"
                 key={label}
                 onChange={handleCheckbox}
               >
-                <Checkbox id={`${label}_${username}`} />
+                <Checkbox id={`${label}-${userId}-checkbox`} />
                 <label
                   htmlFor={`${label}_${username}`}
+                  id={`${label}-${userId}-label`}
                   className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
                 >
                   {label}

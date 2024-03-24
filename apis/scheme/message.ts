@@ -1,11 +1,22 @@
 export interface Message {
   id: number;
-  accompanyPostId: number;
-  senderId: number;
-  receiverId: number;
+  partner: {
+    id: number;
+    nickname: string;
+    profileImage: string;
+    gender: '여자' | '남자';
+    age: number;
+    introduction: string;
+    currentMember: boolean;
+    manner: number;
+  };
   content: string;
-  date: string;
-  isRead: boolean;
+  createdAt: string;
+  hasUnRead: boolean;
+  myMessage: boolean;
 }
 
-export type MessageWithPage = { messages: Message[]; allPage: number };
+export interface MessageWithPage {
+  messageResponses: Message[];
+  hasNext: boolean;
+}

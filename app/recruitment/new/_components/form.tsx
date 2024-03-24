@@ -1,4 +1,4 @@
-import { ReactNode, createContext } from 'react';
+import { ReactNode, createContext, useEffect } from 'react';
 
 import useForm from '~/hooks/useForm';
 import { UseFormReturn, ValidateFn } from '~/hooks/useForm/types';
@@ -32,7 +32,11 @@ export const Form = <T extends object, K extends Extract<keyof T, string>>({
     onSubmit: submit,
     validationRulesList: initialValidations,
   });
-  const { handleSubmit, registerValidation } = formValues;
+  const { handleSubmit, registerValidation, setValues } = formValues;
+
+  useEffect(() => {
+    setValues(initialValues);
+  }, [initialValues, setValues]);
 
   initialValidations.forEach(registerValidation);
 

@@ -20,7 +20,7 @@ const Page = () => {
     data: accompaniesData,
     fetchNextPage: fetchNextAccompaniesPage,
     hasNextPage: hasNextPageCompanion,
-  } = useInfiniteAccompanies('', 9);
+  } = useInfiniteAccompanies({ searchParams: '', size: 9 });
 
   const { data } = useFetchCarouselPerformances();
 

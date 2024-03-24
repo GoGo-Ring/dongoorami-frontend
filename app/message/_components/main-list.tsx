@@ -23,13 +23,13 @@ const MainMessage = () => {
   const { data } = useFetchMessage(MESSAGE_SIZE, +page);
   const { mutate } = useMutationMessage();
 
-  if (!data || !data.messages) {
+  if (!data || !data.messageResponses) {
     return null;
   }
 
   const handleClickMessage = (id: number) => {
     mutate(id);
-    router.push(`/message/${id}`);
+    router.push(`/message/write?userId=${id}`);
   };
 
   return (
@@ -64,23 +64,23 @@ const MainMessage = () => {
           </tr>
         </thead>
         <tbody className="[&_tr:last-child]:border-0">
-          {data.messages?.map(message => (
+          {data.messageResponses?.map(message => (
             <tr
               key={message.id}
               className="border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted"
-              onClick={() => handleClickMessage(message.id)}
+              onClick={() => handleClickMessage(message.partner.id)}
             >
               <td className="cursor-pointer p-4 align-middle font-medium [&:has([role=checkbox])]:pr-0">
-                {message.senderId}
+                {message.partner.nickname}
               </td>
               <td className="cursor-pointer p-4 align-middle font-medium [&:has([role=checkbox])]:pr-0">
                 {message.content}
               </td>
               <td className="cursor-pointer p-4 align-middle font-medium [&:has([role=checkbox])]:pr-0">
-                {getDate(new Date(message.date), 'yyyy.mm.dd')}
+                {getDate(new Date(message.createdAt), 'yyyy.mm.dd')}
               </td>
               <td className="cursor-pointer p-4 align-middle font-medium [&:has([role=checkbox])]:pr-0">
-                {getRead(message.isRead)}
+                {getRead(!message.hasUnRead)}
               </td>
             </tr>
           ))}
@@ -93,7 +93,7 @@ const MainMessage = () => {
             <PaginationLink
               href={{
                 query: {
-                  page: calculatePage(+page - 1, data.allPage),
+                  page: calculatePage(+page - 1, data.messageResponses.length),
                 },
               }}
             >
@@ -104,7 +104,7 @@ const MainMessage = () => {
               />
             </PaginationLink>
           </PaginationItem>
-          {Array.from({ length: data.allPage }, (_, index) => (
+          {Array.from({ length: data.messageResponses.length }, (_, index) => (
             <PaginationItem key={index}>
               <PaginationLink href={{ query: { page: index + 1 } }}>
                 {index + 1}
@@ -115,7 +115,7 @@ const MainMessage = () => {
             <PaginationLink
               href={{
                 query: {
-                  page: calculatePage(+page + 1, data.allPage),
+                  page: calculatePage(+page + 1, data.messageResponses.length),
                 },
               }}
             >

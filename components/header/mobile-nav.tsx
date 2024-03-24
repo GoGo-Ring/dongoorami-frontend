@@ -1,5 +1,6 @@
 import { useState } from 'react';
 
+import { Badge } from '~/components/badge';
 import { Sheet, SheetContent, SheetTrigger } from '~/components/sheet';
 
 import MobileLink from './mobile-link';
@@ -22,11 +23,11 @@ const MobileNav = () => {
           동구라미
         </MobileLink>
         <nav className="mt-5 flex flex-col gap-4">
-          <MobileLink onOpenChange={setIsOpen} href="/concerts">
+          <MobileLink onOpenChange={setIsOpen} href="/search">
             공연
           </MobileLink>
-          <MobileLink onOpenChange={setIsOpen} href="/accompanies">
-            동행
+          <MobileLink onOpenChange={setIsOpen} href="/recruitment/new">
+            <Badge variant="outline">동행 글 작성</Badge>
           </MobileLink>
         </nav>
       </SheetContent>

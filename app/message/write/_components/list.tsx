@@ -1,5 +1,6 @@
 import Profile from '~/app/recruitment/[id]/_components/profile';
-import useFetchMessageById from '~/hooks/queries/useFetchMessageById';
+import useInfiniteSendingMessagesById from '~/hooks/infinite/useInfiniteMessagesById';
+import useIntersectionObsever from '~/hooks/useIntersectionObserver';
 import { cn } from '~/libs/utils';
 import { getDateWithTime } from '~/utils/dateFormatter';
 
@@ -9,7 +10,10 @@ interface MessageWriteListProps {
   contacterId: number;
   contacterName: string;
   contacterProfileImage: string;
+  isInifinity: boolean;
 }
+
+const SIZE = 6;
 
 const MessageWriteList = ({
   myProfileImage,
@@ -17,36 +21,44 @@ const MessageWriteList = ({
   contacterId,
   contacterName,
   contacterProfileImage,
+  isInifinity,
 }: MessageWriteListProps) => {
-  const { data } = useFetchMessageById({
-    targetId: contacterId,
-    size: 100,
-    page: 1,
+  const { data, hasNextPage, fetchNextPage } = useInfiniteSendingMessagesById({
+    partnerId: contacterId,
+    size: SIZE,
   });
-  const isMyId = (id: number) => id === 1; // TODO: 로그인 정보로 변경
+
+  const handleFetchNextPage = () => {
+    fetchNextPage();
+  };
+  const ref = useIntersectionObsever<HTMLDivElement>({
+    callback: handleFetchNextPage,
+    condition: hasNextPage,
+  });
 
   return (
     <div className="divide-y">
-      {data?.messages?.map(({ id, content, date, senderId }) => (
+      {data?.map(({ id, content, createdAt, myMessage }) => (
         <div
           key={id}
           className={cn(
             'text-bold flex flex-col p-2 text-sm ',
-            isMyId(senderId) ? ' bg-gray-150 ' : '',
+            myMessage ? ' bg-gray-150 ' : '',
           )}
         >
           <Profile
-            name={isMyId(senderId) ? myName : contacterName}
-            image={isMyId(senderId) ? myProfileImage : contacterProfileImage}
+            name={myMessage ? myName : contacterName}
+            image={myMessage ? myProfileImage : contacterProfileImage}
           />
           <p className="break-words p-4">{content}</p>
           <div className="flex gap-4 self-end text-sm ">
             <p className="text-gray-300">
-              {getDateWithTime(new Date(date), 'yyyy.mm.dd', 'hh:mm:ss')}
+              {getDateWithTime(new Date(createdAt), 'yyyy.mm.dd', 'hh:mm:ss')}
             </p>
           </div>
         </div>
       ))}
+      {isInifinity && <div ref={ref} className="invisible" />}
     </div>
   );
 };

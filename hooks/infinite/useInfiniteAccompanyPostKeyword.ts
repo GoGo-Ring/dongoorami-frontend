@@ -1,24 +1,26 @@
 import { useInfiniteQuery } from '@tanstack/react-query';
 
-import { getCompanionsList } from '~/apis/companion';
+import { getCompanionsAccompanyList } from '~/apis/companion';
 
 const SIZE = 6;
 
 interface accompaniesParam {
-  searchParams: string;
-  size?: number;
   keyword?: string;
+  size?: number;
 }
 
-const useInfiniteAccompanies = ({
-  searchParams,
-  size = SIZE,
+export const useInfiniteAccompanyPostKeyword = ({
   keyword = '',
+  size = SIZE,
 }: accompaniesParam) => {
   return useInfiniteQuery({
-    queryKey: ['accompanies', searchParams],
+    queryKey: ['performancesKeyword', keyword],
     queryFn: ({ pageParam }) =>
-      getCompanionsList({ searchParams, keyword, size, lastId: pageParam }),
+      getCompanionsAccompanyList({
+        size,
+        lastId: pageParam,
+        keyword,
+      }),
     initialPageParam: 0,
     getNextPageParam: lastPage => {
       const { accompanyPostInfos } = lastPage;
@@ -30,5 +32,3 @@ const useInfiniteAccompanies = ({
     },
   });
 };
-
-export default useInfiniteAccompanies;

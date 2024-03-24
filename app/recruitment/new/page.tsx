@@ -1,12 +1,18 @@
 'use client';
-import { useMutation } from '@tanstack/react-query';
-import { useSearchParams } from 'next/navigation';
+import { useSearchParams, useRouter } from 'next/navigation';
 import React, { useEffect } from 'react';
 
-import { createCompanion } from '~/apis/accompany';
-import { companionFormValueToRequest } from '~/app/recruitment/new/utils';
+import Error from '~/app/recruitment/new/error';
+import Loading from '~/app/recruitment/new/loading';
+import {
+  companionDetailToFormValue,
+  companionFormValueToRequest,
+  convertURLtoFile,
+} from '~/app/recruitment/new/utils';
 import { Button } from '~/components/button';
 import Spinner from '~/components/spinner';
+import useMutationCreateCompanyPost from '~/hooks/mutations/useMutationCreateCompanyPost';
+import useMutationUpdateCompanyPost from '~/hooks/mutations/useMutationUpdateCompanyPost';
 import useFetchCompanionPost from '~/hooks/queries/useFetchCompanionPost';
 
 import {
@@ -20,6 +26,7 @@ import {
   TextareaField,
   CalendarField,
   SearchButtonField,
+  CheckBoxField,
 } from './_components/fields';
 import { Form } from './_components/form';
 import {
@@ -30,11 +37,25 @@ import {
 } from './constants';
 
 const Page = () => {
-  const { mutate, isPending } = useMutation({ mutationFn: createCompanion });
+  const router = useRouter();
+
   const postId = useSearchParams().get('id');
+  const {
+    mutate: createPost,
+    isPending,
+    isError: isMutateError,
+    error: mutateError,
+  } = useMutationCreateCompanyPost(postId || '');
+  const { mutate: updatePost } = useMutationUpdateCompanyPost(postId || '');
   const isEdit = !!postId;
 
-  const { refetch } = useFetchCompanionPost(postId || '');
+  const {
+    data: postData,
+    refetch,
+    isFetching,
+    isError: isFetchError,
+    error: fetchError,
+  } = useFetchCompanionPost(postId || '');
 
   useEffect(() => {
     if (isEdit) {
@@ -42,17 +63,90 @@ const Page = () => {
     }
   }, [isEdit, refetch]);
 
-  const handleSubmit = (values: CompanionFormValue) => {
-    const companionData = companionFormValueToRequest(values);
+  if (isMutateError) {
+    return (
+      <Error
+        error={mutateError}
+        reset={() => {
+          if (isEdit) {
+            refetch();
+          }
+        }}
+      />
+    );
+  }
 
-    mutate(companionData as unknown as FormData);
+  if (isEdit && isFetchError) {
+    return (
+      <Error
+        error={fetchError}
+        reset={() => {
+          refetch();
+        }}
+      />
+    );
+  }
+
+  if ((isEdit && isFetching) || isPending) {
+    return <Loading />;
+  }
+
+  const initialValues = isEdit
+    ? companionDetailToFormValue({
+        datas: postData,
+        INITIAL_VALUES,
+      })
+    : INITIAL_VALUES;
+
+  const handleSubmit = async (values: CompanionFormValue) => {
+    const companionData = companionFormValueToRequest(values);
+    const imageUrls = values.images;
+    const formData = new FormData();
+
+    formData.append(
+      'accompanyPostRequest',
+      new Blob([JSON.stringify(companionData)], {
+        type: 'application/json',
+      }),
+    );
+
+    await Promise.all(
+      imageUrls.map((url, index) => convertURLtoFile(String(index), url)),
+    ).then(files => {
+      files.forEach(file => {
+        formData.append('images', file);
+      });
+    });
+
+    if (imageUrls.length === 0) {
+      formData.append('images', new File([], ''));
+    }
+
+    if (isEdit) {
+      updatePost(
+        { accompanyPostId: postId, formData },
+        {
+          onSuccess: () => {
+            router.push(`/recruitment/${postId}`);
+          },
+        },
+      );
+    } else {
+      createPost(formData, {
+        onSuccess: ({ headers }) => {
+          const [, id] = headers.location.split('accompanies/posts/');
+
+          router.push(`/recruitment/${id}`);
+        },
+      });
+    }
   };
 
   return (
     <div className="flex justify-center py-10">
       <Form
-        className="flex w-[890px] flex-col justify-center gap-4"
-        initialValues={INITIAL_VALUES}
+        className="flex w-full flex-col justify-center gap-4"
+        initialValues={initialValues}
         initialValidations={VALIDATIONS}
         submit={handleSubmit}
       >
@@ -67,15 +161,14 @@ const Page = () => {
           <ImageField id="images" label="이미지" />
         </div>
         <div className="mx-4 flex items-start gap-7 rounded-md border border-gray-200 px-6 pt-6 sm:mx-0 sm:flex-wrap sm:border-0 md:flex-wrap">
-          <div className="flex w-full flex-col">
-            <InputField
+          <div className="flex w-full flex-col lg:w-1/2">
+            <SearchButtonField
               id="performanceId"
-              label="공연명"
-              placeholder="공연명을 입력해주세요"
+              valueId="performanceName"
+              label="공연"
+              placeholder="공연을 입력해주세요"
+              listCount={10}
             />
-            <SelectField id="region" label="지역" placeholder="선택">
-              <SelectFieldItem items={FORM_ITEMS.REGIONS} />
-            </SelectField>
             <SelectField
               id="participantCount"
               label="인원수"
@@ -89,14 +182,16 @@ const Page = () => {
               maxId="performanceMaxDate"
               label="공연 날짜"
             />
-          </div>
-          <div className="flex w-full flex-col ">
-            <SearchButtonField
-              id="performanceId"
-              label="공연명"
-              placeholder="공연 명을 입력해주세요"
-              listCount={10}
+            <CheckBoxField
+              id="purposes"
+              label="목적"
+              items={FORM_ITEMS.PURPOSES}
             />
+          </div>
+          <div className="flex w-full flex-col lg:w-1/2 ">
+            <SelectField id="region" label="지역" placeholder="선택">
+              <SelectFieldItem items={FORM_ITEMS.REGIONS} />
+            </SelectField>
             <SliderField id="age" minId="minAge" maxId="maxAge" label="연령" />
             <RadioGroupField id="gender" label="성별">
               {FORM_ITEMS.GENDER.map(({ label, id }) => (
@@ -114,7 +209,11 @@ const Page = () => {
           />
         </div>
         <div className="flex gap-8 px-4">
-          <Button className="w-full bg-secondary text-secondary-foreground">
+          <Button
+            className="w-full bg-secondary text-secondary-foreground"
+            type="button"
+            onClick={() => router.back()}
+          >
             취소
           </Button>
           <Button

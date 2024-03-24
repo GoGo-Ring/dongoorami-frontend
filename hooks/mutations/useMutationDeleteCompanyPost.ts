@@ -1,11 +1,18 @@
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 
 import { deleteCompanion } from '~/apis/accompany';
 
-const useMutationDeleteCompanyPost = () => {
+const useMutationDeleteCompanyPost = (accompanyPostId: string) => {
+  const queryClient = useQueryClient();
+
   return useMutation({
-    mutationFn: ({ accompanyPostId }: { accompanyPostId: string }) =>
-      deleteCompanion(accompanyPostId),
+    mutationFn: () => deleteCompanion(accompanyPostId),
+    onSettled: () => {
+      queryClient.invalidateQueries({ queryKey: ['companions'] });
+      queryClient.invalidateQueries({
+        queryKey: ['companionPost', accompanyPostId],
+      });
+    },
   });
 };
 
