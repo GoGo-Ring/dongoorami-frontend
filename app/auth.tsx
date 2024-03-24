@@ -1,14 +1,13 @@
 'use client';
 
-import { usePathname, useRouter } from 'next/navigation';
+import { redirect, usePathname } from 'next/navigation';
 import { useEffect } from 'react';
 
 import { PropsWithRequiredChildren } from '~/types/utils';
 
-const routes = ['/message', '/register'];
+const routes = ['/message', '/users', '/register'];
 
 const AuthProvider = ({ children }: PropsWithRequiredChildren) => {
-  const router = useRouter();
   const pathname = usePathname();
 
   useEffect(() => {
@@ -19,13 +18,13 @@ const AuthProvider = ({ children }: PropsWithRequiredChildren) => {
     const token = localStorage.getItem('accessToken');
 
     if (token && pathname.startsWith('/login')) {
-      router.push('/');
+      redirect('/');
     }
 
     if (!token && routes.includes(pathname)) {
-      router.push('/login');
+      redirect('/login');
     }
-  }, [pathname, router]);
+  }, [pathname]);
 
   return <>{children}</>;
 };
