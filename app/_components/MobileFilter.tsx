@@ -1,3 +1,4 @@
+import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 
 import Icon from '~/components/icon';
@@ -6,7 +7,12 @@ import { Sheet, SheetContent, SheetTrigger } from '~/components/sheet';
 import CompanionRecruitmentFilter from './companion-recruitment-filter';
 
 const MobileFilter = () => {
+  const router = useRouter();
   const [isOpen, setIsOpen] = useState(false);
+
+  const onSubmit = (query: string) => {
+    router.push(`/search?${query}`);
+  };
 
   return (
     <Sheet open={isOpen} onOpenChange={setIsOpen}>
@@ -20,11 +26,7 @@ const MobileFilter = () => {
       </SheetTrigger>
       <SheetContent side="left" className="overflow-scroll">
         <div className="flex w-full justify-center border p-8">
-          <CompanionRecruitmentFilter
-            onSubmit={() => {
-              return 1;
-            }}
-          />
+          <CompanionRecruitmentFilter onSubmit={onSubmit} />
         </div>
       </SheetContent>
     </Sheet>
