@@ -1,4 +1,11 @@
-import { Member, Profile, RegisterMemberRequest, Token } from './scheme/member';
+import {
+  Member,
+  Profile,
+  RegisterMemberRequest,
+  Token,
+  WrittenCommentList,
+  WrittenPostList,
+} from './scheme/member';
 
 import api from '.';
 
@@ -45,6 +52,24 @@ export const reAuthorize = async (token: Pick<Token, 'refreshToken'>) => {
   const { data } = await api.patch<Token>({
     url: '/members/reissue',
     data: token,
+  });
+
+  return data;
+};
+
+export const getWrittenPosts = async (size = 3, cursorId?: number) => {
+  const { data } = await api.get<WrittenPostList>({
+    url: '/accompanies/posts/my-page',
+    params: { size, cursorId },
+  });
+
+  return data;
+};
+
+export const getWrittenComments = async (size = 3, cursorId?: number) => {
+  const { data } = await api.get<WrittenCommentList>({
+    url: '/accompanies/comments/my-page?size=3',
+    params: { size, cursorId },
   });
 
   return data;
