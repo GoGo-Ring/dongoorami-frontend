@@ -32,7 +32,7 @@ const CompanionRecruitmentFilter = ({
     age: [20, 30],
     transportation: '동행',
     totalCount: 0,
-    purpose: [],
+    purposes: [],
   });
 
   const getValue = useCallback(
@@ -49,7 +49,7 @@ const CompanionRecruitmentFilter = ({
       startAge: options.age[0],
       endAge: options.age[1],
       totalPeople: options.totalCount,
-      purpose: options.purpose,
+      purposes: options.purposes,
     };
   };
 
@@ -113,7 +113,7 @@ const CompanionRecruitmentFilter = ({
         category={SELECTION.PURPOSE.category}
         options={SELECTION.PURPOSE.options}
         setOption={getValue}
-        fieldName={'purpose'}
+        fieldName={'purposes'}
         className="flex-row gap-2"
       />
       <Button variant="outline" onClick={handleSubmit}>
