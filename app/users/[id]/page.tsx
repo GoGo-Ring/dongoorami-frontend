@@ -9,6 +9,7 @@ import { Progress } from '~/components/progress';
 import useFetchProfile from '~/hooks/queries/useFetchProfile';
 
 import Info from '../_components/info';
+import RecievedReview from '../_components/recieved-review';
 
 const Page = ({ params }: { params: { id: string } }) => {
   const router = useRouter();
@@ -58,6 +59,11 @@ const Page = ({ params }: { params: { id: string } }) => {
         <div className="min-h-40 rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background">
           {member.introduction}
         </div>
+      </div>
+
+      <div className="flex flex-col gap-lg">
+        <h2 className="text-xl font-bold">받은 후기</h2>
+        <RecievedReview id={Number(params.id)} />
       </div>
     </section>
   );
