@@ -55,10 +55,6 @@ const Page = ({ params }: Props) => {
     return <Loading />;
   }
 
-  const confirmedApplies = comments?.filter(
-    ({ isAccompanyConfirmedComment }) => isAccompanyConfirmedComment,
-  );
-
   const isApplied = comments?.some(
     ({ memberProfile: { currentMember }, isAccompanyApplyComment }) =>
       currentMember && isAccompanyApplyComment,
@@ -167,7 +163,7 @@ const Page = ({ params }: Props) => {
 
       <Section className="flex items-center md:flex-nowrap">
         <h2 className="h-full w-1/2 text-nowrap text-xl font-semibold">
-          신청자 목록 ({`${confirmedApplies.length}/${totalPeople}`}명)
+          신청자 수 ({`${waitingCount}/${totalPeople}`}명)
         </h2>
         <ApplyForm
           isDisabled={

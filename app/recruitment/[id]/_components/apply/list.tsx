@@ -20,10 +20,6 @@ const ApplyList = ({ isWriter, accompanyPostId }: ApplyListProps) => {
     ({ isAccompanyApplyComment }) => isAccompanyApplyComment,
   );
 
-  if (!isWriter) {
-    return null;
-  }
-
   const handleConfirmApply = (id: string) => () => {
     confirm('동행 신청을 수락하시겠습니까? 수락 취소는 불가능합니다.') &&
       confirmApply(id, {
@@ -52,7 +48,7 @@ const ApplyList = ({ isWriter, accompanyPostId }: ApplyListProps) => {
               nickName={`${nickname} ${currentMember ? '(나)' : ''}`}
               updatedAt={updatedAt}
             >
-              {!isAccompanyConfirmedComment && (
+              {!isAccompanyConfirmedComment && isWriter && (
                 <Button
                   onClick={handleConfirmApply(String(id))}
                   variant="link"
