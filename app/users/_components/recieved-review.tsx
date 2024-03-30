@@ -21,9 +21,9 @@ const RecievedReview = ({ id }: RecievedReviewProps) => {
 
   return (
     <ul>
-      {reviews.map(({ id, title, content, updatedAt }) => (
+      {reviews.map(({ id: reviewId, title, content, updatedAt }) => (
         <li
-          key={id}
+          key={reviewId}
           className="flex flex-col rounded-md border border-border px-2 py-1.5"
         >
           <h3>{content}</h3>
