@@ -28,7 +28,14 @@ const Page = ({ params }: { params: { id: string } }) => {
       <div className="flex items-center justify-between gap-5">
         <div className="text-2xl font-bold">{member.nickname}</div>
         <Button asChild>
-          <Link href={`/message/${params.id}`}>쪽지 보내기</Link>
+          <Link
+            href={{
+              pathname: '/message/write',
+              query: { userId: `${params.id}` },
+            }}
+          >
+            쪽지 보내기
+          </Link>
         </Button>
       </div>
 
