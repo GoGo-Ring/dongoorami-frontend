@@ -9,6 +9,7 @@ const useMutationCreateCompanyComment = (postId: string) => {
     mutationFn: () => createAcompanyApplyComment(postId),
     onSettled: () => {
       queryClient.invalidateQueries({ queryKey: ['comments', postId] });
+      queryClient.invalidateQueries({ queryKey: ['companionPost', postId] });
     },
   });
 };
