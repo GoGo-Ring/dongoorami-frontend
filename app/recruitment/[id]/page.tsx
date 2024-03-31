@@ -154,10 +154,10 @@ const Page = ({ params }: Props) => {
           <Field label="공연 날짜" value={`${startDate}~${endDate}`} />
         </div>
         <div className="flex w-full flex-col">
-          <Field label="공연장소" value={concertPlace} />
+          <Field label="공연 장소" value={concertPlace} />
           <Field label="연령" value={`${startAge}~${endAge}`} />
           <Field label="성별" value={gender} />
-          <Field label="교통수단" value={purposes} />
+          <Field label="동행 목적" value={purposes} />
         </div>
       </Section>
 
