@@ -5,7 +5,7 @@ import { useEffect } from 'react';
 
 import { PropsWithRequiredChildren } from '~/types/utils';
 
-const routes = ['/message', '/users', '/register'];
+const routes = ['/message', '/users', '/register', '/recruitment/new'];
 
 const AuthProvider = ({ children }: PropsWithRequiredChildren) => {
   const pathname = usePathname();
