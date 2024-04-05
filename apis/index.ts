@@ -48,14 +48,26 @@ instance.interceptors.response.use(
       return Promise.reject(error);
     }
 
-    const { accessToken, refreshToken } = await reAuthorize({
-      refreshToken: localStorage.getItem('refreshToken') || '',
-    });
+    try {
+      const { accessToken, refreshToken } = await reAuthorize({
+        refreshToken: localStorage.getItem('refreshToken') || '',
+      });
 
-    localStorage.setItem('accessToken', accessToken);
-    localStorage.setItem('refreshToken', refreshToken);
+      localStorage.setItem('accessToken', accessToken);
+      localStorage.setItem('refreshToken', refreshToken);
 
-    config.headers.Authorization = accessToken;
+      config.headers.Authorization = accessToken;
+    } catch (refreshError) {
+      if (axios.isAxiosError<{ message: string }>(refreshError)) {
+        if (
+          refreshError.response?.status === 500 &&
+          refreshError.response.data.message ===
+            'refresh token이 이미 만료되었거나 올바르지 않습니다.'
+        ) {
+          localStorage.clear();
+        }
+      }
+    }
 
     return axios(config);
   },
